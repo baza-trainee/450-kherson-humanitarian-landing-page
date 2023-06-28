@@ -1,9 +1,8 @@
+@use '~/styles/colors' as *;
+
 .AboutUs {
 	border: 1px solid magenta;
-
-	& h2 {
-	font-size: 48px;
-	}
 }
-
-
+.H1 {
+	color: $text--color-blue;
+}
