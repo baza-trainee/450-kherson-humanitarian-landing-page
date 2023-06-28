@@ -4,7 +4,7 @@ import { APP } from '~constants/APP';
 
 export default function Home() {
 	return (
-		<Meta title={APP.name}>
+	<Meta title={APP.name}>
 			<HomePage />
 		</Meta>
 	);

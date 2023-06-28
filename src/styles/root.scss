@@ -1,0 +1,30 @@
+:root {
+
+	// text colors
+	--text-color-main: #1F252B;
+	--text-color-blue: #036399;
+	--text-color-gray: #9EADBD;
+	--text-color-gray-natural: #777E90;
+	--text-color-disabled: #979797;
+
+	// BG colors
+	--bg-color-block: #D9EFFC;
+	--bg-color-calculator: #F4F5F6;
+	--bg-color-main-page: #FFFFFF;
+	--bg-color-input-reg-form: #D5D9DD;
+
+	// number of registrations colors
+	--color-number-of-registrations-1: #1479B1;
+	--color-number-of-registrations-2: #276CB5;
+	--color-number-of-registrations-3: #2A4397;
+
+	// buttons bg
+	--button-bg-disabled: #D6D6D6;
+	--button-bg-default: radial-gradient(100.00% 100.00% at 100.00% 0.00%, #00C6FF 0%, #026298 100%);
+	--button-bg-hover: radial-gradient(191.95% 141.42% at 100.00% 0.00%, #FF0 0%, #FFD600 100%);
+	--button-bg-active: radial-gradient(100.00% 100.00% at 100.00% 0.00%, #00C6FF 0%, #004D77 100%);
+
+	// error color
+	--color-error: #E84E2C;
+
+}
