@@ -1,26 +1,28 @@
-// text colors
-$text--color-main: #1f252b;
-$text--color-blue: #036399;
-$text--color-gray: #9eadbd;
-$text--color-gray-natural: #777e90;
-$text--color-disabled: #979797;
+:root {
+	// text colors
+	--text--color-main: #1f252b;
+	--text--color-blue: #036399;
+	--text--color-gray: #9eadbd;
+	--text--color-gray-natural: #777e90;
+	--text--color-disabled: #979797;
 
-// BG colors
-$bg--color-block: #d9effc;
-$bg--color-calculator: #f4f5f6;
-$bg--color-main-page: #ffffff;
-$bg--color-input-reg-form: #d5d9dd;
+	// BG colors
+	--bg--color-block: #d9effc;
+	--bg--color-calculator: #f4f5f6;
+	--bg--color-main-page: #ffffff;
+	--bg--color-input-reg-form: #d5d9dd;
 
-// number of registrations colors
-$color--number-of-registrations-1: #1479b1;
-$color--number-of-registrations-2: #276cb5;
-$color--number-of-registrations-3: #2a4397;
+	// number of registrations colors
+	--color--number-of-registrations-1: #1479b1;
+	--color--number-of-registrations-2: #276cb5;
+	--color--number-of-registrations-3: #2a4397;
 
-// buttons bg
-$button--bg-disabled: #d6d6d6;
-$button--bg-default: radial-gradient(100% 100% at 100% 0%, #00c6ff 0%, #026298 100%);
-$button--bg-hover: radial-gradient(191.95% 141.42% at 100% 0%, #ff0 0%, #ffd600 100%);
-$button--bg-active: radial-gradient(100% 100% at 100% 0%, #00c6ff 0%, #004d77 100%);
+	// buttons bg
+	--button--bg-disabled: #d6d6d6;
+	--button--bg-default: radial-gradient(100% 100% at 100% 0%, #00c6ff 0%, #026298 100%);
+	--button--bg-hover: radial-gradient(191.95% 141.42% at 100% 0%, #ff0 0%, #ffd600 100%);
+	--button--bg-active: radial-gradient(100% 100% at 100% 0%, #00c6ff 0%, #004d77 100%);
 
-// error color
-$color--error: #e84e2c;
+	// error color
+	--color--error: #e84e2c;
+}
