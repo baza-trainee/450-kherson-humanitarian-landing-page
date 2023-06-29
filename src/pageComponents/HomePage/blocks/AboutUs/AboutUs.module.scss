@@ -1,8 +1,6 @@
-@use '~/styles/colors' as *;
-
 .AboutUs {
 	border: 1px solid magenta;
 }
 .H1 {
-	color: $text--color-blue;
+	color: var(--text--color-blue);
 }
