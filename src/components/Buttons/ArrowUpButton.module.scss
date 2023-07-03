@@ -1,0 +1,30 @@
+.Button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 8px;
+	user-select: none;
+	border-radius: 5px;
+	height: 64px;
+	width: 64px;
+
+	border: 2px solid var(--text--color-blue);
+	color: var(--text--color-blue);
+	background-color: var(--bg--color-main-page);
+
+	&:hover {
+		border: 2px solid var(--button--bg-hover);
+		color: var(--text--color-main);
+	}
+	&:active {
+		border-style: none;
+		color: var(--bg--color-main-page);
+		background-color: var(--button--bg-default);
+	}
+
+	.label {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
