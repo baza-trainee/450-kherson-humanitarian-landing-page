@@ -28,10 +28,21 @@
 	flex-wrap: wrap;
 	row-gap: 24px;
 	@media screen and (min-width: 768px) {
-		column-gap: 25px;
+		column-gap: 15px;
 	}
 	@media screen and (min-width: 1440px) {
 		column-gap: 168px;
 		row-gap: 48px;
+	}
+}
+
+.logo {
+	width: 130px;
+	height: auto;
+	@media screen and (min-width: 768px) {
+		width: 160px;
+	}
+	@media screen and (min-width: 1440px) {
+		width: 193px;
 	}
 }

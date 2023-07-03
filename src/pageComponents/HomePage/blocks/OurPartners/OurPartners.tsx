@@ -12,7 +12,7 @@ import partner4 from '../../../../assets/images/partners/nova-poshta.png';
 import partner3 from '../../../../assets/images/partners/rls.png';
 import partner2 from '../../../../assets/images/partners/society-of-ukrainians-in-Finland.png';
 
-import s from './AboutUs.module.scss';
+import s from './OurPartners.module.scss';
 
 // interface Logo {
 // 	src: string;
@@ -29,24 +29,24 @@ export function OurPartners() {
 				<h2 className={s.title}>Наші партнери</h2>
 				<div className={s.flexContainer}>
 					{/* {arrayOfLogos.map((logo) => {
-					return	<Image src={logo.src} width={130} alt={logo.alt} key={logo.id}/>;
+					return	<Image src={logo.src}  alt={logo.alt} key={logo.id}  className={s.logo}/>;
 					})} */}
 
-					<Image src={partner1} width={130} alt="fundacja-ukraina" />
+					<Image src={partner1} alt="fundacja-ukraina" className={s.logo} />
 
-					<Image src={partner2} width={130} alt="society-of-ukrainians-in-Finland" />
+					<Image src={partner2} alt="society-of-ukrainians-in-Finland" className={s.logo} />
 
-					<Image src={partner3} width={130} alt="rls" />
+					<Image src={partner3} alt="rls" className={s.logo} />
 
-					<Image src={partner4} width={130} alt="nova-poshta" />
+					<Image src={partner4} alt="nova-poshta" className={s.logo} />
 
-					<Image src={partner5} width={130} alt="logistics-center-of-finland" />
+					<Image src={partner5} alt="logistics-center-of-finland" className={s.logo} />
 
-					<Image src={partner6} width={130} alt="bevar-ukraine" />
+					<Image src={partner6} alt="bevar-ukraine" className={s.logo} />
 
-					<Image src={partner7} width={130} alt="hungarian-ecumenical-help-service" />
+					<Image src={partner7} alt="hungarian-ecumenical-help-service" className={s.logo} />
 
-					<Image src={partner8} width={130} alt="german-food-bridge" />
+					<Image src={partner8} alt="german-food-bridge" className={s.logo} />
 				</div>
 			</Container>
 		</Section>
