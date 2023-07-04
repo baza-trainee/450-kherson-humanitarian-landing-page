@@ -1,0 +1,28 @@
+@use '~styles/variables/screen-variables' as *;
+
+$screens-variants: (
+	desktop-x: $screen--desktop-xl,
+	desktop-l: $screen--desktop-lg,
+	desktop-m: $screen--desktop-md,
+	desktop-s: $screen--desktop-sm,
+
+	tablet-xl: $screen--tablet-xl,
+	tablet-lg: $screen--tablet-lg,
+	tablet-md: $screen--tablet-md,
+	tablet-sm: $screen--tablet-sm,
+
+	mobile-xl: $screen--mobile-xl,
+	mobile-lg: $screen--mobile-lg,
+	mobile-md: $screen--mobile-md,
+	mobile-sm: $screen--mobile-sm,
+);
+
+@mixin screen($point) {
+	$width: map-get($screens-variants, $point);
+
+	@if $width {
+		@media (min-width: $width) {
+			@content;
+		}
+	}
+}
