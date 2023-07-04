@@ -7,7 +7,7 @@ export function AboutUs() {
 	return (
 		<Section className={s.AboutUs}>
 			<Container>
-				<h2 className={s.H1}>AboutUs</h2>
+				<h2 className={s.H2}>AboutUs</h2>
 			</Container>
 		</Section>
 	);
