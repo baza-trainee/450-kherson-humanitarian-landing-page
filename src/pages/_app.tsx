@@ -4,7 +4,8 @@ import { Poppins, Unbounded } from 'next/font/google';
 
 import { RootLayout } from '~components/RootLayout/RootLayout';
 
-import '~/styles/globals.scss';
+import 'modern-normalize/modern-normalize.css';
+import '~/styles/index.scss';
 
 const unbounded = Unbounded({
 	subsets: ['cyrillic'],
