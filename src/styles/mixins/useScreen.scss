@@ -17,7 +17,7 @@ $screens-variants: (
 	mobile-sm: $screen--mobile-sm,
 );
 
-@mixin screen($point) {
+@mixin useScreen($point) {
 	$width: map-get($screens-variants, $point);
 
 	@if $width {
