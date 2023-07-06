@@ -24,5 +24,7 @@ $screens-variants: (
 		@media (min-width: $width) {
 			@content;
 		}
+	} @else {
+		@error "Unknown screen point: '#{$point}'";
 	}
 }
