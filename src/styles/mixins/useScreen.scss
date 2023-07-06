@@ -1,0 +1,30 @@
+@use '~styles/variables/screenVariables' as *;
+
+$screens-variants: (
+	desktop-xl: $screen--desktop-xl,
+	desktop-lg: $screen--desktop-lg,
+	desktop-md: $screen--desktop-md,
+	desktop-sm: $screen--desktop-sm,
+
+	tablet-xl: $screen--tablet-xl,
+	tablet-lg: $screen--tablet-lg,
+	tablet-md: $screen--tablet-md,
+	tablet-sm: $screen--tablet-sm,
+
+	mobile-xl: $screen--mobile-xl,
+	mobile-lg: $screen--mobile-lg,
+	mobile-md: $screen--mobile-md,
+	mobile-sm: $screen--mobile-sm,
+);
+
+@mixin useScreen($point) {
+	$width: map-get($screens-variants, $point);
+
+	@if $width {
+		@media (min-width: $width) {
+			@content;
+		}
+	} @else {
+		@error "Unknown screen point: '#{$point}'";
+	}
+}
