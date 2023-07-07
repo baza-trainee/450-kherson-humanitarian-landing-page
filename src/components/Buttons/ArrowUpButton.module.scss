@@ -7,12 +7,13 @@
 	border-radius: 5px;
 	height: 64px;
 	width: 64px;
-
-	border: 2px solid var(--color--primary-3);
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--color--primary-3);
 	background: none;
 
 	&:hover {
-		border: 2px solid var(--color--gradient-1);
+		border-image: var(--color--gradient-1);
 	}
 	&:active {
 		border-style: none;
