@@ -1,0 +1,10 @@
+@use '~/styles/mixins' as *;
+
+$path: '/svg/icons/';
+$iconsSet: (burger, close);
+
+@each $icon in $iconsSet {
+	.#{'icon--' + $icon} {
+		@include useSvgIcon($path, $icon);
+	}
+}
