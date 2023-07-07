@@ -86,7 +86,7 @@
 	font-size: var(--font-size--footer-mobile);
 	line-height: 150%;
 	font-weight: 400;
-	@include useScreen('desktop-sm') {
+	@include useScreen('desktop-md') {
 		font-size: var(--font-size--footer);
 	}
 }
@@ -95,7 +95,7 @@
 	font-size: var(--font-size--various1-mobile);
 	line-height: 100%;
 	font-weight: 500;
-	@include useScreen('tablet-xl') {
+	@include useScreen('desktop-md') {
 		font-size: var(--font-size--various1);
 		font-weight: 400;
 	}
