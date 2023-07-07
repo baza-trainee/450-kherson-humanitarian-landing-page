@@ -23,36 +23,36 @@
 
 .fill {
 	border-style: none;
-	color: var(--bg--color-main-page);
-	background-color: var(--button--bg-default);
+	color: var(--color--shades--1);
+	background-color: var(--color--primary--2);
 
 	&:hover {
-		color: var(--text--color-main);
-		background-color: var(--button--bg-hover);
+		color: var(--color--secondary--4);
+		background-color: var(--color--gradient--1);
 	}
 	&:active {
-		color: var(--bg--color-main-page);
-		background-color: var(--button--bg-active);
+		color: var(--color--shades--1);
+		background-color: var(--color--primary--4);
 	}
 }
 
 .outline {
-	border: 2px solid var(--text--color-blue);
-	color: var(--text--color-blue);
-	background-color: var(--bg--color-main-page);
+	border: 2px solid var(--color--primary--3);
+	color: var(--color--primary--3);
+	background-color: var(--color--shades--1);
 
 	&:hover {
-		border: 2px solid var(--button--bg-hover);
-		color: var(--text--color-main);
+		border: 2px solid var(--color--gradient--1);
+		color: var(--color--secondary--4);
 	}
 	&:active {
 		border-style: none;
-		color: var(--bg--color-main-page);
-		background-color: var(--button--bg-active);
+		color: var(--color--shades--1);
+		background-color: var(--color--primary--4);
 	}
 }
 
 .disabled {
-	color: var(--text--color-gray-natural);
-	background: var(--button--bg-disable);
+	color: var(--color--secondary--2);
+	background: var(--color--secondary--1);
 }
