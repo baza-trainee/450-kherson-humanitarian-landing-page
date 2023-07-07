@@ -8,7 +8,7 @@ export type SectionElement = HTMLElement;
 
 type ReactHTMLElementAttributes<
 	E,
-	A extends React.HTMLAttributes<E> = React.HTMLAttributes<E>
+	A extends React.HTMLAttributes<E> = React.HTMLAttributes<E>,
 > = React.DetailedHTMLProps<A, E>;
 
 export type SectionProps = ReactHTMLElementAttributes<SectionElement>;
