@@ -1,68 +1,43 @@
-import { H1, H2, H3, P1, P2, P3, P4, P5, P6 } from './variants';
+import React from 'react';
+import { forwardRef } from 'react';
 
-interface TextProps {
-	variant: 'h1' | 'h2' | 'h3' | 'p1' | 'p2' | 'p3' | 'p4' | 'p5' | 'p6';
-	className?: string;
-	children: string;
+import clsx from 'clsx';
+
+import s from './Text.module.scss';
+
+const variantsMapping = {
+	h1: 'h1',
+	h2: 'h2',
+	h3: 'h3',
+	h4: 'h4',
+	subtitle: 'h6',
+	p: 'p',
+	button: 'span',
+	header: 'p',
+	footer: 'p',
+	various1: 'p',
+	various2: 'p',
+	various3: 'p',
+};
+
+type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h6' | 'p' | 'span';
+
+export type TextElement = HTMLHeadingElement | HTMLParagraphElement;
+
+export interface TextProps extends Omit<ReactHTMLElementAttributes<TextElement>, 'ref'> {
+	variant?: keyof typeof variantsMapping;
 }
 
-export function Text({ variant, className, children, ...props }: TextProps) {
-	switch (variant) {
-		case 'h1':
-			return (
-				<H1 className={`${className}`} {...props}>
-					{children}
-				</H1>
-			);
-		case 'h2':
-			return (
-				<H2 className={`${className}`} {...props}>
-					{children}
-				</H2>
-			);
-		case 'h3':
-			return (
-				<H3 className={`${className}`} {...props}>
-					{children}
-				</H3>
-			);
-		case 'p1':
-			return (
-				<P1 className={`${className}`} {...props}>
-					{children}
-				</P1>
-			);
-		case 'p2':
-			return (
-				<P2 className={`${className}`} {...props}>
-					{children}
-				</P2>
-			);
-		case 'p3':
-			return (
-				<P3 className={`${className}`} {...props}>
-					{children}
-				</P3>
-			);
-		case 'p4':
-			return (
-				<P4 className={`${className}`} {...props}>
-					{children}
-				</P4>
-			);
-		case 'p5':
-			return (
-				<P5 className={`${className}`} {...props}>
-					{children}
-				</P5>
-			);
-		case 'p6':
-			return (
-				<P6 className={`${className}`} {...props}>
-					{children}
-				</P6>
-			);
-		default:
-			null;
-	}
-}
+export const Text = forwardRef<TextElement, TextProps>(({ variant, children, className, ...rest }, ref) => {
+	const Component = (variant ? variantsMapping[variant] : 'span') as TextVariants;
+
+	const componentClass = variant && s[variant];
+
+	return (
+		<Component className={clsx(s.Text, componentClass, className)} ref={ref} {...rest}>
+			{children}
+		</Component>
+	);
+});
+
+Text.displayName = 'Text';
