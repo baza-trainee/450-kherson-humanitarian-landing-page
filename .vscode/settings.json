@@ -17,44 +17,10 @@
 			"source.fixAll.eslint": false
 		}
 	},
-	"cSpell.language": "ua,en,lorem",
+	"cSpell.language": "uk,en,lorem",
 	"search.exclude": {
 		"**/node_modules": true
 	},
 	"files.eol": "\n",
-	"multiCommand.commands": [
-		{
-			"command": "multiCommand.consoleLog",
-			"sequence": [
-				"editor.action.clipboardCopyAction",
-				"editor.action.insertLineAfter",
-				{
-					"command": "editor.action.insertSnippet",
-					"args": {
-						"snippet": "console.log('$CLIPBOARD: ', $CLIPBOARD);"
-					}
-				}
-			]
-		},
-		{
-			"command": "multiCommand.createReactFC",
-			"sequence": [
-				{
-					"command": "editor.action.insertSnippet",
-					"args": {
-						"snippet": {
-							"body": [
-								"export function ${1:${TM_FILENAME_BASE}}() {",
-								"\treturn (",
-								"\t\t<div className=\"${2:${TM_FILENAME_BASE/(.*)/${1:/downcase}/}}\">${3:${TM_FILENAME_BASE}}</div>",
-								"\t);",
-								"}"
-							]
-						}
-					}
-				}
-			]
-		}
-	],
 	"cSpell.words": ["clsx"]
 }
