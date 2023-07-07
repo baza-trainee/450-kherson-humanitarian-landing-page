@@ -21,7 +21,7 @@
 
 	&:hover {
 		color: var(--color--secondary-4);
-		background-color: var(--color--gradient-1);
+		background: var(--color--gradient-1);
 	}
 	&:active {
 		color: var(--color--shades-1);
@@ -30,12 +30,14 @@
 }
 
 .secondary {
-	border: 2px solid var(--color--primary-3);
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--color--primary-3);
 	color: var(--color--primary-3);
 	background-color: var(--color--shades-1);
 
 	&:hover {
-		border: 2px solid var(--color--gradient-1);
+		border-image: var(--color--gradient-1) 1;
 		color: var(--color--secondary-4);
 	}
 	&:active {
