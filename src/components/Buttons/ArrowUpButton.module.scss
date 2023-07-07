@@ -8,15 +8,15 @@
 	height: 64px;
 	width: 64px;
 
-	border: 2px solid var(--color--primary--3);
-	background-color: var(--bg--color-main-page);
+	border: 2px solid var(--color--primary-3);
+	background: none;
 
 	&:hover {
-		border: 2px solid var(--color--gradient--1);
+		border: 2px solid var(--color--gradient-1);
 	}
 	&:active {
 		border-style: none;
-		background-color: var(--color--primary--3);
+		background-color: var(--color--primary-3);
 	}
 
 	.label {
