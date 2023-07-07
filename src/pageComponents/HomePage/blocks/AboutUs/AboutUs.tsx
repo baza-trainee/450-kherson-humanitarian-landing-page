@@ -1,6 +1,6 @@
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
-import { Text } from '~/components/Text/Text';
+import { Text } from '~components/Text/Text';
 
 import s from './AboutUs.module.scss';
 
@@ -8,7 +8,7 @@ export function AboutUs() {
 	return (
 		<Section className={s.AboutUs}>
 			<Container>
-				<h2 className={s.H2}>AboutUs</h2>
+				<h2>AboutUs</h2>
 				<Text variant="h1">h1 Check</Text>
 				<Text variant="h2">h2 Check</Text>
 				<Text variant="h3">h3 Check</Text>
