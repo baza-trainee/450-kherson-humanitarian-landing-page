@@ -6,15 +6,18 @@ import s from './TextButton.module.scss';
 
 type ButtonElement = HTMLElementTagNameMap['button'];
 interface ButtonProps extends React.HTMLAttributes<ButtonElement> {
-	size?: 'medium' | 'big';
 	disabled?: boolean;
-	type?: 'fill' | 'outline';
+	type?: 'primary' | 'secondary';
 	submit?: boolean;
 }
 
 export const Button = forwardRef<ButtonElement, ButtonProps>(
-	({ size = 'medium', type = 'fill', submit, disabled, children, className, ...rest }, ref) => {
-		const componentClass = [disabled && s.disabled, size && s[size], type && s[type]];
+	({ type = 'primary', submit, disabled, children, className, ...rest }, ref) => {
+		const componentClass = [
+			disabled && type === 'primary' && s.disabledPrimary,
+			disabled && type === 'secondary' && s.disabledSecondary,
+			type && s[type],
+		];
 		return (
 			<button
 				type={submit ? 'submit' : 'button'}
@@ -22,7 +25,7 @@ export const Button = forwardRef<ButtonElement, ButtonProps>(
 				ref={ref}
 				{...rest}
 			>
-				<span className={clsx(s.label, `s.${size}`)}>{children}</span>
+				<span className={clsx(s.label)}>{children}</span>
 			</button>
 		);
 	},
