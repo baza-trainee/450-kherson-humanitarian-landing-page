@@ -12,7 +12,7 @@ const unbounded = Unbounded({
 	display: 'swap',
 	weight: ['400', '600'],
 	style: 'normal',
-	variable: '--font-unbounded',
+	variable: '--font-family--unbounded',
 });
 
 const poppins = Poppins({
