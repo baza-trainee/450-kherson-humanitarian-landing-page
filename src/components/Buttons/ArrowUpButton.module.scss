@@ -13,16 +13,12 @@
 	background: none;
 
 	&:hover {
-		border-image: var(--color--gradient-1);
+		border-color: transparent;
+		background: linear-gradient(var(--color--shades-1), var(--color--shades-1)) padding-box,
+			var(--color--gradient-1) border-box;
 	}
 	&:active {
 		border-style: none;
 		background-color: var(--color--primary-3);
 	}
-}
-
-.label {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }

@@ -10,9 +10,9 @@ type ButtonProps = React.HTMLAttributes<ButtonElement>;
 export const ArrowUpButton = forwardRef<ButtonElement, ButtonProps>(({ children, className, ...rest }, ref) => {
 	return (
 		<button className={clsx(s.Button, className)} ref={ref} {...rest}>
-			<span className={s.label}>{children}</span>
+			{children}
 		</button>
 	);
 });
 
-ArrowUpButton.displayName = 'Button';
+ArrowUpButton.displayName = 'ArrowUpButton';
