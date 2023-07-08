@@ -13,19 +13,16 @@ interface ButtonProps extends React.HTMLAttributes<ButtonElement> {
 
 export const Button = forwardRef<ButtonElement, ButtonProps>(
 	({ type = 'primary', submit, disabled, children, className, ...rest }, ref) => {
-		const componentClass = [
-			disabled && type === 'primary' && s.disabledPrimary,
-			disabled && type === 'secondary' && s.disabledSecondary,
-			type && s[type],
-		];
+		const componentClass = [type && s[type], disabled && `${s.disabled}`];
 		return (
 			<button
 				type={submit ? 'submit' : 'button'}
 				className={clsx(s.Button, className, componentClass)}
+				disabled={disabled}
 				ref={ref}
 				{...rest}
 			>
-				<span className={clsx(s.label)}>{children}</span>
+				<span className={s.label}>{children}</span>
 			</button>
 		);
 	},

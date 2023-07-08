@@ -29,6 +29,12 @@
 		background-color: var(--color--primary-4);
 	}
 }
+.primary.disabled {
+	color: var(--color--secondary-2);
+	background: var(--color--secondary-1);
+	pointer-events: none;
+	user-select: none;
+}
 
 .secondary {
 	border-width: 2px;
@@ -38,8 +44,10 @@
 	background-color: var(--color--shades-1);
 
 	&:hover {
-		border-image: var(--color--gradient-1) 1;
+		border-color: transparent;
 		color: var(--color--secondary-4);
+		background: linear-gradient(var(--color--shades-1), var(--color--shades-1)) padding-box,
+			var(--color--gradient-1) border-box;
 	}
 	&:active {
 		border-style: none;
@@ -47,13 +55,9 @@
 		background-color: var(--color--primary-4);
 	}
 }
-
-.disabledPrimary {
-	color: var(--color--secondary--2);
-	background: var(--color--secondary--1);
-}
-
-.disabledSecondary {
-	border: 2px solid var(--color--secondary--1);
+.secondary.disabled {
+	border: 2px solid var(--color--secondary-1);
 	color: var(--color--secondary-2);
+	pointer-events: none;
+	user-select: none;
 }
