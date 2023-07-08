@@ -1,7 +1,7 @@
 @use '~/styles/mixins' as *;
 
 .Text {
-	color: var(--color--secondary--4);
+	color: var(--color--secondary-4);
 }
 
 .h1,
@@ -9,11 +9,19 @@
 .header,
 .button,
 .various1 {
-	color: var(--color--primary--3);
+	color: var(--color--primary-3);
+}
+
+.h4 {
+	color: var(--color--secondary-2);
+}
+
+.various2 {
+	color: var(--color--primary-2);
 }
 
 .h1 {
-	font-family: var(--font-unbounded);
+	font-family: var(--font-family--unbounded);
 	font-size: var(--font-size--h1-mobile);
 	line-height: 140%;
 	font-weight: 600;
@@ -23,7 +31,7 @@
 }
 
 .h2 {
-	font-family: var(--font-unbounded);
+	font-family: var(--font-family--unbounded);
 	font-size: var(--font-size--h2-mobile);
 	line-height: 140%;
 	font-weight: 600;
@@ -43,7 +51,6 @@
 }
 
 .h4 {
-	color: var(--color--secondary--2);
 	font-size: var(--font-size--h4);
 	line-height: 100%;
 	font-weight: 700;
@@ -105,11 +112,10 @@
 	font-size: var(--font-size--various2);
 	line-height: 100%;
 	font-weight: 600;
-	color: var(--color--primary--2);
 }
 
 .various3 {
-	font-family: var(--font-unbounded);
+	font-family: var(--font-family--unbounded);
 	font-size: var(--font-size--various3-mobile);
 	line-height: 130%;
 	font-weight: 400;
