@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
+import { Text } from '~components/Text/Text';
+
 import s from './Button.module.scss';
 
 type ButtonElement = HTMLElementTagNameMap['button'];
@@ -22,7 +24,9 @@ export const Button = forwardRef<ButtonElement, ButtonProps>(
 				ref={ref}
 				{...rest}
 			>
-				<span className={s.label}>{children}</span>
+				<Text variant="button" className={s.label}>
+					{children}
+				</Text>
 			</button>
 		);
 	},
