@@ -1,4 +1,3 @@
-// custom typescript eslint rules by AmelianceSkyMusic@gmail.com
 module.exports = {
 	rules: {
 		// TypeScript Rules
