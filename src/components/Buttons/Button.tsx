@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import s from './TextButton.module.scss';
+import s from './Button.module.scss';
 
 type ButtonElement = HTMLElementTagNameMap['button'];
 interface ButtonProps extends React.HTMLAttributes<ButtonElement> {
