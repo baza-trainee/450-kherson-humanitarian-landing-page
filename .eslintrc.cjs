@@ -9,6 +9,8 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:react/jsx-runtime',
 		'next/core-web-vitals',
+		'./.eslintrc-typescript.cjs',
+		'prettier',
 	],
 	overrides: [],
 	parser: '@typescript-eslint/parser',

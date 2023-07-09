@@ -1,0 +1,11 @@
+$components-sizes: (tiny, small, default, medium, large, extra);
+
+@mixin useSize($size) {
+	@if index($components-sizes, $size) {
+		&.#{$size} {
+			@content;
+		}
+	} @else {
+		@error "Unknown components size point: '#{$size}'";
+	}
+}
