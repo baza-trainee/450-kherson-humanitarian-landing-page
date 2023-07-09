@@ -10,14 +10,15 @@ import '~/styles/index.scss';
 const unbounded = Unbounded({
 	subsets: ['cyrillic'],
 	display: 'swap',
+	weight: ['400', '600'],
 	style: 'normal',
-	variable: '--font-unbounded',
+	variable: '--font-family--unbounded',
 });
 
 const poppins = Poppins({
 	subsets: ['devanagari'],
 	display: 'swap',
-	weight: ['500'],
+	weight: ['300', '400', '500', '600', '700', '900'],
 	style: 'normal',
 });
 
