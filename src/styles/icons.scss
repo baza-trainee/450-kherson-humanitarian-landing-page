@@ -1,7 +1,23 @@
 @use '~/styles/mixins' as *;
 
 $path: '/svg/icons/';
-$iconsSet: (burger, close);
+$iconsSet: (
+	burger,
+	close,
+	arrow-left,
+	arrow-right,
+	arrow-up-right,
+	arrow-up,
+	attention,
+	copy,
+	dropdown-form,
+	dropdown-modal,
+	email,
+	facebook,
+	instagram,
+	location,
+	phone
+);
 
 @each $icon in $iconsSet {
 	.#{'icon--' + $icon} {
