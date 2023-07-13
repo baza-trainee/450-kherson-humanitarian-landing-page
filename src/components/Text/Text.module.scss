@@ -56,18 +56,31 @@
 	font-weight: 700;
 }
 
-.subtitle {
-	font-size: var(--font-size--subtitle-mobile);
-	line-height: 150%;
+.h5 {
+	font-size: var(--font-size--h5-mobile);
 	font-weight: 400;
 	@include useScreen('tablet-sm') {
+		font-size: var(--font-size--h5);
+		line-height: 150%;
+	}
+}
+
+.h6 {
+	font-size: var(--font-size--h6);
+	line-height: 150%;
+	font-weight: 400;
+}
+
+.subtitle {
+	font-size: var(--font-size--subtitle-mobile);
+	font-weight: 400;
+	@include useScreen('desktop-md') {
 		font-size: var(--font-size--subtitle);
 	}
 }
 
 .p {
 	font-size: var(--font-size--p);
-	line-height: 150%;
 	font-weight: 400;
 }
 
@@ -82,8 +95,7 @@
 
 .header {
 	font-size: var(--font-size--header-mobile);
-	line-height: 150%;
-	font-weight: 500;
+	font-weight: 400;
 	@include useScreen('tablet-sm') {
 		font-size: var(--font-size--header);
 	}
@@ -91,10 +103,10 @@
 
 .footer {
 	font-size: var(--font-size--footer-mobile);
-	line-height: 150%;
 	font-weight: 400;
 	@include useScreen('desktop-md') {
 		font-size: var(--font-size--footer);
+		line-height: 150%;
 	}
 }
 
@@ -109,9 +121,12 @@
 }
 
 .various2 {
-	font-size: var(--font-size--various2);
+	font-size: var(--font-size--various2-mobile);
 	line-height: 100%;
 	font-weight: 600;
+	@include useScreen('tablet-sm') {
+		font-size: var(--font-size--various2);
+	}
 }
 
 .various3 {
