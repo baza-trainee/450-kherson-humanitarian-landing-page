@@ -1,0 +1,79 @@
+@use '~/styles/mixins' as *;
+
+.linkModal {
+	text-decoration: none;
+	padding: 8px 0;
+	@include useScreen('tablet-sm') {
+		padding: 16px 0;
+	}
+}
+
+.column {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 40px 58px 0 16px;
+	z-index: 103;
+	gap: 40px;
+	@include useScreen('tablet-sm') {
+		gap: 48px;
+		padding: 48px 48px 0 48px;
+	}
+}
+.backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 99;
+	backdrop-filter: blur(3px);
+	background: mix(rgba(255, 255, 255, 0.32), rgba(0, 0, 0, 0.32), 50%);
+}
+.whiteField {
+	background: var(--color--shades-1);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 102;
+	width: 288px;
+	height: 100vh;
+	@include useScreen('tablet-sm') {
+		width: 456px;
+	}
+}
+.icon {
+	margin: 12px;
+}
+.close {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	z-index: 110;
+	@include useScreen('tablet-sm') {
+		top: 24px;
+		right: 24px;
+	}
+}
+.burger {
+	position: relative;
+	z-index: 10;
+}
+.navigation {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+.buttons {
+	display: flex;
+	gap: 36px;
+	flex-direction: column;
+	align-items: flex-start;
+}

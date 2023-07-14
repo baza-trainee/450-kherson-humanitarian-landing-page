@@ -5,7 +5,7 @@ import s from './AboutUs.module.scss';
 
 export function AboutUs() {
 	return (
-		<Section className={s.AboutUs}>
+		<Section className={s.AboutUs} id="AboutUs">
 			<Container>
 				<h2>AboutUs</h2>
 			</Container>

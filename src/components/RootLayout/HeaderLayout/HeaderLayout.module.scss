@@ -1,4 +1,43 @@
+@use '~/styles/mixins' as *;
+
 .HeaderLayout {
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	background: var(--color--opacity-1);
+	box-shadow: 0px 1px 4px 0px rgba(45, 35, 66, 0.2);
+
 	width: 100%;
-	padding: 0 32px;
+	padding: 10px 16px;
+	@include useScreen('tablet-sm') {
+		padding: 10px 32px;
+	}
+	@include useScreen('desktop-md') {
+		padding: 9px 80px;
+	}
+}
+.blur {
+	backdrop-filter: blur(6px);
+}
+.whiteColor {
+	background: var(--color--shades-1);
+}
+.visibilityHidden {
+	visibility: hidden;
+}
+.row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.navigation {
+	margin: 0;
+	display: flex;
+	column-gap: 16px;
+}
+.link {
+	padding: 16px 10px;
+	text-decoration: none;
 }
