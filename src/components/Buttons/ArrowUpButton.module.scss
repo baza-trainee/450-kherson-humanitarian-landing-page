@@ -10,7 +10,8 @@
 	border-width: 2px;
 	border-style: solid;
 	border-color: var(--color--primary-3);
-	background: none;
+	background: var(--color--shades-1);
+	cursor: pointer;
 
 	&:hover {
 		border-color: transparent;
@@ -19,6 +20,12 @@
 	}
 	&:active {
 		border-style: none;
-		background-color: var(--color--primary-3);
+		background: var(--color--primary-3);
+		span {
+			background: var(--color--shades-1);
+		}
+	}
+	&.hidden {
+		display: none;
 	}
 }
