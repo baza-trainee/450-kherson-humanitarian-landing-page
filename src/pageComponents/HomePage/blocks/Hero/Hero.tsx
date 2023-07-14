@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useKeenSlider } from 'keen-slider/react';
 
 import { Button } from '~components/Buttons/Button';
+// import { ButtonLink } from '~components/Buttons/ButtonLink';
 import { Container } from '~components/Container/Container';
 import { Icon } from '~components/Icon/Icon';
 import { Text } from '~components/Text/Text';
@@ -51,34 +52,28 @@ export function Hero() {
 	const { isScreenTabletSm } = useScreenQuery();
 	const buttons = (
 		<div className={s.buttonsGap}>
-			<Button type="primary">Отримати допомогу</Button>
+			{/* <ButtonLink href="#GetHelp">Отримати допомогу</ButtonLink> */}
 			<Button type="secondary">Допомогти нам</Button>
 		</div>
 	);
-	const dots = (
-		<>
-			<div className={s.column}>{buttons}</div>
-			{loaded && instanceRef.current && (
-				<div className={s.dots}>
-					{[...Array(instanceRef.current.track.details.slides.length).keys()].map((idx) => {
-						return (
-							<button
-								key={idx}
-								onClick={() => {
-									instanceRef.current?.moveToIdx(idx);
-								}}
-								className={clsx(s.dot, currentSlide === idx ? `${s.active}` : '')}
-							></button>
-						);
-					})}
-				</div>
-			)}
-		</>
+	const dots = loaded && instanceRef.current && (
+		<div className={s.dots}>
+			{[...Array(instanceRef.current.track.details.slides.length).keys()].map((idx) => {
+				return (
+					<button
+						key={idx}
+						onClick={() => {
+							instanceRef.current?.moveToIdx(idx);
+						}}
+						className={clsx(s.dot, currentSlide === idx ? `${s.active}` : '')}
+					></button>
+				);
+			})}
+		</div>
 	);
 
 	const arrows = (
-		<div className={s.row}>
-			{buttons}
+		<div className={s.arrows}>
 			{loaded && instanceRef.current && (
 				<div className={s.arrowsGap}>
 					<Arrow
@@ -97,20 +92,20 @@ export function Hero() {
 	);
 	console.log(isScreenTabletSm);
 	function renderNavigation() {
-		return isScreenTabletSm ? dots : arrows;
+		return isScreenTabletSm ? arrows : dots;
 	}
 	return (
-		<Container>
+		<Container className={s.positionRelative}>
 			<div ref={sliderRef} className="keen-slider">
 				<div className="keen-slider__slide">
 					<div className={clsx(s.content, s.banner1)}>
 						<div className={s.text}>
-							<Text variant="h1" className={s.heading}>
+							<Text variant="h1" className={clsx(s.heading, s.blueColor)}>
 								Надаємо гуманітарні набори потребуючим
 							</Text>
 							<Text variant="various3">м. Кривий Ріг</Text>
 						</div>
-						{renderNavigation()}
+						{buttons}
 					</div>
 				</div>
 				<div className="keen-slider__slide">
@@ -123,7 +118,7 @@ export function Hero() {
 								м. Кривий Ріг
 							</Text>
 						</div>
-						{renderNavigation()}
+						{buttons}
 					</div>
 				</div>
 				<div className="keen-slider__slide">
@@ -136,10 +131,11 @@ export function Hero() {
 								м. Кривий Ріг
 							</Text>
 						</div>
-						{renderNavigation()}
+						{buttons}
 					</div>
 				</div>
 			</div>
+			{renderNavigation()}
 		</Container>
 	);
 }

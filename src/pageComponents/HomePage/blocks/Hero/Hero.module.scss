@@ -1,7 +1,10 @@
 @use '~/styles/mixins' as *;
 
-.Hero {
-	border: 1px solid magenta;
+// .Hero {
+// 	border: 1px solid magenta;
+// }
+.positionRelative {
+	position: relative;
 }
 .content {
 	background-repeat: no-repeat;
@@ -13,7 +16,7 @@
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: flex-start;
-	padding: 0 23px 0 16px;
+	padding: 0 16px 52px 16px;
 	height: 100%;
 	gap: 10px;
 	width: 100%;
@@ -29,10 +32,11 @@
 	}
 	@include useScreen('tablet-sm') {
 		gap: 101px;
-		padding: 0 32px 101px 32px;
+		padding: 0 32px 104px 32px;
 		height: 850px;
 	}
 	@include useScreen('desktop-md') {
+		gap: 64px;
 		height: 680px;
 		padding: 0 80px 88px 80px;
 	}
@@ -63,15 +67,7 @@
 		gap: 64px;
 	}
 }
-.row {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
-	@include useScreen('desktop-md') {
-		align-items: center;
-	}
-}
+
 .heading {
 	width: 274px;
 	@include useScreen('mobile-lg') {
@@ -119,6 +115,20 @@
 		flex-direction: row;
 	}
 }
+.arrows {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+
+	padding: 0 16px 52px 16px;
+
+	@include useScreen('tablet-sm') {
+		padding: 0 32px 104px 32px;
+	}
+	@include useScreen('desktop-md') {
+		padding: 0 80px 88px 80px;
+	}
+}
 .arrow {
 	width: 32px;
 	height: 32px;
@@ -130,19 +140,16 @@
 	cursor: pointer;
 }
 
-.column {
-	display: flex;
-	flex-direction: column;
-	gap: 23px;
-	align-items: center;
-}
 .dots {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	width: 100%;
 	display: flex;
-	padding: 16px 4px;
+	padding: 20px 4px;
 	justify-content: center;
 	align-items: center;
-	margin-top: -15px;
-	margin-left: 50%;
 }
 
 .dot {
@@ -174,4 +181,7 @@
 }
 .whiteColor {
 	color: var(--color--shades-1);
+}
+.blueColor {
+	color: var(--color--primary-3);
 }
