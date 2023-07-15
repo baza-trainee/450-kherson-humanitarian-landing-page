@@ -1,4 +1,17 @@
+@use '~/styles/mixins' as *;
+
 .Button {
+	// position: absolute;
+	// right: 16px;
+	// bottom: 24px;
+	// z-index: 10;
+	// @include useScreen('tablet-sm') {
+	// 	right: 32px;
+	// }
+	// @include useScreen('desktop-md') {
+	// 	right: 80px;
+	// }
+
 	display: flex;
 	justify-content: center;
 	align-items: center;

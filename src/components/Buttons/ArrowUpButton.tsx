@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 
+import { Icon } from '~components/Icon/Icon';
+
 import s from './ArrowUpButton.module.scss';
 
 type ButtonElement = HTMLElementTagNameMap['button'];
 type ButtonProps = React.HTMLAttributes<ButtonElement>;
 
-export const ArrowUpButton = forwardRef<ButtonElement, ButtonProps>(({ children, className, ...rest }, ref) => {
+export const ArrowUpButton = forwardRef<ButtonElement, ButtonProps>(({ className, ...rest }, ref) => {
 	const [showButton, setShowButton] = useState(false);
 
 	const handleScrollUp = () => {
@@ -54,7 +56,17 @@ export const ArrowUpButton = forwardRef<ButtonElement, ButtonProps>(({ children,
 			ref={ref}
 			{...rest}
 		>
-			{children}
+			<Icon
+				icon="icon--arrow-up"
+				colors={{
+					default: 'var(--color--primary-3)',
+					hover: 'var(--color--primary-3)',
+					click: 'var(--color--shades-1)',
+				}}
+				onClick={() => {
+					/**/
+				}}
+			></Icon>
 		</button>
 	);
 });
