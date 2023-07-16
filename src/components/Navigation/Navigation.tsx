@@ -1,25 +1,35 @@
-import { CustomLink } from '~components/Link/Link';
+import clsx from 'clsx';
 
+import { CustomLink } from '~components/Link/Link';
+import { Text } from '~components/Text/Text';
+
+import s from './Navigation.module.scss';
 interface NavigationProps {
 	variant: 'header' | 'footer';
+	flexDirection?: 'column' | 'rowHeader' | 'rowFooter';
 	className: string;
 }
 
-export function Navigation({ variant, className }: NavigationProps) {
+export function Navigation({ variant, className, flexDirection }: NavigationProps) {
+	const navigation = [
+		{ id: 1, href: '#AboutUs', name: 'Про нас' },
+		{ id: 2, href: '#OurActivity', name: 'Наша діяльність' },
+		{ id: 3, href: '#Projects', name: 'Проєкти' },
+		{ id: 4, href: '#OurPartners', name: 'Наші партнери' },
+	];
 	return (
-		<>
-			<CustomLink href="#AboutUs" variant={variant} className={className}>
-				Про нас
-			</CustomLink>
-			<CustomLink href="#OurActivity" variant={variant} className={className}>
-				Наша діяльність
-			</CustomLink>
-			<CustomLink href="#Projects" variant={variant} className={className}>
-				Проєкти
-			</CustomLink>
-			<CustomLink href="#OurPartners" variant={variant} className={className}>
-				Наші партнери
-			</CustomLink>
-		</>
+		<ul className={clsx(s.navigation, flexDirection && s[flexDirection])}>
+			{navigation.length ? (
+				navigation.map(({ id, name, href }) => (
+					<li className={clsx(s.navigationItem, className)} key={id}>
+						<CustomLink href={href} variant={variant} className={s.link}>
+							{name}
+						</CustomLink>
+					</li>
+				))
+			) : (
+				<Text variant="header">Navigation</Text>
+			)}
+		</ul>
 	);
 }

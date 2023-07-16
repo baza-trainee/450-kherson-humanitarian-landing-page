@@ -1,44 +1,9 @@
 @use '~/styles/mixins' as *;
 
-.linkModal {
-	position: relative;
-	text-decoration: none;
-	padding: 8px 0;
+.link {
+	padding: 7px 0;
 	@include useScreen('tablet-sm') {
-		padding: 16px 0;
-	}
-	&:hover {
-		&::after {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			content: '';
-			width: 100%;
-			height: 2px;
-			opacity: 1;
-			border-radius: 2px;
-			background: var(--color--gradient-1);
-		}
-		p {
-			color: var(--color--warning-1);
-		}
-	}
-	&:active,
-	&:focus {
-		&::after {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			content: '';
-			width: 100%;
-			height: 2px;
-			opacity: 1;
-			border-radius: 2px;
-			background: var(--color--primary-3);
-		}
-		p {
-			color: var(--color--primary-3);
-		}
+		padding: 15px 0;
 	}
 }
 
@@ -98,13 +63,7 @@
 	position: relative;
 	z-index: 10;
 }
-.navigation {
-	margin: 0;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-}
+
 .buttons {
 	display: flex;
 	gap: 36px;

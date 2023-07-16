@@ -42,18 +42,11 @@ export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
 
 	const { isScreenTabletSm } = useScreenQuery();
 
-	const navigation = (
-		<ul className={s.navigation}>
-			<Navigation variant="header" className={s.linkModal} />
-		</ul>
-	);
-
 	return (
 		<>
 			<Icon icon="icon--burger" className={clsx(s.icon, s.burger)} onClick={toggleMenu}></Icon>
 
 			{isMenuOpen && (
-				// <div className={s.blur}>
 				<div className={s.backdrop} onClick={handleBackdropClick}>
 					<div className={s.whiteField}>
 						<Icon icon="icon--close" className={clsx(s.icon, s.close)} onClick={toggleMenu}></Icon>
@@ -61,21 +54,20 @@ export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
 						{isScreenTabletSm ? (
 							<div className={s.column}>
 								<Image src={logo} alt="logo" width={360} height={152} />
-								{navigation}
+								<Navigation variant="header" className={s.link} flexDirection="column" />
 							</div>
 						) : (
 							<div className={s.column}>
 								<Image src={logo} alt="logo" width={170} height={72} />
 
 								<div className={s.buttons}>
-									{navigation}
+									<Navigation variant="header" className={s.link} flexDirection="column" />
 									<ButtonLink href="#GetHelp">Отримати допомогу</ButtonLink>
 								</div>
 							</div>
 						)}
 					</div>
 				</div>
-				// </div>
 			)}
 		</>
 	);

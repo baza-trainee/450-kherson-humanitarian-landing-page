@@ -23,10 +23,10 @@ export function HeaderLayout() {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const aboutUsSection = document.getElementById('AboutUs');
+			const sectionForChangeHeader = document.getElementById('AboutUs');
 
-			if (aboutUsSection) {
-				const sectionTop = aboutUsSection.getBoundingClientRect().top;
+			if (sectionForChangeHeader) {
+				const sectionTop = sectionForChangeHeader.getBoundingClientRect().top;
 				const offset = 80;
 				if (sectionTop <= offset) {
 					setIsScrolledToAboutUs(true);
@@ -62,9 +62,7 @@ export function HeaderLayout() {
 	const desktopHeader = (
 		<div className={s.row}>
 			<Image src={logo} alt="logo" width={142} height={60} />
-			<ul className={s.navigation}>
-				<Navigation variant="header" className={s.link} />
-			</ul>
+			<Navigation variant="header" className={s.link} flexDirection="rowHeader" />
 
 			{isScrolledToAboutUs ? (
 				<ButtonLink href="#GetHelp">Отримати допомогу</ButtonLink>
