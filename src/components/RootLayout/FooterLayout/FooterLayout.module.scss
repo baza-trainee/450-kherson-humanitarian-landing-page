@@ -1,4 +1,177 @@
+@use '~/styles/mixins' as *;
+
 .FooterLayout {
-   width: 100%;
-	padding: 0 32px;
+	width: 100%;
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: center;
+	justify-content: center;
+	@include useScreen('tablet-sm') {
+		flex-direction: row;
+	}
+}
+.blue {
+	position: relative;
+	z-index: 1;
+
+	margin: 0 16px;
+	padding: 35px 16px;
+
+	background-color: var(--color--primary-3);
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 16px;
+
+	width: 92.7vw;
+	height: 310px;
+	@include useScreen('tablet-sm') {
+		height: 288px;
+		max-width: 345px;
+		padding: 32px 9px 32px 24px;
+		margin: 0;
+		gap: 37px;
+	}
+	@include useScreen('tablet-xl') {
+		min-width: 548px;
+		height: 441px;
+		padding: 68px 60px 68px 96px;
+		gap: 34px;
+	}
+}
+.grey {
+	width: 100vw;
+	margin-top: -41px;
+	padding: 73px 0 16px 0;
+	background-color: var(--color--shades-2);
+
+	height: 320px;
+	@include useScreen('tablet-sm') {
+		padding: 34px 34px 34px 32px;
+		margin: 17px -32px 17px 0;
+		height: 254px;
+	}
+	@include useScreen('tablet-xl') {
+		height: 372px;
+		max-width: 1011px;
+		padding: 50px 80px 62px;
+		margin: 35px -80px 35px 0;
+		position: relative;
+		z-index: 2;
+	}
+}
+.flex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 32px;
+
+	@include useScreen('tablet-sm') {
+		flex-direction: row;
+		gap: 8px;
+	}
+	@media screen and (min-width: 800px) {
+		gap: 40px;
+	}
+	@include useScreen('tablet-md') {
+		gap: 100px;
+	}
+	@include useScreen('tablet-lg') {
+		gap: 170px;
+	}
+	@include useScreen('tablet-xl') {
+		gap: 50px;
+	}
+	@include useScreen('desktop-sm') {
+		gap: 135px;
+	}
+	@include useScreen('desktop-md') {
+		gap: 186px;
+	}
+}
+.flexGrey {
+	@include useScreen('tablet-sm') {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 24px;
+	}
+}
+.link {
+	color: var(--color--secondary-4);
+}
+.logoAndCallToAction {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+.icons {
+	display: flex;
+	justify-content: center;
+	gap: 16px;
+	@include useScreen('tablet-sm') {
+		gap: 0px;
+	}
+	@include useScreen('tablet-xl') {
+		gap: 8px;
+	}
+}
+.iconAndText {
+	display: flex;
+	align-items: center;
+	@include useScreen('tablet-sm') {
+		gap: 8px;
+	}
+}
+.icon {
+	margin: 12px;
+}
+.whiteColor {
+	color: var(--color--shades-1);
+}
+.contacts {
+	width: 302px;
+	@include useScreen('tablet-sm') {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 13px;
+	}
+	@include useScreen('tablet-xl') {
+		gap: 24px;
+	}
+}
+.socialNetworks {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	@include useScreen('tablet-sm') {
+		flex-direction: row;
+	}
+	@include useScreen('tablet-xl') {
+		gap: 8px;
+	}
+}
+.fontSizeCallToAction {
+	font-size: 16px;
+}
+.fontSizeBaza {
+	font-size: 11px;
+}
+.widthCallToAction {
+	width: 171px;
+	@include useScreen('tablet-xl') {
+		width: 256px;
+	}
+}
+.widthBaza {
+	width: 220px;
+	@include useScreen('tablet-xl') {
+		width: 462px;
+	}
 }
