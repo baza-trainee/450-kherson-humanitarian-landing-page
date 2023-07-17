@@ -5,7 +5,7 @@ import s from './Projects.module.scss';
 
 export function Projects() {
 	return (
-		<Section className={s.Projects}>
+		<Section className={s.Projects} id="Projects">
 			<Container>
 				<h2>Projects</h2>
 			</Container>
