@@ -6,9 +6,10 @@ import Image from 'next/image';
 import { BurgerMenu } from '~components/BurgerMenu/BurgerMenu';
 import { ButtonLink } from '~components/Buttons/ButtonLink';
 import { Container } from '~components/Container/Container';
-import { Navigation } from '~components/Navigation/Navigation';
+import { CustomLink } from '~components/Link/Link';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
+import { navigation } from '../navigation';
 import logo from '/public/svg/logo.svg';
 
 import s from './HeaderLayout.module.scss';
@@ -62,7 +63,15 @@ export function HeaderLayout() {
 	const desktopHeader = (
 		<div className={s.row}>
 			<Image src={logo} alt="logo" width={142} height={60} />
-			<Navigation variant="header" className={s.link} flexDirection="rowHeader" />
+			<ul className={s.navigation}>
+				{navigation.map(({ id, name, href }) => (
+					<li className={s.navigationItem} key={id}>
+						<CustomLink href={href} variant="header" className={s.link}>
+							{name}
+						</CustomLink>
+					</li>
+				))}
+			</ul>
 
 			{isScrolledToAboutUs ? (
 				<ButtonLink href="#GetHelp">Отримати допомогу</ButtonLink>

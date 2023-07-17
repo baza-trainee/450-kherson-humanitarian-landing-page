@@ -36,3 +36,17 @@
 .link {
 	padding: 15px 10px;
 }
+.navigation {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	column-gap: 16px;
+}
+.navigationItem {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

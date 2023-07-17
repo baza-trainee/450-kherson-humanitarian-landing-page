@@ -5,9 +5,10 @@ import Image from 'next/image';
 
 import { ButtonLink } from '~components/Buttons/ButtonLink';
 import { Icon } from '~components/Icon/Icon';
-import { Navigation } from '~components/Navigation/Navigation';
+import { CustomLink } from '~components/Link/Link';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
+import { navigation } from '../RootLayout/navigation';
 import logo from '/public/svg/logo.svg';
 
 import s from './BurgerMenu.module.scss';
@@ -42,6 +43,18 @@ export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
 
 	const { isScreenTabletSm } = useScreenQuery();
 
+	const navComponent = (
+		<ul className={s.navigation}>
+			{navigation.map(({ id, name, href }) => (
+				<li className={s.navigationItem} key={id}>
+					<CustomLink href={href} variant="header" className={s.link}>
+						{name}
+					</CustomLink>
+				</li>
+			))}
+		</ul>
+	);
+
 	return (
 		<>
 			<Icon icon="icon--burger" className={clsx(s.icon, s.burger)} onClick={toggleMenu}></Icon>
@@ -54,14 +67,14 @@ export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
 						{isScreenTabletSm ? (
 							<div className={s.column}>
 								<Image src={logo} alt="logo" width={360} height={152} />
-								<Navigation variant="header" className={s.link} flexDirection="column" />
+								{navComponent}
 							</div>
 						) : (
 							<div className={s.column}>
 								<Image src={logo} alt="logo" width={170} height={72} />
 
 								<div className={s.buttons}>
-									<Navigation variant="header" className={s.link} flexDirection="column" />
+									{navComponent}
 									<ButtonLink href="#GetHelp">Отримати допомогу</ButtonLink>
 								</div>
 							</div>
