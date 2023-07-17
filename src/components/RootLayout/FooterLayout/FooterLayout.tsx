@@ -2,10 +2,11 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
-// import { Navigation } from '~components/Navigation/Navigation';
+import { CustomLink } from '~components/Link/Link';
 import { Text } from '~components/Text/Text';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
+import { navigation } from '../navigation';
 import email from '/public/svg/icons/email.svg';
 import location from '/public/svg/icons/location.svg';
 import phone from '/public/svg/icons/phone.svg';
@@ -14,11 +15,25 @@ import logo from '/public/svg/logo.svg';
 import s from './FooterLayout.module.scss';
 
 export function FooterLayout() {
+	const navComponent = (
+		<ul className={s.navigation}>
+			{navigation.map(({ id, name, href }) => (
+				<li className={s.navigationItem} key={id}>
+					<CustomLink href={href} variant="footer" className={s.link}>
+						{name}
+					</CustomLink>
+				</li>
+			))}
+		</ul>
+	);
+
 	const greyBlockMobile = (
 		<div className={s.flex}>
-			{/* <Navigation variant="footer" className={s.link} flexDirection="rowFooter" /> */}
+			{navComponent}
 			<div className={s.logoAndCallToAction}>
-				<Image src={logo} alt="logo" width={142} height={60} />
+				<a href="#Hero">
+					<Image src={logo} alt="logo" width={142} height={60} />
+				</a>
 				<Text variant="h3">Давайте допоможемо разом</Text>
 			</div>
 			<Text variant="subtitle">Розробка Baza Trainee Ukraine 2023. Усі права захищені.</Text>
@@ -27,7 +42,9 @@ export function FooterLayout() {
 	const greyBlockTablet = (
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
-				<Image src={logo} alt="logo" width={142} height={60} />
+				<a href="#Hero">
+					<Image src={logo} alt="logo" width={142} height={60} />
+				</a>
 				<Text variant="h3" className={clsx(s.fontSizeCallToAction, s.widthCallToAction)}>
 					Давайте <br /> допоможемо разом
 				</Text>
@@ -36,14 +53,16 @@ export function FooterLayout() {
 				</Text>
 			</div>
 
-			{/* <Navigation variant="footer" className={s.link} flexDirection="rowFooter" /> */}
+			{navComponent}
 		</div>
 	);
 
 	const greyBlockDesktop = (
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
-				<Image src={logo} alt="logo" width={290} height={120} />
+				<a href="#Hero">
+					<Image src={logo} alt="logo" width={290} height={120} />
+				</a>
 				<Text variant="h3" className={s.widthCallToAction}>
 					Давайте <br /> допоможемо разом
 				</Text>
@@ -52,7 +71,7 @@ export function FooterLayout() {
 				</Text>
 			</div>
 
-			{/* <Navigation variant="footer" className={s.link} flexDirection="rowFooter" /> */}
+			{navComponent}
 		</div>
 	);
 	const { isScreenTabletSm, isScreenTabletXl } = useScreenQuery();
@@ -67,27 +86,26 @@ export function FooterLayout() {
 		}
 	};
 
-	const iconClass = isScreenTabletSm && !isScreenTabletXl ? '' : `${s.icon}`;
 	return (
 		<footer className={s.FooterLayout}>
 			<div className={s.grey}>{renderGreyBlock()}</div>
 			<div className={s.blue}>
 				<div className={s.contacts}>
 					<div className={s.iconAndText}>
-						<Image className={iconClass} src={location} alt="location" width={24} height={24} />
+						<Image src={location} alt="location" width={24} height={24} />
 						<Text className={s.whiteColor} variant="footer">
 							50014 Україна
 							<br /> Дніпропетровська область <br /> Кривий Ріг, вул. Ракітіна, буд. 9
 						</Text>
 					</div>
 					<div className={s.iconAndText}>
-						<Image className={iconClass} src={email} alt="email" width={24} height={24} />
+						<Image src={email} alt="email" width={24} height={24} />
 						<Text className={s.whiteColor} variant="footer">
 							go450.kryvyi.rih@gmail.com
 						</Text>
 					</div>
 					<div className={s.iconAndText}>
-						<Image className={iconClass} src={phone} alt="phone" width={24} height={24} />
+						<Image src={phone} alt="phone" width={24} height={24} />
 						<Text className={s.whiteColor} variant="footer">
 							(+38)0 00 000 00 00
 						</Text>

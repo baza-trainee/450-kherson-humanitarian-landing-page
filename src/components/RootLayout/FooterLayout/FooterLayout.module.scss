@@ -15,7 +15,7 @@
 	z-index: 1;
 
 	margin: 0 16px;
-	padding: 35px 16px;
+	padding: 35px 10px 43px 26px;
 
 	background-color: var(--color--primary-3);
 
@@ -28,17 +28,18 @@
 	width: 92.7vw;
 	height: 310px;
 	@include useScreen('tablet-sm') {
+		align-items: flex-start;
 		height: 288px;
 		max-width: 345px;
-		padding: 32px 9px 32px 24px;
+		padding: 38px 8px 39px 26px;
 		margin: 0;
-		gap: 37px;
+		gap: 39px;
 	}
 	@include useScreen('tablet-xl') {
 		min-width: 548px;
 		height: 441px;
-		padding: 68px 60px 68px 96px;
-		gap: 34px;
+		padding: 68px 60px 68px 145px;
+		gap: 55px;
 	}
 }
 .grey {
@@ -67,10 +68,12 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 32px;
+	padding-bottom: 12px;
+	background-color: var(--color--shades-2);
 
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
-		gap: 8px;
+		gap: 22px;
 	}
 	@media screen and (min-width: 800px) {
 		gap: 40px;
@@ -111,50 +114,53 @@
 .icons {
 	display: flex;
 	justify-content: center;
-	gap: 16px;
+	gap: 40px;
 	@include useScreen('tablet-sm') {
-		gap: 0px;
+		gap: 24px;
 	}
 	@include useScreen('tablet-xl') {
-		gap: 8px;
+		gap: 32px;
+	}
+}
+.contacts {
+	width: 302px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 26px;
+	@include useScreen('tablet-sm') {
+		width: 315px;
+	}
+	@include useScreen('tablet-xl') {
+		width: 360px;
+		gap: 45px;
 	}
 }
 .iconAndText {
 	display: flex;
 	align-items: center;
+	gap: 14px;
 	@include useScreen('tablet-sm') {
-		gap: 8px;
+		gap: 20px;
 	}
-}
-.icon {
-	margin: 12px;
 }
 .whiteColor {
 	color: var(--color--shades-1);
 }
-.contacts {
-	width: 302px;
-	@include useScreen('tablet-sm') {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 13px;
-	}
-	@include useScreen('tablet-xl') {
-		gap: 24px;
-	}
-}
+
 .socialNetworks {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	gap: 12px;
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
+		gap: 17px;
 	}
 	@include useScreen('tablet-xl') {
-		gap: 8px;
+		gap: 30px;
+		width: 360px;
 	}
 }
 .fontSizeCallToAction {
@@ -170,8 +176,32 @@
 	}
 }
 .widthBaza {
-	width: 220px;
+	width: 205px;
 	@include useScreen('tablet-xl') {
 		width: 462px;
 	}
+}
+.navigation {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	width: 240px;
+	flex-wrap: wrap;
+	column-gap: 32px;
+	row-gap: 16px;
+	@include useScreen('tablet-sm') {
+		width: 100%;
+		flex-direction: column;
+	}
+	@include useScreen('tablet-xl') {
+		row-gap: 24px;
+	}
+}
+.navigationItem {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
