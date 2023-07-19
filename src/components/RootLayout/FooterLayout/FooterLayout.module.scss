@@ -15,7 +15,7 @@
 	z-index: 1;
 
 	margin: 0 16px;
-	padding: 35px 10px 43px 26px;
+	padding: 19px 23px 31px 23px;
 
 	background-color: var(--color--primary-3);
 
@@ -23,7 +23,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 16px;
+	gap: 32px;
 
 	width: 92.7vw;
 	height: 310px;
@@ -31,15 +31,14 @@
 		align-items: flex-start;
 		height: 288px;
 		max-width: 345px;
-		padding: 38px 8px 39px 26px;
+		padding: 23px 28px 35px 16px;
 		margin: 0;
-		gap: 39px;
 	}
 	@include useScreen('tablet-xl') {
-		min-width: 548px;
+		min-width: 600px;
 		height: 441px;
-		padding: 68px 60px 68px 145px;
-		gap: 55px;
+		padding: 77px 80px 77px 171px;
+		gap: 40px;
 	}
 }
 .grey {
@@ -55,10 +54,10 @@
 		height: 254px;
 	}
 	@include useScreen('tablet-xl') {
-		height: 372px;
-		max-width: 1011px;
+		height: 370px;
+		max-width: 960px;
 		padding: 50px 80px 62px;
-		margin: 35px -80px 35px 0;
+		margin: 35px -120px 35px 0;
 		position: relative;
 		z-index: 2;
 	}
@@ -114,35 +113,30 @@
 .icons {
 	display: flex;
 	justify-content: center;
-	gap: 40px;
-	@include useScreen('tablet-sm') {
-		gap: 24px;
-	}
+	gap: 24px;
 	@include useScreen('tablet-xl') {
 		gap: 32px;
 	}
 }
 .contacts {
-	width: 302px;
+	width: 282px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 26px;
+	gap: 24px;
 	@include useScreen('tablet-sm') {
-		width: 315px;
+		padding-left: 12px;
+		width: 294px;
 	}
 	@include useScreen('tablet-xl') {
 		width: 360px;
-		gap: 45px;
+		gap: 32px;
 	}
 }
 .iconAndText {
 	display: flex;
 	align-items: center;
-	gap: 14px;
-	@include useScreen('tablet-sm') {
-		gap: 20px;
-	}
+	gap: 16px;
 }
 .whiteColor {
 	color: var(--color--shades-1);
@@ -153,14 +147,14 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 12px;
+	gap: 22px;
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
-		gap: 17px;
+		gap: 20px;
 	}
 	@include useScreen('tablet-xl') {
-		gap: 30px;
-		width: 360px;
+		gap: 28px;
+		width: 348px;
 	}
 }
 .fontSizeCallToAction {
