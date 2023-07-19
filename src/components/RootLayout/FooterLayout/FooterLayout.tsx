@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Icon } from '~components/Icon/Icon';
 import { CustomLink } from '~components/Link/Link';
@@ -31,9 +32,9 @@ export function FooterLayout() {
 		<div className={s.flex}>
 			{navComponent}
 			<div className={s.logoAndCallToAction}>
-				<a href="#Hero">
+				<Link href="#Hero">
 					<Image src={logo} alt="logo" width={142} height={60} />
-				</a>
+				</Link>
 				<Text variant="h3">Давайте допоможемо разом</Text>
 			</div>
 			<Text variant="subtitle">Розробка Baza Trainee Ukraine 2023. Усі права захищені.</Text>
@@ -42,9 +43,9 @@ export function FooterLayout() {
 	const greyBlockTablet = (
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
-				<a href="#Hero">
+				<Link href="#Hero">
 					<Image src={logo} alt="logo" width={142} height={60} />
-				</a>
+				</Link>
 				<Text variant="h3" className={clsx(s.fontSizeCallToAction, s.widthCallToAction)}>
 					Давайте <br /> допоможемо разом
 				</Text>
@@ -60,9 +61,9 @@ export function FooterLayout() {
 	const greyBlockDesktop = (
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
-				<a href="#Hero">
+				<Link href="#Hero">
 					<Image src={logo} alt="logo" width={290} height={120} />
-				</a>
+				</Link>
 				<Text variant="h3" className={s.widthCallToAction}>
 					Давайте <br /> допоможемо разом
 				</Text>
