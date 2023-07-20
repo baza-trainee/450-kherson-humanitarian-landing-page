@@ -16,11 +16,16 @@
 	flex-wrap: wrap;
 	row-gap: 24px;
 	@include useScreen('tablet-sm') {
-		column-gap: 15px;
+		column-gap: 21px;
+		justify-content: flex-start;
 	}
 	@include useScreen('desktop-sm') {
-		column-gap: 168px;
+		column-gap: 62px;
 		row-gap: 48px;
+	}
+	@include useScreen('desktop-md') {
+		column-gap: 168px;
+		justify-content: space-between;
 	}
 }
 
