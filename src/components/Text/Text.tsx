@@ -10,6 +10,8 @@ const variantsMapping = {
 	h2: 'h2',
 	h3: 'h3',
 	h4: 'h4',
+	h5: 'h5',
+	h6: 'h6',
 	subtitle: 'h6',
 	p: 'p',
 	button: 'span',
@@ -20,7 +22,7 @@ const variantsMapping = {
 	various3: 'p',
 };
 
-type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h6' | 'p' | 'span';
+type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
 
 export type TextElement = HTMLHeadingElement | HTMLParagraphElement;
 
