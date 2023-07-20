@@ -88,7 +88,7 @@ export function FooterLayout() {
 	};
 
 	return (
-		<footer className={s.FooterLayout}>
+		<footer className={s.FooterLayout} id="Footer">
 			<div className={s.grey}>{renderGreyBlock()}</div>
 			<div className={s.blue}>
 				<div className={s.contacts}>
