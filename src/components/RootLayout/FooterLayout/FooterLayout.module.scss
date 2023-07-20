@@ -1,13 +1,18 @@
 @use '~/styles/mixins' as *;
 
 .FooterLayout {
+	padding-top: 48px;
 	width: 100%;
 	display: flex;
 	flex-direction: column-reverse;
 	align-items: center;
 	justify-content: center;
 	@include useScreen('tablet-sm') {
+		padding-top: 80px;
 		flex-direction: row;
+	}
+	@include useScreen('desktop-sm') {
+		padding-top: 100px;
 	}
 }
 .blue {

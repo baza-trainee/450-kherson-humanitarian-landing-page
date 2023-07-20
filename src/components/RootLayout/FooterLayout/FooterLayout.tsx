@@ -16,6 +16,8 @@ import logo from '/public/svg/logo.svg';
 import s from './FooterLayout.module.scss';
 
 export function FooterLayout() {
+	const { isScreenTabletSm, isScreenTabletXl } = useScreenQuery();
+
 	const navComponent = (
 		<ul className={s.navigation}>
 			{navigation.map(({ id, name, href }) => (
@@ -57,7 +59,6 @@ export function FooterLayout() {
 			{navComponent}
 		</div>
 	);
-
 	const greyBlockDesktop = (
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
@@ -75,7 +76,6 @@ export function FooterLayout() {
 			{navComponent}
 		</div>
 	);
-	const { isScreenTabletSm, isScreenTabletXl } = useScreenQuery();
 
 	const renderGreyBlock = () => {
 		if (isScreenTabletXl) {
@@ -96,7 +96,8 @@ export function FooterLayout() {
 						<Image src={location} alt="location" width={24} height={24} />
 						<Text className={s.whiteColor} variant="footer">
 							50014 Україна
-							<br /> Дніпропетровська область <br /> Кривий Ріг, вул. Ракітіна, буд. 9
+							<br /> Дніпропетровська область
+							<br /> Кривий Ріг, вул. Ракітіна, буд. 9
 						</Text>
 					</div>
 					<div className={s.iconAndText}>
@@ -117,7 +118,7 @@ export function FooterLayout() {
 						Ми в соціальних мережах
 					</Text>
 					<div className={s.icons}>
-						<a target="_blank" href="https://www.facebook.com/go450.kryvyi.rih">
+						<Link target="_blank" href="https://www.facebook.com/go450.kryvyi.rih">
 							<Icon
 								onClick={() => {
 									/**/
@@ -126,8 +127,8 @@ export function FooterLayout() {
 								icon="icon--facebook"
 								colors={{ default: 'var(--color--shades-1)', hover: 'var(--color--warning-1)' }}
 							></Icon>
-						</a>
-						<a target="_blank" href="https://www.instagram.com/4_5_0_kryvyi_rih/">
+						</Link>
+						<Link target="_blank" href="https://www.instagram.com/4_5_0_kryvyi_rih/">
 							<Icon
 								onClick={() => {
 									/**/
@@ -136,7 +137,7 @@ export function FooterLayout() {
 								icon="icon--instagram"
 								colors={{ default: 'var(--color--shades-1)', hover: 'var(--color--warning-1)' }}
 							></Icon>
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
