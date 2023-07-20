@@ -1,7 +1,9 @@
+import type { StaticImageData } from 'next/image';
 import Image from 'next/image';
 
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
+import { Text } from '~components/Text/Text';
 
 import partner6 from '../../../../assets/images/partners/bevar-ukraine.png';
 import partner1 from '../../../../assets/images/partners/fundacja-ukraina.png';
@@ -14,39 +16,32 @@ import partner2 from '../../../../assets/images/partners/society-of-ukrainians-i
 
 import s from './OurPartners.module.scss';
 
-// interface Logo {
-// 	src: string;
-// 	alt: string;
-// 	id:string
-//  }
+interface Logo {
+	src: StaticImageData;
+	alt: string;
+	id: number;
+}
 
-// const arrayOfLogos:Logo[] = [partner1, partner2, partner3];
+const arrayOfLogos: Logo[] = [
+	{ id: 1, src: partner1, alt: 'fundacja-ukraina' },
+	{ id: 2, src: partner2, alt: 'society-of-ukrainians-in-Finland' },
+	{ id: 3, src: partner3, alt: 'rls' },
+	{ id: 4, src: partner4, alt: 'nova-poshta' },
+	{ id: 5, src: partner5, alt: 'logistics-center-of-finland' },
+	{ id: 6, src: partner6, alt: 'bevar-ukraine' },
+	{ id: 7, src: partner7, alt: 'hungarian-ecumenical-help-service' },
+	{ id: 8, src: partner8, alt: 'german-food-bridge' },
+];
 
 export function OurPartners() {
 	return (
-		<Section className={s.OurPartners}>
-			<Container>
-				<h2 className={s.title}>Наші партнери</h2>
+		<Section>
+			<Container className={s.flexColumn}>
+				<Text variant="h2">Наші партнери</Text>
 				<div className={s.flexContainer}>
-					{/* {arrayOfLogos.map((logo) => {
-					return	<Image src={logo.src}  alt={logo.alt} key={logo.id}  className={s.logo}/>;
-					})} */}
-
-					<Image src={partner1} alt="fundacja-ukraina" className={s.logo} />
-
-					<Image src={partner2} alt="society-of-ukrainians-in-Finland" className={s.logo} />
-
-					<Image src={partner3} alt="rls" className={s.logo} />
-
-					<Image src={partner4} alt="nova-poshta" className={s.logo} />
-
-					<Image src={partner5} alt="logistics-center-of-finland" className={s.logo} />
-
-					<Image src={partner6} alt="bevar-ukraine" className={s.logo} />
-
-					<Image src={partner7} alt="hungarian-ecumenical-help-service" className={s.logo} />
-
-					<Image src={partner8} alt="german-food-bridge" className={s.logo} />
+					{arrayOfLogos.map((logo) => {
+						return <Image src={logo.src} alt={logo.alt} key={logo.id} className={s.logo} />;
+					})}
 				</div>
 			</Container>
 		</Section>

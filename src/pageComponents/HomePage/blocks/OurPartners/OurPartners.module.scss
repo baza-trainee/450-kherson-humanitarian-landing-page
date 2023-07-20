@@ -1,24 +1,12 @@
-.OurPartners {
-	padding: 48px 0;
+@use '~/styles/mixins' as *;
+
+.flexColumn {
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
-	align-items: flex-start;
-	@media screen and (min-width: 768px) {
-		padding: 80px 0;
-	}
-	@media screen and (min-width: 1440px) {
-		padding: 100px 0;
+	@include useScreen('desktop-sm') {
 		gap: 48px;
 	}
-}
-
-.title {
-	font-family: var(--font-unbounded);
-	color: #036399;
-	font-weight: 600;
-	font-size: 32px;
-	line-height: 1;
 }
 
 .flexContainer {
@@ -27,10 +15,10 @@
 	justify-content: space-between;
 	flex-wrap: wrap;
 	row-gap: 24px;
-	@media screen and (min-width: 768px) {
+	@include useScreen('tablet-sm') {
 		column-gap: 15px;
 	}
-	@media screen and (min-width: 1440px) {
+	@include useScreen('desktop-sm') {
 		column-gap: 168px;
 		row-gap: 48px;
 	}
@@ -39,10 +27,10 @@
 .logo {
 	width: 130px;
 	height: auto;
-	@media screen and (min-width: 768px) {
+	@include useScreen('tablet-sm') {
 		width: 160px;
 	}
-	@media screen and (min-width: 1440px) {
+	@include useScreen('desktop-sm') {
 		width: 193px;
 	}
 }
