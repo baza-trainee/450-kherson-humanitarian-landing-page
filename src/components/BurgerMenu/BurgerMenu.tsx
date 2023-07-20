@@ -41,13 +41,17 @@ export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
 		onMenuOpen(!isMenuOpen);
 	};
 
+	const hideBurger = () => {
+		onMenuOpen(!isMenuOpen);
+	};
+
 	const { isScreenTabletSm } = useScreenQuery();
 
 	const navComponent = (
 		<ul className={s.navigation}>
 			{navigation.map(({ id, name, href }) => (
 				<li className={s.navigationItem} key={id}>
-					<CustomLink href={href} variant="header" className={s.link}>
+					<CustomLink href={href} variant="header" className={s.link} onClick={hideBurger}>
 						{name}
 					</CustomLink>
 				</li>

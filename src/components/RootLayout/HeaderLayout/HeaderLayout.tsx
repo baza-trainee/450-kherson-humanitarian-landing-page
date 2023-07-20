@@ -8,6 +8,7 @@ import { ButtonLink } from '~components/Buttons/ButtonLink';
 import { Container } from '~components/Container/Container';
 import { CustomLink } from '~components/Link/Link';
 import { useScreenQuery } from '~hooks/useScreenQuery';
+import { useScrollLock } from '~hooks/useScrollLock';
 
 import { navigation } from '../navigation';
 import logo from '/public/svg/logo.svg';
@@ -16,6 +17,13 @@ import s from './HeaderLayout.module.scss';
 
 export function HeaderLayout() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	const { lockScroll, unlockScroll } = useScrollLock();
+	if (isMenuOpen) {
+		lockScroll();
+	} else {
+		unlockScroll();
+	}
 
 	const handleMenuOpen = (newState: boolean): void => {
 		setIsMenuOpen(newState);
