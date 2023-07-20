@@ -8,15 +8,11 @@
 	&:focus {
 		&::after {
 			position: absolute;
-			top: 35px;
 			left: 0;
 			content: '';
 			width: 100%;
 			height: 2px;
 			opacity: 1;
-			@include useScreen('tablet-xl') {
-				top: 40px;
-			}
 		}
 	}
 	&:hover {
@@ -36,5 +32,17 @@
 		p {
 			color: var(--color--primary-3);
 		}
+	}
+}
+.header::after {
+	top: 35px;
+	@include useScreen('tablet-sm') {
+		top: 60px;
+	}
+}
+.footer::after {
+	top: 25px;
+	@include useScreen('tablet-xl') {
+		top: 30px;
 	}
 }

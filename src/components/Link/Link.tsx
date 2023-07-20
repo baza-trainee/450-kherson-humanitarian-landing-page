@@ -15,7 +15,7 @@ interface LinkProps extends React.HTMLAttributes<LinkElement> {
 
 export const CustomLink = forwardRef<LinkElement, LinkProps>(({ variant, children, className, href, ...rest }, ref) => {
 	return (
-		<Link href={href} scroll={false} className={clsx(className, s.link)} ref={ref} {...rest}>
+		<Link href={href} scroll={false} className={clsx(className, s.link, s[variant])} ref={ref} {...rest}>
 			<Text variant={variant}>{children}</Text>
 		</Link>
 	);
