@@ -37,7 +37,7 @@
 .header::after {
 	top: 35px;
 	@include useScreen('tablet-sm') {
-		top: 60px;
+		top: 58px;
 	}
 }
 .footer::after {
