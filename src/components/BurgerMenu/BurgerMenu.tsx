@@ -70,12 +70,12 @@ export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
 
 						{isScreenTabletSm ? (
 							<div className={s.column}>
-								<Image src={logo} alt="logo" width={360} height={152} />
+								<Image priority={true} src={logo} alt="logo" width={360} height={152} />
 								{navComponent}
 							</div>
 						) : (
 							<div className={s.column}>
-								<Image src={logo} alt="logo" width={170} height={72} />
+								<Image priority={true} src={logo} alt="logo" width={170} height={72} />
 
 								<div className={s.buttons}>
 									{navComponent}

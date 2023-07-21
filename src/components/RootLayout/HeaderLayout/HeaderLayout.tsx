@@ -19,11 +19,13 @@ export function HeaderLayout() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const { lockScroll, unlockScroll } = useScrollLock();
-	if (isMenuOpen) {
-		lockScroll();
-	} else {
-		unlockScroll();
-	}
+	useEffect(() => {
+		if (isMenuOpen) {
+			lockScroll();
+		} else {
+			unlockScroll();
+		}
+	}, [isMenuOpen, lockScroll, unlockScroll]);
 
 	const handleMenuOpen = (newState: boolean): void => {
 		setIsMenuOpen(newState);
@@ -57,13 +59,13 @@ export function HeaderLayout() {
 
 	const mobileHeader = (
 		<div className={s.row}>
-			<Image src={logo} alt="logo" width={142} height={60} />
+			<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 			<BurgerMenu onMenuOpen={handleMenuOpen} isMenuOpen={isMenuOpen} />
 		</div>
 	);
 	const tabletHeader = (
 		<div className={s.row}>
-			<Image src={logo} alt="logo" width={142} height={60} />
+			<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 			{isScrolledToAboutUs && <ButtonLink href="#GetHelp">Отримати допомогу</ButtonLink>}
 			<BurgerMenu onMenuOpen={handleMenuOpen} isMenuOpen={isMenuOpen} />
 		</div>
