@@ -1,0 +1,43 @@
+.InputWrapper {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	row-gap: 8px;
+}
+
+.disabled {
+	opacity: 50%;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.label {
+	display: flex;
+	font-weight: 700;
+	font-size: var(--font-size--h4);
+	line-height: 100%;
+	text-transform: uppercase;
+}
+
+.labelText {
+	color: var(--color--primary-3);
+}
+
+.labelRequired {
+	color: var(--color--error-1);
+}
+
+.inputBlockContainer {
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+}
+
+.errorText {
+	min-height: 15px;
+	color: var(--color--error-1);
+	font-style: normal;
+	font-weight: 400;
+	font-size: var(--font-size--subtitle-mobile);
+	line-height: normal;
+}
