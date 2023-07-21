@@ -20,6 +20,8 @@
 }
 
 .labelText {
+	display: flex;
+	column-gap: 2px;
 	color: var(--color--primary-3);
 }
 
