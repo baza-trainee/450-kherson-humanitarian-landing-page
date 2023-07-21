@@ -35,7 +35,7 @@ export function FooterLayout() {
 			{navComponent}
 			<div className={s.logoAndCallToAction}>
 				<Link href="#Hero">
-					<Image src={logo} alt="logo" width={142} height={60} />
+					<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 				</Link>
 				<Text variant="h3">Давайте допоможемо разом</Text>
 			</div>
@@ -46,7 +46,7 @@ export function FooterLayout() {
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
 				<Link href="#Hero">
-					<Image src={logo} alt="logo" width={142} height={60} />
+					<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 				</Link>
 				<Text variant="h3" className={clsx(s.fontSizeCallToAction, s.widthCallToAction)}>
 					Давайте <br /> допоможемо разом
@@ -63,7 +63,7 @@ export function FooterLayout() {
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
 				<Link href="#Hero">
-					<Image src={logo} alt="logo" width={290} height={120} />
+					<Image priority={true} src={logo} alt="logo" width={290} height={120} />
 				</Link>
 				<Text variant="h3" className={s.widthCallToAction}>
 					Давайте <br /> допоможемо разом
