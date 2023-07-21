@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react';
-import { useEffect } from 'react';
+import { type ReactNode, useEffect } from 'react';
 
 import { Icon } from '~components/Icon/Icon';
 import { Portal } from '~components/Portal/Portal';
-import { useScrollLock } from '~hooks/useScrollBarWidth';
+import { useKeyPress } from '~hooks/useKeyPress';
+import { useScrollLock } from '~hooks/useScrollLock';
 
 import s from './Modal.module.scss';
 
@@ -15,13 +15,8 @@ interface ModalProps {
 
 export function Modal({ isOpen, onClose, children }: ModalProps) {
 	const { lockScroll, unlockScroll } = useScrollLock();
-	useEffect(() => {
-		const closeOnEscape = (e: KeyboardEvent) => (e.key === 'Escape' ? onClose() : null);
-		document.body.addEventListener('keydown', closeOnEscape);
-		return () => {
-			document.body.removeEventListener('keydown', closeOnEscape);
-		};
-	}, [onClose]);
+
+	useKeyPress('Escape', onClose);
 
 	useEffect(() => {
 		lockScroll();
@@ -33,7 +28,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 
 	return (
 		<Portal wrapperId="portal-modal">
-			<div className={s.modalContainer} onClick={() => onClose()}>
+			<div className={s.modalContainer} onClick={onClose}>
 				<div className={s.modal} onClick={(e) => e.stopPropagation()}>
 					<div className={s.decor}></div>
 					<div className={s.close}>
@@ -42,7 +37,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 							colors={{
 								default: 'var(--color--secondary-4)',
 							}}
-							onClick={() => onClose()}
+							onClick={onClose}
 							className={s.icon}
 						></Icon>
 					</div>
