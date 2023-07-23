@@ -1,10 +1,11 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 
-import { ABOUT_US_CONTENT } from './AboutUsContent';
+import { ABOUT_US_CONTENT } from './constants/ABOUT_US_CONTENT';
 
 import aboutPhoto from '~assets/images/aboutUs/photo-1.jpg';
 import ourTeamPhoto from '~assets/images/aboutUs/photo-2.jpg';
@@ -17,14 +18,14 @@ export function AboutUs() {
 	return (
 		<Section className={s.AboutUs}>
 			<Container className={s.wrapper}>
-				<Text variant="h2" className={s.h2}>
-					Про нас
-				</Text>
+				<Text variant="h2">Про нас</Text>
 				<div className={s.about}>
 					<div className={s.block}>
 						<div className={s.text}>
 							<div className={s.header}>
-								<Text variant="h3">{about.title}</Text>
+								<Text variant="h3" className={s.aboutTitle}>
+									{about.title}
+								</Text>
 								<Text variant="p">{about.subtitle}</Text>
 							</div>
 							<ul className={s.list}>
@@ -32,7 +33,9 @@ export function AboutUs() {
 									return (
 										<li className={s.item} key={obj.id}>
 											<Image src={obj.src} alt={`${obj.id} icon`} width={48} height={48} />
-											<Text variant="p">{obj.text}</Text>
+											<Text variant="p" className={s.listText}>
+												{obj.text}
+											</Text>
 										</li>
 									);
 								})}
@@ -47,7 +50,7 @@ export function AboutUs() {
 						/>
 					</div>
 					<div className={s.block}>
-						<div className={s.text}>
+						<div className={clsx(s.text, s.order)}>
 							<Text variant="h3">{command.title}</Text>
 							<div className={s.employee}>
 								{command.staff.map((employee) => {
