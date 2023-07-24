@@ -1,13 +1,13 @@
 import type { StaticImageData } from 'next/image';
 
-import partner6 from '../../../../assets/images/partners/bevar-ukraine.png';
-import partner1 from '../../../../assets/images/partners/fundacja-ukraina.png';
-import partner8 from '../../../../assets/images/partners/german-food-bridge.png';
-import partner7 from '../../../../assets/images/partners/hungarian-ecumenical-help-service.png';
-import partner5 from '../../../../assets/images/partners/logistics-center-of-finland.png';
-import partner4 from '../../../../assets/images/partners/nova-poshta.png';
-import partner3 from '../../../../assets/images/partners/rls.png';
-import partner2 from '../../../../assets/images/partners/society-of-ukrainians-in-Finland.png';
+import partner6 from '~assets/images/partners/bevar-ukraine.png';
+import partner1 from '~assets/images/partners/fundacja-ukraina.png';
+import partner8 from '~assets/images/partners/german-food-bridge.png';
+import partner7 from '~assets/images/partners/hungarian-ecumenical-help-service.png';
+import partner5 from '~assets/images/partners/logistics-center-of-finland.png';
+import partner4 from '~assets/images/partners/nova-poshta.png';
+import partner3 from '~assets/images/partners/rls.png';
+import partner2 from '~assets/images/partners/society-of-ukrainians-in-Finland.png';
 
 interface Logo {
 	src: StaticImageData;
