@@ -1,3 +1,129 @@
-.AboutUs {
-	border: 1px solid magenta;
+@use '~/styles/mixins' as *;
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 48px 0;
+	@include useScreen('tablet-sm') {
+		padding: 80px 0;
+		gap: 40px;
+	}
+	@include useScreen('desktop-sm') {
+		padding: 100px 0;
+	}
+}
+
+.about {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 24px;
+	@include useScreen('tablet-sm') {
+		gap: 40px;
+	}
+	@include useScreen('desktop-sm') {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 40px;
+	}
+}
+
+.block {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 24px;
+
+	@include useScreen('desktop-sm') {
+		flex-direction: row;
+		align-items: center;
+		gap: 80px;
+	}
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.aboutTitle {
+	width: 246px;
+	@include useScreen('mobile-lg') {
+		width: 100%;
+	}
+}
+
+.list {
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	margin: 0;
+
+	.item:first-child p {
+		@include useScreen('mobile-xl') {
+			width: 458px;
+		}
+	}
+}
+
+.item {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.listText {
+	width: 264px;
+	@include useScreen('mobile-lg') {
+		width: 100%;
+	}
+}
+
+.image {
+	width: 100%;
+
+	@include useScreen('mobile-xl') {
+		height: 400px;
+	}
+	@include useScreen('tablet-sm') {
+		height: 432px;
+	}
+	@include useScreen('tablet-lg') {
+		height: 480px;
+	}
+	@include useScreen('desktop-sm') {
+		width: 600px;
+		height: 450px;
+	}
+}
+
+.order {
+	@include useScreen('desktop-sm') {
+		order: 1;
+	}
+}
+
+.employee {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.history {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	@include useScreen('tablet-sm') {
+		gap: 24px;
+	}
 }
