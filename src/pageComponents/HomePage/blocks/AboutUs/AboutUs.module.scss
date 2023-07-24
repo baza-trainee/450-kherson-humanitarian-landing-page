@@ -67,7 +67,8 @@
 	flex-direction: column;
 	gap: 24px;
 	margin: 0;
-	& .item:first-child p {
+
+	.item:first-child p {
 		@include useScreen('mobile-xl') {
 			width: 458px;
 		}
