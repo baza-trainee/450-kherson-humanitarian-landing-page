@@ -1,11 +1,10 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 
+import { aboutUsContent } from '~/data/aboutUsContent';
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
-
-import { ABOUT_US_CONTENT } from './constants/ABOUT_US_CONTENT';
 
 import aboutPhoto from '~assets/images/aboutUs/photo-1.jpg';
 import ourTeamPhoto from '~assets/images/aboutUs/photo-2.jpg';
@@ -14,7 +13,7 @@ import historyPhoto from '~assets/images/aboutUs/photo-3.jpg';
 import s from './AboutUs.module.scss';
 
 export function AboutUs() {
-	const { about, command, history } = ABOUT_US_CONTENT;
+	const { about, command, history } = aboutUsContent;
 	return (
 		<Section className={s.AboutUs}>
 			<Container className={s.wrapper}>
