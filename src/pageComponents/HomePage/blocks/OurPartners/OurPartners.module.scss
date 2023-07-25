@@ -1,5 +1,9 @@
 @use '~/styles/mixins' as *;
 
+.OurPartners {
+	scroll-margin-top: 80px;
+}
+
 .flexColumn {
 	display: flex;
 	flex-direction: column;

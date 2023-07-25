@@ -10,7 +10,7 @@ import s from './OurPartners.module.scss';
 
 export function OurPartners() {
 	return (
-		<Section>
+		<Section className={s.OurPartners} id="our-partners">
 			<Container className={s.flexColumn}>
 				<Text variant="h2">Наші партнери</Text>
 				<div className={s.flexContainer}>
