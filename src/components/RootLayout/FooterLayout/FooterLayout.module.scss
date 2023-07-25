@@ -33,14 +33,13 @@
 	width: 92.7vw;
 	height: 310px;
 	@include useScreen('tablet-sm') {
-		align-items: flex-start;
-		height: 288px;
-		max-width: 345px;
-		padding: 23px 28px 35px 16px;
+		height: 318px;
+		max-width: 318px;
+		padding: 23px 18px 35px 18px;
 		margin: 0;
 	}
 	@include useScreen('tablet-xl') {
-		min-width: 600px;
+		min-width: 599px;
 		height: 441px;
 		padding: 77px 80px 77px 171px;
 		gap: 40px;
@@ -52,16 +51,19 @@
 	padding: 73px 0 16px 0;
 	background-color: var(--color--shades-2);
 
-	height: 320px;
+	height: 360px;
 	@include useScreen('tablet-sm') {
-		padding: 34px 34px 34px 32px;
+		padding: 25.5px 32px 25.5px 18px;
 		margin: 17px -32px 17px 0;
-		height: 254px;
+		height: 377px;
+	}
+	@media screen and (min-width: 800px) {
+		padding: 25.5px 32px 25.5px 32px;
 	}
 	@include useScreen('tablet-xl') {
 		height: 370px;
 		max-width: 960px;
-		padding: 50px 80px 62px;
+		padding: 50px 70px 0 80px;
 		margin: 35px -120px 35px 0;
 		position: relative;
 		z-index: 2;
@@ -71,22 +73,22 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 32px;
-	padding-bottom: 12px;
+	gap: 23px;
+	padding-bottom: 36px;
 	background-color: var(--color--shades-2);
 
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
-		gap: 22px;
+		gap: 16px;
 	}
 	@media screen and (min-width: 800px) {
 		gap: 40px;
 	}
 	@include useScreen('tablet-md') {
-		gap: 100px;
+		gap: 160px;
 	}
 	@include useScreen('tablet-lg') {
-		gap: 170px;
+		gap: 200px;
 	}
 	@include useScreen('tablet-xl') {
 		gap: 50px;
@@ -95,7 +97,7 @@
 		gap: 135px;
 	}
 	@include useScreen('desktop-md') {
-		gap: 186px;
+		gap: 73.5px;
 	}
 }
 .flexGrey {
@@ -103,7 +105,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 24px;
+		gap: 87px;
+	}
+	@include useScreen('tablet-xl') {
+		gap: 0px;
 	}
 }
 .link {
@@ -130,11 +135,10 @@
 	align-items: flex-start;
 	gap: 24px;
 	@include useScreen('tablet-sm') {
-		padding-left: 12px;
 		width: 294px;
 	}
 	@include useScreen('tablet-xl') {
-		width: 360px;
+		width: 348px;
 		gap: 32px;
 	}
 }
@@ -154,10 +158,10 @@
 	justify-content: center;
 	gap: 22px;
 	@include useScreen('tablet-sm') {
-		flex-direction: row;
 		gap: 20px;
 	}
 	@include useScreen('tablet-xl') {
+		flex-direction: row;
 		gap: 28px;
 		width: 348px;
 	}
@@ -177,25 +181,20 @@
 .widthBaza {
 	width: 205px;
 	@include useScreen('tablet-xl') {
-		width: 462px;
+		width: 282px;
 	}
 }
 .navigation {
 	margin: 0;
 	padding: 0;
 	display: flex;
+	flex-direction: column;
 	align-items: flex-start;
 	justify-content: flex-start;
-	width: 240px;
-	flex-wrap: wrap;
-	column-gap: 32px;
+	width: 201px;
 	row-gap: 16px;
 	@include useScreen('tablet-sm') {
-		width: 100%;
-		flex-direction: column;
-	}
-	@include useScreen('tablet-xl') {
-		row-gap: 24px;
+		width: max-content;
 	}
 }
 .navigationItem {
@@ -203,4 +202,23 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.twoLists {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	row-gap: 16px;
+	@include useScreen('tablet-xl') {
+		flex-direction: row;
+		column-gap: 70.5px;
+	}
+}
+.greyBlockText {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	row-gap: 48px;
+	padding: 12px 0;
 }

@@ -7,7 +7,8 @@ import { CustomLink } from '~components/Link/Link';
 import { Text } from '~components/Text/Text';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
-import { navigation } from '../navigation';
+import { navigation } from '../HeaderLayout/navigation';
+import { documents } from './documents';
 import email from '/public/svg/icons/email.svg';
 import location from '/public/svg/icons/location.svg';
 import phone from '/public/svg/icons/phone.svg';
@@ -29,12 +30,27 @@ export function FooterLayout() {
 			))}
 		</ul>
 	);
+	const documentsList = (
+		<ul className={s.navigation}>
+			{documents.map(({ id, name, href }) => (
+				<li className={s.navigationItem} key={id}>
+					<CustomLink href={href} target="_blank" variant="footer" className={s.link}>
+						{name}
+					</CustomLink>
+				</li>
+			))}
+		</ul>
+	);
 
 	const greyBlockMobile = (
 		<div className={s.flex}>
-			{navComponent}
+			<div className={s.twoLists}>
+				{navComponent}
+				{documentsList}
+			</div>
+
 			<div className={s.logoAndCallToAction}>
-				<Link href="#Hero">
+				<Link href="#hero">
 					<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 				</Link>
 				<Text variant="h3">Давайте допоможемо разом</Text>
@@ -45,7 +61,7 @@ export function FooterLayout() {
 	const greyBlockTablet = (
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
-				<Link href="#Hero">
+				<Link href="#hero">
 					<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 				</Link>
 				<Text variant="h3" className={clsx(s.fontSizeCallToAction, s.widthCallToAction)}>
@@ -55,25 +71,31 @@ export function FooterLayout() {
 					Розробка Baza Trainee Ukraine 2023. <br /> Усі права захищені.
 				</Text>
 			</div>
-
-			{navComponent}
+			<div className={s.twoLists}>
+				{navComponent}
+				{documentsList}
+			</div>
 		</div>
 	);
 	const greyBlockDesktop = (
 		<div className={s.flex}>
 			<div className={s.flexGrey}>
-				<Link href="#Hero">
+				<Link href="#hero">
 					<Image priority={true} src={logo} alt="logo" width={290} height={120} />
 				</Link>
-				<Text variant="h3" className={s.widthCallToAction}>
-					Давайте <br /> допоможемо разом
-				</Text>
-				<Text variant="subtitle" className={s.widthBaza}>
-					Розробка Baza Trainee Ukraine 2023. Усі права захищені.
-				</Text>
+				<div className={s.greyBlockText}>
+					<Text variant="h3" className={s.widthCallToAction}>
+						Давайте <br /> допоможемо разом
+					</Text>
+					<Text variant="subtitle" className={s.widthBaza}>
+						Розробка Baza Trainee Ukraine 2023. <br /> Усі права захищені.
+					</Text>
+				</div>
 			</div>
-
-			{navComponent}
+			<div className={s.twoLists}>
+				{navComponent}
+				{documentsList}
+			</div>
 		</div>
 	);
 

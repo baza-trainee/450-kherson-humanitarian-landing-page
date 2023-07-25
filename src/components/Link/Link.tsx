@@ -11,6 +11,7 @@ type LinkElement = HTMLElementTagNameMap['a'];
 interface LinkProps extends React.HTMLAttributes<LinkElement> {
 	variant: 'header' | 'footer';
 	href: string;
+	target?: '_blank';
 }
 
 export const CustomLink = forwardRef<LinkElement, LinkProps>(({ variant, children, className, href, ...rest }, ref) => {
