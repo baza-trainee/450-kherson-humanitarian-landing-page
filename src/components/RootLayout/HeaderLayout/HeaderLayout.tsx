@@ -34,7 +34,7 @@ export function HeaderLayout() {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const sectionForChangeHeader = document.getElementById('AboutUs');
+			const sectionForChangeHeader = document.getElementById('about-us');
 
 			if (sectionForChangeHeader) {
 				const sectionTop = sectionForChangeHeader.getBoundingClientRect().top;

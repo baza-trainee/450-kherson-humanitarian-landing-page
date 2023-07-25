@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
-
 import clsx from 'clsx';
 import Image from 'next/image';
 
 import { ButtonLink } from '~components/Buttons/ButtonLink';
 import { Icon } from '~components/Icon/Icon';
 import { CustomLink } from '~components/Link/Link';
+import { useKeyPress } from '~hooks/useKeyPress';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
 import { navigation } from '../RootLayout/HeaderLayout/navigation';
@@ -19,31 +18,17 @@ interface BurgerMenuProps {
 }
 
 export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
-	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.code === 'Escape') {
-				onMenuOpen(false);
-			}
-		};
-		window.addEventListener('keydown', handleKeyDown);
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-		};
-	}, [onMenuOpen]);
-
 	const handleBackdropClick = (e: React.MouseEvent) => {
 		if (e.target === e.currentTarget) {
 			onMenuOpen(false);
 		}
 	};
 
-	const toggleMenu = () => {
-		onMenuOpen(!isMenuOpen);
-	};
-
 	const hideBurger = () => {
 		onMenuOpen(!isMenuOpen);
 	};
+
+	useKeyPress('Escape', hideBurger);
 
 	const { isScreenTabletSm } = useScreenQuery();
 
@@ -61,12 +46,12 @@ export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
 
 	return (
 		<>
-			<Icon icon="icon--burger" className={clsx(s.icon, s.burger)} onClick={toggleMenu}></Icon>
+			<Icon icon="icon--burger" className={clsx(s.icon, s.burger)} onClick={hideBurger}></Icon>
 
 			{isMenuOpen && (
 				<div className={s.backdrop} onClick={handleBackdropClick}>
 					<div className={s.whiteField}>
-						<Icon icon="icon--close" className={clsx(s.icon, s.close)} onClick={toggleMenu}></Icon>
+						<Icon icon="icon--close" className={clsx(s.icon, s.close)} onClick={hideBurger}></Icon>
 
 						{isScreenTabletSm ? (
 							<div className={s.column}>

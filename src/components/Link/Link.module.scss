@@ -35,9 +35,9 @@
 	}
 }
 .header::after {
-	top: 36px;
+	top: 30px;
 	@include useScreen('tablet-sm') {
-		top: 58px;
+		top: 51px;
 	}
 }
 .footer::after {
