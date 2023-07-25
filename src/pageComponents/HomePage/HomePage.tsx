@@ -1,3 +1,5 @@
+import { ArrowUpButton } from '~components/Buttons/ArrowUpButton';
+
 import { AboutUs } from './blocks/AboutUs/AboutUs';
 import { GetHelp } from './blocks/GetHelp/GetHelp';
 import { Hero } from './blocks/Hero/Hero';
@@ -16,6 +18,7 @@ export function HomePage() {
 			<OurActivity />
 			<Projects />
 			<OurPartners />
+			<ArrowUpButton />
 		</>
 	);
 }

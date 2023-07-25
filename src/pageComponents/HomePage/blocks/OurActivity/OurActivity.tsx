@@ -5,7 +5,7 @@ import s from './OurActivity.module.scss';
 
 export function OurActivity() {
 	return (
-		<Section className={s.OurActivity} id="OurActivity">
+		<Section className={s.OurActivity} id="our-activity">
 			<Container>
 				<h2>OurActivity</h2>
 			</Container>
