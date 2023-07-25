@@ -15,7 +15,7 @@ import s from './AboutUs.module.scss';
 export function AboutUs() {
 	const { about, command, history } = aboutUsContent;
 	return (
-		<Section className={s.AboutUs}>
+		<Section className={s.AboutUs} id="about-us">
 			<Container className={s.wrapper}>
 				<Text variant="h2">Про нас</Text>
 				<div className={s.about}>

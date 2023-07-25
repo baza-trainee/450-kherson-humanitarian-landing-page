@@ -4,7 +4,7 @@ import s from './FooterLayout.module.scss';
 
 export function FooterLayout() {
 	return (
-		<footer className={s.FooterLayout}>
+		<footer className={s.FooterLayout} id="Footer">
 			<Container>
 				<h2>footer</h2>
 			</Container>
