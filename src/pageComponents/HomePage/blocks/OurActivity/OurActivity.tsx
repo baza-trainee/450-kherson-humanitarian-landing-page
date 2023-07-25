@@ -1,13 +1,13 @@
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
 
-import s from './Projects.module.scss';
+import s from './OurActivity.module.scss';
 
-export function Projects() {
+export function OurActivity() {
 	return (
-		<Section className={s.Projects} id="projects">
+		<Section className={s.OurActivity} id="our-activity">
 			<Container>
-				<h2>Projects</h2>
+				<h2>OurActivity</h2>
 			</Container>
 		</Section>
 	);

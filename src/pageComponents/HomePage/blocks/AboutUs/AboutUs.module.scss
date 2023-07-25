@@ -1,5 +1,9 @@
 @use '~/styles/mixins' as *;
 
+.AboutUs {
+	scroll-margin-top: 80px;
+}
+
 .wrapper {
 	display: flex;
 	flex-direction: column;
