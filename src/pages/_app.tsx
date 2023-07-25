@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import type { AppProps } from 'next/app';
-import { Poppins, Unbounded } from 'next/font/google';
+import { Open_Sans, Unbounded } from 'next/font/google';
 
 import { RootLayout } from '~components/RootLayout/RootLayout';
 
@@ -15,16 +15,16 @@ const unbounded = Unbounded({
 	variable: '--font-family--unbounded',
 });
 
-const poppins = Poppins({
-	subsets: ['devanagari'],
+const openSans = Open_Sans({
+	subsets: ['cyrillic'],
 	display: 'swap',
-	weight: ['300', '400', '500', '600', '700', '900'],
+	weight: ['400', '500', '600', '700'],
 	style: 'normal',
 });
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
-		<RootLayout className={clsx([unbounded.variable, poppins.className])}>
+		<RootLayout className={clsx([unbounded.variable, openSans.className])}>
 			<Component {...pageProps} />
 		</RootLayout>
 	);
