@@ -10,7 +10,7 @@ import { CustomLink } from '~components/Link/Link';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 import { useScrollLock } from '~hooks/useScrollLock';
 
-import { navigation } from '../navigation';
+import { navigation } from './navigation';
 import logo from '/public/svg/logo.svg';
 
 import s from './HeaderLayout.module.scss';

@@ -8,7 +8,7 @@ import { Icon } from '~components/Icon/Icon';
 import { CustomLink } from '~components/Link/Link';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
-import { navigation } from '../RootLayout/navigation';
+import { navigation } from '../RootLayout/HeaderLayout/navigation';
 import logo from '/public/svg/logo.svg';
 
 import s from './BurgerMenu.module.scss';
