@@ -1,6 +1,5 @@
 @use '~/styles/mixins' as *;
 
-$path: '/svg/icons/';
 $iconsSet: (
 	burger,
 	close,
@@ -19,8 +18,4 @@ $iconsSet: (
 	phone
 );
 
-@each $icon in $iconsSet {
-	.#{'icon--' + $icon} {
-		@include useSvgIcon($path, $icon);
-	}
-}
+@include useSvgIcon($icons: $iconsSet);
