@@ -1,16 +1,16 @@
 @use '~/styles/mixins' as *;
 
 .HeaderLayout {
+	z-index: 3;
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 3;
-
-	background: var(--color--opacity-1);
-	box-shadow: 0px 1px 4px 0px rgba(45, 35, 66, 0.2);
 
 	width: 100%;
 	padding: 10px 16px;
+
+	background: var(--color--opacity-1);
+	box-shadow: 0px 1px 4px 0px rgba(45, 35, 66, 0.2);
 	@include useScreen('tablet-sm') {
 		padding: 10px 32px;
 	}
@@ -29,16 +29,12 @@
 }
 .row {
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
-}
-
-.link {
-	padding: 15px 10px;
+	align-items: center;
 }
 .navigation {
-	column-gap: 36px;
 	padding: 16px 10px;
+	column-gap: 36px;
 }
 .underline::after {
 	top: 37px;
