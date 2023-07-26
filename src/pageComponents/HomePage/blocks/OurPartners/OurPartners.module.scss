@@ -15,21 +15,35 @@
 
 .flexContainer {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
-	flex-wrap: wrap;
 	row-gap: 24px;
+	@include useScreen('mobile-md') {
+		justify-content: space-between;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	@media screen and (min-width: 400px) {
+		column-gap: 20px;
+	}
+	@media screen and (min-width: 750px) {
+		column-gap: 50px;
+	}
 	@include useScreen('tablet-sm') {
 		column-gap: 21px;
-		justify-content: flex-start;
+	}
+	@media screen and (min-width: 950px) {
+		column-gap: 82px;
+	}
+	@media screen and (min-width: 1090px) {
+		column-gap: 129px;
 	}
 	@include useScreen('desktop-sm') {
-		column-gap: 62px;
 		row-gap: 48px;
 	}
 	@include useScreen('desktop-md') {
 		column-gap: 168px;
-		justify-content: space-between;
 	}
 }
 
