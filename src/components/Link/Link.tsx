@@ -9,13 +9,27 @@ import s from './Link.module.scss';
 
 type LinkElement = HTMLElementTagNameMap['a'];
 interface LinkProps extends React.HTMLAttributes<LinkElement> {
-	variant: 'header' | 'footer';
+	variant:
+		| 'h1'
+		| 'h2'
+		| 'h3'
+		| 'h4'
+		| 'h5'
+		| 'h6'
+		| 'subtitle'
+		| 'p'
+		| 'button'
+		| 'header'
+		| 'footer'
+		| 'various1'
+		| 'various2'
+		| 'various3';
 	href: string;
 }
 
 export const CustomLink = forwardRef<LinkElement, LinkProps>(({ variant, children, className, href, ...rest }, ref) => {
 	return (
-		<Link href={href} scroll={false} className={clsx(className, s.link, s[variant])} ref={ref} {...rest}>
+		<Link href={href} scroll={false} className={clsx(className, s.link)} ref={ref} {...rest}>
 			<Text variant={variant}>{children}</Text>
 		</Link>
 	);

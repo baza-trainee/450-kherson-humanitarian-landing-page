@@ -72,16 +72,17 @@
 	align-items: flex-start;
 }
 .navigation {
-	margin: 0;
-	padding: 0;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
 	flex-direction: column;
+	gap: 16px;
+	padding: 8px 0;
+	@include useScreen('tablet-sm') {
+		gap: 32px;
+		padding: 16px 0;
+	}
 }
-.navigationItem {
-	list-style: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.underline::after {
+	top: 26px;
+	@include useScreen('tablet-sm') {
+		top: 40px;
+	}
 }
