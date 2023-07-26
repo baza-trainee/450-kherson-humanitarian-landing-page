@@ -29,10 +29,10 @@ export function HeaderLayout() {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const sectionForChangeHeader = document.getElementById('about-us');
+			const changeHeader = document.getElementById('about-us');
 
-			if (sectionForChangeHeader) {
-				const sectionTop = sectionForChangeHeader.getBoundingClientRect().top;
+			if (changeHeader) {
+				const sectionTop = changeHeader.getBoundingClientRect().top;
 				const offset = 80;
 				if (sectionTop <= offset) {
 					setIsScrolledToAboutUs(true);
