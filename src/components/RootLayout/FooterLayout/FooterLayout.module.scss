@@ -78,6 +78,7 @@
 	background-color: var(--color--shades-2);
 
 	@include useScreen('tablet-sm') {
+		padding-bottom: 0px;
 		flex-direction: row;
 		gap: 16px;
 	}
@@ -185,23 +186,18 @@
 	}
 }
 .navigation {
-	margin: 0;
-	padding: 0;
-	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
 	width: 201px;
 	row-gap: 16px;
 	@include useScreen('tablet-sm') {
 		width: max-content;
 	}
 }
-.navigationItem {
-	list-style: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.underline::after {
+	top: 25px;
+	@include useScreen('tablet-xl') {
+		top: 30px;
+	}
 }
 .twoLists {
 	display: flex;
