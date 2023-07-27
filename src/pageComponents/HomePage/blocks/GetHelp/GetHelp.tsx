@@ -10,7 +10,7 @@ import s from './GetHelp.module.scss';
 
 export function GetHelp() {
 	return (
-		<Section className={s.GetHelp}>
+		<Section className={s.GetHelp} id="get-help">
 			<Container className={s.container}>
 				<div className={s.formContainer}>
 					<div className={s.headingContainer}>

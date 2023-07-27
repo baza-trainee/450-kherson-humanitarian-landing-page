@@ -15,7 +15,7 @@ const unbounded = Unbounded({
 	variable: '--font-family--unbounded',
 });
 
-const poppins = Open_Sans({
+const openSans = Open_Sans({
 	subsets: ['cyrillic'],
 	display: 'swap',
 	weight: ['400', '500', '600', '700'],
@@ -24,7 +24,7 @@ const poppins = Open_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
-		<RootLayout className={clsx([unbounded.variable, poppins.className])}>
+		<RootLayout className={clsx([unbounded.variable, openSans.className])}>
 			<Component {...pageProps} />
 		</RootLayout>
 	);
