@@ -1,0 +1,69 @@
+@use '~/styles/mixins' as *;
+
+.Info {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	box-shadow: 0px -3px 0px 0px rgba(58, 65, 111, 0) inset, 0px 2px 4px 0px rgba(45, 35, 66, 0.2),
+		0px 7px 10px 0px rgba(0, 0, 0, 0.1);
+	@include useScreen('desktop-sm') {
+		flex-grow: 1;
+		flex-basis: 0;
+		width: 737px;
+	}
+}
+
+.tracker {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	height: 314px;
+	padding: 16px 8px;
+	text-align: center;
+	background-color: var(--color--shades-2);
+	@include useScreen('tablet-sm') {
+		padding: 24px 106px;
+	}
+	@include useScreen('desktop-sm') {
+		height: 296px;
+		padding: 24px 82px;
+	}
+}
+
+.trackerIndicator {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 16px;
+	@include useScreen('tablet-sm') {
+		flex-direction: row;
+		column-gap: 48px;
+	}
+}
+
+.numbers {
+	display: flex;
+	column-gap: 4px;
+	:nth-child(1) {
+		color: var(--color--primary-2);
+	}
+	:nth-child(2) {
+		color: var(--color--various-1);
+	}
+	:nth-child(3) {
+		color: var(--color--various-2);
+	}
+}
+
+.map {
+	width: 100%;
+	height: 420px;
+	background-color: gray;
+	@include useScreen('tablet-sm') {
+		height: 740px;
+	}
+	@include useScreen('desktop-sm') {
+		height: 1654px;
+	}
+}
