@@ -13,6 +13,7 @@ export const formList: FormList = [
 		fieldList: [
 			'name',
 			'surname',
+			'patronymic',
 			'populationPoint',
 			'street',
 			'houseNumber',
