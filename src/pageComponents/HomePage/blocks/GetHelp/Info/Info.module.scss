@@ -64,6 +64,8 @@
 		height: 740px;
 	}
 	@include useScreen('desktop-sm') {
+		flex-grow: 1;
+		flex-basis: 0;
 		height: 100%;
 	}
 }
