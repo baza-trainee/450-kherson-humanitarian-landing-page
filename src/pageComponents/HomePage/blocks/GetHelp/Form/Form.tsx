@@ -119,6 +119,7 @@ export function Form() {
 			street: {
 				type: 'text',
 				name: 'street',
+				label: 'Назва вулиці',
 				placeholder: 'Оберіть назву вулиці',
 				required: true,
 				size: 'fullWidth',
@@ -130,7 +131,8 @@ export function Form() {
 			houseNumber: {
 				type: 'text',
 				name: 'houseNumber',
-				placeholder: 'введіть номер будинку',
+				label: 'Номер будинку',
+				placeholder: 'Введіть номер будинку',
 				required: true,
 				size: 'halfWidth',
 				register: () =>
@@ -141,6 +143,7 @@ export function Form() {
 			apartmentNumber: {
 				type: 'text',
 				name: 'apartmentNumber',
+				label: 'Номер квартири',
 				placeholder: 'Введіть номер квартири',
 				required: true,
 				size: 'halfWidth',
@@ -259,6 +262,7 @@ export function Form() {
 			movementCity: {
 				type: 'text',
 				name: 'movementCity',
+				label: 'Назва населеного пункту',
 				placeholder: 'Введіть назву населеного пункту',
 				required: true,
 				size: 'fullWidth',
