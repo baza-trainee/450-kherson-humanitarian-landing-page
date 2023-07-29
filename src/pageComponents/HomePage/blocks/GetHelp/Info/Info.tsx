@@ -10,7 +10,7 @@ export function Info() {
 			<div className={s.tracker}>
 				<Text variant="h3">На отримання наборів зареєстровано</Text>
 				<div className={s.trackerIndicator}>
-					<Image src={'/images/getHelp/state-70.png'} alt={'status'} width={120} height={120} />
+					<Image src={'/svg/getHelp/state-70.svg'} alt={'status'} width={120} height={120} />
 					<div className={s.numbers}>
 						<Text variant="various2">155</Text>
 						<Text variant="various2">/</Text>
