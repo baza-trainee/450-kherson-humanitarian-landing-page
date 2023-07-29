@@ -56,7 +56,7 @@ export const Dropdown = forwardRef<DropdownElement, DropdownProps>(
 								</option>
 							))}
 						</select>
-						<Icon className={s.icon} onClick={() => null} icon="icon--chevron-down" />
+						<Icon className={s.icon} icon="icon--chevron-down" />
 					</div>
 				</InputWrapper>
 			</label>
