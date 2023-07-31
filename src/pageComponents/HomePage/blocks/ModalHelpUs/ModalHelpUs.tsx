@@ -10,8 +10,9 @@ import { modalList } from './data/modalList';
 
 import s from './ModalHelpUs.module.scss';
 
-export function ModalHelpUs() {
+export function ModalHelpUs({ onClose }: { onClose: () => void }) {
 	const [tabIndex, setTabIndex] = useState(0);
+	const [isCopied, setIsCopied] = useState(false);
 
 	const tabModalVariantOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
@@ -19,9 +20,23 @@ export function ModalHelpUs() {
 		setTabIndex(valueIndex);
 	};
 
+	const textToCopy = tabIndex === 0 ? 'UA693052990000026002020407112' : 'UA643052990000026002010405629';
+
+	const onCopy = () => {
+		navigator.clipboard
+			.writeText(textToCopy)
+			.then(() => {
+				setIsCopied(true);
+				setTimeout(() => setIsCopied(false), 2000);
+			})
+			.catch((error) => {
+				console.error('Помилка копіювання тексту:', error);
+			});
+	};
+
 	return (
-		<Modal isOpen={true} onClose={() => console.log('modal')}>
-			<div className={s.content}>
+		<Modal isOpen={true} onClose={onClose}>
+			<div className={s.container}>
 				<Text className={s.heading} variant="h2">
 					Підтримати
 					<br /> гуманітарний
@@ -46,16 +61,22 @@ export function ModalHelpUs() {
 							</li>
 						))}
 					</ul>
-					<Button className={s.button} type="secondary">
-						<span>Скопіювати IBAN</span>
-						<Icon
-							icon="icon--copy"
-							colors={{
-								default: 'var(--color--primary-3)',
-							}}
-							onClick={() => null}
-							className={s.icon}
-						/>
+					<Button className={s.button} type="secondary" onClick={onCopy}>
+						{isCopied ? (
+							<span>Скопійовано</span>
+						) : (
+							<>
+								<span>Скопіювати IBAN</span>
+								<Icon
+									icon="icon--copy"
+									colors={{
+										default: 'var(--color--primary-3)',
+									}}
+									onClick={() => null}
+									className={s.icon}
+								/>
+							</>
+						)}
 					</Button>
 				</div>
 			</div>
