@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-import { ModalHelpUs } from '~/pageComponents/HomePage/HelpUsButton/ModalHelpUs/ModalHelpUs';
-
-import { Button } from '../../../components/Buttons/Button';
+import { ModalHelpUs } from '~/pageComponents/HomePage/ButtonHelpUs/ModalHelpUs/ModalHelpUs';
+import { Button } from '~components/Buttons/Button';
 
 export function HelpUsButton() {
 	const [isOpen, setIsOpen] = useState(false);
