@@ -46,6 +46,7 @@ export function AboutUs() {
 							alt="about organization photo"
 							height={200}
 							style={{ objectFit: 'cover' }}
+							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 50vw"
 						/>
 					</div>
 					<div className={s.block}>
@@ -67,6 +68,7 @@ export function AboutUs() {
 							alt="history of foundation photo"
 							height={221}
 							style={{ objectFit: 'cover' }}
+							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 50vw"
 						/>
 					</div>
 					<div className={s.block}>
@@ -83,6 +85,7 @@ export function AboutUs() {
 							alt="team photo"
 							height={253}
 							style={{ objectFit: 'cover' }}
+							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 50vw"
 						/>
 					</div>
 				</div>
