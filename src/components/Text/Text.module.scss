@@ -74,7 +74,7 @@
 .subtitle {
 	font-size: var(--font-size--subtitle-mobile);
 	font-weight: 400;
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		font-size: var(--font-size--subtitle);
 	}
 }
@@ -105,7 +105,7 @@
 .footer {
 	font-size: var(--font-size--footer-mobile);
 	font-weight: 400;
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		font-size: var(--font-size--footer);
 		line-height: 150%;
 	}
@@ -115,7 +115,7 @@
 	font-size: var(--font-size--various1-mobile);
 	line-height: 100%;
 	font-weight: 500;
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		font-size: var(--font-size--various1);
 		font-weight: 400;
 	}
