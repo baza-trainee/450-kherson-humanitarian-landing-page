@@ -86,6 +86,10 @@
 	gap: 16px;
 }
 
+.icon {
+	flex-shrink: 0;
+}
+
 .listText {
 	width: 264px;
 	@include useScreen('mobile-lg') {

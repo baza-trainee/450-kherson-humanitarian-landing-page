@@ -31,7 +31,13 @@ export function AboutUs() {
 								{about.list.map((obj) => {
 									return (
 										<li className={s.item} key={obj.id}>
-											<Image src={obj.src} alt={`${obj.id} icon`} width={48} height={48} />
+											<Image
+												src={obj.src}
+												alt={`${obj.id} icon`}
+												className={s.icon}
+												width={48}
+												height={48}
+											/>
 											<Text variant="p" className={s.listText}>
 												{obj.text}
 											</Text>
