@@ -3,6 +3,7 @@ import type React from 'react';
 import clsx from 'clsx';
 
 import { CustomLink } from '~components/Link/Link';
+import type { TextVariants } from '~components/Text/Text';
 
 import s from './NavigationList.module.scss';
 
@@ -17,21 +18,7 @@ interface NavigationListProps {
 	navigation: NavigationItem[];
 	navStyle?: string;
 	linkStyle?: string;
-	variant:
-		| 'h1'
-		| 'h2'
-		| 'h3'
-		| 'h4'
-		| 'h5'
-		| 'h6'
-		| 'subtitle'
-		| 'p'
-		| 'button'
-		| 'header'
-		| 'footer'
-		| 'various1'
-		| 'various2'
-		| 'various3';
+	variant: TextVariants;
 }
 
 export const NavigationList: React.FC<NavigationListProps> = ({

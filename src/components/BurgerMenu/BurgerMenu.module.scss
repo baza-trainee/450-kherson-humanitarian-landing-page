@@ -16,6 +16,7 @@
 	}
 	gap: 40px;
 }
+
 .backdrop {
 	z-index: 99;
 	position: fixed;
@@ -28,6 +29,7 @@
 	background: mix(rgba(255, 255, 255, 0.32), rgba(0, 0, 0, 0.32), 50%);
 	backdrop-filter: blur(3px);
 }
+
 .whiteField {
 	z-index: 102;
 	position: fixed;
@@ -40,9 +42,11 @@
 		width: 456px;
 	}
 }
+
 .icon {
 	margin: 12px;
 }
+
 .close {
 	z-index: 110;
 	position: absolute;
@@ -53,16 +57,19 @@
 		right: 24px;
 	}
 }
+
 .burger {
 	z-index: 10;
 	position: relative;
 }
+
 .buttons {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 36px;
 }
+
 .navigation {
 	flex-direction: column;
 	padding: 8px 0;
@@ -72,6 +79,7 @@
 		gap: 32px;
 	}
 }
+
 .underline::after {
 	top: 26px;
 	@include useScreen('tablet-sm') {

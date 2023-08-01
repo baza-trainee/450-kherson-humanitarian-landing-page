@@ -18,24 +18,30 @@
 		padding: 9px 80px;
 	}
 }
+
 .blur {
 	backdrop-filter: blur(6px);
 }
+
 .whiteColor {
 	background: var(--color--shades-1);
 }
+
 .visibilityHidden {
 	visibility: hidden;
 }
+
 .row {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
+
 .navigation {
 	padding: 16px 10px;
 	column-gap: 36px;
 }
+
 .underline::after {
 	top: 37px;
 }
