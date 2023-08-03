@@ -20,7 +20,7 @@ module.exports = {
 	},
 	plugins: ['react', '@typescript-eslint', 'simple-import-sort'],
 	rules: {
-		indent: ['error', 'tab'],
+		'indent': ['error', 'tab', {SwitchCase: 1}],
 		'linebreak-style': ['error', 'unix'],
 		quotes: ['error', 'single', { avoidEscape: true }],
 		semi: ['error', 'always'],
@@ -42,5 +42,6 @@ module.exports = {
 				],
 			},
 		],
+		'react/self-closing-comp': 'warn',
 	},
 };

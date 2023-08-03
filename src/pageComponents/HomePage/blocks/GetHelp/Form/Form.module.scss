@@ -1,0 +1,32 @@
+@use '~/styles/mixins' as *;
+
+.Form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	row-gap: 32px;
+}
+
+.formFields {
+	display: grid;
+	column-gap: 12px;
+	row-gap: 16px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.submitButton {
+	height: 56px;
+	grid-column: span 2;
+}
+
+.field {
+	display: flex;
+	align-self: flex-end;
+	grid-column: span 2;
+}
+
+.halfWidth {
+	@include useScreen('tablet-sm') {
+		grid-column: span 1;
+	}
+}

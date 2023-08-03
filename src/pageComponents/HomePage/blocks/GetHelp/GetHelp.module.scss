@@ -1,4 +1,48 @@
-.GetHelp {
-	border: 1px solid magenta;
-	scroll-margin-top: 80px;
+@use '~/styles/mixins' as *;
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	@include useScreen('desktop-sm') {
+		flex-direction: row;
+		gap: 24px;
+	}
+}
+
+.formContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	row-gap: 24px;
+	@include useScreen('tablet-sm') {
+		row-gap: 40px;
+	}
+	@include useScreen('desktop-sm') {
+		width: 519px;
+	}
+}
+
+.headingContainer {
+	display: flex;
+	flex-direction: column;
+	row-gap: 16px;
+	@include useScreen('tablet-sm') {
+		row-gap: 24px;
+	}
+}
+
+.description {
+	display: flex;
+	flex-direction: column;
+	row-gap: 8px;
+}
+
+.alert {
+	display: flex;
+	column-gap: 8px;
+}
+
+.form {
+	width: 100%;
 }
