@@ -30,7 +30,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 		<Portal wrapperId="portal-modal">
 			<div className={s.modalContainer} onClick={onClose}>
 				<div className={s.modal} onClick={(e) => e.stopPropagation()}>
-					<div className={s.decor}></div>
+					<div className={s.decor} />
 					<div className={s.close}>
 						<Icon
 							icon="icon--close"
@@ -39,7 +39,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 							}}
 							onClick={onClose}
 							className={s.icon}
-						></Icon>
+						/>
 					</div>
 					<div className={s.content}>{children}</div>
 				</div>
