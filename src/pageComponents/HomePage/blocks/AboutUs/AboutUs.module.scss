@@ -84,6 +84,17 @@
 	gap: 16px;
 }
 
+.icon {
+	flex-shrink: 0;
+}
+
+.listText {
+	width: 240px;
+	@include useScreen('mobile-lg') {
+		width: 100%;
+	}
+}
+
 .image {
 	width: 100%;
 	@include useScreen('mobile-xl') {
