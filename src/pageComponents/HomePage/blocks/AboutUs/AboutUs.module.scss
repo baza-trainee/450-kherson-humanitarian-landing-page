@@ -8,17 +8,13 @@
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
-	padding: 48px 0;
 	@include useScreen('tablet-sm') {
-		padding: 80px 0;
 		gap: 40px;
-	}
-	@include useScreen('desktop-sm') {
-		padding: 100px 0;
 	}
 }
 
 .about {
+	width: 100%;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -34,11 +30,10 @@
 }
 
 .block {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
 	gap: 24px;
-
 	@include useScreen('desktop-sm') {
 		flex-direction: row;
 		align-items: center;
@@ -47,9 +42,13 @@
 }
 
 .text {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
+	@include useScreen('desktop-sm') {
+		width: 600px;
+	}
 }
 
 .header {
@@ -59,7 +58,7 @@
 }
 
 .aboutTitle {
-	width: 246px;
+	width: 240px;
 	@include useScreen('mobile-lg') {
 		width: 100%;
 	}
@@ -71,7 +70,6 @@
 	flex-direction: column;
 	gap: 24px;
 	margin: 0;
-
 	.item:first-child p {
 		@include useScreen('mobile-xl') {
 			width: 458px;
@@ -86,16 +84,8 @@
 	gap: 16px;
 }
 
-.listText {
-	width: 264px;
-	@include useScreen('mobile-lg') {
-		width: 100%;
-	}
-}
-
 .image {
 	width: 100%;
-
 	@include useScreen('mobile-xl') {
 		height: 400px;
 	}
