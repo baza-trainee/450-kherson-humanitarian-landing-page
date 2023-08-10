@@ -11,9 +11,9 @@ import s from './OurPartners.module.scss';
 export function OurPartners() {
 	return (
 		<Section className={s.OurPartners} id="our-partners">
-			<Container className={s.flexColumn}>
+			<Container className={s.container}>
 				<Text variant="h2">Наші партнери</Text>
-				<div className={s.flexContainer}>
+				<div className={s.logoContainer}>
 					{partners.map((logo) => {
 						return <Image src={logo.src} alt={logo.alt} key={logo.id} className={s.logo} />;
 					})}
