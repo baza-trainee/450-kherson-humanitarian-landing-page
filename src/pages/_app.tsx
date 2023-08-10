@@ -21,7 +21,6 @@ const openSans = Open_Sans({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-	console.log('openSans.className: ', openSans);
 	return (
 		<>
 			<style jsx global>{`

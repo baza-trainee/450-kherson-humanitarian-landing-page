@@ -1,10 +1,10 @@
 @use '~/styles/mixins' as *;
 
 .container {
-	min-width: 320px;
-	padding: 0 8px 32px 8px;
 	display: flex;
 	flex-direction: column;
+	min-width: 320px;
+	padding: 0 8px 32px 8px;
 	overflow-x: hidden;
 	@include useScreen('tablet-sm') {
 		padding: 0 42px 60px 42px;
@@ -15,7 +15,12 @@
 }
 
 .heading {
+	width: 264px;
 	padding: 0 0 18px 8px;
+	line-height: 140%;
+	@include useScreen('tablet-sm') {
+		width: 350px;
+	}
 }
 
 .block {

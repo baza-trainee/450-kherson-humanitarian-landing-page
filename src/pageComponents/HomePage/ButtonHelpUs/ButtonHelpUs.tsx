@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ModalHelpUs } from '~/pageComponents/HomePage/ButtonHelpUs/ModalHelpUs/ModalHelpUs';
 import { Button } from '~components/Buttons/Button';
 
-export function HelpUsButton() {
+export function ButtonHelpUs() {
 	const [isOpen, setIsOpen] = useState(false);
 	const onOpenModal = () => {
 		setIsOpen(true);

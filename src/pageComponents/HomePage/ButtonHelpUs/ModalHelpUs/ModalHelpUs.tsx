@@ -6,6 +6,7 @@ import { Tabs } from '~components/inputs/Tabs/Tabs';
 import { Modal } from '~components/Modal/Modal';
 import { Text } from '~components/Text/Text';
 
+import { ibanData } from './data/ibanData';
 import { modalList } from './data/modalList';
 
 import s from './ModalHelpUs.module.scss';
@@ -20,7 +21,7 @@ export function ModalHelpUs({ onClose }: { onClose: () => void }) {
 		setTabIndex(valueIndex);
 	};
 
-	const textToCopy = tabIndex === 0 ? 'UA693052990000026002020407112' : 'UA643052990000026002010405629';
+	const textToCopy = tabIndex === 0 ? ibanData['USD'] : ibanData['EUR'];
 
 	const onCopy = () => {
 		navigator.clipboard
@@ -38,14 +39,11 @@ export function ModalHelpUs({ onClose }: { onClose: () => void }) {
 		<Modal isOpen={true} onClose={onClose}>
 			<div className={s.container}>
 				<Text className={s.heading} variant="h2">
-					Підтримати
-					<br /> гуманітарний
-					<br /> напрямок
+					Підтримати гуманітарний напрямок
 				</Text>
 				<div className={s.block}>
-					<Text variant="h2">
-						Банківський
-						<br /> переказ
+					<Text className={s.heading} variant="h2">
+						Банківський переказ
 					</Text>
 					<Tabs
 						onChange={tabModalVariantOnChange}
