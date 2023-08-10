@@ -13,18 +13,14 @@ interface HeaderDesktopMenuProps {
 }
 
 export function HeaderDesktop({ isScrolledToAboutUs }: HeaderDesktopMenuProps) {
+	const buttonLinkClass = !isScrolledToAboutUs && s.visibilityHidden;
 	return (
 		<div className={s.row}>
 			<Image src={logo} alt="logo" width={142} height={60} />
 			<NavigationList navigation={navigation} variant="header" navStyle={s.navigation} linkStyle={s.underline} />
-
-			{isScrolledToAboutUs ? (
-				<ButtonLink href="#get-help">Отримати допомогу</ButtonLink>
-			) : (
-				<ButtonLink href="#get-help" className={s.visibilityHidden}>
-					Отримати допомогу
-				</ButtonLink>
-			)}
+			<ButtonLink href="#get-help" className={`${buttonLinkClass}`}>
+				Отримати допомогу
+			</ButtonLink>
 		</div>
 	);
 }

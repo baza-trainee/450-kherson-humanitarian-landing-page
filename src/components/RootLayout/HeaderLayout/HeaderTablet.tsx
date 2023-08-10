@@ -17,7 +17,7 @@ export function HeaderTablet({ handleMenuOpen, isMenuOpen, isScrolledToAboutUs }
 		<div className={s.row}>
 			<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 			{isScrolledToAboutUs && <ButtonLink href="#get-help">Отримати допомогу</ButtonLink>}
-			<BurgerMenu onMenuOpen={handleMenuOpen} isMenuOpen={isMenuOpen} />
+			<BurgerMenu handleMenuOpen={handleMenuOpen} isMenuOpen={isMenuOpen} />
 		</div>
 	);
 }

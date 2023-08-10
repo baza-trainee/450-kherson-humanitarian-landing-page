@@ -31,11 +31,12 @@ export function HeaderLayout() {
 
 	const isScrolledToAboutUs = useChangeHeader('about-us', 80);
 
-	const { isScreenTabletSm } = useScreenQuery();
-	const { isScreenTabletXl } = useScreenQuery();
+	const { isScreenTabletSm, isScreenTabletXl } = useScreenQuery();
+
+	const componentClass = [isScrolledToAboutUs && s.whiteColor, !isMenuOpen && s.blur];
 
 	return (
-		<header className={clsx(s.HeaderLayout, isScrolledToAboutUs && s.whiteColor, !isMenuOpen && s.blur)}>
+		<header className={clsx(s.HeaderLayout, componentClass)}>
 			<Container>
 				{isScreenTabletXl ? (
 					<HeaderDesktop isScrolledToAboutUs={isScrolledToAboutUs} />

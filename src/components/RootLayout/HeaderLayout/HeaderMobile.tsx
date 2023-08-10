@@ -15,7 +15,7 @@ export function HeaderMobile({ handleMenuOpen, isMenuOpen }: HeaderMobileMenuPro
 	return (
 		<div className={s.row}>
 			<Image priority={true} src={logo} alt="logo" width={142} height={60} />
-			<BurgerMenu onMenuOpen={handleMenuOpen} isMenuOpen={isMenuOpen} />
+			<BurgerMenu handleMenuOpen={handleMenuOpen} isMenuOpen={isMenuOpen} />
 		</div>
 	);
 }

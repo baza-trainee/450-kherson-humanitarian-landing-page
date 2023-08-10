@@ -13,19 +13,19 @@ import logo from '/public/svg/logo.svg';
 import s from './BurgerMenu.module.scss';
 
 interface BurgerMenuProps {
-	onMenuOpen: (newState: boolean) => void;
 	isMenuOpen: boolean;
+	handleMenuOpen: (newState: boolean) => void;
 }
 
-export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
+export function BurgerMenu({ handleMenuOpen, isMenuOpen }: BurgerMenuProps) {
 	const handleBackdropClick = (e: React.MouseEvent) => {
 		if (e.target === e.currentTarget) {
-			onMenuOpen(false);
+			handleMenuOpen(false);
 		}
 	};
 
 	const hideBurger = () => {
-		onMenuOpen(!isMenuOpen);
+		handleMenuOpen(!isMenuOpen);
 	};
 
 	useKeyPress('Escape', hideBurger);
@@ -34,12 +34,12 @@ export function BurgerMenu({ onMenuOpen, isMenuOpen }: BurgerMenuProps) {
 
 	return (
 		<>
-			<Icon icon="icon--burger" className={clsx(s.icon, s.burger)} onClick={hideBurger}></Icon>
+			<Icon icon="icon--burger" className={clsx(s.icon, s.burger)} onClick={hideBurger} />
 
 			{isMenuOpen && (
 				<div className={s.backdrop} onClick={handleBackdropClick}>
 					<div className={s.whiteField}>
-						<Icon icon="icon--close" className={clsx(s.icon, s.close)} onClick={hideBurger}></Icon>
+						<Icon icon="icon--close" className={clsx(s.icon, s.close)} onClick={hideBurger} />
 						<div className={s.column}>
 							{isScreenTabletSm ? (
 								<>
