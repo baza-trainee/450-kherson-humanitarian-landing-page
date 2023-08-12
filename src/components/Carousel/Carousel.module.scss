@@ -1,0 +1,20 @@
+@use '~/styles/mixins' as *;
+.carousel {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	min-height: 422px;
+	@include useScreen('mobile-xl') {
+		min-height: 437px;
+	}
+}
+
+.row {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	margin: 0px;
+	left: 0px;
+	right: auto;
+	top: auto;
+}
