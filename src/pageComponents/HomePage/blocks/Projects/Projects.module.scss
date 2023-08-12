@@ -1,4 +1,60 @@
+@use '~/styles/mixins' as *;
+
 .Projects {
-	border: 1px solid magenta;
 	scroll-margin-top: 80px;
+	padding-top: 32px;
+	padding-bottom: 32px;
+	background-color: var(--color--primary-1);
+	@include useScreen('desktop-sm') {
+		padding-top: 48px;
+		padding-bottom: 48px;
+	}
+}
+
+.wrapper {
+	height: 552px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	@include useScreen('mobile-xl') {
+		gap: 32px;
+		height: 581px;
+	}
+	@include useScreen('tablet-sm') {
+		gap: 48px;
+		height: 613px;
+	}
+}
+
+.swipable {
+	display: flex;
+	flex-direction: row;
+}
+
+.blockArrow {
+	align-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 99px;
+	height: 48px;
+	cursor: pointer;
+}
+
+.arrow {
+	background-color: transparent;
+	border-style: none;
+}
+
+.button {
+	margin: auto;
+	margin-right: auto;
+	margin-top: 24px;
+	@include useScreen('tablet-sm') {
+		margin-right: 0;
+		margin-top: 32px;
+	}
+	@include useScreen('desktop-sm') {
+		margin-top: 10px;
+	}
 }
