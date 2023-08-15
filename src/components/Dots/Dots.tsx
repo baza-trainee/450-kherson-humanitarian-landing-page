@@ -17,7 +17,7 @@ export function Dots({ items, activeIndex, paginateTo }: Props) {
 				<motion.button
 					key={index}
 					initial={false}
-					className={clsx(s.dot, index === activeIndex ? `${s.active}` : '')}
+					className={clsx(s.dot, index === activeIndex && s.active)}
 					animate={{
 						scale: index === activeIndex ? 1.5 : 1,
 						opacity: index === activeIndex ? 1 : 0.5,
