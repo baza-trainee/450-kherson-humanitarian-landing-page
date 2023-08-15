@@ -4,7 +4,7 @@ import type { MotionProps } from 'framer-motion';
 import Image from 'next/image';
 
 import { images } from '~/data/ourActivityData';
-import { Carousel } from '~/pageComponents/HomePage/blocks/OurActivity/Carousel3d/Carousel3d';
+import { Carousel3d } from '~/pageComponents/HomePage/blocks/OurActivity/Carousel3d/Carousel3d';
 import { Arrow } from '~components/Arrow/Arrow';
 import { Container } from '~components/Container/Container';
 import { Dots } from '~components/Dots/Dots';
@@ -14,6 +14,7 @@ import { useScreenQuery } from '~hooks/useScreenQuery';
 
 import s from './OurActivity.module.scss';
 
+const animationDuration = 0.5;
 const getCenterXPosition = (slidePosition: string, isScreenTabletSm: boolean) => {
 	switch (slidePosition) {
 		case 'left':
@@ -71,43 +72,59 @@ const animation: MotionProps = {
 			return { scale: 0.2, x: direction < 1 ? 20 : -20, opacity: 0 };
 		},
 	},
-	transition: { duration: 0.7 },
+	transition: { duration: animationDuration },
 	initial: 'enter',
 	animate: 'center',
 	exit: 'exit',
 	drag: 'x',
-	dragConstraints: { left: 0, right: 0 },
-	dragElastic: 0.1,
+	dragConstraints: { left: 0, right: 0, top: 0, bottom: 0 },
+	dragElastic: 0,
 };
 
 export function OurActivity() {
 	const [[activeIndex, direction], setActiveIndex] = useState([Math.floor(images.length / 2), -1]);
+	const [isAnimating, setIsAnimating] = useState(false);
 	const { isScreenDesktopSm, isScreenTabletSm } = useScreenQuery();
 
 	const visibleIndices = [...images, ...images].slice(activeIndex, activeIndex + 3);
 
 	const paginate = useCallback(
 		(dir: number) => {
-			const index = activeIndex + dir;
-			if (index >= 0 && index < images.length) {
-				setActiveIndex([index, dir]);
+			if (!isAnimating) {
+				setIsAnimating(true);
+				const index = activeIndex + dir;
+				if (index >= 0 && index < images.length) {
+					setActiveIndex([index, dir]);
+				}
+				setTimeout(() => {
+					setIsAnimating(false);
+				}, animationDuration * 1000);
 			}
 		},
-		[activeIndex],
+		[activeIndex, isAnimating],
 	);
 
-	const paginateTo = useCallback((index: number) => {
-		setActiveIndex((prevState) => {
-			return [index, index > prevState[0] ? 1 : -1];
-		});
-	}, []);
+	const paginateTo = useCallback(
+		(index: number) => {
+			if (!isAnimating) {
+				setIsAnimating(true);
+				setActiveIndex((prevState) => {
+					return [index, index > prevState[0] ? 1 : -1];
+				});
+				setTimeout(() => {
+					setIsAnimating(false);
+				}, animationDuration * 1000);
+			}
+		},
+		[isAnimating],
+	);
 
 	return (
 		<Section className={s.OurActivity} id="our-activity">
 			<Container className={s.container}>
 				<Text variant="h2">Наша діяльність</Text>
 				<div className={s.wrapper}>
-					<Carousel
+					<Carousel3d
 						className={s.slider}
 						renderContent={(src) => (
 							<div className={s.card}>
