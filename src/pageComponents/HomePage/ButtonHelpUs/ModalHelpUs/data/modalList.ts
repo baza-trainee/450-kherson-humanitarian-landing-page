@@ -1,6 +1,6 @@
 import { ibanData } from './ibanData';
 
-interface ModalFields {
+interface ModalField {
 	title: string;
 	text: string;
 	id: number;
@@ -8,7 +8,7 @@ interface ModalFields {
 
 interface ModalCollection {
 	label: string;
-	fieldList: ModalFields[];
+	fieldList: ModalField[];
 }
 
 type ModalList = ModalCollection[];

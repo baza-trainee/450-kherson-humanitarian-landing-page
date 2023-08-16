@@ -11,7 +11,11 @@ import { modalList } from './data/modalList';
 
 import s from './ModalHelpUs.module.scss';
 
-export function ModalHelpUs({ onClose }: { onClose: () => void }) {
+interface ModalHelpUsProps {
+	onClose: () => void;
+}
+
+export function ModalHelpUs({ onClose }: ModalHelpUsProps) {
 	const [tabIndex, setTabIndex] = useState(0);
 	const [isCopied, setIsCopied] = useState(false);
 
