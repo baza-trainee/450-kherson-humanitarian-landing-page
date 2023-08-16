@@ -2,18 +2,15 @@ import { useCallback } from 'react';
 
 import type { HTMLMotionProps, PanInfo } from 'framer-motion';
 
-import { swipePower } from '~helpers/swipePower';
+import { calculateSwipeOffset } from '~helpers/calculateSwipeOffset';
 
-export function useHandleDrag(
-	callbackRight: (dir?: number | undefined) => void,
-	callbackLeft: (dir?: number | undefined) => void,
-) {
+export function useHandleDrag(callbackRight: (dir?: number) => void, callbackLeft: (dir?: number) => void) {
 	const handleDragEnd = useCallback<NonNullable<HTMLMotionProps<'div'>['onDragEnd']>>(
 		(e: MouseEvent | TouchEvent | PointerEvent, { offset, velocity }: PanInfo) => {
 			if (e.target instanceof HTMLElement) {
 				e.target.style.cursor = 'grab';
 
-				const swipe = swipePower(offset.x, velocity.x);
+				const swipe = calculateSwipeOffset(offset.x, velocity.x);
 
 				if (swipe < -1000) {
 					callbackRight();
