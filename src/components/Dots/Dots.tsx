@@ -13,18 +13,21 @@ interface Props {
 export function Dots({ items, activeIndex, paginateTo }: Props) {
 	return (
 		<>
-			{items.map((_, index) => (
-				<motion.button
-					key={index}
-					initial={false}
-					className={clsx(s.dot, index === activeIndex && s.active)}
-					animate={{
-						scale: index === activeIndex ? 1.5 : 1,
-						opacity: index === activeIndex ? 1 : 0.5,
-					}}
-					onClick={() => paginateTo(index)}
-				/>
-			))}
+			{items.map((el, index) => {
+				const dotClass = clsx(s.dot, index === activeIndex && s.active);
+				return (
+					<motion.button
+						key={el.src}
+						initial={false}
+						className={dotClass}
+						animate={{
+							scale: index === activeIndex ? 1.5 : 1,
+							opacity: index === activeIndex ? 1 : 0.5,
+						}}
+						onClick={() => paginateTo(index)}
+					/>
+				);
+			})}
 		</>
 	);
 }
