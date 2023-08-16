@@ -41,31 +41,24 @@ export function BurgerMenu({ handleMenuOpen, isMenuOpen }: BurgerMenuProps) {
 					<div className={s.whiteField}>
 						<Icon icon="icon--close" className={clsx(s.icon, s.close)} onClick={hideBurger} />
 						<div className={s.column}>
-							{isScreenTabletSm ? (
-								<>
-									<Image priority={true} src={logo} alt="logo" width={360} height={152} />
-									<NavigationList
-										navigation={navigation}
-										variant="header"
-										onClick={hideBurger}
-										navStyle={s.navigation}
-										linkStyle={s.underline}
-									/>
-								</>
-							) : (
-								<>
-									<Image priority={true} src={logo} alt="logo" width={170} height={72} />
-									<div className={s.buttons}>
-										<NavigationList
-											navigation={navigation}
-											variant="header"
-											onClick={hideBurger}
-											navStyle={s.navigation}
-											linkStyle={s.underline}
-										/>
-										<ButtonLink href="#get-help">Отримати допомогу</ButtonLink>
-									</div>
-								</>
+							<Image
+								priority={true}
+								src={logo}
+								alt="logo"
+								width={isScreenTabletSm ? 360 : 170}
+								height={isScreenTabletSm ? 152 : 72}
+							/>
+							<NavigationList
+								navigation={navigation}
+								variant="header"
+								onClick={hideBurger}
+								navStyle={s.navigation}
+								linkStyle={s.underline}
+							/>
+							{!isScreenTabletSm && (
+								<ButtonLink href="#get-help" onClick={hideBurger}>
+									Отримати допомогу
+								</ButtonLink>
 							)}
 						</div>
 					</div>
