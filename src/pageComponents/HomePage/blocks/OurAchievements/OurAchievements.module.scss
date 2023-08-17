@@ -6,10 +6,11 @@
 	@include useScreen('tablet-sm') {
 		padding: 32px;
 	}
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		padding: 48px 80px;
 	}
 }
+
 .flexContainer,
 .blocks,
 .block {
@@ -17,17 +18,18 @@
 	flex-direction: column;
 	align-items: flex-start;
 }
+
 .flexContainer {
-	gap: 24px;
-	margin: 0 auto;
 	max-width: 328px;
+	margin: 0 auto;
+	gap: 24px;
 
 	@include useScreen('tablet-sm') {
 		max-width: 704px;
 	}
-	@include useScreen('desktop-md') {
-		gap: 32px;
+	@include useScreen('desktop-sm') {
 		max-width: 1280px;
+		gap: 32px;
 	}
 }
 
@@ -37,30 +39,31 @@
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
 	}
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 	}
 }
+
 .block {
 	width: 100%;
 	height: 220px;
 
-	background: var(--color--shades-1);
-	box-shadow: 0px 10px 32px -4px rgba(24, 39, 75, 0.1), 0px 6px 14px -6px rgba(24, 39, 75, 0.12);
-
 	padding: 64.5px 48px;
+	background: var(--color--shades-1);
+
+	box-shadow: 0px 10px 32px -4px rgba(24, 39, 75, 0.1), 0px 6px 14px -6px rgba(24, 39, 75, 0.12);
 	gap: 16px;
 
-	@include useScreen('mobile-md') {
+	@include useScreen('mobile-sm') {
 		width: 328px;
 	}
 
 	@include useScreen('tablet-sm') {
-		padding: 66.5px 16px;
 		width: 219px;
+		padding: 66.5px 16px;
 	}
-	@include useScreen('desktop-md') {
-		padding: 48px 60px 48px 64px;
+	@include useScreen('desktop-sm') {
 		width: 411px;
+		padding: 48px 60px 48px 64px;
 	}
 }
 
@@ -71,10 +74,11 @@
 	@include useScreen('tablet-sm') {
 		gap: 4px;
 	}
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		gap: 16px;
 	}
 }
+
 .button {
 	max-width: 214px;
 	margin: 0 auto;
@@ -82,6 +86,16 @@
 		margin: 0 0 0 auto;
 	}
 }
+
 .title {
 	color: var(--color--secondary-3);
+}
+
+.number {
+	@include useScreen('desktop-sm') {
+		font-size: 58px;
+	}
+	@include useScreen('desktop-md') {
+		font-size: 64px;
+	}
 }
