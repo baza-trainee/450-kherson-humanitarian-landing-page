@@ -1,14 +1,14 @@
 @use '~/styles/mixins' as *;
 
-$path: '/svg/icons/';
 $iconsSet: (
-	burger,
-	close,
 	arrow-left,
 	arrow-right,
 	arrow-up-right,
 	arrow-up,
 	attention,
+	burger,
+	chevron-down,
+	close,
 	copy,
 	dropdown-form,
 	dropdown-modal,
@@ -19,8 +19,4 @@ $iconsSet: (
 	phone
 );
 
-@each $icon in $iconsSet {
-	.#{'icon--' + $icon} {
-		@include useSvgIcon($path, $icon);
-	}
-}
+@include useSvgIcon($icons: $iconsSet);

@@ -1,3 +1,130 @@
-.AboutUs {
-	border: 1px solid magenta;
+@use '~/styles/mixins' as *;
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	@include useScreen('tablet-sm') {
+		gap: 40px;
+	}
+}
+
+.about {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	gap: 24px;
+	@include useScreen('tablet-sm') {
+		gap: 40px;
+	}
+	@include useScreen('desktop-sm') {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 40px;
+	}
+}
+
+.block {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 24px;
+	@include useScreen('desktop-sm') {
+		flex-direction: row;
+		align-items: center;
+		gap: 80px;
+	}
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 24px;
+	@include useScreen('desktop-sm') {
+		width: 600px;
+	}
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.aboutTitle {
+	width: 240px;
+	@include useScreen('mobile-lg') {
+		width: 100%;
+	}
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	gap: 24px;
+	.item:first-child p {
+		@include useScreen('mobile-xl') {
+			width: 458px;
+		}
+	}
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	list-style: none;
+	gap: 16px;
+}
+
+.icon {
+	flex-shrink: 0;
+}
+
+.listText {
+	width: 240px;
+	@include useScreen('mobile-lg') {
+		width: 100%;
+	}
+}
+
+.image {
+	width: 100%;
+	@include useScreen('mobile-xl') {
+		height: 400px;
+	}
+	@include useScreen('tablet-sm') {
+		height: 432px;
+	}
+	@include useScreen('tablet-lg') {
+		height: 480px;
+	}
+	@include useScreen('desktop-sm') {
+		width: 600px;
+		height: 450px;
+	}
+}
+
+.order {
+	@include useScreen('desktop-sm') {
+		order: 1;
+	}
+}
+
+.employee {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.history {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	@include useScreen('tablet-sm') {
+		gap: 24px;
+	}
 }
