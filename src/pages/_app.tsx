@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import type { AppProps } from 'next/app';
 import { Open_Sans, Unbounded } from 'next/font/google';
 
@@ -12,7 +11,6 @@ const unbounded = Unbounded({
 	display: 'swap',
 	weight: ['400', '600'],
 	style: 'normal',
-	variable: '--font-family--unbounded',
 });
 
 const openSans = Open_Sans({
@@ -24,8 +22,16 @@ const openSans = Open_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
-		<RootLayout className={clsx([unbounded.variable, openSans.className])}>
-			<Component {...pageProps} />
-		</RootLayout>
+		<>
+			<style jsx global>{`
+				:root {
+					--font-family--unbounded: ${unbounded.style.fontFamily};
+					--font-family--open-sans: ${openSans.style.fontFamily};
+				}
+			`}</style>
+			<RootLayout>
+				<Component {...pageProps} />
+			</RootLayout>
+		</>
 	);
 }

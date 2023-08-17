@@ -1,0 +1,87 @@
+@use '~/styles/mixins' as *;
+
+.container {
+	display: flex;
+	flex-direction: column;
+	min-width: 320px;
+	padding: 0 8px 32px 8px;
+	overflow-x: hidden;
+	@include useScreen('tablet-sm') {
+		padding: 0 42px 60px 42px;
+	}
+	@include useScreen('desktop-md') {
+		padding: 0 48px 60px 48px;
+	}
+}
+
+.heading {
+	width: 264px;
+	padding: 0 0 18px 8px;
+	line-height: 140%;
+	@include useScreen('tablet-sm') {
+		width: 350px;
+	}
+}
+
+.block {
+	padding: 24px 16px 40px;
+	border: 1px solid var(--color--secondary-2);
+	border-radius: 10px;
+
+	background: var(--color--shades-1);
+
+	box-shadow: 0px 1px 4px 0px rgba(45, 35, 66, 0.2);
+	gap: 24px;
+
+	@include useScreen('tablet-sm') {
+		padding: 32px 16px;
+	}
+	@include useScreen('desktop-md') {
+		padding: 32px 24px 40px 24px;
+	}
+}
+
+.tabs {
+	display: flex;
+	z-index: 66;
+	position: relative;
+	border-bottom: 1px solid var(--color--secondary-2);
+	gap: 32px;
+}
+
+.items,
+.item,
+.block,
+.tab {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.tab {
+	align-items: center;
+}
+
+.items {
+	margin: 0;
+	padding: 0;
+	gap: 16px;
+}
+
+.item,
+.tab {
+	gap: 8px;
+}
+
+.button {
+	&:hover {
+		.icon {
+			background-color: var(--color--secondary-4);
+		}
+	}
+	&:active {
+		.icon {
+			background-color: var(--color--shades-1);
+		}
+	}
+}
