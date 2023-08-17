@@ -25,14 +25,26 @@ interface LinkProps extends React.HTMLAttributes<LinkElement> {
 		| 'various2'
 		| 'various3';
 	href: string;
+	download?: boolean;
+	target?: '_blank';
 }
 
-export const CustomLink = forwardRef<LinkElement, LinkProps>(({ variant, children, className, href, ...rest }, ref) => {
-	return (
-		<Link href={href} scroll={false} className={clsx(className, s.link)} ref={ref} {...rest}>
-			<Text variant={variant}>{children}</Text>
-		</Link>
-	);
-});
+export const CustomLink = forwardRef<LinkElement, LinkProps>(
+	({ download, target, variant, children, className, href, ...rest }, ref) => {
+		return (
+			<Link
+				href={href}
+				scroll={false}
+				target={target}
+				className={clsx(className, s.link)}
+				download={download}
+				ref={ref}
+				{...rest}
+			>
+				<Text variant={variant}>{children}</Text>
+			</Link>
+		);
+	},
+);
 
 CustomLink.displayName = 'CustomLink';

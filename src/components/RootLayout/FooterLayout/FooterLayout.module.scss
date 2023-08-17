@@ -1,42 +1,42 @@
 @use '~/styles/mixins' as *;
 
 .FooterLayout {
-	padding-top: 48px;
-	width: 100%;
 	display: flex;
 	flex-direction: column-reverse;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding-top: 48px;
 	@include useScreen('tablet-sm') {
-		padding-top: 80px;
 		flex-direction: row;
+		padding-top: 80px;
 	}
 	@include useScreen('desktop-sm') {
 		padding-top: 100px;
 	}
 }
 .blue {
-	position: relative;
+	display: flex;
 	z-index: 1;
 
+	position: relative;
+	flex-direction: column;
+
+	justify-content: center;
+
+	align-items: center;
+	width: 92.7vw;
+	height: 310px;
 	margin: 0 16px;
 	padding: 19px 23px 31px 23px;
 
 	background-color: var(--color--primary-3);
-
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	gap: 32px;
-
-	width: 92.7vw;
-	height: 310px;
 	@include useScreen('tablet-sm') {
-		height: 318px;
 		max-width: 318px;
-		padding: 23px 18px 35px 18px;
+		height: 318px;
 		margin: 0;
+		padding: 23px 18px 35px 18px;
 	}
 	@include useScreen('tablet-xl') {
 		min-width: 599px;
@@ -47,39 +47,39 @@
 }
 .grey {
 	width: 100vw;
+	height: 360px;
 	margin-top: -41px;
 	padding: 73px 0 16px 0;
-	background-color: var(--color--shades-2);
 
-	height: 360px;
+	background-color: var(--color--shades-2);
 	@include useScreen('tablet-sm') {
-		padding: 25.5px 32px 25.5px 18px;
-		margin: 17px -32px 17px 0;
 		height: 377px;
+		margin: 17px -32px 17px 0;
+		padding: 25.5px 32px 25.5px 18px;
 	}
 	@media screen and (min-width: 800px) {
 		padding: 25.5px 32px 25.5px 32px;
 	}
 	@include useScreen('tablet-xl') {
-		height: 370px;
-		max-width: 960px;
-		padding: 50px 70px 0 80px;
-		margin: 35px -120px 35px 0;
-		position: relative;
 		z-index: 2;
+		position: relative;
+		max-width: 960px;
+		height: 370px;
+		margin: 35px -120px 35px 0;
+		padding: 50px 70px 0 80px;
 	}
 }
 .flex {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 23px;
 	padding-bottom: 36px;
 	background-color: var(--color--shades-2);
+	gap: 23px;
 
 	@include useScreen('tablet-sm') {
-		padding-bottom: 0px;
 		flex-direction: row;
+		padding-bottom: 0px;
 		gap: 16px;
 	}
 	@media screen and (min-width: 800px) {
@@ -130,10 +130,10 @@
 	}
 }
 .contacts {
-	width: 282px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	width: 282px;
 	gap: 24px;
 	@include useScreen('tablet-sm') {
 		width: 294px;
@@ -155,16 +155,16 @@
 .socialNetworks {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
 	gap: 22px;
 	@include useScreen('tablet-sm') {
 		gap: 20px;
 	}
 	@include useScreen('tablet-xl') {
 		flex-direction: row;
-		gap: 28px;
 		width: 348px;
+		gap: 28px;
 	}
 }
 .fontSizeCallToAction {
@@ -202,8 +202,8 @@
 .twoLists {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
 	justify-content: flex-start;
+	align-items: flex-start;
 	row-gap: 16px;
 	@include useScreen('tablet-xl') {
 		flex-direction: row;
@@ -213,8 +213,8 @@
 .greyBlockText {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
 	justify-content: flex-start;
-	row-gap: 48px;
+	align-items: flex-start;
 	padding: 12px 0;
+	row-gap: 48px;
 }

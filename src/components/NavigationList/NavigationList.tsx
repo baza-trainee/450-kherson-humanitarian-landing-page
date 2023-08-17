@@ -32,6 +32,8 @@ interface NavigationListProps {
 		| 'various1'
 		| 'various2'
 		| 'various3';
+	download?: boolean;
+	target?: '_blank';
 }
 
 export const NavigationList: React.FC<NavigationListProps> = ({
@@ -40,12 +42,21 @@ export const NavigationList: React.FC<NavigationListProps> = ({
 	navStyle,
 	linkStyle,
 	variant,
+	download,
+	target,
 }) => {
 	return (
 		<ul className={clsx(s.navigation, navStyle)}>
 			{navigation.map(({ id, name, href }) => (
 				<li className={s.navigationItem} key={id}>
-					<CustomLink className={linkStyle} href={href} variant={variant} onClick={onClick}>
+					<CustomLink
+						className={linkStyle}
+						href={href}
+						target={target}
+						download={download}
+						variant={variant}
+						onClick={onClick}
+					>
 						{name}
 					</CustomLink>
 				</li>

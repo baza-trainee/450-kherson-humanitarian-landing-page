@@ -24,7 +24,7 @@ export function FooterLayout() {
 					<div className={s.iconAndText}>
 						<Image src={location} alt="location" width={24} height={24} />
 						<Text className={s.whiteColor} variant="footer">
-							<div dangerouslySetInnerHTML={{ __html: contacts[0] }} />
+							<span dangerouslySetInnerHTML={{ __html: contacts[0] }} />
 						</Text>
 					</div>
 					<div className={s.iconAndText}>

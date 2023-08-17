@@ -15,7 +15,14 @@ const greyBlockMobile = (
 	<div className={s.flex}>
 		<div className={s.twoLists}>
 			<NavigationList navigation={navigation} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
-			<NavigationList navigation={documents} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
+			<NavigationList
+				download
+				target="_blank"
+				navigation={documents}
+				variant="footer"
+				navStyle={s.navigation}
+				linkStyle={s.underline}
+			/>
 		</div>
 
 		<div className={s.logoAndCallToAction}>
@@ -42,7 +49,14 @@ const greyBlockTablet = (
 		</div>
 		<div className={s.twoLists}>
 			<NavigationList navigation={navigation} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
-			<NavigationList navigation={documents} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
+			<NavigationList
+				download
+				target="_blank"
+				navigation={documents}
+				variant="footer"
+				navStyle={s.navigation}
+				linkStyle={s.underline}
+			/>
 		</div>
 	</div>
 );
@@ -63,7 +77,14 @@ const greyBlockDesktop = (
 		</div>
 		<div className={s.twoLists}>
 			<NavigationList navigation={navigation} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
-			<NavigationList navigation={documents} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
+			<NavigationList
+				download
+				target="_blank"
+				navigation={documents}
+				variant="footer"
+				navStyle={s.navigation}
+				linkStyle={s.underline}
+			/>
 		</div>
 	</div>
 );
