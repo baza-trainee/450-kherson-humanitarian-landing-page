@@ -1,17 +1,17 @@
 @use '~/styles/mixins' as *;
 
 .Icon {
-	--icon--background-color: var(--color--secondary-4);
-	--icon--background-color-hover: var(--color--secondary-4);
-	--icon--background-color-click: var(--color--secondary-4);
-	--icon--background-color-disabled: var(--color--secondary-4);
-	--icon--background-color-disabled-opacity: 60%;
-
 	display: flex;
+	flex-shrink: 0;
 	justify-content: center;
 	align-items: center;
-	flex-shrink: 0;
 	background-color: var(--icon--background-color);
+
+	--icon--background-color: var(--color--secondary-4);
+	--icon--background-color-hover: var(--color--secondary-4);
+	--icon--background-color-click: var(--color--shades-1);
+	--icon--background-color-disabled: var(--color--secondary-2);
+	--icon--background-color-disabled-opacity: 60%;
 
 	&.clickable {
 		user-select: none;

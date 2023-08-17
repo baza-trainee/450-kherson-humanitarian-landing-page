@@ -1,4 +1,3 @@
-import React from 'react';
 import { forwardRef } from 'react';
 
 import clsx from 'clsx';
@@ -22,16 +21,18 @@ const variantsMapping = {
 	various3: 'p',
 };
 
-type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+export type TextVariants = keyof typeof variantsMapping;
+
+type ComponentVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
 
 export type TextElement = HTMLHeadingElement | HTMLParagraphElement;
 
 export interface TextProps extends Omit<ReactHTMLElementAttributes<TextElement>, 'ref'> {
-	variant?: keyof typeof variantsMapping;
+	variant?: TextVariants;
 }
 
 export const Text = forwardRef<TextElement, TextProps>(({ variant, children, className, ...rest }, ref) => {
-	const Component = (variant ? variantsMapping[variant] : 'span') as TextVariants;
+	const Component = (variant ? variantsMapping[variant] : 'span') as ComponentVariants;
 
 	const componentClass = variant && s[variant];
 
