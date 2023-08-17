@@ -10,6 +10,8 @@ import s from './Link.module.scss';
 interface LinkProps extends React.HTMLAttributes<HTMLAnchorElement> {
 	variant: TextVariants;
 	href: string;
+	download?: boolean;
+	target?: '_blank';
 }
 
 export const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(

@@ -18,8 +18,9 @@ interface NavigationListProps {
 	navigation: NavigationItem[];
 	navStyle?: string;
 	linkStyle?: string;
-
 	variant: TextVariants;
+	download?: boolean;
+	target?: '_blank';
 }
 
 export const NavigationList: React.FC<NavigationListProps> = ({
@@ -28,12 +29,21 @@ export const NavigationList: React.FC<NavigationListProps> = ({
 	navStyle,
 	linkStyle,
 	variant,
+	target,
+	download,
 }) => {
 	return (
 		<ul className={clsx(s.navigation, navStyle)}>
 			{navigation.map(({ id, name, href }) => (
 				<li className={s.navigationItem} key={id}>
-					<CustomLink className={linkStyle} href={href} variant={variant} onClick={onClick}>
+					<CustomLink
+						className={linkStyle}
+						href={href}
+						variant={variant}
+						onClick={onClick}
+						target={target}
+						download={download}
+					>
 						{name}
 					</CustomLink>
 				</li>

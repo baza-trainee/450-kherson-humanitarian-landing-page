@@ -15,28 +15,25 @@
 		padding-top: 100px;
 	}
 }
+
 .blue {
 	display: flex;
 	z-index: 1;
-
 	position: relative;
 	flex-direction: column;
-
 	justify-content: center;
-
 	align-items: center;
 	width: 92.7vw;
 	height: 310px;
 	margin: 0 16px;
-	padding: 19px 23px 31px 23px;
-
+	padding: 19px 23px;
 	background-color: var(--color--primary-3);
 	gap: 32px;
 	@include useScreen('tablet-sm') {
 		max-width: 318px;
 		height: 318px;
 		margin: 0;
-		padding: 23px 18px 35px 18px;
+		padding: 23px 16px;
 	}
 	@include useScreen('tablet-xl') {
 		min-width: 599px;
@@ -45,20 +42,16 @@
 		gap: 40px;
 	}
 }
+
 .grey {
 	width: 100vw;
-	height: 360px;
 	margin-top: -41px;
-	padding: 73px 0 16px 0;
-
+	padding: 73px 25px 16px;
+	user-select: none;
 	background-color: var(--color--shades-2);
 	@include useScreen('tablet-sm') {
-		height: 377px;
-		margin: 17px -32px 17px 0;
-		padding: 25.5px 32px 25.5px 18px;
-	}
-	@media screen and (min-width: 800px) {
-		padding: 25.5px 32px 25.5px 32px;
+		margin: 0 -32px 0 0;
+		padding: 26px 32px;
 	}
 	@include useScreen('tablet-xl') {
 		z-index: 2;
@@ -69,21 +62,21 @@
 		padding: 50px 70px 0 80px;
 	}
 }
+
 .flex {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-bottom: 36px;
 	background-color: var(--color--shades-2);
 	gap: 23px;
 
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
 		padding-bottom: 0px;
-		gap: 16px;
+		gap: 8px;
 	}
 	@media screen and (min-width: 800px) {
-		gap: 40px;
+		gap: 70px;
 	}
 	@include useScreen('tablet-md') {
 		gap: 160px;
@@ -101,26 +94,32 @@
 		gap: 73.5px;
 	}
 }
+
 .flexGrey {
 	@include useScreen('tablet-sm') {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
+		width: 205px;
 		gap: 87px;
 	}
 	@include useScreen('tablet-xl') {
+		width: max-content;
 		gap: 0px;
 	}
 }
+
 .link {
 	color: var(--color--secondary-4);
 }
+
 .logoAndCallToAction {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 8px;
 }
+
 .icons {
 	display: flex;
 	justify-content: center;
@@ -129,76 +128,81 @@
 		gap: 32px;
 	}
 }
+
 .contacts {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	width: 282px;
 	gap: 24px;
-	@include useScreen('tablet-sm') {
-		width: 294px;
-	}
 	@include useScreen('tablet-xl') {
-		width: 348px;
 		gap: 32px;
 	}
 }
+
 .iconAndText {
 	display: flex;
 	align-items: center;
 	gap: 16px;
 }
+
 .whiteColor {
+	@media screen and (max-width: 359px) {
+		font-size: 13.93px;
+	}
+	max-width: 242px;
 	color: var(--color--shades-1);
+	@include useScreen('desktop-sm') {
+		max-width: 272px;
+	}
 }
 
 .socialNetworks {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	gap: 22px;
 	@include useScreen('tablet-sm') {
-		gap: 20px;
-	}
-	@include useScreen('tablet-xl') {
-		flex-direction: row;
-		width: 348px;
-		gap: 28px;
+		gap: 18px;
 	}
 }
+
 .fontSizeCallToAction {
 	font-size: 16px;
 }
+
 .fontSizeBaza {
 	font-size: 11px;
 }
+
 .widthCallToAction {
 	width: 171px;
 	@include useScreen('tablet-xl') {
 		width: 256px;
 	}
 }
+
 .widthBaza {
 	width: 205px;
 	@include useScreen('tablet-xl') {
 		width: 282px;
 	}
 }
+
 .navigation {
 	flex-direction: column;
-	width: 201px;
 	row-gap: 16px;
 	@include useScreen('tablet-sm') {
 		width: max-content;
 	}
 }
+
 .underline::after {
 	top: 25px;
-	@include useScreen('tablet-xl') {
+	@include useScreen('desktop-sm') {
 		top: 30px;
 	}
 }
+
 .twoLists {
 	display: flex;
 	flex-direction: column;
@@ -210,6 +214,7 @@
 		column-gap: 70.5px;
 	}
 }
+
 .greyBlockText {
 	display: flex;
 	flex-direction: column;
@@ -217,4 +222,11 @@
 	align-items: flex-start;
 	padding: 12px 0;
 	row-gap: 48px;
+}
+
+.iconSocial {
+	color: var(--color--shades-1);
+	&:hover {
+		color: var(--color--warning-1);
+	}
 }
