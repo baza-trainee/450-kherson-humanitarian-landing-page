@@ -22,7 +22,9 @@ export function GreyBlockDesktop() {
 						допоможемо разом
 					</Text>
 					<Text variant="subtitle" className={s.widthBaza}>
-						Розробка Baza Trainee Ukraine 2023. Усі права захищені.
+						Розробка Baza Trainee Ukraine 2023.
+						<br />
+						Усі права захищені.
 					</Text>
 				</div>
 			</div>
