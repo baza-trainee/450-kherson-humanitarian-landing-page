@@ -2,12 +2,12 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	height: 48px;
 	padding: 16px;
+	border-radius: 5px;
+	text-decoration: none;
 	cursor: pointer;
 	user-select: none;
-	border-radius: 5px;
-	height: 48px;
-	text-decoration: none;
 }
 
 .label {
@@ -33,9 +33,9 @@
 	}
 	&.disabled {
 		color: var(--color--secondary-2);
-		background: var(--color--secondary-1);
-		pointer-events: none;
 		user-select: none;
+		pointer-events: none;
+		background: var(--color--secondary-1);
 	}
 }
 
@@ -53,6 +53,7 @@
 			var(--color--gradient-1) border-box;
 	}
 	&:active {
+		padding: 18px;
 		border-style: none;
 		color: var(--color--shades-1);
 		background: var(--color--primary-4);
@@ -60,7 +61,7 @@
 	&.disabled {
 		border: 2px solid var(--color--secondary-1);
 		color: var(--color--secondary-2);
-		pointer-events: none;
 		user-select: none;
+		pointer-events: none;
 	}
 }
