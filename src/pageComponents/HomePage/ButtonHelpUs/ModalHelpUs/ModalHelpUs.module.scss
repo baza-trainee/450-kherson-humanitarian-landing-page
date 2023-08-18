@@ -9,7 +9,7 @@
 	@include useScreen('tablet-sm') {
 		padding: 0 42px 60px 42px;
 	}
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		padding: 0 48px 60px 48px;
 	}
 }
@@ -17,9 +17,14 @@
 .heading {
 	width: 264px;
 	padding: 0 0 18px 8px;
+	padding-bottom: 18px;
 	line-height: 140%;
 	@include useScreen('tablet-sm') {
 		width: 350px;
+		padding-bottom: 27px;
+	}
+	@include useScreen('desktop-sm') {
+		padding-bottom: 25px;
 	}
 }
 
@@ -35,9 +40,11 @@
 
 	@include useScreen('tablet-sm') {
 		padding: 32px 16px;
+		gap: 27px;
 	}
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		padding: 32px 24px 40px 24px;
+		gap: 32px;
 	}
 }
 
@@ -66,6 +73,9 @@
 	margin: 0;
 	padding: 0;
 	gap: 16px;
+	@include useScreen('tablet-sm') {
+		gap: 32px;
+	}
 }
 
 .item,
@@ -74,6 +84,13 @@
 }
 
 .button {
+	width: 250px;
+	@include useScreen('tablet-sm') {
+		margin-top: 21px;
+	}
+	@include useScreen('desktop-sm') {
+		margin-top: 16px;
+	}
 	&:hover {
 		.icon {
 			background-color: var(--color--secondary-4);
@@ -84,4 +101,8 @@
 			background-color: var(--color--shades-1);
 		}
 	}
+}
+
+.buttonWidth {
+	width: 214px;
 }

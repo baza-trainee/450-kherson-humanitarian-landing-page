@@ -58,8 +58,8 @@ export function ModalHelpUs({ onClose }: ModalHelpUsProps) {
 					<ul className={s.items}>
 						{modalList[tabIndex].fieldList.map((item) => (
 							<li className={s.item} key={item.id}>
-								<Text variant="h3">{item.title}</Text>
-								<Text variant="h5">{item.text}</Text>
+								<Text variant="h5">{item.title}</Text>
+								<Text variant="h3">{item.text}</Text>
 							</li>
 						))}
 					</ul>
