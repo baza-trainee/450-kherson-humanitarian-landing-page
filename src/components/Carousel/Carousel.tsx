@@ -9,22 +9,20 @@ export type CarouselElement = HTMLDivElement;
 
 export interface CarouselProps extends Omit<ReactHTMLElementAttributes<CarouselElement>, 'ref'> {
 	animation: MotionProps;
-	handleDrag: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+	handleDragEnd: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
+	handleDragStart: (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => void;
 }
 
-export const Carousel = forwardRef<CarouselElement, CarouselProps>(({ children, animation, handleDrag }, ref) => {
-	return (
-		<div ref={ref} className={s.carousel}>
-			<motion.div
-				className={s.row}
-				{...animation}
-				onDragStart={(e) => ((e.target as HTMLDivElement).style.cursor = 'grabbing')}
-				onDragEnd={handleDrag}
-			>
-				{children}
-			</motion.div>
-		</div>
-	);
-});
+export const Carousel = forwardRef<CarouselElement, CarouselProps>(
+	({ children, animation, handleDragEnd, handleDragStart }, ref) => {
+		return (
+			<div ref={ref} className={s.carousel}>
+				<motion.div className={s.row} {...animation} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+					{children}
+				</motion.div>
+			</div>
+		);
+	},
+);
 
 Carousel.displayName = 'Carousel';
