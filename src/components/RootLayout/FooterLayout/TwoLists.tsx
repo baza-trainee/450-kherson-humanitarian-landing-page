@@ -7,7 +7,7 @@ import s from './FooterLayout.module.scss';
 
 export function TwoLists() {
 	return (
-		<div className={s.twoLists}>
+		<div className={s.rightContent}>
 			<NavigationList navigation={navigation} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
 			<NavigationList
 				download

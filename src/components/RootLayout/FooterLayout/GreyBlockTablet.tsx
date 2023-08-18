@@ -11,19 +11,21 @@ import s from './FooterLayout.module.scss';
 
 export function GreyBlockTablet() {
 	return (
-		<div className={s.flex}>
-			<div className={s.flexGrey}>
+		<>
+			<div className={s.leftContent}>
 				<Link href="#hero">
 					<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 				</Link>
 				<Text variant="h3" className={clsx(s.fontSizeCallToAction, s.widthCallToAction)}>
-					Давайте <br /> допоможемо разом
+					Давайте
+					<br />
+					допоможемо разом
 				</Text>
 				<Text variant="subtitle" className={clsx(s.fontSizeBaza, s.widthBaza)}>
-					Розробка Baza Trainee Ukraine 2023. <br /> Усі права захищені.
+					Розробка Baza Trainee Ukraine 2023. Усі права захищені.
 				</Text>
 			</div>
 			<TwoLists />
-		</div>
+		</>
 	);
 }

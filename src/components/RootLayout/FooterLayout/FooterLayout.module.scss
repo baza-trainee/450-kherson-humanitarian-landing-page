@@ -11,7 +11,7 @@
 		flex-direction: row;
 		padding-top: 80px;
 	}
-	@include useScreen('desktop-sm') {
+	@include useScreen('tablet-md') {
 		padding-top: 100px;
 	}
 }
@@ -44,14 +44,25 @@
 }
 
 .grey {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 	width: 100vw;
 	margin-top: -41px;
 	padding: 73px 25px 16px;
 	user-select: none;
 	background-color: var(--color--shades-2);
+	gap: 23px;
+
 	@include useScreen('tablet-sm') {
+		flex-direction: row;
 		margin: 0 -32px 0 0;
-		padding: 26px 32px;
+		padding: 26px 50px 26px 32px;
+		gap: 8px;
+	}
+	@include useScreen('tablet-lg') {
+		padding: 26px 100px 26px 32px;
 	}
 	@include useScreen('tablet-xl') {
 		z-index: 2;
@@ -60,42 +71,11 @@
 		height: 370px;
 		margin: 35px -120px 35px 0;
 		padding: 50px 70px 0 80px;
+		gap: 66px;
 	}
 }
 
-.flex {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background-color: var(--color--shades-2);
-	gap: 23px;
-
-	@include useScreen('tablet-sm') {
-		flex-direction: row;
-		padding-bottom: 0px;
-		gap: 8px;
-	}
-	@media screen and (min-width: 800px) {
-		gap: 70px;
-	}
-	@include useScreen('tablet-md') {
-		gap: 160px;
-	}
-	@include useScreen('tablet-lg') {
-		gap: 200px;
-	}
-	@include useScreen('tablet-xl') {
-		gap: 50px;
-	}
-	@include useScreen('desktop-sm') {
-		gap: 135px;
-	}
-	@include useScreen('desktop-md') {
-		gap: 73.5px;
-	}
-}
-
-.flexGrey {
+.leftContent {
 	@include useScreen('tablet-sm') {
 		display: flex;
 		flex-direction: column;
@@ -107,10 +87,6 @@
 		width: max-content;
 		gap: 0px;
 	}
-}
-
-.link {
-	color: var(--color--secondary-4);
 }
 
 .logoAndCallToAction {
@@ -151,7 +127,7 @@
 	}
 	max-width: 242px;
 	color: var(--color--shades-1);
-	@include useScreen('desktop-sm') {
+	@include useScreen('tablet-md') {
 		max-width: 272px;
 	}
 }
@@ -188,6 +164,14 @@
 	}
 }
 
+.rulesProtected {
+	width: 200px;
+	text-align: center;
+	@include useScreen('mobile-md') {
+		width: 100%;
+	}
+}
+
 .navigation {
 	flex-direction: column;
 	row-gap: 16px;
@@ -198,18 +182,18 @@
 
 .underline::after {
 	top: 25px;
-	@include useScreen('desktop-sm') {
+	@include useScreen('tablet-md') {
 		top: 30px;
 	}
 }
 
-.twoLists {
+.rightContent {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: flex-start;
 	row-gap: 16px;
-	@include useScreen('tablet-xl') {
+	@include useScreen('tablet-md') {
 		flex-direction: row;
 		column-gap: 70.5px;
 	}

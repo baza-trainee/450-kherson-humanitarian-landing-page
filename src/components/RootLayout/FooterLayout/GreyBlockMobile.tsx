@@ -10,7 +10,7 @@ import s from './FooterLayout.module.scss';
 
 export function GreyBlockMobile() {
 	return (
-		<div className={s.flex}>
+		<>
 			<TwoLists />
 			<div className={s.logoAndCallToAction}>
 				<Link href="#hero">
@@ -18,7 +18,9 @@ export function GreyBlockMobile() {
 				</Link>
 				<Text variant="h3">Давайте допоможемо разом</Text>
 			</div>
-			<Text variant="subtitle">Розробка Baza Trainee Ukraine 2023. Усі права захищені.</Text>
-		</div>
+			<Text variant="subtitle" className={s.rulesProtected}>
+				Розробка Baza Trainee Ukraine 2023. Усі права захищені.
+			</Text>
+		</>
 	);
 }
