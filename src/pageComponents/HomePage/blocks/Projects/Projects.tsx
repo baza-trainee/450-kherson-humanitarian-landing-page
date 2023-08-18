@@ -42,7 +42,7 @@ export function Projects() {
 			setPosition(position - 1);
 		}
 	};
-	const { handleDrag } = useHandleDrag(onRight, onLeft);
+	const { handleDragEnd, handleDragStart } = useHandleDrag(onRight, onLeft);
 
 	const animation: MotionProps = {
 		initial: { scale: 0 },
@@ -73,7 +73,12 @@ export function Projects() {
 			<Container className={s.container}>
 				<div className={s.wrapper}>
 					<Text variant="h2">Проєкти</Text>
-					<Carousel ref={carousel} animation={animation} handleDrag={handleDrag}>
+					<Carousel
+						ref={carousel}
+						animation={animation}
+						handleDragEnd={handleDragEnd}
+						handleDragStart={handleDragStart}
+					>
 						<CardBlock />
 					</Carousel>
 					<div className={s.blockArrow}>
