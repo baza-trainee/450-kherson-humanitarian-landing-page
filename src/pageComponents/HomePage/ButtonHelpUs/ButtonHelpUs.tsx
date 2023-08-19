@@ -4,6 +4,7 @@ import { ModalHelpUs } from '~/pageComponents/HomePage/ButtonHelpUs/ModalHelpUs/
 import { Button } from '~components/Buttons/Button';
 
 import s from './ModalHelpUs/ModalHelpUs.module.scss';
+
 export function ButtonHelpUs() {
 	const [isOpen, setIsOpen] = useState(false);
 	const onOpenModal = () => {
@@ -14,7 +15,7 @@ export function ButtonHelpUs() {
 	};
 	return (
 		<>
-			<Button type="secondary" onClick={onOpenModal} className={s.buttonWidth}>
+			<Button type="secondary" onClick={onOpenModal} className={s.buttonHelpUs}>
 				Допомогти нам
 			</Button>
 			{isOpen && <ModalHelpUs onClose={onCloseModal} />}
