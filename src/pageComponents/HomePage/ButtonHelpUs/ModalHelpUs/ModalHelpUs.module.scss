@@ -28,6 +28,10 @@
 	}
 }
 
+.headingInner {
+	padding: 0;
+}
+
 .block {
 	padding: 24px 16px 40px;
 	border: 1px solid var(--color--secondary-2);
@@ -39,12 +43,11 @@
 	gap: 24px;
 
 	@include useScreen('tablet-sm') {
-		padding: 32px 16px;
-		gap: 27px;
+		padding: 32px 21px 32px 23px;
+		gap: 32px;
 	}
 	@include useScreen('desktop-sm') {
 		padding: 32px 24px 40px 24px;
-		gap: 32px;
 	}
 }
 
@@ -85,9 +88,6 @@
 
 .button {
 	width: 250px;
-	@include useScreen('tablet-sm') {
-		margin-top: 21px;
-	}
 	@include useScreen('desktop-sm') {
 		margin-top: 16px;
 	}

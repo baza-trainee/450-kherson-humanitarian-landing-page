@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import clsx from 'clsx';
+
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { Tabs } from '~components/inputs/Tabs/Tabs';
@@ -46,7 +48,7 @@ export function ModalHelpUs({ onClose }: ModalHelpUsProps) {
 					Підтримати гуманітарний напрямок
 				</Text>
 				<div className={s.block}>
-					<Text className={s.heading} variant="h2">
+					<Text className={clsx(s.heading, s.headingInner)} variant="h2">
 						Банківський переказ
 					</Text>
 					<Tabs
