@@ -10,11 +10,11 @@
 	height: 100%;
 	padding: 40px 58px 0 16px;
 	overflow: auto;
+	gap: 40px;
 	@include useScreen('tablet-sm') {
 		padding: 48px 48px 0 48px;
 		gap: 48px;
 	}
-	gap: 40px;
 }
 
 .backdrop {
