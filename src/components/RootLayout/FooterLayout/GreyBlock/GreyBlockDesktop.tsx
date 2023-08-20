@@ -3,15 +3,15 @@ import Link from 'next/link';
 
 import { Text } from '~components/Text/Text';
 
-import { TwoLists } from './TwoLists';
+import { NavigationAndDocuments } from './NavigationAndDocuments/NavigationAndDocuments';
 import logo from '/public/svg/logo.svg';
 
-import s from './FooterLayout.module.scss';
+import s from './GreyBlock.module.scss';
 
 export function GreyBlockDesktop() {
 	return (
 		<>
-			<div className={s.leftContent}>
+			<div className={s.mainInfo}>
 				<Link href="#hero">
 					<Image priority={true} src={logo} alt="logo" width={290} height={120} />
 				</Link>
@@ -28,7 +28,7 @@ export function GreyBlockDesktop() {
 					</Text>
 				</div>
 			</div>
-			<TwoLists />
+			<NavigationAndDocuments />
 		</>
 	);
 }

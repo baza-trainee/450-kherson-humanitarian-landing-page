@@ -4,15 +4,15 @@ import Link from 'next/link';
 
 import { Text } from '~components/Text/Text';
 
-import { TwoLists } from './TwoLists';
+import { NavigationAndDocuments } from './NavigationAndDocuments/NavigationAndDocuments';
 import logo from '/public/svg/logo.svg';
 
-import s from './FooterLayout.module.scss';
+import s from './GreyBlock.module.scss';
 
 export function GreyBlockTablet() {
 	return (
 		<>
-			<div className={s.leftContent}>
+			<div className={s.mainInfo}>
 				<Link href="#hero">
 					<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 				</Link>
@@ -27,7 +27,7 @@ export function GreyBlockTablet() {
 					Усі права захищені.
 				</Text>
 			</div>
-			<TwoLists />
+			<NavigationAndDocuments />
 		</>
 	);
 }

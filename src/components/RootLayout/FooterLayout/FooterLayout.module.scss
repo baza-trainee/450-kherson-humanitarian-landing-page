@@ -75,27 +75,6 @@
 	}
 }
 
-.leftContent {
-	@include useScreen('tablet-sm') {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		width: 205px;
-		gap: 87px;
-	}
-	@include useScreen('tablet-xl') {
-		width: max-content;
-		gap: 0px;
-	}
-}
-
-.logoAndCallToAction {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 8px;
-}
-
 .icons {
 	display: flex;
 	justify-content: center;
@@ -121,7 +100,7 @@
 	gap: 16px;
 }
 
-.whiteColor {
+.textInBlueBlock {
 	@media screen and (max-width: 359px) {
 		font-size: 13.93px;
 	}
@@ -140,72 +119,6 @@
 	@include useScreen('tablet-sm') {
 		gap: 18px;
 	}
-}
-
-.fontSizeCallToAction {
-	font-size: 16px;
-}
-
-.fontSizeBaza {
-	font-size: 11px;
-}
-
-.widthCallToAction {
-	width: 171px;
-	@include useScreen('tablet-xl') {
-		width: 256px;
-	}
-}
-
-.widthBaza {
-	width: 205px;
-	@include useScreen('tablet-xl') {
-		width: 282px;
-	}
-}
-
-.rulesProtected {
-	width: 200px;
-	text-align: center;
-	@include useScreen('mobile-md') {
-		width: 100%;
-	}
-}
-
-.navigation {
-	flex-direction: column;
-	row-gap: 16px;
-	@include useScreen('tablet-sm') {
-		width: max-content;
-	}
-}
-
-.underline::after {
-	top: 25px;
-	@include useScreen('tablet-md') {
-		top: 30px;
-	}
-}
-
-.rightContent {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: flex-start;
-	row-gap: 16px;
-	@include useScreen('tablet-md') {
-		flex-direction: row;
-		column-gap: 70.5px;
-	}
-}
-
-.greyBlockText {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: flex-start;
-	padding: 12px 0;
-	row-gap: 48px;
 }
 
 .iconSocial {

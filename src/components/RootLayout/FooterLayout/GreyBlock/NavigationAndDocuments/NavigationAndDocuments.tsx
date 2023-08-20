@@ -1,13 +1,13 @@
 import { NavigationList } from '~components/NavigationList/NavigationList';
 
-import { navigation } from '../HeaderLayout/navigation';
-import { documents } from './documents';
+import { navigation } from '../../../HeaderLayout/navigation';
+import { documents } from '../../data/documents';
 
-import s from './FooterLayout.module.scss';
+import s from './NavigationAndDocuments.module.scss';
 
-export function TwoLists() {
+export function NavigationAndDocuments() {
 	return (
-		<div className={s.rightContent}>
+		<div className={s.NavigationAndDocuments}>
 			<NavigationList navigation={navigation} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
 			<NavigationList
 				download
