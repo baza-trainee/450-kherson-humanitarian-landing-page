@@ -17,7 +17,7 @@ export function FooterLayout() {
 	const { isScreenTabletSm, isScreenTabletXl } = useScreenQuery();
 
 	return (
-		<footer className={s.FooterLayout} id="Footer">
+		<footer className={s.FooterLayout} id="footer">
 			<div className={s.grey}>
 				{isScreenTabletXl ? <GreyBlockDesktop /> : isScreenTabletSm ? <GreyBlockTablet /> : <GreyBlockMobile />}
 			</div>
