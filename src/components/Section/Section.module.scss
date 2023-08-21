@@ -1,4 +1,14 @@
+@use '~/styles/mixins' as *;
+
 .Section {
 	width: 100%;
-	padding: 0 32px;
+	padding: 0 16px;
+
+	@include useScreen('tablet-sm') {
+		padding: 0 32px;
+	}
+
+	@include useScreen('desktop-sm') {
+		padding: 0 80px;
+	}
 }

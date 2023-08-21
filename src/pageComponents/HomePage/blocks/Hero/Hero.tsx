@@ -30,7 +30,7 @@ function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => 
 					colors={{ default: 'var(--color--primary-3)' }}
 					onClick={props.onClick}
 					disabled={props.disabled}
-				></Icon>
+				/>
 			)}
 			{!props.left && (
 				<Icon
@@ -38,7 +38,7 @@ function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => 
 					colors={{ default: 'var(--color--primary-3)' }}
 					onClick={props.onClick}
 					disabled={props.disabled}
-				></Icon>
+				/>
 			)}
 		</button>
 	);
@@ -73,7 +73,7 @@ export function Hero() {
 							instanceRef.current?.moveToIdx(idx);
 						}}
 						className={clsx(s.dot, currentSlide === idx ? `${s.active}` : '')}
-					></button>
+					/>
 				);
 			})}
 		</div>
