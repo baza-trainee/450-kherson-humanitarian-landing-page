@@ -2,7 +2,6 @@ export interface ContentItem {
 	id: number;
 	title: {
 		value: string;
-		width?: string;
 		color: string;
 	};
 	subtitle: {
@@ -17,7 +16,6 @@ export const content: ContentItem[] = [
 		id: 1,
 		title: {
 			value: 'Надаємо гуманітарні набори потребуючим',
-			width: 'smallWidthOfHeading',
 			color: 'blue',
 		},
 		subtitle: { value: 'м. Кривий Ріг', color: 'black' },

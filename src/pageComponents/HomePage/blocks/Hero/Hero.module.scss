@@ -42,7 +42,7 @@
 	}
 }
 
-.bg {
+.background {
 	background-repeat: no-repeat;
 	background-attachment: local;
 	background-position: center;
@@ -52,9 +52,11 @@
 .first {
 	background-image: url('../../../../assets/images/hero/banner-1.jpg');
 }
+
 .second {
 	background-image: url('../../../../assets/images/hero/banner-2.jpg');
 }
+
 .third {
 	background-image: url('../../../../assets/images/hero/banner-3.jpg');
 }
@@ -87,110 +89,6 @@
 	@include useScreen('desktop-md') {
 		width: 675px;
 	}
-}
-
-.smallWidthOfHeading {
-	width: 274px;
-	@include useScreen('mobile-lg') {
-		width: 315px;
-	}
-	@include useScreen('mobile-xl') {
-		width: 450px;
-	}
-	@include useScreen('tablet-sm') {
-		width: 490px;
-	}
-	@include useScreen('desktop-md') {
-		width: 514px;
-	}
-}
-
-.buttonsContainer {
-	display: flex;
-	flex-direction: column;
-	column-gap: 32px;
-	row-gap: 16px;
-	@include useScreen('tablet-sm') {
-		row-gap: 24px;
-	}
-	@include useScreen('desktop-md') {
-		flex-direction: row;
-	}
-}
-
-.arrowsContainer {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	padding: 0 16px 52px 16px;
-	@include useScreen('tablet-sm') {
-		padding: 0 32px 104px 32px;
-	}
-	@include useScreen('desktop-md') {
-		padding: 0 80px 88px 80px;
-	}
-}
-
-.arrows {
-	display: flex;
-	padding: 8px 0;
-	gap: 35px;
-}
-
-.arrow {
-	display: flex;
-	opacity: 0.9;
-	justify-content: center;
-	align-items: center;
-	width: 32px;
-	height: 32px;
-	border-style: none;
-	border-radius: 3px;
-	color: var(--color--primary-3);
-	cursor: pointer;
-	background-color: var(--color--shades-1);
-	box-shadow: 0px -3px 0px 0px #3a416f00 inset, 0px 2px 4px 0px #2d234233, 0px 7px 10px -3px #2d23421a;
-}
-
-.dots {
-	display: flex;
-	position: absolute;
-	bottom: 0;
-
-	left: 0;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	padding: 20px 4px;
-}
-
-.dot {
-	width: 5px;
-	height: 5px;
-	margin: 0 6px;
-	padding: 0;
-	border: none;
-	border-radius: 50%;
-	cursor: pointer;
-	background: var(--color--shades-2);
-	&:focus {
-		outline: none;
-	}
-	&.active {
-		padding: 3.5px;
-		background: var(--color--primary-3);
-	}
-}
-
-.dotActive {
-	width: 7px;
-	height: 7px;
-	margin: 0 5px;
-	padding: 5px;
-	border: none;
-	border-radius: 50%;
-	cursor: pointer;
-	background: var(--color--primary-3);
 }
 
 .white {
