@@ -1,47 +1,25 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import clsx from 'clsx';
 import { useKeenSlider } from 'keen-slider/react';
 
-import { Button } from '~components/Buttons/Button';
+import { Arrow } from '~components/Arrow/Arrow';
 import { ButtonLink } from '~components/Buttons/ButtonLink';
 import { Container } from '~components/Container/Container';
-import { Icon } from '~components/Icon/Icon';
 import { Text } from '~components/Text/Text';
 import { useScreenQuery } from '~hooks/useScreenQuery';
+
+import { ButtonHelpUs } from '../../ButtonHelpUs/ButtonHelpUs';
+import type { ContentItem } from './data/content';
+import { content } from './data/content';
 
 import 'keen-slider/keen-slider.min.css';
 
 import s from './Hero.module.scss';
 
-const headings = [
-	'Надаємо гуманітарні набори потребуючим',
-	'Відбудовуємо зруйновані та пошкоджені об’єкти (Херсонська область)',
-	'Забезпечуємо медичні заклади м. Кривий Ріг, Криворізького району та Херсонської області',
-];
-const city = 'м. Кривий Ріг';
-
-function Arrow(props: { disabled: boolean; left?: boolean; onClick: (e: any) => void }) {
-	return (
-		<button className={s.arrow}>
-			{props.left && (
-				<Icon
-					icon="icon--arrow-left"
-					colors={{ default: 'var(--color--primary-3)' }}
-					onClick={props.onClick}
-					disabled={props.disabled}
-				/>
-			)}
-			{!props.left && (
-				<Icon
-					icon="icon--arrow-right"
-					colors={{ default: 'var(--color--primary-3)' }}
-					onClick={props.onClick}
-					disabled={props.disabled}
-				/>
-			)}
-		</button>
-	);
+function ArrowKeenSlider(props: { disabled: boolean; left?: boolean; onClick: (e: any) => void }) {
+	const direction = props.left ? true : false;
+	return <Arrow direction={direction} onClick={props.onClick} disabled={props.disabled} className={s.arrow} />;
 }
 
 export function Hero() {
@@ -56,13 +34,16 @@ export function Hero() {
 			setLoaded(true);
 		},
 	});
+
 	const { isScreenTabletSm } = useScreenQuery();
+
 	const buttons = (
-		<div className={s.buttonsGap}>
-			<ButtonLink href="#GetHelp">Отримати допомогу</ButtonLink>
-			<Button type="secondary">Допомогти нам</Button>
+		<div className={s.buttonsContainer}>
+			<ButtonLink href="#get-help">Отримати допомогу</ButtonLink>
+			<ButtonHelpUs />
 		</div>
 	);
+
 	const dots = loaded && instanceRef.current && (
 		<div className={s.dots}>
 			{[...Array(instanceRef.current.track.details.slides.length).keys()].map((idx) => {
@@ -80,16 +61,16 @@ export function Hero() {
 	);
 
 	const arrows = (
-		<div className={s.arrows}>
+		<div className={s.arrowsContainer}>
 			{loaded && instanceRef.current && (
-				<div className={s.arrowsGap}>
-					<Arrow
+				<div className={s.arrows}>
+					<ArrowKeenSlider
 						left
 						onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()}
 						disabled={currentSlide === 0}
 					/>
 
-					<Arrow
+					<ArrowKeenSlider
 						onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()}
 						disabled={currentSlide === instanceRef.current.track.details.slides.length - 1}
 					/>
@@ -98,52 +79,32 @@ export function Hero() {
 		</div>
 	);
 
-	function renderNavigation() {
-		return isScreenTabletSm ? arrows : dots;
-	}
+	const generateSlideClasses = (c: ContentItem) => {
+		return clsx('keen-slider__slide', s.bg, s[c.photo]);
+	};
 
 	return (
-		<Container className={s.positionRelative}>
-			<div ref={sliderRef} className="keen-slider">
-				<div className="keen-slider__slide">
-					<div className={clsx(s.content, s.banner1)}>
+		<div ref={sliderRef} className={clsx('keen-slider', s.container)}>
+			{content.map((c: ContentItem) => (
+				<div key={c.id} className={generateSlideClasses(c)}>
+					<Container className={s.content}>
 						<div className={s.text}>
-							<Text variant="h1" className={clsx(s.heading, s.blueColor)}>
-								{headings[0]}
+							<Text
+								variant="h1"
+								className={clsx(s.heading, s[c.title.color], c.title.width && s[c.title.width])}
+							>
+								{c.title.value}
 							</Text>
-							<Text variant="various3">{city}</Text>
-						</div>
-						{buttons}
-					</div>
-				</div>
-				<div className="keen-slider__slide">
-					<div className={clsx(s.content, s.banner2)}>
-						<div className={s.text}>
-							<Text variant="h1" className={clsx(s.whiteColor, s.headingWidth)}>
-								{headings[1]}
-							</Text>
-							<Text variant="various3" className={s.whiteColor}>
-								{city}
+							<Text variant="various3" className={s[c.subtitle.color]}>
+								{c.subtitle.value}
 							</Text>
 						</div>
 						{buttons}
-					</div>
+					</Container>
 				</div>
-				<div className="keen-slider__slide">
-					<div className={clsx(s.content, s.banner3)}>
-						<div className={s.text}>
-							<Text variant="h1" className={clsx(s.whiteColor, s.headingWidth)}>
-								{headings[2]}
-							</Text>
-							<Text variant="various3" className={s.whiteColor}>
-								{city}
-							</Text>
-						</div>
-						{buttons}
-					</div>
-				</div>
-			</div>
-			{renderNavigation()}
-		</Container>
+			))}
+
+			{isScreenTabletSm ? arrows : dots}
+		</div>
 	);
 }

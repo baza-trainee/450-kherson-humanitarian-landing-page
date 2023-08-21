@@ -1,26 +1,26 @@
 @use '~/styles/mixins' as *;
 
-// .Hero {
-// 	border: 1px solid magenta;
-// }
-.positionRelative {
+.container {
 	position: relative;
+	height: 528px;
+	@include useScreen('tablet-sm') {
+		height: 850px;
+	}
+	@include useScreen('desktop-md') {
+		height: 680px;
+	}
 }
-.content {
-	background-repeat: no-repeat;
-	background-position: center;
-	background-attachment: local;
-	background-size: auto 100%;
 
+.content {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: flex-start;
-	padding: 0 16px 52px 16px;
-	height: 100%;
-	gap: 10px;
 	width: 100%;
+	height: 100%;
 	height: 528px;
+	padding: 0 16px 52px 16px;
+	gap: 10px;
 	@include useScreen('mobile-md') {
 		gap: 20px;
 	}
@@ -31,26 +31,34 @@
 		gap: 40px;
 	}
 	@include useScreen('tablet-sm') {
-		gap: 101px;
-		padding: 0 32px 104px 32px;
 		height: 850px;
+		padding: 0 32px 104px 32px;
+		gap: 101px;
 	}
 	@include useScreen('desktop-md') {
-		gap: 64px;
 		height: 680px;
-		padding: 0 80px 88px 80px;
+		padding: 0 0 88px 0;
+		gap: 64px;
 	}
 }
 
-.banner1 {
+.bg {
+	background-repeat: no-repeat;
+	background-attachment: local;
+	background-position: center;
+	background-size: cover;
+}
+
+.first {
 	background-image: url('../../../../assets/images/hero/banner-1.jpg');
 }
-.banner2 {
+.second {
 	background-image: url('../../../../assets/images/hero/banner-2.jpg');
 }
-.banner3 {
+.third {
 	background-image: url('../../../../assets/images/hero/banner-3.jpg');
 }
+
 .text {
 	display: flex;
 	flex-direction: column;
@@ -69,6 +77,19 @@
 }
 
 .heading {
+	width: 321px;
+	@include useScreen('mobile-lg') {
+		width: 400px;
+	}
+	@include useScreen('tablet-sm') {
+		width: 680px;
+	}
+	@include useScreen('desktop-md') {
+		width: 675px;
+	}
+}
+
+.smallWidthOfHeading {
 	width: 274px;
 	@include useScreen('mobile-lg') {
 		width: 315px;
@@ -83,31 +104,12 @@
 		width: 514px;
 	}
 }
-.headingWidth {
-	width: 321px;
-	@include useScreen('mobile-lg') {
-		width: 400px;
-	}
-	@include useScreen('mobile-xl') {
-		width: 500px;
-	}
-	@include useScreen('tablet-sm') {
-		width: 680px;
-	}
-	@include useScreen('desktop-md') {
-		width: 675px;
-	}
-}
-.arrowsGap {
-	display: flex;
-	gap: 35px;
-	padding: 8px 0;
-}
-.buttonsGap {
+
+.buttonsContainer {
 	display: flex;
 	flex-direction: column;
-	row-gap: 16px;
 	column-gap: 32px;
+	row-gap: 16px;
 	@include useScreen('tablet-sm') {
 		row-gap: 24px;
 	}
@@ -115,13 +117,12 @@
 		flex-direction: row;
 	}
 }
-.arrows {
+
+.arrowsContainer {
 	position: absolute;
-	bottom: 0;
 	right: 0;
-
+	bottom: 0;
 	padding: 0 16px 52px 16px;
-
 	@include useScreen('tablet-sm') {
 		padding: 0 32px 104px 32px;
 	}
@@ -129,38 +130,49 @@
 		padding: 0 80px 88px 80px;
 	}
 }
+
+.arrows {
+	display: flex;
+	padding: 8px 0;
+	gap: 35px;
+}
+
 .arrow {
+	display: flex;
+	opacity: 0.9;
+	justify-content: center;
+	align-items: center;
 	width: 32px;
 	height: 32px;
-	box-shadow: 0px -3px 0px 0px #3a416f00 inset, 0px 2px 4px 0px #2d234233, 0px 7px 10px -3px #2d23421a;
-	background-color: var(--color--shades-1);
-	opacity: 0.9;
 	border-style: none;
 	border-radius: 3px;
+	color: var(--color--primary-3);
 	cursor: pointer;
+	background-color: var(--color--shades-1);
+	box-shadow: 0px -3px 0px 0px #3a416f00 inset, 0px 2px 4px 0px #2d234233, 0px 7px 10px -3px #2d23421a;
 }
 
 .dots {
+	display: flex;
 	position: absolute;
 	bottom: 0;
-	left: 0;
 
-	width: 100%;
-	display: flex;
-	padding: 20px 4px;
+	left: 0;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
+	padding: 20px 4px;
 }
 
 .dot {
-	border: none;
 	width: 5px;
 	height: 5px;
-	background: var(--color--shades-2);
-	border-radius: 50%;
 	margin: 0 6px;
-	padding: 2.5px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
 	cursor: pointer;
+	background: var(--color--shades-2);
 	&:focus {
 		outline: none;
 	}
@@ -169,19 +181,26 @@
 		background: var(--color--primary-3);
 	}
 }
+
 .dotActive {
-	border: none;
 	width: 7px;
 	height: 7px;
-	background: var(--color--primary-3);
-	border-radius: 50%;
 	margin: 0 5px;
 	padding: 5px;
+	border: none;
+	border-radius: 50%;
 	cursor: pointer;
+	background: var(--color--primary-3);
 }
-.whiteColor {
+
+.white {
 	color: var(--color--shades-1);
 }
-.blueColor {
+
+.blue {
 	color: var(--color--primary-3);
+}
+
+.black {
+	color: var(--color--secondary-4);
 }
