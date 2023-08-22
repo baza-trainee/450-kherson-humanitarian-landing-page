@@ -18,15 +18,17 @@ export function OurAchievements() {
 						const line = block.title.split('\n');
 						return (
 							<div className={s.block} key={block.id}>
-								<Text variant="p" className={s.title}>
-									{line[0]} <br />
-									{line[1]}
-								</Text>
-								<div className={s.achievement}>
-									<Text variant="various1" className={s.number}>
-										{block.number}
+								<div className={s.content}>
+									<Text variant="p" className={s.title}>
+										{line[0]} <br />
+										{line[1]}
 									</Text>
-									<Text variant="p">{block.unit}</Text>
+									<div className={s.achievement}>
+										<Text variant="various1" className={s.number}>
+											{block.number}
+										</Text>
+										<Text variant="p">{block.unit}</Text>
+									</div>
 								</div>
 							</div>
 						);

@@ -1,4 +1,4 @@
-@use '~/styles/mixins' as *;
+@use "~/styles/mixins" as *;
 
 $iconsSet: (
 	arrow-left,
@@ -10,13 +10,20 @@ $iconsSet: (
 	chevron-down,
 	close,
 	copy,
+	download,
 	dropdown-form,
 	dropdown-modal,
+	edit,
 	email,
+	eye,
 	facebook,
 	instagram,
 	location,
-	phone
+	log-out,
+	phone,
+	plus,
+	trash,
+	upload
 );
 
 @include useSvgIcon($icons: $iconsSet);
