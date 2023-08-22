@@ -1,0 +1,8 @@
+@use '~/styles/mixins' as *;
+
+.mainImage {
+	width: 578px;
+	@include useScreen('tablet-md') {
+		width: 600px;
+	}
+}

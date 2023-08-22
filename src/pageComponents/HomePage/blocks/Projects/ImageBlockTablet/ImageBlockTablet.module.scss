@@ -1,0 +1,9 @@
+.swipable {
+	display: flex;
+	flex-direction: row;
+	gap: 16px;
+}
+
+.active {
+	border: 2px solid var(--color--primary-3);
+}

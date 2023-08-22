@@ -1,0 +1,13 @@
+.swipable {
+	display: flex;
+	flex-direction: row;
+}
+
+.container {
+	width: 100%;
+	max-width: 100%;
+	padding: 0 10px;
+	min-height: 253px;
+	display: flex;
+	justify-content: center;
+}

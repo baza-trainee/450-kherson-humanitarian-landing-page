@@ -1,0 +1,64 @@
+@use '~/styles/mixins' as *;
+
+.blockContent {
+	display: flex;
+	row-gap: 24px;
+	column-gap: 80px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.infoContent {
+	width: 100%;
+	@include useScreen('tablet-sm') {
+		width: 600px;
+	}
+}
+
+.infoContent {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.about,
+.reportData {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.report {
+	background-color: var(--color--primary-1);
+	padding: 24px 24px 64px 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.square,
+.duration {
+	display: flex;
+}
+
+.square {
+	& .staticText {
+		flex: 0 1 80%;
+		@include useScreen('mobile-xl') {
+			flex: 0 1 50%;
+		}
+	}
+}
+
+.duration {
+	flex-wrap: wrap;
+}
+
+.staticText {
+	flex: 0 1 50%;
+}
+
+.dynamicText,
+.staticText {
+	font-weight: 600;
+}
