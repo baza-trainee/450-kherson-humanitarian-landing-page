@@ -1,8 +1,6 @@
 import type { AppProps } from 'next/app';
 import { Open_Sans, Unbounded } from 'next/font/google';
 
-import { RootLayout } from '~components/RootLayout/RootLayout';
-
 import 'modern-normalize/modern-normalize.css';
 import '~/styles/index.scss';
 
@@ -29,9 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
 					--font-family--open-sans: ${openSans.style.fontFamily};
 				}
 			`}</style>
-			<RootLayout>
-				<Component {...pageProps} />
-			</RootLayout>
+			<Component {...pageProps} />
 		</>
 	);
 }
