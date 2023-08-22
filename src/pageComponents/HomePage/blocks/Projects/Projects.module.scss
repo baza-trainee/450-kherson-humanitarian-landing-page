@@ -26,11 +26,6 @@
 	}
 }
 
-.swipable {
-	display: flex;
-	flex-direction: row;
-}
-
 .blockArrow {
 	align-self: center;
 	display: flex;
@@ -47,14 +42,36 @@
 }
 
 .button {
-	margin: auto;
-	margin-right: auto;
-	margin-top: 24px;
+	width: 214px;
+	margin: 0 auto;
 	@include useScreen('tablet-sm') {
-		margin-right: 0;
-		margin-top: 32px;
+		margin: 32px 0 0 auto;
 	}
 	@include useScreen('desktop-sm') {
-		margin-top: 10px;
+		margin: 10px 0 0 auto;
+	}
+}
+
+.modalContainer {
+	min-width: 360px;
+	padding: 0 16px 16px 16px;
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
+	@include useScreen('tablet-sm') {
+		padding: 16px 42px 42px 42px;
+		max-width: calc(100vw - 50px);
+	}
+	@include useScreen('desktop-md') {
+		max-width: 1392px;
+	}
+}
+
+.aboutProject {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	@include useScreen('tablet-sm') {
+		gap: 64px;
 	}
 }

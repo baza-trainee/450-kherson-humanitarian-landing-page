@@ -4,25 +4,34 @@ import type { MotionProps } from 'framer-motion';
 
 import { cardsData } from '~/data/projectsContent';
 import { Arrow } from '~components/Arrow/Arrow';
-import { Button } from '~components/Buttons/Button';
-import { Card } from '~components/Card/Card';
 import { Carousel } from '~components/Carousel/Carousel';
 import { Container } from '~components/Container/Container';
+import { Modal } from '~components/Modal/Modal';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 import { useHandleDrag } from '~hooks/useHandleDrag';
 import { useHandleResize } from '~hooks/useHandleResize';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
+import { ButtonHelpUs } from '../../ButtonHelpUs/ButtonHelpUs';
+import AboutProject from './AboutProject/AboutProject';
+import { CardBlock } from './CardBlock/CardBlock';
+
 import s from './Projects.module.scss';
 
 export function Projects() {
+	const [isOpen, setIsOpen] = useState(false);
 	const [position, setPosition] = useState(0);
 	const [width, setWidth] = useState(0);
+	const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+
 	const carousel = useRef<HTMLDivElement>(null);
+
 	const { isScreenTabletMd, isScreenMobileXl } = useScreenQuery();
 
-	const visibleItems = isScreenTabletMd ? 3 : isScreenMobileXl ? 2 : 1;
+	let visibleItems = 1;
+	if (isScreenMobileXl) visibleItems = 2;
+	if (isScreenTabletMd) visibleItems = 3;
 
 	const handleResize = () => {
 		if (carousel.current?.offsetWidth) {
@@ -42,7 +51,21 @@ export function Projects() {
 			setPosition(position - 1);
 		}
 	};
-	const { handleDragEnd, handleDragStart } = useHandleDrag(onRight, onLeft);
+
+	const openModal = () => {
+		setIsOpen(true);
+	};
+
+	const { handleDragEnd, handleDragStart, handleOpenModal } = useHandleDrag({
+		callbackRight: onRight,
+		callbackLeft: onLeft,
+		openModal: openModal,
+	});
+
+	const handleProductClick = (id: string) => {
+		setSelectedProductId(id);
+		handleOpenModal();
+	};
 
 	const animation: MotionProps = {
 		initial: { scale: 0 },
@@ -60,14 +83,6 @@ export function Projects() {
 		dragElastic: 0.7,
 	};
 
-	const CardBlock = () => (
-		<div className={s.swipable}>
-			{cardsData.map((card) => (
-				<Card key={card.src} src={card.src} title={card.title} status={card.status} width={width} />
-			))}
-		</div>
-	);
-
 	return (
 		<Section className={s.Projects} id="projects">
 			<Container className={s.container}>
@@ -79,7 +94,7 @@ export function Projects() {
 						handleDragEnd={handleDragEnd}
 						handleDragStart={handleDragStart}
 					>
-						<CardBlock />
+						<CardBlock handleProductClick={handleProductClick} width={width} />
 					</Carousel>
 					<div className={s.blockArrow}>
 						<Arrow direction className={s.arrow} onClick={onLeft} disabled={position === 0} />
@@ -90,9 +105,19 @@ export function Projects() {
 						/>
 					</div>
 				</div>
-				<Button type="secondary" className={s.button}>
-					Допомогти нам
-				</Button>
+				<div className={s.button}>
+					<ButtonHelpUs />
+				</div>
+				{isOpen && (
+					<Modal isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
+						<section className={s.modalContainer}>
+							<div className={s.aboutProject}>
+								<Text variant="h2">Проєкти</Text>
+								<AboutProject productId={selectedProductId} />
+							</div>
+						</section>
+					</Modal>
+				)}
 			</Container>
 		</Section>
 	);
