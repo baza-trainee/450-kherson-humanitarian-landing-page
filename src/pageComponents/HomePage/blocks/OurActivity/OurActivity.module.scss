@@ -80,12 +80,6 @@
 	justify-content: center;
 	align-items: center;
 	gap: 18px;
-	@include useScreen('tablet-sm') {
-		min-height: 80px;
-	}
-	@include useScreen('desktop-sm') {
-		min-height: 48px;
-	}
 }
 
 .img {
