@@ -5,7 +5,7 @@ import phone from '/public/svg/icons/phone.svg';
 export const contacts = [
 	{
 		id: 1,
-		value: '50014, Україна, Дніпропетровська область, \n м. Кривий Ріг, вул. Ракітіна, буд. 9',
+		value: '50014, Україна,\nДніпропетровська область,\nм. Кривий Ріг, вул. Ракітіна, буд. 9',
 		name: 'address',
 		src: location,
 	},
