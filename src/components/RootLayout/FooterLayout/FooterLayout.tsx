@@ -28,7 +28,7 @@ export function FooterLayout() {
 						.map((contact) => (
 							<div className={s.iconAndText} key={contact.id}>
 								<Image src={contact.src} alt={contact.name} width={24} height={24} />
-								<Text className={s.textInBlueBlock} variant="footer">
+								<Text className={s.textInBlueBlock} variant="footer" lineBreak>
 									{contact.value}
 								</Text>
 							</div>
