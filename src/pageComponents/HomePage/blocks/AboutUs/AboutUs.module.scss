@@ -79,13 +79,6 @@
 	flex-shrink: 0;
 }
 
-.listText {
-	width: 240px;
-	@include useScreen('mobile-lg') {
-		width: 100%;
-	}
-}
-
 .image {
 	width: 100%;
 	height: 200px;
