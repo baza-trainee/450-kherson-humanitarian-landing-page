@@ -1,6 +1,6 @@
 import { NavigationList } from '~components/NavigationList/NavigationList';
+import { navigation } from '~components/RootLayout/HeaderLayout/navigation';
 
-import { navigation } from '../../../HeaderLayout/navigation';
 import { documents } from '../../data/documents';
 
 import s from './NavigationAndDocuments.module.scss';

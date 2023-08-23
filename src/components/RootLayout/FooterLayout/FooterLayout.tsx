@@ -23,14 +23,16 @@ export function FooterLayout() {
 			</div>
 			<div className={s.blue}>
 				<div className={s.contacts}>
-					{contacts.map((contact) => (
-						<div className={s.iconAndText} key={contact.id}>
-							<Image src={contact.src} alt={contact.name} width={24} height={24} />
-							<Text className={s.textInBlueBlock} variant="footer">
-								{contact.value}
-							</Text>
-						</div>
-					))}
+					{contacts
+						.filter((contact) => contact.value !== '')
+						.map((contact) => (
+							<div className={s.iconAndText} key={contact.id}>
+								<Image src={contact.src} alt={contact.name} width={24} height={24} />
+								<Text className={s.textInBlueBlock} variant="footer">
+									{contact.value}
+								</Text>
+							</div>
+						))}
 				</div>
 				<div className={s.socialNetworks}>
 					<Text className={s.textInBlueBlock} variant="footer">
