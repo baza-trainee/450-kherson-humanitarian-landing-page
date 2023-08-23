@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { Icon } from '~components/Icon/Icon';
+
 import s from './ImgUpload.module.scss';
 
 export function ImgUpload() {
@@ -14,9 +16,14 @@ export function ImgUpload() {
 					className={s.img}
 				/>
 			</div>
-			<label>
+			<div className={s.iconBlock}>
+				<Icon icon="icon--upload" className={s.icon} /> {/*onClick={}*/}
+				<Icon icon="icon--trash" className={s.icon} />
+			</div>
+
+			{/* <label>
 				<input type='file' />
-			</label>
+			</label> */}
 		</div>
 	);
 }

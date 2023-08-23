@@ -1,6 +1,8 @@
 .ImgUpload {
+	display: flex;
 	width: 752px;
 	height: 300px;
+
 }
 
 .imgBlock {
@@ -14,4 +16,14 @@
 
 .img {
 	margin: 0 auto;
+}
+
+.iconBlock {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.icon {
+	margin: 8px;
 }
