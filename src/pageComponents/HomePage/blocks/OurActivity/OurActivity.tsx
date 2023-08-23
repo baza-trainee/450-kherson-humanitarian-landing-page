@@ -15,6 +15,12 @@ import { useScreenQuery } from '~hooks/useScreenQuery';
 import s from './OurActivity.module.scss';
 
 const animationDuration = 0.5;
+
+const wrap = (min: number, max: number, v: number) => {
+	const rangeSize = max - min;
+	return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
+};
+
 const getCenterXPosition = (slidePosition: string, isScreenTabletSm: boolean) => {
 	switch (slidePosition) {
 		case 'left':
@@ -92,10 +98,7 @@ export function OurActivity() {
 		(dir: number) => {
 			if (!isAnimating) {
 				setIsAnimating(true);
-				const index = activeIndex + dir;
-				if (index >= 0 && index < images.length) {
-					setActiveIndex([index, dir]);
-				}
+				setActiveIndex([wrap(0, images.length, activeIndex + dir), dir]);
 				setTimeout(() => {
 					setIsAnimating(false);
 				}, animationDuration * 1000);
@@ -145,12 +148,14 @@ export function OurActivity() {
 						visibleIndices={visibleIndices}
 					/>
 					<div className={s.dots}>
-						{isScreenDesktopSm && <Dots items={images} activeIndex={activeIndex} paginateTo={paginateTo} />}
+						<Dots items={images} activeIndex={activeIndex} paginateTo={paginateTo} />
 					</div>
-					<div className={s.blockArrow}>
-						<Arrow direction className={s.arrow} onClick={() => paginate(-1)} disabled={activeIndex === 0} />
-						<Arrow className={s.arrow} onClick={() => paginate(1)} disabled={activeIndex === images.length - 1} />
-					</div>
+					{isScreenDesktopSm && (
+						<div className={s.blockArrow}>
+							<Arrow direction className={s.arrow} onClick={() => paginate(-1)} />
+							<Arrow className={s.arrow} onClick={() => paginate(1)} />
+						</div>
+					)}
 				</div>
 			</Container>
 		</Section>
