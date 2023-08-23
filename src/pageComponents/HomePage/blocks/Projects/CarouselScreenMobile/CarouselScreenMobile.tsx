@@ -57,7 +57,7 @@ export function CarouselScreenMobile({ arrayIndex }: CarouselScreenMobileProps) 
 	const animation: MotionProps = {
 		initial: { scale: 0 },
 		animate: {
-			left: `${position * -width}px`,
+			left: `${position * (-width - 16)}px`,
 			scale: 1,
 		},
 		transition: {

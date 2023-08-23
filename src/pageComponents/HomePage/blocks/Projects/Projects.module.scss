@@ -60,7 +60,7 @@
 	overflow-x: hidden;
 	@include useScreen('tablet-sm') {
 		padding: 16px 42px 42px 42px;
-		max-width: calc(100vw - 50px);
+		max-width: calc(100vw - 100px);
 	}
 	@include useScreen('desktop-md') {
 		max-width: 1392px;
