@@ -14,8 +14,14 @@
 	text-align: center;
 }
 
-.img {
+.imgDefault {
 	margin: 0 auto;
+}
+
+.img {
+	width: auto;
+	height: auto;
+	margin: 0;
 }
 
 .iconBlock {
@@ -26,4 +32,14 @@
 
 .icon {
 	margin: 8px;
+}
+
+.hidden {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	line-height: 0;
 }
