@@ -45,20 +45,22 @@
 .background {
 	background-repeat: no-repeat;
 	background-attachment: local;
-	background-position: center;
 	background-size: cover;
 }
 
 .first {
 	background-image: url('../../../../assets/images/hero/banner-1.jpg');
+	background-position: right;
 }
 
 .second {
 	background-image: url('../../../../assets/images/hero/banner-2.jpg');
+	background-position: center;
 }
 
 .third {
 	background-image: url('../../../../assets/images/hero/banner-3.jpg');
+	background-position: center;
 }
 
 .text {
