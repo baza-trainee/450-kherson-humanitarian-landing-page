@@ -15,18 +15,14 @@ export function OurAchievements() {
 				<Text variant="p">За час існування організації</Text>
 				<div className={s.blocks}>
 					{blocks.map((block) => {
-						const line = block.title.split('\n');
 						return (
 							<div className={s.block} key={block.id}>
 								<div className={s.content}>
-									<Text variant="p" className={s.title}>
-										{line[0]} <br />
-										{line[1]}
+									<Text variant="p" className={s.title} lineBreak>
+										{block.title}
 									</Text>
 									<div className={s.achievement}>
-										<Text variant="various1" className={s.number}>
-											{block.number}
-										</Text>
+										<Text variant="various1">{block.number}</Text>
 										<Text variant="p">{block.unit}</Text>
 									</div>
 								</div>

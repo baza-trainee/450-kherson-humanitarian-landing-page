@@ -59,7 +59,7 @@
 		padding: 64.5px 16px;
 	}
 	@include useScreen('desktop-sm') {
-		padding: 48px 64px;
+		padding: 48px 0 48px 64px;
 	}
 }
 
@@ -93,13 +93,4 @@
 
 .title {
 	color: var(--color--secondary-3);
-}
-
-.number {
-	@include useScreen('desktop-sm') {
-		font-size: 58px;
-	}
-	@include useScreen('desktop-md') {
-		font-size: 64px;
-	}
 }
