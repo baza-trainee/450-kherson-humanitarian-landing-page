@@ -1,8 +1,12 @@
 @use '~/styles/mixins' as *;
 
 .OurAchievements {
-	padding: 32px 16px;
+	padding: 32px 10px;
 	background-color: var(--color--primary-1);
+
+	@include useScreen('mobile-md') {
+		padding: 32px 16px;
+	}
 	@include useScreen('tablet-sm') {
 		padding: 32px;
 	}
@@ -13,22 +17,21 @@
 
 .flexContainer,
 .blocks,
-.block {
+.block,
+.content {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
 }
 
 .flexContainer {
-	max-width: 328px;
-	margin: 0 auto;
+	min-width: 300px;
 	gap: 24px;
 
 	@include useScreen('tablet-sm') {
-		max-width: 704px;
+		min-width: 704px;
 	}
 	@include useScreen('desktop-sm') {
-		max-width: 1280px;
+		min-width: 1280px;
 		gap: 32px;
 	}
 }
@@ -39,31 +42,32 @@
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
 	}
-	@include useScreen('desktop-sm') {
-	}
 }
 
 .block {
 	width: 100%;
 	height: 220px;
-
-	padding: 64.5px 48px;
+	padding: 64.5px 22px;
 	background: var(--color--shades-1);
-
 	box-shadow: 0px 10px 32px -4px rgba(24, 39, 75, 0.1), 0px 6px 14px -6px rgba(24, 39, 75, 0.12);
-	gap: 16px;
 
-	@include useScreen('mobile-sm') {
-		width: 328px;
+	@include useScreen('mobile-md') {
+		padding: 64.5px 48px;
 	}
-
 	@include useScreen('tablet-sm') {
-		width: 219px;
-		padding: 66.5px 16px;
+		min-width: 219px;
+		padding: 64.5px 16px;
 	}
 	@include useScreen('desktop-sm') {
-		width: 411px;
-		padding: 48px 60px 48px 64px;
+		padding: 48px 64px;
+	}
+}
+
+.content {
+	align-self: center;
+	gap: 16px;
+	@include useScreen('desktop-sm') {
+		align-self: flex-start;
 	}
 }
 

@@ -54,7 +54,7 @@
 }
 
 .aboutTitle {
-	width: 240px;
+	width: 220px;
 	@include useScreen('mobile-lg') {
 		width: 100%;
 	}
@@ -77,13 +77,6 @@
 
 .icon {
 	flex-shrink: 0;
-}
-
-.listText {
-	width: 240px;
-	@include useScreen('mobile-lg') {
-		width: 100%;
-	}
 }
 
 .image {
