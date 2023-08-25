@@ -60,15 +60,15 @@ export function Form() {
 				label: 'Прізвище',
 				placeholder: 'Шевченко',
 				required: true,
+				inputMaxLength: 30,
 				widthSize: 'fullWidth',
 				register: () =>
 					register('surname', {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
-						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки кирилицю, пробіл, дефіс та апостроф',
+							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
 						},
 					}),
 			},
@@ -78,15 +78,15 @@ export function Form() {
 				label: "Ім'я",
 				placeholder: 'Тарас',
 				required: true,
+				inputMaxLength: 30,
 				widthSize: 'fullWidth',
 				register: () =>
 					register('name', {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
-						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
 						pattern: {
-							value: /^^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки кирилицю, пробіл, дефіс та апостроф',
+							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
+							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
 						},
 					}),
 			},
@@ -96,15 +96,15 @@ export function Form() {
 				label: 'По-батькові',
 				placeholder: 'Григорович',
 				required: true,
+				inputMaxLength: 30,
 				widthSize: 'fullWidth',
 				register: () =>
 					register('patronymic', {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
-						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки кирилицю, пробіл, дефіс та апостроф',
+							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу та апострофу',
 						},
 					}),
 			},
@@ -112,20 +112,10 @@ export function Form() {
 				type: 'text',
 				name: 'populationCity',
 				label: 'Фактичне місце проживання',
-				placeholder: 'Введіть коректну назву населеного пункту',
 				required: true,
 				disabled: true,
 				widthSize: 'fullWidth',
-				register: () =>
-					register('populationCity', {
-						required: 'Поле не може бути пустим',
-						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
-						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
-						pattern: {
-							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-.]+$/,
-							message: 'Поле може містити тільки кирилицю, пробіл, крапку, дефіс та апостроф',
-						},
-					}),
+				register: () => register('populationCity', {}),
 			},
 			populationStreet: {
 				type: 'text',
@@ -133,15 +123,16 @@ export function Form() {
 				label: 'Назва вулиці',
 				placeholder: 'вул. Визволення',
 				required: true,
+				inputMaxLength: 30,
 				widthSize: 'fullWidth',
 				register: () =>
 					register('populationStreet', {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
-						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-.]+$/,
-							message: 'Поле може містити тільки кирилицю, пробіл, крапку, дефіс та апостроф',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, крапки, дефісу та апострофу',
 						},
 					}),
 			},
@@ -151,15 +142,15 @@ export function Form() {
 				label: 'Номер будинку',
 				placeholder: '11а',
 				required: true,
+				inputMaxLength: 5,
 				widthSize: 'halfWidth',
 				register: () =>
 					register('populationHouseNumber', {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
-						maxLength: { value: 5, message: 'Максимальна кількість символів 5' },
 						pattern: {
 							value: /^[0-9А-Яа-яІіЇїЄєҐґЁё/-]+$/,
-							message: 'Поле може містити тільки цифри, кирилицю, слеш та дефіс',
+							message: 'Поле може містити тільки цифри, літери кирилиці та символи слешу та дефісу',
 						},
 					}),
 			},
@@ -168,14 +159,14 @@ export function Form() {
 				name: 'populationApartmentNumber',
 				label: 'Номер квартири',
 				placeholder: '11',
+				inputMaxLength: 5,
 				widthSize: 'halfWidth',
 				register: () =>
 					register('populationApartmentNumber', {
 						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
-						maxLength: { value: 5, message: 'Максимальна кількість символів 5' },
 						pattern: {
-							value: /^[0-9А-Яа-яІіЇїЄєҐґЁё/-]+$/,
-							message: 'Поле може містити тільки цифри, кирилицю, слеш та дефіс',
+							value: /^\d+$/,
+							message: 'Поле може містити тільки цифри',
 						},
 					}),
 			},
@@ -250,15 +241,15 @@ export function Form() {
 				label: 'Назва населеного пункту',
 				placeholder: 'Високопілля',
 				required: true,
+				inputMaxLength: 30,
 				widthSize: 'fullWidth',
 				register: () =>
 					register('movementCity', {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
-						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-.]+$/,
-							message: 'Поле може містити тільки кирилицю, пробіл, крапку, дефіс та апостроф',
+							message: 'Поле може містити тільки літери кирилиці та символи пробілу, крапки, дефісу, апострофу',
 						},
 					}),
 			},
@@ -290,7 +281,7 @@ export function Form() {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 12, message: 'Мінімальна кількість символів 12' },
 						pattern: {
-							value: /^[+]?(380)[\s][0-9]{2}[\s][0-9]{3}[\s]?[0-9]{2}[\s]?[0-9]{2}[\s]?$/,
+							value: /^[+]?380[\s][0-9]{2}[\s][0-9]{3}[\s]?[0-9]{2}[\s]?[0-9]{2}[\s]?$/,
 							message: 'Номер телефону повинен бути у форматі +380 11 111 11 11',
 						},
 					}),
