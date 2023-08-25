@@ -38,9 +38,7 @@ export function AboutUs() {
 												width={48}
 												height={48}
 											/>
-											<Text variant="p" className={s.listText}>
-												{obj.text}
-											</Text>
+											<Text variant="p">{obj.text}</Text>
 										</li>
 									);
 								})}
