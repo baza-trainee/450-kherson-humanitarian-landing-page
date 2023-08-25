@@ -1,5 +1,4 @@
-import React from 'react';
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
@@ -22,22 +21,34 @@ const variantsMapping = {
 	various3: 'p',
 };
 
-type TextVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+export type TextVariants = keyof typeof variantsMapping;
+
+type ComponentVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
 
 export type TextElement = HTMLHeadingElement | HTMLParagraphElement;
 
 export interface TextProps extends Omit<ReactHTMLElementAttributes<TextElement>, 'ref'> {
-	variant?: keyof typeof variantsMapping;
+	variant?: TextVariants;
+	lineBreak?: boolean;
 }
 
-export const Text = forwardRef<TextElement, TextProps>(({ variant, children, className, ...rest }, ref) => {
-	const Component = (variant ? variantsMapping[variant] : 'span') as TextVariants;
+export function splitTextByBr(text: string): React.ReactNode {
+	return text.split('\n').map((textLine, i) => (
+		<React.Fragment key={i}>
+			{textLine}
+			<br />
+		</React.Fragment>
+	));
+}
+
+export const Text = forwardRef<TextElement, TextProps>(({ variant, lineBreak, children, className, ...rest }, ref) => {
+	const Component = (variant ? variantsMapping[variant] : 'span') as ComponentVariants;
 
 	const componentClass = variant && s[variant];
 
 	return (
 		<Component className={clsx(s.Text, componentClass, className)} ref={ref} {...rest}>
-			{children}
+			{lineBreak ? splitTextByBr(String(children)) : children}
 		</Component>
 	);
 });

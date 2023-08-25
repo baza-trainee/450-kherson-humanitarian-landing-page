@@ -1,3 +1,105 @@
+@use '~/styles/mixins' as *;
+
 .OurAchievements {
-	border: 1px solid magenta;
+	padding: 32px 10px;
+	background-color: var(--color--primary-1);
+
+	@include useScreen('mobile-md') {
+		padding: 32px 16px;
+	}
+	@include useScreen('tablet-sm') {
+		padding: 32px;
+	}
+	@include useScreen('desktop-sm') {
+		padding: 48px 80px;
+	}
+}
+
+.flexContainer,
+.blocks,
+.block,
+.content {
+	display: flex;
+	flex-direction: column;
+}
+
+.flexContainer {
+	min-width: 300px;
+	gap: 24px;
+
+	@include useScreen('tablet-sm') {
+		min-width: 704px;
+	}
+	@include useScreen('desktop-sm') {
+		min-width: 1280px;
+		gap: 32px;
+	}
+}
+
+.blocks {
+	width: 100%;
+	gap: 24px;
+	@include useScreen('tablet-sm') {
+		flex-direction: row;
+	}
+}
+
+.block {
+	width: 100%;
+	height: 220px;
+	padding: 64.5px 22px;
+	background: var(--color--shades-1);
+	box-shadow: 0px 10px 32px -4px rgba(24, 39, 75, 0.1), 0px 6px 14px -6px rgba(24, 39, 75, 0.12);
+
+	@include useScreen('mobile-md') {
+		padding: 64.5px 48px;
+	}
+	@include useScreen('tablet-sm') {
+		min-width: 219px;
+		padding: 64.5px 16px;
+	}
+	@include useScreen('desktop-sm') {
+		padding: 48px 64px;
+	}
+}
+
+.content {
+	align-self: center;
+	gap: 16px;
+	@include useScreen('desktop-sm') {
+		align-self: flex-start;
+	}
+}
+
+.achievement {
+	display: flex;
+	align-items: flex-end;
+	gap: 8px;
+	@include useScreen('tablet-sm') {
+		gap: 4px;
+	}
+	@include useScreen('desktop-sm') {
+		gap: 16px;
+	}
+}
+
+.button {
+	max-width: 214px;
+	margin: 0 auto;
+	@include useScreen('tablet-sm') {
+		margin: 0 0 0 auto;
+	}
+}
+
+.title {
+	color: var(--color--secondary-3);
+}
+
+.number {
+	@include useScreen('desktop-sm') {
+		font-size: 58px;
+	}
+	@include useScreen('desktop-md') {
+		font-size: 64px;
+	}
 }

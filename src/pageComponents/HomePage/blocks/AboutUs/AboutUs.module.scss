@@ -1,9 +1,5 @@
 @use '~/styles/mixins' as *;
 
-.AboutUs {
-	scroll-margin-top: 80px;
-}
-
 .wrapper {
 	display: flex;
 	flex-direction: column;
@@ -14,10 +10,10 @@
 }
 
 .about {
-	width: 100%;
 	display: flex;
-	justify-content: center;
 	flex-direction: column;
+	justify-content: center;
+	width: 100%;
 	gap: 24px;
 	@include useScreen('tablet-sm') {
 		gap: 40px;
@@ -30,9 +26,9 @@
 }
 
 .block {
-	width: 100%;
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 	gap: 24px;
 	@include useScreen('desktop-sm') {
 		flex-direction: row;
@@ -42,9 +38,9 @@
 }
 
 .text {
-	width: 100%;
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 	gap: 24px;
 	@include useScreen('desktop-sm') {
 		width: 600px;
@@ -58,29 +54,24 @@
 }
 
 .aboutTitle {
-	width: 240px;
+	width: 220px;
 	@include useScreen('mobile-lg') {
 		width: 100%;
 	}
 }
 
 .list {
-	padding: 0;
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
 	margin: 0;
-	.item:first-child p {
-		@include useScreen('mobile-xl') {
-			width: 458px;
-		}
-	}
+	padding: 0;
+	gap: 24px;
 }
 
 .item {
-	list-style: none;
 	display: flex;
 	align-items: center;
+	list-style: none;
 	gap: 16px;
 }
 
@@ -88,15 +79,9 @@
 	flex-shrink: 0;
 }
 
-.listText {
-	width: 240px;
-	@include useScreen('mobile-lg') {
-		width: 100%;
-	}
-}
-
 .image {
 	width: 100%;
+	height: 200px;
 	@include useScreen('mobile-xl') {
 		height: 400px;
 	}
