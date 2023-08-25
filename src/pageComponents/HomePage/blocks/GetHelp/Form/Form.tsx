@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { SubmitHandler, UseFormRegisterReturn } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -24,7 +24,8 @@ interface Field {
 	placeholder?: string;
 	required?: boolean;
 	disabled?: boolean;
-	size: 'fullWidth' | 'halfWidth';
+	widthSize: 'fullWidth' | 'halfWidth';
+	inputMaxLength?: number;
 	register: () => UseFormRegisterReturn<keyof FormFields>;
 	options?: string[];
 	condition?: string;
@@ -44,217 +45,202 @@ export function Form() {
 	} = useForm<FormFields>({
 		mode: 'onSubmit',
 		defaultValues: {
-			documentType: 'Паспорт',
+			populationCity: 'м. Кривий Ріг',
 			movementArea: '',
 		},
 	});
 
-	const watchDocumentType = watch('documentType');
-	const conditions = [watchDocumentType];
 	const watchConsent = watch('consent');
-
-	useEffect(() => {
-		if (watchDocumentType === 'Паспорт') {
-			register('passportSeries');
-			register('passportNumber');
-			unregister('idCard');
-		} else {
-			unregister('passportSeries');
-			unregister('passportNumber');
-			register('idCard');
-		}
-	}, [register, unregister, watchDocumentType]);
 
 	const formFieldsData: FormFieldsData = useMemo(
 		() => ({
-			name: {
-				type: 'text',
-				name: 'name',
-				label: "Ім'я",
-				placeholder: "Введіть ім'я",
-				required: true,
-				size: 'fullWidth',
-				register: () =>
-					register('name', {
-						required: 'Поле таке пусте! Введіть більше символів!',
-					}),
-			},
 			surname: {
 				type: 'text',
 				name: 'surname',
 				label: 'Прізвище',
-				placeholder: 'Введіть прізвище',
+				placeholder: 'Шевченко',
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
 					register('surname', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+						required: 'Поле не може бути пустим',
+						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
+						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
+						pattern: {
+							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
+							message: 'Поле може містити тільки кирилицю, пробіл, дефіс та апостроф',
+						},
+					}),
+			},
+			name: {
+				type: 'text',
+				name: 'name',
+				label: "Ім'я",
+				placeholder: 'Тарас',
+				required: true,
+				widthSize: 'fullWidth',
+				register: () =>
+					register('name', {
+						required: 'Поле не може бути пустим',
+						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
+						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
+						pattern: {
+							value: /^^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
+							message: 'Поле може містити тільки кирилицю, пробіл, дефіс та апостроф',
+						},
 					}),
 			},
 			patronymic: {
 				type: 'text',
 				name: 'patronymic',
 				label: 'По-батькові',
-				placeholder: 'Введіть по-батькові',
+				placeholder: 'Григорович',
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
 					register('patronymic', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+						required: 'Поле не може бути пустим',
+						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
+						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
+						pattern: {
+							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
+							message: 'Поле може містити тільки кирилицю, пробіл, дефіс та апостроф',
+						},
 					}),
 			},
-			populationPoint: {
+			populationCity: {
 				type: 'text',
-				name: 'populationPoint',
-				label: 'Фактична адреса проживання',
+				name: 'populationCity',
+				label: 'Фактичне місце проживання',
 				placeholder: 'Введіть коректну назву населеного пункту',
 				required: true,
-				size: 'fullWidth',
+				disabled: true,
+				widthSize: 'fullWidth',
 				register: () =>
-					register('populationPoint', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+					register('populationCity', {
+						required: 'Поле не може бути пустим',
+						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
+						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
+						pattern: {
+							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-.]+$/,
+							message: 'Поле може містити тільки кирилицю, пробіл, крапку, дефіс та апостроф',
+						},
 					}),
 			},
-			street: {
+			populationStreet: {
 				type: 'text',
-				name: 'street',
+				name: 'populationStreet',
 				label: 'Назва вулиці',
-				placeholder: 'Оберіть назву вулиці',
+				placeholder: 'вул. Визволення',
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
-					register('street', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+					register('populationStreet', {
+						required: 'Поле не може бути пустим',
+						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
+						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
+						pattern: {
+							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-.]+$/,
+							message: 'Поле може містити тільки кирилицю, пробіл, крапку, дефіс та апостроф',
+						},
 					}),
 			},
-			houseNumber: {
+			populationHouseNumber: {
 				type: 'text',
-				name: 'houseNumber',
+				name: 'populationHouseNumber',
 				label: 'Номер будинку',
-				placeholder: 'Введіть номер будинку',
+				placeholder: '11а',
 				required: true,
-				size: 'halfWidth',
+				widthSize: 'halfWidth',
 				register: () =>
-					register('houseNumber', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+					register('populationHouseNumber', {
+						required: 'Поле не може бути пустим',
+						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
+						maxLength: { value: 5, message: 'Максимальна кількість символів 5' },
+						pattern: {
+							value: /^[0-9А-Яа-яІіЇїЄєҐґЁё/-]+$/,
+							message: 'Поле може містити тільки цифри, кирилицю, слеш та дефіс',
+						},
 					}),
 			},
-			apartmentNumber: {
+			populationApartmentNumber: {
 				type: 'text',
-				name: 'apartmentNumber',
+				name: 'populationApartmentNumber',
 				label: 'Номер квартири',
-				placeholder: 'Введіть номер квартири',
-				required: true,
-				size: 'halfWidth',
+				placeholder: '11',
+				widthSize: 'halfWidth',
 				register: () =>
-					register('apartmentNumber', {
-						required: 'Поле таке пусте! Введіть більше символів!',
-					}),
-			},
-			documentType: {
-				type: 'dropdown',
-				name: 'documentType',
-				label: 'Тип документу, що посвідчує особу',
-				size: 'fullWidth',
-				register: () => register('documentType'),
-				options: ['Паспорт', 'ID-картка'],
-			},
-			passportSeries: {
-				type: 'text',
-				name: 'passportSeries',
-				label: 'Паспортні дані',
-				placeholder: 'Введіть серію паспорта',
-				required: true,
-				size: 'halfWidth',
-				register: () =>
-					register('passportSeries', {
-						required: 'Поле таке пусте! Введіть більше символів!',
-					}),
-				condition: 'Паспорт',
-			},
-			passportNumber: {
-				type: 'text',
-				name: 'passportNumber',
-				placeholder: 'Введіть номер паспорта',
-				required: true,
-				size: 'halfWidth',
-				register: () =>
-					register('passportNumber', {
-						required: 'Поле таке пусте! Введіть більше символів!',
-					}),
-				condition: 'Паспорт',
-			},
-			idCard: {
-				type: 'text',
-				name: 'idCard',
-				label: 'ID-карта',
-				placeholder: 'Введіть номер ID-карти',
-				required: true,
-				size: 'fullWidth',
-				register: () =>
-					register('idCard', {
-						required: 'Поле таке пусте! Введіть більше символів!',
-					}),
-				condition: 'ID-картка',
-			},
-			disabilityCertificateNumber: {
-				type: 'text',
-				name: 'disabilityCertificateNumber',
-				label: 'Номер посвідчення з інвалідності',
-				placeholder: 'Номер посвідчення з інвалідності',
-				required: true,
-				size: 'fullWidth',
-				register: () =>
-					register('disabilityCertificateNumber', {
-						required: 'Поле таке пусте! Введіть більше символів!',
-					}),
-			},
-			identificationNumber: {
-				type: 'text',
-				name: 'identificationNumber',
-				label: 'ІПН (Ідентифікаційний номер)',
-				placeholder: 'Введіть ідентифікаційний номер',
-				required: true,
-				size: 'fullWidth',
-				register: () =>
-					register('identificationNumber', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+					register('populationApartmentNumber', {
+						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
+						maxLength: { value: 5, message: 'Максимальна кількість символів 5' },
+						pattern: {
+							value: /^[0-9А-Яа-яІіЇїЄєҐґЁё/-]+$/,
+							message: 'Поле може містити тільки цифри, кирилицю, слеш та дефіс',
+						},
 					}),
 			},
 			idpCertificateNumber: {
 				type: 'text',
 				name: 'idpCertificateNumber',
 				label: 'Номер довідки ВПО',
-				placeholder: 'Введіть номер довідки ВПО',
+				placeholder: '1111-1111111111',
+				inputMaxLength: 15,
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
 					register('idpCertificateNumber', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+						required: 'Поле не може бути пустим',
+						pattern: {
+							value: /^\d{4}-\d{10}$/,
+							message: 'Поле повинно бути у форматі 1111-1111111111',
+						},
 					}),
 			},
-			idpCertificateOrBirthCertificateNumber: {
+			disabilityCertificateNumber: {
 				type: 'text',
-				name: 'idpCertificateOrBirthCertificateNumber',
-				label: 'Номер довідки ВПО/свідоцтво про народження',
-				placeholder: 'Введіть номер довідки впо/свідоцтво про народження',
+				name: 'disabilityCertificateNumber',
+				label: 'Номер посвідчення з інвалідності',
+				placeholder: '111111',
+				inputMaxLength: 6,
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
-					register('idpCertificateOrBirthCertificateNumber', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+					register('disabilityCertificateNumber', {
+						required: 'Поле не може бути пустим',
+						pattern: {
+							value: /^\d{6}$/,
+							message: 'Поле повинно містити шість цифр',
+						},
+					}),
+			},
+			birthCertificateNumber: {
+				type: 'text',
+				name: 'birthCertificateNumber',
+				label: 'Номер свідоцтва про народження',
+				placeholder: '111111',
+				inputMaxLength: 6,
+				required: true,
+				widthSize: 'fullWidth',
+				register: () =>
+					register('birthCertificateNumber', {
+						required: 'Поле не може бути пустим',
+						pattern: {
+							value: /^\d{6}$/,
+							message: 'Поле повинно містити шість цифр',
+						},
 					}),
 			},
 			movementArea: {
 				type: 'dropdown',
 				name: 'movementArea',
 				label: 'Звідки переміщені',
-				placeholder: 'Оберіть назву області',
+				placeholder: 'Оберіть область',
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
 					register('movementArea', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+						validate: (value) => AREA_LIST.includes(value) || 'Повинна бути обрана область зі списку',
+						required: 'Повинна бути обрана область',
 					}),
 				options: AREA_LIST,
 			},
@@ -262,36 +248,51 @@ export function Form() {
 				type: 'text',
 				name: 'movementCity',
 				label: 'Назва населеного пункту',
-				placeholder: 'Введіть назву населеного пункту',
+				placeholder: 'Високопілля',
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
 					register('movementCity', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+						required: 'Поле не може бути пустим',
+						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
+						maxLength: { value: 30, message: 'Максимальна кількість символів 30' },
+						pattern: {
+							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-.]+$/,
+							message: 'Поле може містити тільки кирилицю, пробіл, крапку, дефіс та апостроф',
+						},
 					}),
 			},
-			numberOfFamilyMembers: {
+			email: {
 				type: 'text',
-				name: 'numberOfFamilyMembers',
-				label: 'Кількість членів родини',
-				placeholder: 'Введіть кількість членів родини',
+				name: 'email',
+				label: 'E-mail',
+				placeholder: 't.shevchenko@gmail.com',
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
-					register('numberOfFamilyMembers', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+					register('email', {
+						required: 'Поле не може бути пустим',
+						pattern: {
+							value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+							message: 'E-mail повинен бути у форматі example@example.com',
+						},
 					}),
 			},
 			phone: {
 				type: 'text',
 				name: 'phone',
 				label: 'Номер телефону',
-				placeholder: 'Введіть номер телефону',
+				placeholder: '+380 11 111 11 11',
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
 					register('phone', {
-						required: 'Поле таке пусте! Введіть більше символів!',
+						required: 'Поле не може бути пустим',
+						minLength: { value: 12, message: 'Мінімальна кількість символів 12' },
+						pattern: {
+							value: /^[+]?(380)[\s][0-9]{2}[\s][0-9]{3}[\s]?[0-9]{2}[\s]?[0-9]{2}[\s]?$/,
+							message: 'Номер телефону повинен бути у форматі +380 11 111 11 11',
+						},
 					}),
 			},
 			consent: {
@@ -299,7 +300,7 @@ export function Form() {
 				name: 'consent',
 				placeholder: '',
 				required: true,
-				size: 'fullWidth',
+				widthSize: 'fullWidth',
 				register: () =>
 					register('consent', {
 						required: true,
@@ -337,9 +338,7 @@ export function Form() {
 				{formList[tabIndex].fieldList.map((field) => {
 					if (!formFieldsData[field]) return null;
 					const condition = formFieldsData[field]?.condition;
-					if (condition && !conditions.includes(condition)) {
-						return null;
-					}
+					if (condition) return null;
 					switch (formFieldsData[field].type) {
 						case 'text':
 							return (
@@ -351,7 +350,8 @@ export function Form() {
 									required={formFieldsData[field].required}
 									disabled={formFieldsData[field].disabled}
 									placeholder={formFieldsData[field].placeholder}
-									className={clsx(s.field, s[formFieldsData[field].size])}
+									className={clsx(s.field, s[formFieldsData[field].widthSize])}
+									maxLength={formFieldsData[field].inputMaxLength}
 								/>
 							);
 						case 'dropdown':
@@ -366,7 +366,7 @@ export function Form() {
 									disabled={formFieldsData[field].disabled}
 									placeholder={formFieldsData[field].placeholder}
 									options={formFieldsData[field].options || []}
-									className={clsx(s.field, s[formFieldsData[field].size])}
+									className={clsx(s.field, s[formFieldsData[field].widthSize])}
 								/>
 							);
 						case 'checkbox':
@@ -378,7 +378,7 @@ export function Form() {
 									errors={errors}
 									required={formFieldsData[field].required}
 									disabled={formFieldsData[field].disabled}
-									className={clsx(s.field, s[formFieldsData[field].size])}
+									className={clsx(s.field, s[formFieldsData[field].widthSize])}
 									text={formFieldsData[field].text || ''}
 								/>
 							);
