@@ -15,15 +15,18 @@ export interface TextInputProps extends ReactHTMLElementAttributes<TextInputElem
 	errors?: FieldErrors<FieldValues>;
 	required?: boolean;
 	disabled?: boolean;
+	size?: number;
+	maxLength?: number;
 }
 
 export const TextInput = forwardRef<TextInputElement, TextInputProps>(
-	({ label, required, disabled, register, errors, placeholder, className, ...rest }, ref) => {
+	({ label, required, disabled, register, errors, placeholder, size, maxLength, className, ...rest }, ref) => {
 		const error = errors ? errors[register?.name]?.message?.toString() : '';
 		const componentClass = [error && cs.error, disabled && cs.disabled];
+		const disabledClass = [disabled && cs.disabled];
 
 		return (
-			<label className={className}>
+			<label className={clsx(disabledClass, className)}>
 				<InputWrapper
 					label={label}
 					error={error}
@@ -32,7 +35,16 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 					className={clsx(componentClass)}
 					showError={!!errors}
 				>
-					<input type="text" className={cs.input} placeholder={placeholder} ref={ref} {...register} {...rest} />
+					<input
+						type="text"
+						className={cs.input}
+						placeholder={placeholder}
+						size={size}
+						maxLength={maxLength}
+						ref={ref}
+						{...register}
+						{...rest}
+					/>
 				</InputWrapper>
 			</label>
 		);
