@@ -50,21 +50,21 @@ export function Hero() {
 		}
 	};
 
-	const generateSlideClasses = (c: ContentItem) => {
-		return clsx('keen-slider__slide', s.background, s[c.photo]);
-	};
-
 	return (
 		<div ref={sliderRef} className={clsx('keen-slider', s.container)}>
-			{content.map((c: ContentItem) => (
-				<div key={c.id} className={generateSlideClasses(c)}>
+			{content.map((item: ContentItem) => (
+				<div
+					key={item.id}
+					className={clsx('keen-slider__slide', s.background, s[item.banner.gradientColor])}
+					style={{ '--hero-image-url': `url(${item.banner.src})` } as React.CSSProperties}
+				>
 					<Container className={s.content}>
 						<div className={s.text}>
-							<Text variant="h1" className={clsx(s.heading, s[c.title.color])}>
-								{c.title.value}
+							<Text variant="h1" className={clsx(s.heading, s[item.title.color])} lineBreak>
+								{item.title.value}
 							</Text>
-							<Text variant="various3" className={s[c.subtitle.color]}>
-								{c.subtitle.value}
+							<Text variant="various3" className={s[item.subtitle.color]}>
+								{item.subtitle.value}
 							</Text>
 						</div>
 						<Buttons />

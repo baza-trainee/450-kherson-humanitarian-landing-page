@@ -8,18 +8,18 @@ export interface ContentItem {
 		value: string;
 		color: string;
 	};
-	photo: string;
+	banner: { src: string; gradientColor: 'gradientWhite' | 'gradientBlack' };
 }
 
 export const content: ContentItem[] = [
 	{
 		id: 1,
 		title: {
-			value: 'Надаємо гуманітарні набори потребуючим',
+			value: 'Надаємо\nгуманітарні набори\nпотребуючим',
 			color: 'blue',
 		},
 		subtitle: { value: 'м. Кривий Ріг', color: 'black' },
-		photo: 'first',
+		banner: { src: '/hero/banner-1.jpg', gradientColor: 'gradientWhite' },
 	},
 	{
 		id: 2,
@@ -28,7 +28,7 @@ export const content: ContentItem[] = [
 			color: 'white',
 		},
 		subtitle: { value: 'м. Кривий Ріг', color: 'white' },
-		photo: 'second',
+		banner: { src: '/hero/banner-2.jpg', gradientColor: 'gradientBlack' },
 	},
 	{
 		id: 3,
@@ -37,6 +37,6 @@ export const content: ContentItem[] = [
 			color: 'white',
 		},
 		subtitle: { value: 'м. Кривий Ріг', color: 'white' },
-		photo: 'third',
+		banner: { src: '/hero/banner-3.jpg', gradientColor: 'gradientBlack' },
 	},
 ];

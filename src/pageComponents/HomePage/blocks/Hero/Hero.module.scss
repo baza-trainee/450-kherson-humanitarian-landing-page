@@ -43,24 +43,20 @@
 }
 
 .background {
+	--hero-image-url: url('');
 	background-repeat: no-repeat;
 	background-attachment: local;
-	background-size: cover;
-}
-
-.first {
-	background-image: url('../../../../assets/images/hero/banner-1.jpg');
 	background-position: right;
+	background-size: cover;
+	background-color: lightgray 50%;
 }
 
-.second {
-	background-image: url('../../../../assets/images/hero/banner-2.jpg');
-	background-position: center;
+.gradientBlack {
+	background-image: linear-gradient(270deg, rgba(0, 0, 0, 0.08) 29.01%, rgba(0, 0, 0, 0.8) 100%), var(--hero-image-url);
 }
 
-.third {
-	background-image: url('../../../../assets/images/hero/banner-3.jpg');
-	background-position: center;
+.gradientWhite {
+	background-image: var(--hero-image-url);
 }
 
 .text {
