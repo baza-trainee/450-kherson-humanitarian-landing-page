@@ -13,7 +13,6 @@ import { isObjectEmpty } from '~helpers/isObjectEmpty';
 
 import { AREA_LIST } from './constants/AREA_LIST';
 import { formList } from './data/formList';
-import { ErrorMessage } from './ErrorMessage/ErrorMessage';
 import type { FormFields } from './types/FormFields';
 
 import s from './Form.module.scss';
@@ -389,7 +388,6 @@ export function Form() {
 				<Button className={s.submitButton} submit disabled={!watchConsent || !isValidFixed}>
 					Зареєструватись
 				</Button>
-				<ErrorMessage />
 				{/* {isLoading && <LoaderOverlay />} */}
 				{/* {(isSubmit && !isLoading) && <UserPageSuccessModal onClose={handlerSuccessModal} />} */}
 				{/* {(error && !isLoading) && <UserPageErrorModal onClose={handlerErrorModal} error={error} />} */}
