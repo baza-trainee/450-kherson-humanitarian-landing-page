@@ -22,6 +22,8 @@ export function ImageBlockMobile({ imagesArray, width }: ImageBlockProps) {
 							height={253}
 							className={s.img}
 							style={{ objectFit: 'cover' }}
+							draggable="false"
+							onMouseDown={(e) => e.preventDefault()}
 						/>
 					</div>
 				);

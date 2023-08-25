@@ -25,6 +25,8 @@ export function ImageBlockTablet({ imagesArray, width, position }: ImageBlockTab
 						height={94}
 						className={borderImageClassName}
 						style={{ objectFit: 'cover' }}
+						draggable="false"
+						onMouseDown={(e) => e.preventDefault()}
 					/>
 				);
 			})}

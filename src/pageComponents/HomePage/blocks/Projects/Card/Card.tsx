@@ -54,6 +54,8 @@ export function Card({ src, title, status, width, handleProductClick }: CardProp
 					style={{ objectFit: 'cover', width: `${width}px`, height: 'auto' }}
 					priority
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+					draggable="false"
+					onMouseDown={(e) => e.preventDefault()}
 				/>
 				<Text variant="h5" className={s.text}>
 					{title}
