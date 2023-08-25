@@ -3,7 +3,7 @@ import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 
 import { ButtonHelpUs } from '../../ButtonHelpUs/ButtonHelpUs';
-import { blocks } from './blocks';
+import { blocks, date } from './blocks';
 
 import s from './OurAchievements.module.scss';
 
@@ -30,7 +30,7 @@ export function OurAchievements() {
 						);
 					})}
 				</div>
-				<Text variant="p">*Інформація подана станом на 01.07.2023</Text>
+				<Text variant="p">*Інформація подана станом на {date}</Text>
 				<div className={s.button}>
 					<ButtonHelpUs />
 				</div>
