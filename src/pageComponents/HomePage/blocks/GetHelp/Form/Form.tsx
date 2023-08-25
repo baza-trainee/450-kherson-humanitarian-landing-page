@@ -149,7 +149,7 @@ export function Form() {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
 						pattern: {
-							value: /^[0-9А-Яа-яІіЇїЄєҐґЁё/-]+$/,
+							value: /^\d[0-9А-Яа-яІіЇїЄєҐґЁё-]*$/,
 							message: 'Поле може містити тільки цифри, літери кирилиці та символи слешу та дефісу',
 						},
 					}),
@@ -302,13 +302,24 @@ export function Form() {
 		[register],
 	);
 
-	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		console.log(data);
-	};
-
 	const isValidFixed = isObjectEmpty(errors);
 
 	const [tabIndex, setTabIndex] = useState(0);
+
+	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { populationCity, consent, ...restData } = data;
+		const numbers = restData.phone.replace(/[\s+]/g, '');
+		const phoneNumber = [
+			numbers.slice(0, 3),
+			numbers.slice(3, 5),
+			numbers.slice(5, 8),
+			numbers.slice(8, 10),
+			numbers.slice(10),
+		].join(' ');
+		console.log(formList[tabIndex].label);
+		console.table({ ...restData, phone: `+${phoneNumber}` });
+	};
 
 	const tabFormVariantOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
