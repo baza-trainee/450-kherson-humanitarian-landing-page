@@ -1,5 +1,4 @@
-import { forwardRef } from 'react';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 
@@ -18,7 +17,7 @@ export const ArrowUpButton = forwardRef<ButtonElement, ButtonProps>(({ className
 	};
 
 	const handleScrollDown = () => {
-		const FooterSection = document.getElementById('Footer');
+		const FooterSection = document.getElementById('footer');
 		if (FooterSection) {
 			const sectionRect = FooterSection.getBoundingClientRect();
 			const windowHeight = window.innerHeight;
@@ -28,7 +27,7 @@ export const ArrowUpButton = forwardRef<ButtonElement, ButtonProps>(({ className
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const getHelpSection = document.getElementById('GetHelp');
+			const getHelpSection = document.getElementById('get-help');
 			if (getHelpSection) {
 				const sectionRect = getHelpSection.getBoundingClientRect();
 				const windowHeight = window.innerHeight;
@@ -66,7 +65,7 @@ export const ArrowUpButton = forwardRef<ButtonElement, ButtonProps>(({ className
 				onClick={() => {
 					/**/
 				}}
-			></Icon>
+			/>
 		</button>
 	);
 });
