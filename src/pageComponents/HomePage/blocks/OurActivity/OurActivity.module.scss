@@ -1,15 +1,15 @@
 @use '~/styles/mixins' as *;
 
+.OurActivity {
+	padding: 0 0 0 16px;
+	@include useScreen('mobile-lg') {
+		padding: 0 16px;
+	}
+}
+
 .container {
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
-	@include useScreen('tablet-sm') {
-		gap: 32px;
-	}
-	@include useScreen('desktop-sm') {
-		gap: 77px;
-	}
 }
 
 .wrapper {
@@ -22,11 +22,25 @@
 	overflow: hidden;
 }
 
+.title {
+	width: 328px;
+	padding-bottom: 24px;
+	@include useScreen('mobile-lg') {
+		width: 100%;
+	}
+	@include useScreen('tablet-sm') {
+		padding-bottom: 32px;
+	}
+	@include useScreen('desktop-sm') {
+		padding-bottom: 77px;
+	}
+}
+
 .slider {
 	height: 346px;
 	display: flex;
 	gap: 16px;
-	padding-right: 40px;
+	padding-right: calc(100% - 286px);
 	@include useScreen('mobile-lg') {
 		padding-right: 0;
 	}
@@ -55,23 +69,20 @@
 .arrow {
 	background-color: var(--color--shades-1);
 	border-style: none;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: 55%;
+	transform: translateY(-50%);
+	z-index: 4;
 }
 
-.blockArrow {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 99px;
-	height: 48px;
-	top: 96%;
-	position: absolute;
-	transform: translateY(-50%);
-	cursor: pointer;
-	z-index: 4;
-	@include useScreen('desktop-sm') {
-		top: 50%;
-		width: 100%;
-	}
+.leftArrow {
+	left: 0;
+}
+
+.rightArrow {
+	right: 0;
 }
 
 .dots {
@@ -80,6 +91,10 @@
 	justify-content: center;
 	align-items: center;
 	gap: 18px;
+	padding-right: 16px;
+	@include useScreen('mobile-lg') {
+		padding-right: 0;
+	}
 }
 
 .img {
