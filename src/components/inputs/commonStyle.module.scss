@@ -6,10 +6,9 @@
 	border: none;
 	border: 1px solid transparent;
 	border-radius: 10px;
-	font-weight: 700;
+	font-weight: 400;
 	font-size: var(--font-size--h4);
-	line-height: 100%;
-	text-transform: uppercase;
+	line-height: 14px;
 	background-color: var(--color--shades-2);
 
 	&:hover {
@@ -27,12 +26,11 @@
 	.error & {
 		border-color: var(--color--error-1);
 	}
+}
 
-	.disabled & {
-		border-color: transparent;
-		background-color: var(--color--shades-1);
-		&::placeholder {
-			color: var(--color--secondary-1);
-		}
-	}
+.disabled {
+	border-color: transparent;
+	cursor: not-allowed;
+	pointer-events: none;
+	background-color: var(--color--shades-1);
 }
