@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import clsx from 'clsx';
 import type { MotionProps } from 'framer-motion';
 import Image from 'next/image';
 
@@ -15,6 +16,12 @@ import { useScreenQuery } from '~hooks/useScreenQuery';
 import s from './OurActivity.module.scss';
 
 const animationDuration = 0.5;
+
+const wrap = (min: number, max: number, v: number) => {
+	const rangeSize = max - min;
+	return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
+};
+
 const getCenterXPosition = (slidePosition: string, isScreenTabletSm: boolean) => {
 	switch (slidePosition) {
 		case 'left':
@@ -92,10 +99,7 @@ export function OurActivity() {
 		(dir: number) => {
 			if (!isAnimating) {
 				setIsAnimating(true);
-				const index = activeIndex + dir;
-				if (index >= 0 && index < images.length) {
-					setActiveIndex([index, dir]);
-				}
+				setActiveIndex([wrap(0, images.length, activeIndex + dir), dir]);
 				setTimeout(() => {
 					setIsAnimating(false);
 				}, animationDuration * 1000);
@@ -122,7 +126,9 @@ export function OurActivity() {
 	return (
 		<Section className={s.OurActivity} id="our-activity">
 			<Container className={s.container}>
-				<Text variant="h2">Наша діяльність</Text>
+				<Text variant="h2" className={s.title}>
+					Наша діяльність
+				</Text>
 				<div className={s.wrapper}>
 					<Carousel3d
 						className={s.slider}
@@ -135,6 +141,8 @@ export function OurActivity() {
 									width={286}
 									height={346}
 									style={{ objectFit: 'cover' }}
+									draggable="false"
+									onMouseDown={(e) => e.preventDefault()}
 								/>
 							</div>
 						)}
@@ -144,13 +152,16 @@ export function OurActivity() {
 						direction={direction}
 						visibleIndices={visibleIndices}
 					/>
-					<div className={s.dots}>
-						{isScreenDesktopSm && <Dots items={images} activeIndex={activeIndex} paginateTo={paginateTo} />}
-					</div>
-					<div className={s.blockArrow}>
-						<Arrow direction className={s.arrow} onClick={() => paginate(-1)} disabled={activeIndex === 0} />
-						<Arrow className={s.arrow} onClick={() => paginate(1)} disabled={activeIndex === images.length - 1} />
-					</div>
+
+					{isScreenDesktopSm && (
+						<>
+							<Arrow direction className={clsx(s.arrow, s.leftArrow)} onClick={() => paginate(-1)} />
+							<Arrow className={clsx(s.arrow, s.rightArrow)} onClick={() => paginate(1)} />
+						</>
+					)}
+				</div>
+				<div className={s.dots}>
+					<Dots items={images} activeIndex={activeIndex} paginateTo={paginateTo} />
 				</div>
 			</Container>
 		</Section>

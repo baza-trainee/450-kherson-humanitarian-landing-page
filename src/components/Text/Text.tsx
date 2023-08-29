@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
@@ -29,16 +29,26 @@ export type TextElement = HTMLHeadingElement | HTMLParagraphElement;
 
 export interface TextProps extends Omit<ReactHTMLElementAttributes<TextElement>, 'ref'> {
 	variant?: TextVariants;
+	lineBreak?: boolean;
 }
 
-export const Text = forwardRef<TextElement, TextProps>(({ variant, children, className, ...rest }, ref) => {
+export function splitTextByBr(text: string): React.ReactNode {
+	return text.split('\n').map((textLine, i) => (
+		<React.Fragment key={i}>
+			{textLine}
+			<br />
+		</React.Fragment>
+	));
+}
+
+export const Text = forwardRef<TextElement, TextProps>(({ variant, lineBreak, children, className, ...rest }, ref) => {
 	const Component = (variant ? variantsMapping[variant] : 'span') as ComponentVariants;
 
 	const componentClass = variant && s[variant];
 
 	return (
 		<Component className={clsx(s.Text, componentClass, className)} ref={ref} {...rest}>
-			{children}
+			{lineBreak ? splitTextByBr(String(children)) : children}
 		</Component>
 	);
 });

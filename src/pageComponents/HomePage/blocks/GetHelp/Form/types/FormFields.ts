@@ -1,22 +1,22 @@
 export interface FormFields {
-	name: string;
 	surname: string;
+	name: string;
 	patronymic: string;
-	populationPoint: string;
-	street: string;
-	houseNumber: number;
-	apartmentNumber: number;
-	documentType: string;
-	passportSeries: string;
-	passportNumber: string;
-	idCard: string;
-	disabilityCertificateNumber: string;
-	identificationNumber: string;
+
+	email: string;
+	populationCity: string;
+	populationStreet: string;
+	populationHouseNumber: number;
+	populationApartmentNumber: number;
+
 	idpCertificateNumber: string;
-	idpCertificateOrBirthCertificateNumber: string;
+
+	disabilityCertificateNumber: string;
+	birthCertificateNumber: string;
+
 	movementArea: string;
 	movementCity: string;
-	numberOfFamilyMembers: number;
+
 	phone: string;
 	consent: boolean;
 }

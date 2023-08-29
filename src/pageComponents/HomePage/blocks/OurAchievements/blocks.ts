@@ -10,3 +10,5 @@ export const blocks: Block[] = [
 	{ id: 2, title: 'Було отримано\nгуманіарної допомоги', number: '264', unit: 'тонн' },
 	{ id: 3, title: 'Нам\nзадонатили', number: '104 228', unit: 'UAH' },
 ];
+
+export const date = '01.07.2023';
