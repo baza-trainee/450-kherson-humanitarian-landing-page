@@ -114,9 +114,12 @@ export function Projects() {
 					<ButtonHelpUs />
 				</div>
 				{isOpen && (
-					<ModalPop title="Проєкти" isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
+					<ModalPop isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
 						<section className={s.projectContainer}>
 							<div className={s.aboutProject}>
+								<Text variant="h2" className={s.title}>
+									Проєкти
+								</Text>
 								<AboutProject productId={selectedProductId} />
 							</div>
 						</section>

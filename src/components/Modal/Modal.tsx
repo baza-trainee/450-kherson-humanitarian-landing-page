@@ -4,7 +4,6 @@ import clsx from 'clsx';
 
 import { Icon } from '~components/Icon/Icon';
 import { Portal } from '~components/Portal/Portal';
-import { Text } from '~components/Text/Text';
 import { useKeyPress } from '~hooks/useKeyPress';
 import { useScrollLock } from '~hooks/useScrollLock';
 
@@ -12,13 +11,12 @@ import s from './Modal.module.scss';
 
 interface ModalProps {
 	type?: 'alert' | 'notification';
-	title: string;
 	children: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export function Modal({ type, title, isOpen, onClose, children }: ModalProps) {
+export function Modal({ type, isOpen, onClose, children }: ModalProps) {
 	const { lockScroll, unlockScroll } = useScrollLock();
 
 	const popUpType = (typePop: string | undefined) => {
@@ -33,7 +31,6 @@ export function Modal({ type, title, isOpen, onClose, children }: ModalProps) {
 	};
 
 	const decorClassName = clsx(s.decor, s[popUpType(type)]);
-	const titleClassName = clsx(s.title, popUpType(type) === 'red' ? s.redText : null);
 
 	useKeyPress('Escape', onClose);
 
@@ -60,9 +57,6 @@ export function Modal({ type, title, isOpen, onClose, children }: ModalProps) {
 							className={s.icon}
 						/>
 					</div>
-					<Text variant="h2" className={titleClassName}>
-						{title}
-					</Text>
 					<div className={s.content}>{children}</div>
 				</div>
 			</div>
