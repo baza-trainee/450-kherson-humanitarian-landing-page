@@ -23,6 +23,16 @@
 	overflow: auto;
 }
 
+.title {
+	padding: 4px 0 24px 16px;
+	@include useScreen('tablet-sm') {
+		padding: 4px 0 48px 42px;
+	}
+	@include useScreen('desktop-sm') {
+		padding: 4px 0 64px 42px;
+	}
+}
+
 .content {
 	display: flex;
 	flex-direction: column;
@@ -33,6 +43,17 @@
 
 .decor {
 	height: 14px;
+}
+
+.red {
+	background-color: var(--color--error-1);
+}
+
+.redText {
+	color: var(--color--error-1);
+}
+
+.blue {
 	background-color: var(--color--primary-3);
 }
 

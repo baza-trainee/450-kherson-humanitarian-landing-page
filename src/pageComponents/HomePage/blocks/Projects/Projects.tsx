@@ -6,7 +6,7 @@ import { cardsData } from '~/data/projectsContent';
 import { Arrow } from '~components/Arrow/Arrow';
 import { Carousel } from '~components/Carousel/Carousel';
 import { Container } from '~components/Container/Container';
-import { Modal } from '~components/Modal/Modal';
+import ModalPop from '~components/ModalPop/ModalPop';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 import { useHandleDrag } from '~hooks/useHandleDrag';
@@ -33,9 +33,14 @@ export function Projects() {
 	if (isScreenMobileXl) visibleItems = 2;
 	if (isScreenTabletMd) visibleItems = 3;
 
+	const gap = 24;
+	let widthWithGap = 0;
+	if (isScreenMobileXl) widthWithGap = gap / visibleItems;
+	if (isScreenTabletMd) widthWithGap = (gap * 2) / visibleItems;
+
 	const handleResize = () => {
 		if (carousel.current?.offsetWidth) {
-			setWidth(carousel.current.offsetWidth / visibleItems);
+			setWidth(carousel.current.offsetWidth / visibleItems - widthWithGap);
 		}
 	};
 
@@ -70,7 +75,7 @@ export function Projects() {
 	const animation: MotionProps = {
 		initial: { scale: 0 },
 		animate: {
-			left: `${position * -width}px`,
+			left: `${position * (-width - gap)}px`,
 			scale: 1,
 		},
 		transition: {
@@ -109,14 +114,13 @@ export function Projects() {
 					<ButtonHelpUs />
 				</div>
 				{isOpen && (
-					<Modal isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
-						<section className={s.modalContainer}>
+					<ModalPop title="Проєкти" isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
+						<section className={s.projectContainer}>
 							<div className={s.aboutProject}>
-								<Text variant="h2">Проєкти</Text>
 								<AboutProject productId={selectedProductId} />
 							</div>
 						</section>
-					</Modal>
+					</ModalPop>
 				)}
 			</Container>
 		</Section>

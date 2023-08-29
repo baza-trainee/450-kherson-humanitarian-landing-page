@@ -1,20 +1,39 @@
 import { type ReactNode, useEffect } from 'react';
 
+import clsx from 'clsx';
+
 import { Icon } from '~components/Icon/Icon';
 import { Portal } from '~components/Portal/Portal';
+import { Text } from '~components/Text/Text';
 import { useKeyPress } from '~hooks/useKeyPress';
 import { useScrollLock } from '~hooks/useScrollLock';
 
 import s from './Modal.module.scss';
 
 interface ModalProps {
+	type?: 'alert' | 'notification';
+	title: string;
 	children: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export function Modal({ isOpen, onClose, children }: ModalProps) {
+export function Modal({ type, title, isOpen, onClose, children }: ModalProps) {
 	const { lockScroll, unlockScroll } = useScrollLock();
+
+	const popUpType = (typePop: string | undefined) => {
+		switch (typePop) {
+			case 'alert':
+				return 'red';
+			case 'notification':
+				return 'blue';
+			default:
+				return 'blue';
+		}
+	};
+
+	const decorClassName = clsx(s.decor, s[popUpType(type)]);
+	const titleClassName = clsx(s.title, popUpType(type) === 'red' ? s.redText : null);
 
 	useKeyPress('Escape', onClose);
 
@@ -30,7 +49,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 		<Portal wrapperId="portal-modal">
 			<div className={s.modalContainer} onClick={onClose}>
 				<div className={s.modal} onClick={(e) => e.stopPropagation()}>
-					<div className={s.decor} />
+					<div className={decorClassName} />
 					<div className={s.close}>
 						<Icon
 							icon="icon--close"
@@ -41,6 +60,9 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 							className={s.icon}
 						/>
 					</div>
+					<Text variant="h2" className={titleClassName}>
+						{title}
+					</Text>
 					<div className={s.content}>{children}</div>
 				</div>
 			</div>
