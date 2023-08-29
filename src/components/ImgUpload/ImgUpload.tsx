@@ -42,8 +42,8 @@ export function ImgUpload() {
 					<Image
 						src={image}
 						alt='card-img'
-						width={712}
-						height={300}
+						fill={true}
+						className={s.img}
 					/>}
 			</div>
 			<div className={s.iconBlock}>
