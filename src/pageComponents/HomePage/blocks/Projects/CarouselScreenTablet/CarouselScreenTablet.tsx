@@ -22,6 +22,8 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 
 	const carouselMini = useRef<HTMLDivElement>(null);
 	const visibleItems = 3;
+	const gap = 16;
+	const widthWithGap = (gap * 2) / visibleItems;
 
 	const { description } = cardsData[arrayIndex];
 	const onRight = () => {
@@ -46,7 +48,7 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 	const animationMini: MotionProps = {
 		initial: { scale: 0 },
 		animate: {
-			left: `${positionMini * (-widthMini - 16)}px`,
+			left: `${positionMini * (-widthMini - gap)}px`,
 			scale: 1,
 		},
 		transition: {
@@ -61,9 +63,9 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 
 	useEffect(() => {
 		if (carouselMini.current) {
-			setWidthMini(carouselMini.current.offsetWidth / visibleItems - 10);
+			setWidthMini(carouselMini.current.offsetWidth / visibleItems - widthWithGap);
 		}
-	}, []);
+	}, [widthWithGap]);
 
 	return (
 		<div className={s.imageContent}>
