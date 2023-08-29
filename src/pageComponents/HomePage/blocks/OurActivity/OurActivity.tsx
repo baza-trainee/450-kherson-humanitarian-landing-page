@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import clsx from 'clsx';
 import type { MotionProps } from 'framer-motion';
 import Image from 'next/image';
 
@@ -125,7 +126,9 @@ export function OurActivity() {
 	return (
 		<Section className={s.OurActivity} id="our-activity">
 			<Container className={s.container}>
-				<Text variant="h2">Наша діяльність</Text>
+				<Text variant="h2" className={s.title}>
+					Наша діяльність
+				</Text>
 				<div className={s.wrapper}>
 					<Carousel3d
 						className={s.slider}
@@ -138,6 +141,8 @@ export function OurActivity() {
 									width={286}
 									height={346}
 									style={{ objectFit: 'cover' }}
+									draggable="false"
+									onMouseDown={(e) => e.preventDefault()}
 								/>
 							</div>
 						)}
@@ -147,15 +152,16 @@ export function OurActivity() {
 						direction={direction}
 						visibleIndices={visibleIndices}
 					/>
-					<div className={s.dots}>
-						<Dots items={images} activeIndex={activeIndex} paginateTo={paginateTo} />
-					</div>
+
 					{isScreenDesktopSm && (
-						<div className={s.blockArrow}>
-							<Arrow direction className={s.arrow} onClick={() => paginate(-1)} />
-							<Arrow className={s.arrow} onClick={() => paginate(1)} />
-						</div>
+						<>
+							<Arrow direction className={clsx(s.arrow, s.leftArrow)} onClick={() => paginate(-1)} />
+							<Arrow className={clsx(s.arrow, s.rightArrow)} onClick={() => paginate(1)} />
+						</>
 					)}
+				</div>
+				<div className={s.dots}>
+					<Dots items={images} activeIndex={activeIndex} paginateTo={paginateTo} />
 				</div>
 			</Container>
 		</Section>
