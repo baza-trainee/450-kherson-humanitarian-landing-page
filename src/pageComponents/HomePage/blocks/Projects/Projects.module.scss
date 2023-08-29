@@ -17,8 +17,7 @@
 	flex-direction: column;
 	gap: 24px;
 	@include useScreen('mobile-xl') {
-		gap: 32px;
-		height: 581px;
+		height: 600px;
 	}
 	@include useScreen('tablet-sm') {
 		gap: 48px;
@@ -43,8 +42,8 @@
 
 .button {
 	width: 214px;
-	margin: 0 auto;
-	@include useScreen('tablet-sm') {
+	margin: 24px auto;
+	@include useScreen('mobile-xl') {
 		margin: 32px 0 0 auto;
 	}
 	@include useScreen('desktop-sm') {
@@ -52,14 +51,14 @@
 	}
 }
 
-.modalContainer {
+.projectContainer {
 	min-width: 360px;
 	padding: 0 16px 16px 16px;
 	display: flex;
 	flex-direction: column;
 	overflow-x: hidden;
 	@include useScreen('tablet-sm') {
-		padding: 16px 42px 42px 42px;
+		padding: 0px 42px 42px 42px;
 		max-width: calc(100vw - 100px);
 	}
 	@include useScreen('desktop-md') {
@@ -70,8 +69,4 @@
 .aboutProject {
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
-	@include useScreen('tablet-sm') {
-		gap: 64px;
-	}
 }
