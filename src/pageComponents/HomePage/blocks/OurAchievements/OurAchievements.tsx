@@ -3,7 +3,7 @@ import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 
 import { ButtonHelpUs } from '../../ButtonHelpUs/ButtonHelpUs';
-import { blocks } from './blocks';
+import { blocks, date } from './blocks';
 
 import s from './OurAchievements.module.scss';
 
@@ -15,18 +15,14 @@ export function OurAchievements() {
 				<Text variant="p">За час існування організації</Text>
 				<div className={s.blocks}>
 					{blocks.map((block) => {
-						const line = block.title.split('\n');
 						return (
 							<div className={s.block} key={block.id}>
 								<div className={s.content}>
-									<Text variant="p" className={s.title}>
-										{line[0]} <br />
-										{line[1]}
+									<Text variant="p" className={s.title} lineBreak>
+										{block.title}
 									</Text>
 									<div className={s.achievement}>
-										<Text variant="various1" className={s.number}>
-											{block.number}
-										</Text>
+										<Text variant="various1">{block.number}</Text>
 										<Text variant="p">{block.unit}</Text>
 									</div>
 								</div>
@@ -34,7 +30,7 @@ export function OurAchievements() {
 						);
 					})}
 				</div>
-				<Text variant="p">*Інформація подана станом на 01.07.2023</Text>
+				<Text variant="p">*Інформація подана станом на {date}</Text>
 				<div className={s.button}>
 					<ButtonHelpUs />
 				</div>
