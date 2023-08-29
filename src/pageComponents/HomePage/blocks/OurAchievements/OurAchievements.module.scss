@@ -10,7 +10,7 @@
 	@include useScreen('tablet-sm') {
 		padding: 32px;
 	}
-	@include useScreen('desktop-sm') {
+	@include useScreen('desktop-md') {
 		padding: 48px 80px;
 	}
 }
@@ -30,7 +30,7 @@
 	@include useScreen('tablet-sm') {
 		min-width: 704px;
 	}
-	@include useScreen('desktop-sm') {
+	@include useScreen('desktop-md') {
 		min-width: 1280px;
 		gap: 32px;
 	}
@@ -58,7 +58,7 @@
 		min-width: 219px;
 		padding: 64.5px 16px;
 	}
-	@include useScreen('desktop-sm') {
+	@include useScreen('desktop-md') {
 		padding: 48px 0 48px 64px;
 	}
 }
@@ -66,7 +66,7 @@
 .content {
 	align-self: center;
 	gap: 16px;
-	@include useScreen('desktop-sm') {
+	@include useScreen('desktop-md') {
 		align-self: flex-start;
 	}
 }
@@ -78,7 +78,7 @@
 	@include useScreen('tablet-sm') {
 		gap: 4px;
 	}
-	@include useScreen('desktop-sm') {
+	@include useScreen('desktop-md') {
 		gap: 16px;
 	}
 }
