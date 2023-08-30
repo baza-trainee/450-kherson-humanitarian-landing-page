@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
+import type { ComponentSizes } from '~components/types/ComponentSize';
+
 import s from './Icon.module.scss';
 
 export type IconElement = HTMLDivElement;
