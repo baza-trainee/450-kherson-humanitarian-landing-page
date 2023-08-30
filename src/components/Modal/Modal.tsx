@@ -4,11 +4,11 @@ import clsx from 'clsx';
 
 import { Icon } from '~components/Icon/Icon';
 import { Portal } from '~components/Portal/Portal';
+import type { NotificationTypes } from '~components/types/NotificationTypes';
 import { useKeyPress } from '~hooks/useKeyPress';
 import { useScrollLock } from '~hooks/useScrollLock';
 
 import s from './Modal.module.scss';
-import { NotificationTypes } from '~components/types/NotificationTypes';
 
 interface ModalProps {
 	type?: NotificationTypes;

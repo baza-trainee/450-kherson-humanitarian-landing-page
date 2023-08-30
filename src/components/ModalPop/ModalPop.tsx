@@ -4,9 +4,9 @@ import clsx from 'clsx';
 
 import { Modal } from '~components/Modal/Modal';
 import { Text } from '~components/Text/Text';
+import type { NotificationTypes } from '~components/types/NotificationTypes';
 
 import s from './ModalPop.module.scss';
-import { NotificationTypes } from '~components/types/NotificationTypes';
 
 interface ModalPop {
 	type?: NotificationTypes;
