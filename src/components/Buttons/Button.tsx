@@ -6,15 +6,16 @@ import { Text } from '~components/Text/Text';
 
 import s from './Button.module.scss';
 
-type ButtonElement = HTMLElementTagNameMap['button'];
-interface ButtonProps extends React.HTMLAttributes<ButtonElement> {
-	disabled?: boolean;
+type ButtonElement = HTMLButtonElement;
+
+export interface ButtonProps extends React.HTMLAttributes<ButtonElement> {
 	type?: 'primary' | 'secondary';
+	disabled?: boolean;
 	submit?: boolean;
 }
 
 export const Button = forwardRef<ButtonElement, ButtonProps>(
-	({ type = 'primary', submit, disabled, children, className, ...rest }, ref) => {
+	({ type = 'primary', disabled, submit, children, className, ...rest }, ref) => {
 		const componentClass = [type && s[type], disabled && `${s.disabled}`];
 		return (
 			<button
