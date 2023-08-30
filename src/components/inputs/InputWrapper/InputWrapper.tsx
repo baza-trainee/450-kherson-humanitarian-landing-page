@@ -14,15 +14,16 @@ export interface InputWrapperCommonProps {
 }
 
 interface InputWrapperProps extends ReactHTMLElementAttributes<InputWrapperElement>, InputWrapperCommonProps {
+	info?: string;
+	showInfo?: boolean;
 	error?: string;
 }
 
 const NON_BREAKING_SPACE = '\xA0';
 
 export const InputWrapper = forwardRef<InputWrapperElement, InputWrapperProps>(
-	({ label, required, disabled, error, className, showError, children, ...rest }, ref) => {
+	({ label, info, showInfo, required, disabled, error, className, showError, children, ...rest }, ref) => {
 		const containerClass = [error && s.error, disabled && s.disabled];
-
 		const labelString = label && label?.trim().length > 0 ? label : NON_BREAKING_SPACE;
 
 		return (
@@ -37,7 +38,8 @@ export const InputWrapper = forwardRef<InputWrapperElement, InputWrapperProps>(
 				)}
 				<div className={s.inputBlockContainer}>
 					{children}
-					{showError && <p className={s.errorText}>{error}</p>}
+					{showError && <p className={clsx(s.infoText, s.errorText)}>{error}</p>}
+					{showInfo && <p className={s.infoText}>{info}</p>}
 				</div>
 			</div>
 		);
