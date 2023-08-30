@@ -10,6 +10,7 @@ import cs from '../commonStyle.module.scss';
 export type TextInputElement = HTMLInputElement;
 
 export interface TextInputProps extends ReactHTMLElementAttributes<TextInputElement> {
+	type?: string; // TODO: fix missing type in TextInputElement
 	label?: string;
 	register?: FieldValues;
 	errors?: FieldErrors<FieldValues>;
@@ -17,10 +18,29 @@ export interface TextInputProps extends ReactHTMLElementAttributes<TextInputElem
 	disabled?: boolean;
 	size?: number;
 	maxLength?: number;
+	hideError?: boolean;
+	info?: string;
 }
 
 export const TextInput = forwardRef<TextInputElement, TextInputProps>(
-	({ label, required, disabled, register, errors, placeholder, size, maxLength, className, ...rest }, ref) => {
+	(
+		{
+			type = 'text',
+			label,
+			required,
+			disabled,
+			register,
+			errors,
+			hideError,
+			info,
+			placeholder,
+			size,
+			maxLength,
+			className,
+			...rest
+		},
+		ref,
+	) => {
 		const error = errors ? errors[register?.name]?.message?.toString() : '';
 		const componentClass = [error && cs.error, disabled && cs.disabled];
 		const disabledClass = [disabled && cs.disabled];
@@ -33,10 +53,12 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 					required={required}
 					disabled={disabled}
 					className={clsx(componentClass)}
-					showError={!!errors}
+					showError={Boolean(errors && !hideError)}
+					showInfo={!!info}
+					info={info}
 				>
 					<input
-						type="text"
+						type={type}
 						className={cs.input}
 						placeholder={placeholder}
 						size={size}

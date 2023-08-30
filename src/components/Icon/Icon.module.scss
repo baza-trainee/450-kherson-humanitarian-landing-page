@@ -1,4 +1,12 @@
-@use '~/styles/mixins' as *;
+@use "~/styles/mixins" as *;
+
+.Icon {
+	--icon--background-color: var(--color--secondary-4);
+	--icon--background-color-hover: var(--color--secondary-4);
+	--icon--background-color-click: var(--color--secondary-4);
+	--icon--background-color-disabled: var(--color--secondary-4);
+	--icon--background-color-disabled-opacity: 60%;
+}
 
 .Icon {
 	display: flex;
@@ -6,12 +14,6 @@
 	justify-content: center;
 	align-items: center;
 	background-color: var(--icon--background-color);
-
-	--icon--background-color: var(--color--secondary-4);
-	--icon--background-color-hover: var(--color--secondary-4);
-	--icon--background-color-click: var(--color--shades-1);
-	--icon--background-color-disabled: var(--color--secondary-2);
-	--icon--background-color-disabled-opacity: 60%;
 
 	&.clickable {
 		user-select: none;
@@ -29,32 +31,32 @@
 		background-color: var(--icon--background-color-disabled);
 	}
 
-	@include useSize('tiny') {
+	@include useSize("tiny") {
 		width: 12px;
 		height: 12px;
 	}
 
-	@include useSize('small') {
+	@include useSize("small") {
 		width: 16px;
 		height: 16px;
 	}
 
-	@include useSize('default') {
+	@include useSize("default") {
 		width: 24px;
 		height: 24px;
 	}
 
-	@include useSize('medium') {
+	@include useSize("medium") {
 		width: 32px;
 		height: 32px;
 	}
 
-	@include useSize('large') {
+	@include useSize("large") {
 		width: 36px;
 		height: 36px;
 	}
 
-	@include useSize('extra') {
+	@include useSize("extra") {
 		width: 48px;
 		height: 48px;
 	}

@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
+import type { ComponentSizes } from '~components/types/ComponentSize';
+
 import s from './Icon.module.scss';
 
 export type IconElement = HTMLDivElement;
@@ -48,7 +50,7 @@ export const Icon = forwardRef<IconElement, IconProps>(
 
 		return (
 			<span
-				className={clsx(s.Icon, icon, className, componentClass)}
+				className={clsx(icon, s.Icon, componentClass, className)}
 				onClick={onClick}
 				ref={ref}
 				style={
