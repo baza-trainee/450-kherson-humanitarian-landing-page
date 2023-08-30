@@ -48,7 +48,7 @@ export const Icon = forwardRef<IconElement, IconProps>(
 
 		return (
 			<span
-				className={clsx(s.Icon, icon, className, componentClass)}
+				className={clsx(icon, s.Icon, componentClass, className)}
 				onClick={onClick}
 				ref={ref}
 				style={
