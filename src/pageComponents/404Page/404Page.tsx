@@ -6,7 +6,7 @@ import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 
-import s from './Page404.module.scss';
+import s from './404Page.module.scss';
 
 export function Page404() {
 	return (
