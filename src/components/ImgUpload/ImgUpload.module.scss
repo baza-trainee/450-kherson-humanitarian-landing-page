@@ -1,0 +1,44 @@
+.ImgUpload {
+	display: flex;
+	width: 752px;
+	height: 300px;
+
+}
+
+.imgBlock {
+	display: flex;
+	position: relative;
+	align-items: center;
+	width: 712px;
+	height: 300px;
+	border: 1px solid var(--color--secondary-2);
+	text-align: center;
+}
+
+.imgDefault {
+	margin: 0 auto;
+}
+
+.img {
+	object-fit: contain;
+}
+
+.iconBlock {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.icon {
+	margin: 8px;
+}
+
+.hidden {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	line-height: 0;
+}
