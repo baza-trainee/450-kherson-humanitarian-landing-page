@@ -10,27 +10,16 @@ import { useScrollLock } from '~hooks/useScrollLock';
 import s from './Modal.module.scss';
 
 interface ModalProps {
-	type?: 'alert' | 'notification';
+	type?: 'alert' | 'primary';
 	children: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export function Modal({ type, isOpen, onClose, children }: ModalProps) {
+export function Modal({ type = 'primary', isOpen, onClose, children }: ModalProps) {
 	const { lockScroll, unlockScroll } = useScrollLock();
 
-	const popUpType = (typePop: string | undefined) => {
-		switch (typePop) {
-			case 'alert':
-				return 'red';
-			case 'notification':
-				return 'blue';
-			default:
-				return 'blue';
-		}
-	};
-
-	const decorClassName = clsx(s.decor, s[popUpType(type)]);
+	const decorClassName = clsx(s.decor, s[type ? type : '']);
 
 	useKeyPress('Escape', onClose);
 
