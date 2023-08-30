@@ -1,0 +1,61 @@
+.label {
+	cursor: pointer;
+
+	&:before {
+		display: inline-block;
+		width: 32px;
+		height: 32px;
+		border: 1px solid var(--color--secondary-4);
+		border-radius: 100%;
+		content: "";
+		background-color: transparent;
+		background-clip: content-box;
+		transition: all 0.2s ease;
+	}
+}
+
+.input {
+	display: block;
+	border-radius: 8px;
+	outline: 0;
+	resize: none;
+	box-shadow: 0 1px 1px rgba(black, 0.1);
+
+	&[type="radio"] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		border: 0;
+		clip: rect(0 0 0 0);
+		overflow: hidden;
+	}
+
+}
+
+.bgSpan {
+	display: block;
+	width: 24px;
+	height: 24px;
+	margin-top: -31px;
+	margin-left: 4px;
+	border: 1px solid var(--color--secondary-1);
+	border-radius: 100%;
+}
+
+.shadow {
+	background-color: gray;
+	// background: rgb(255, 255, 255);
+	// background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 66, 23%, rgba(246, 246, 246, 1) 100%);
+}
+
+.noShadow {
+	background-color: transparent;
+}
+
+.input[type="radio"]:checked+.bgSpan {
+	background-image: url("../../../public/svg/icons/checked.svg");
+	background-repeat: no-repeat;
+	background-position: center;
+}

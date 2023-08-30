@@ -50,7 +50,9 @@ export function ImgUpload() {
 				<Icon icon="icon--upload" className={s.icon} onClick={handleClick} />
 				<Icon icon="icon--trash" className={s.icon} onClick={clearFile} />
 			</div>
-			<input type='file' className={s.hidden} ref={fileClick} onChange={changeFile} accept='image/*, .png, .jpeg, .web' />
+			<label>
+				<input type='file' className={s.hidden} ref={fileClick} onChange={changeFile} accept='image/*, .png, .jpeg, .web' />
+			</label>
 		</div>
 	);
 }
