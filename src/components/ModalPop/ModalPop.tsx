@@ -6,16 +6,17 @@ import { Modal } from '~components/Modal/Modal';
 import { Text } from '~components/Text/Text';
 
 import s from './ModalPop.module.scss';
+import { NotificationTypes } from '~components/types/NotificationTypes';
 
 interface ModalPop {
-	type?: 'alert' | 'primary';
+	type?: NotificationTypes;
 	title: string;
 	children: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export default function ModalPop({ type = 'primary', title, isOpen, onClose, children }: ModalPop) {
+export default function ModalPop({ type = 'info', title, isOpen, onClose, children }: ModalPop) {
 	const titleClassName = clsx(s.title, s[type ? type : '']);
 
 	return (

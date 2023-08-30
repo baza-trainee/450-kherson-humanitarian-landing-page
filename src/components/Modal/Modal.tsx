@@ -8,15 +8,16 @@ import { useKeyPress } from '~hooks/useKeyPress';
 import { useScrollLock } from '~hooks/useScrollLock';
 
 import s from './Modal.module.scss';
+import { NotificationTypes } from '~components/types/NotificationTypes';
 
 interface ModalProps {
-	type?: 'alert' | 'primary';
+	type?: NotificationTypes;
 	children: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export function Modal({ type = 'primary', isOpen, onClose, children }: ModalProps) {
+export function Modal({ type = 'info', isOpen, onClose, children }: ModalProps) {
 	const { lockScroll, unlockScroll } = useScrollLock();
 
 	const decorClassName = clsx(s.decor, s[type ? type : '']);
