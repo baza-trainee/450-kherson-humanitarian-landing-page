@@ -1,0 +1,19 @@
+@use '~/styles/mixins' as *;
+
+.title {
+	padding: 4px 0 24px 16px;
+	@include useScreen('tablet-sm') {
+		padding: 4px 0 48px 42px;
+	}
+	@include useScreen('desktop-sm') {
+		padding: 4px 0 64px 42px;
+	}
+}
+
+.alert {
+	color: var(--color--error-1);
+}
+
+.primary {
+	color: var(--color--primary-3);
+}

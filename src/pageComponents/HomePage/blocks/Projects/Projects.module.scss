@@ -25,16 +25,6 @@
 	}
 }
 
-.title {
-	padding: 4px 0 24px 0;
-	@include useScreen('tablet-sm') {
-		padding: 4px 0 48px 0;
-	}
-	@include useScreen('desktop-sm') {
-		padding: 4px 0 64px 0;
-	}
-}
-
 .blockArrow {
 	align-self: center;
 	display: flex;

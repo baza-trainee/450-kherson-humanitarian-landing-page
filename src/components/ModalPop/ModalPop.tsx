@@ -1,17 +1,28 @@
 import type { ReactNode } from 'react';
 
+import clsx from 'clsx';
+
 import { Modal } from '~components/Modal/Modal';
+import { Text } from '~components/Text/Text';
+
+import s from './ModalPop.module.scss';
 
 interface ModalPop {
-	type?: 'alert' | 'notification';
+	type?: 'alert' | 'primary';
+	title: string;
 	children: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export default function ModalPop({ type = 'notification', isOpen, onClose, children }: ModalPop) {
+export default function ModalPop({ type = 'primary', title, isOpen, onClose, children }: ModalPop) {
+	const titleClassName = clsx(s.title, s[type ? type : '']);
+
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} type={type}>
+			<Text variant="h2" className={titleClassName}>
+				{title}
+			</Text>
 			{children}
 		</Modal>
 	);
