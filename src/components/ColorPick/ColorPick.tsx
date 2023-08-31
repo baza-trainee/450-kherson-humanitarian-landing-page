@@ -13,16 +13,12 @@ interface ColorPickProps {
 
 export function ColorPick({ nameColorPick, valueColorPick, isCheckedColorPick, textValue }: ColorPickProps) {
 	return (
-		<>
-			<label htmlFor={valueColorPick} className={s.label}>
-				<input type="radio" name={nameColorPick} value={valueColorPick} id={valueColorPick} checked={isCheckedColorPick} className={s.input} />
-				<span className={clsx(s.bgSpan, s[valueColorPick])} />
-				{!!textValue && (<Text variant='p' className={s.text}>
-					{textValue}
-				</Text>)
-				}
-
-			</label >
-		</>
+		<label htmlFor={valueColorPick} className={s.label}>
+			<input type="radio" name={nameColorPick} value={valueColorPick} id={valueColorPick} defaultChecked={isCheckedColorPick} className={s.input} />
+			<span className={clsx(s.bgSpan, s[valueColorPick])} />
+			{!!textValue && (<Text variant='p' className={s.text}>
+				{textValue}
+			</Text>)}
+		</label >
 	);
 }
