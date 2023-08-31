@@ -1,0 +1,29 @@
+@use '~/styles/mixins' as *;
+
+.container {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.wrapper {
+	width: 572px;
+	display: flex;
+	flex-direction: column;
+	gap: 48px;
+	padding: 0 21px;
+	@include useScreen('mobile-lg') {
+		padding: 0;
+	}
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.button {
+	width: 214px;
+}
