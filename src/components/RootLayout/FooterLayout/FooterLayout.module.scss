@@ -7,6 +7,7 @@
 	align-items: center;
 	width: 100%;
 	padding-top: 48px;
+	overflow-x: hidden;
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
 		padding-top: 80px;
