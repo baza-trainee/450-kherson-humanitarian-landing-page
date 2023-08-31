@@ -1,4 +1,6 @@
 .label {
+	display: flex;
+	align-items: center;
 	cursor: pointer;
 
 	&:before {
@@ -19,7 +21,6 @@
 	border-radius: 8px;
 	outline: 0;
 	resize: none;
-	box-shadow: 0 1px 1px rgba(black, 0.1);
 
 	&[type="radio"] {
 		position: absolute;
@@ -38,24 +39,41 @@
 	display: block;
 	width: 24px;
 	height: 24px;
-	margin-top: -31px;
-	margin-left: 4px;
-	border: 1px solid var(--color--secondary-1);
+	margin-left: -28px;
 	border-radius: 100%;
 }
 
-.shadow {
-	background-color: gray;
-	// background: rgb(255, 255, 255);
-	// background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 66, 23%, rgba(246, 246, 246, 1) 100%);
+.darkShadow {
+	background: linear-gradient(90deg, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.00) 100%);
+	// background: var(--color--gradient-3);
 }
 
-.noShadow {
+.noShadow,
+.whiteShadow,
+.white {
 	background-color: transparent;
+}
+
+.blue {
+	background-color: var(--color--primary-2);
+}
+
+.black {
+	background-color: var(--color--secondary-4);
 }
 
 .input[type="radio"]:checked+.bgSpan {
 	background-image: url("../../../public/svg/icons/checked.svg");
 	background-repeat: no-repeat;
 	background-position: center;
+}
+
+.input[type="radio"]:checked+.black,
+.input[type="radio"]:checked+.blue {
+	background-image: url("../../../public/svg/icons/checked-white.svg");
+}
+
+.text {
+	margin-left: 8px;
+	color: #000;
 }
