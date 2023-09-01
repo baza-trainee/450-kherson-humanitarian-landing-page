@@ -12,7 +12,7 @@ export function GreyBlockDesktop() {
 	return (
 		<>
 			<div className={s.mainInfo}>
-				<Link href="#hero">
+				<Link href="#hero" scroll={false}>
 					<Image priority={true} src={logo} alt="logo" width={290} height={120} />
 				</Link>
 				<div className={s.greyBlockText}>
