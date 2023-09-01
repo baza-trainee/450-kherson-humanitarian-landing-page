@@ -1,0 +1,22 @@
+.elementContainer {
+	max-width: fit-content;
+}
+
+.label {
+	padding: 4px 8px;
+	border-radius: 5px;
+	color: var(--color--secondary-4);
+	text-transform: uppercase;
+}
+
+.wait {
+	background-color: var(--color--secondary-1);
+}
+
+.inprogress {
+	background-color: var(--color--warning-1);
+}
+
+.finished {
+	background-color: var(--color--success-1);
+}
