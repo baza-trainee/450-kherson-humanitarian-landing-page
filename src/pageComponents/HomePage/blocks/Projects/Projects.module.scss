@@ -1,10 +1,10 @@
 @use '~/styles/mixins' as *;
 
 .Projects {
-	scroll-margin-top: 80px;
 	padding-top: 32px;
 	padding-bottom: 32px;
 	background-color: var(--color--primary-1);
+	scroll-margin-top: 80px;
 	@include useScreen('desktop-sm') {
 		padding-top: 48px;
 		padding-bottom: 48px;
@@ -12,32 +12,32 @@
 }
 
 .wrapper {
-	height: 552px;
 	display: flex;
 	flex-direction: column;
+	height: 552px;
 	gap: 24px;
 	@include useScreen('mobile-xl') {
 		height: 600px;
 	}
 	@include useScreen('tablet-sm') {
-		gap: 48px;
 		height: 613px;
+		gap: 48px;
 	}
 }
 
 .blockArrow {
-	align-self: center;
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
+	align-items: center;
+	align-self: center;
 	width: 99px;
 	height: 48px;
 	cursor: pointer;
 }
 
 .arrow {
-	background-color: transparent;
 	border-style: none;
+	background-color: transparent;
 }
 
 .button {
@@ -52,14 +52,12 @@
 }
 
 .projectContainer {
-	min-width: 360px;
-	padding: 0 16px 16px 16px;
-	display: flex;
-	flex-direction: column;
-	overflow-x: hidden;
+	max-width: 100%;
 	@include useScreen('tablet-sm') {
-		padding: 0px 42px 42px 42px;
-		max-width: calc(100vw - 100px);
+		max-width: 600px;
+	}
+	@include useScreen('desktop-sm') {
+		max-width: 1280px;
 	}
 	@include useScreen('desktop-md') {
 		max-width: 1392px;
