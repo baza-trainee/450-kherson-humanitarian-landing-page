@@ -9,14 +9,18 @@
 	text-transform: uppercase;
 }
 
-.wait {
+.success {
+	background-color: var(--color--success-1);
+}
+
+.info {
 	background-color: var(--color--secondary-1);
 }
 
-.inprogress {
+.warn {
 	background-color: var(--color--warning-1);
 }
 
-.finished {
-	background-color: var(--color--success-1);
+.alert {
+	background-color: var(--color--error-1);
 }

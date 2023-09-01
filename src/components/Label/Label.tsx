@@ -2,31 +2,24 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { labelData } from '~/data/projectsContent';
 import { Text } from '~components/Text/Text';
+import type { NotificationTypes } from '~components/types/NotificationTypes';
 
 import s from './Label.module.scss';
 
 export type LabelElement = HTMLDivElement;
 
 export interface LabelProps extends ReactHTMLElementAttributes<LabelElement> {
-	status: string;
+	type: NotificationTypes;
+	children: string;
 }
 
-export const Label = forwardRef<LabelElement, LabelProps>(({ status, ...rest }, ref) => {
-	const labelText = labelData.map(({ name, className, text }) => {
-		if (status === name) {
-			return (
-				<Text variant="h4" key={name} className={clsx(s.label, s[className])}>
-					{text}
-				</Text>
-			);
-		}
-	});
-
+export const Label = forwardRef<LabelElement, LabelProps>(({ type, children, ...rest }, ref) => {
 	return (
 		<div className={s.elementContainer} ref={ref} {...rest}>
-			{labelText}
+			<Text variant="h4" key={type} className={clsx(s.label, s[type])}>
+				{children}
+			</Text>
 		</div>
 	);
 });
