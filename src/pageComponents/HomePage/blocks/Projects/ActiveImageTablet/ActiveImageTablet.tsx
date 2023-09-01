@@ -1,7 +1,5 @@
 import Image from 'next/image';
 
-import s from './ActiveImageTablet.module.scss';
-
 interface ActiveImageTabletProps {
 	imagesArray: {
 		src: string;
@@ -17,7 +15,6 @@ export default function ActiveImageTablet({ imagesArray, position }: ActiveImage
 					return (
 						<Image
 							key={image.src}
-							className={s.mainImage}
 							src={image.src}
 							alt="image1"
 							width={600}
