@@ -13,7 +13,7 @@ export function GreyBlockTablet() {
 	return (
 		<>
 			<div className={s.mainInfo}>
-				<Link href="#hero">
+				<Link href="#hero" scroll={false}>
 					<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 				</Link>
 				<Text variant="h3" className={clsx(s.fontSizeCallToAction, s.widthCallToAction)}>
