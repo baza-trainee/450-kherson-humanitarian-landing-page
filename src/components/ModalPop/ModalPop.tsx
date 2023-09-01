@@ -24,7 +24,7 @@ export default function ModalPop({ type = 'info', title, isOpen, onClose, childr
 			<Text variant="h2" className={titleClassName}>
 				{title}
 			</Text>
-			{children}
+			<div className={s.container}>{children}</div>
 		</Modal>
 	);
 }

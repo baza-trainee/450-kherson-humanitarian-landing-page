@@ -1,12 +1,27 @@
 @use '~/styles/mixins' as *;
 
-.title {
-	padding: 4px 0 24px 16px;
+.container {
+	display: flex;
+	flex-direction: column;
+	min-width: 100%;
+	padding: 0 16px 16px 16px;
+	overflow-x: hidden;
 	@include useScreen('tablet-sm') {
-		padding: 4px 0 48px 42px;
+		max-width: calc(100vw - 50px);
+		padding: 0px 42px 42px 42px;
 	}
 	@include useScreen('desktop-sm') {
-		padding: 4px 0 64px 42px;
+		max-width: calc(100vw - 24px);
+	}
+}
+
+.title {
+	padding: 4px 16px 24px 16px;
+	@include useScreen('tablet-sm') {
+		padding: 4px 42px 48px 42px;
+	}
+	@include useScreen('desktop-sm') {
+		padding: 4px 42px 64px 42px;
 	}
 }
 
