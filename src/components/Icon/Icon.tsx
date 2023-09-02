@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 
 import clsx from 'clsx';
+import { redirect } from 'next/dist/server/api-utils';
 
 import type { ComponentSizes } from '~components/types/ComponentSize';
 
@@ -21,17 +22,21 @@ export interface IconProps extends ReactHTMLElementAttributes<IconElement> {
 	height?: string | number;
 	width?: string | number;
 	disabled?: boolean;
+	clickable?: boolean;
 }
 
 export const Icon = forwardRef<IconElement, IconProps>(
-	({ icon, colors, size = 'default', width, height, disabled, onClick, className, style, ...rest }, ref) => {
-		const componentClass = [onClick && s.clickable, disabled && s.disabled, size && s[size]];
+	(
+		{ icon, colors, size = 'default', width, height, disabled, clickable, onClick, className, style, ...rest },
+		ref,
+	) => {
+		const componentClass = [onClick || (clickable && s.clickable), disabled && s.disabled, size && s[size]];
 
 		const customSizeStyle = size === 'custom' && width && height ? { width, height } : {};
 
-		const customDefaultColorStyle = colors?.default ? { '--icon--background-color': colors?.default } : null;
-		const customHoverColorStyle = colors?.hover ? { '--icon--background-color-hover': colors?.hover } : null;
-		const customClickColorStyle = colors?.click ? { '--icon--background-color-click': colors?.click } : null;
+		const customDefaultColorStyle = colors?.default ? { '--icon--background-color': colors?.default } : {};
+		const customHoverColorStyle = colors?.hover ? { '--icon--background-color-hover': colors?.hover } : {};
+		const customClickColorStyle = colors?.click ? { '--icon--background-color-click': colors?.click } : {};
 		const customDisabledColorStyle = colors?.disabled
 			? { '--icon--background-color-disabled': colors?.disabled }
 			: null;
@@ -50,9 +55,9 @@ export const Icon = forwardRef<IconElement, IconProps>(
 
 		return (
 			<span
-				className={clsx(icon, s.Icon, componentClass, className)}
 				onClick={onClick}
 				ref={ref}
+				className={clsx(icon, s.Icon, componentClass, className)}
 				style={
 					{
 						...style,
