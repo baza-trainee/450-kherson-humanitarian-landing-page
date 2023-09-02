@@ -1,10 +1,10 @@
-@use '~/styles/mixins' as *;
+@use "~/styles/mixins" as *;
 
 .container {
 	display: flex;
 	flex-direction: column;
 	gap: 40px;
-	@include useScreen('desktop-sm') {
+	@include useScreen("tablet-xl") {
 		flex-direction: row;
 		gap: 24px;
 	}
@@ -15,10 +15,10 @@
 	flex-direction: column;
 	width: 100%;
 	row-gap: 24px;
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		row-gap: 40px;
 	}
-	@include useScreen('desktop-sm') {
+	@include useScreen("tablet-xl") {
 		width: 519px;
 	}
 }
@@ -27,7 +27,7 @@
 	display: flex;
 	flex-direction: column;
 	row-gap: 16px;
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		row-gap: 24px;
 	}
 }

@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Container } from '~components/Container/Container';
+import { ROUTES } from '~constants/ROUTES';
 
 import logo from '/public/svg/logo.svg';
 
@@ -10,9 +12,9 @@ export function HeaderLite() {
 	return (
 		<header className={s.HeaderLite}>
 			<Container>
-				<div className={s.row}>
+				<Link href={ROUTES.home} className={s.row}>
 					<Image src={logo} alt="logo" width={142} height={60} />
-				</div>
+				</Link>
 			</Container>
 		</header>
 	);
