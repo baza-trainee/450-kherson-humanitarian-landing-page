@@ -1,0 +1,17 @@
+.LoaderOverlay {
+	display: flex;
+	z-index: 10000;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	width: auto;
+	height: auto;
+}
+
+.loader {
+	position: relative;
+}
