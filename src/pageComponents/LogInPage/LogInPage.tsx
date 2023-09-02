@@ -91,7 +91,7 @@ export function LogInPage() {
 							placeholder="Пароль"
 							className={s.input}
 						/>
-						<Button submit>Зареєструватися</Button>
+						<Button submit>Увійти</Button>
 					</form>
 				</Container>
 			</Section>
