@@ -1,17 +1,21 @@
-import { ImgUpload } from '~components/ImgUpload/ImgUpload';
+import { ListsBoard } from './Boards/ListsBoard/ListsBoard';
+import { TestBoard } from './Boards/TestBoard/TestBoard';
 
 import s from './ContentBoard.module.scss';
 
 interface ContentBoardProps {
-	nothing?: unknown;
+	slug?: string | string[];
+	activeTabId: string;
+	activeTabName: string;
 }
 
-export function ContentBoard({ nothing }: ContentBoardProps) {
+export function ContentBoard({ slug, activeTabId, activeTabName }: ContentBoardProps) {
 	return (
-		<div className={s.ContentBoard}>
-			<ImgUpload />
-			<p>ContentBoard</p>
-			<p>ContentBoard</p>
-		</div>
+		<>
+			<div className={s.ContentBoard}>
+				{slug === 'lists' && <ListsBoard tabId={activeTabId} tabName={activeTabName} />}
+				{slug === 'test' && <TestBoard tabId={activeTabId} tabName={activeTabName} />}
+			</div>
+		</>
 	);
 }
