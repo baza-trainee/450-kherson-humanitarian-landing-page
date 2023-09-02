@@ -14,9 +14,9 @@ export interface LabelProps extends ReactHTMLElementAttributes<LabelElement> {
 	children: string;
 }
 
-export const Label = forwardRef<LabelElement, LabelProps>(({ type, children, ...rest }, ref) => {
+export const Label = forwardRef<LabelElement, LabelProps>(({ type, children, className, ...rest }, ref) => {
 	return (
-		<div className={s.elementContainer} ref={ref} {...rest}>
+		<div className={clsx(s.elementContainer, className)} ref={ref} {...rest}>
 			<Text variant="h4" key={type} className={clsx(s.label, s[type])}>
 				{children}
 			</Text>
