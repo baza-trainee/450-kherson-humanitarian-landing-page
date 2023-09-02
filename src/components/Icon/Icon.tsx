@@ -30,7 +30,7 @@ export const Icon = forwardRef<IconElement, IconProps>(
 		{ icon, colors, size = 'default', width, height, disabled, clickable, onClick, className, style, ...rest },
 		ref,
 	) => {
-		const componentClass = [onClick || (clickable && s.clickable), disabled && s.disabled, size && s[size]];
+		const componentClass = [(onClick || clickable) && s.clickable, disabled && s.disabled, size && s[size]];
 
 		const customSizeStyle = size === 'custom' && width && height ? { width, height } : {};
 
