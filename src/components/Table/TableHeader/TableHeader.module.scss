@@ -1,0 +1,22 @@
+.TableHeader {
+	z-index: 1;
+	position: sticky;
+	top: 0;
+}
+
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	background-color: var(--a--color--red-5);
+}
+
+.cell {
+	display: flex;
+	padding: 8px 8px;
+}
+
+.title {
+	color: var(--color--primary-2);
+	text-transform: uppercase;
+}

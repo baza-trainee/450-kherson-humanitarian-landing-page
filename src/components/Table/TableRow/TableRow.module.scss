@@ -1,0 +1,17 @@
+.TableRow {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	&:hover {
+		background-color: var(--a--color--red-9);
+	}
+
+	border-bottom: 1px solid var(--a--color--red-8);
+}
+
+.cell {
+	display: flex;
+	padding: 8px 8px;
+	overflow: hidden;
+}
