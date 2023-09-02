@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
+import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
 import { Container } from '~components/Container/Container';
 import { Icon } from '~components/Icon/Icon';
 import { Section } from '~components/Section/Section';
@@ -8,7 +12,12 @@ import { Info } from './Info/Info';
 
 import s from './GetHelp.module.scss';
 
-export function GetHelp() {
+interface GetHelp {
+	lists: GetHelpLists;
+}
+
+export function GetHelp({ lists }: GetHelp) {
+	const [activeTab, setActiveTab] = useState<HelpCategories>('idp');
 	return (
 		<Section className={s.GetHelp} id="get-help">
 			<Container className={s.container}>
@@ -25,14 +34,15 @@ export function GetHelp() {
 									документів, зазначених у формі реєстрації, а також документів інших членів сім&apos;ї, що
 									підтверджують їхню особу.
 									<br />
+									<br />
 									Набори видаються з розрахунку до 4 людей на 1 набір.
 								</Text>
 							</div>
 						</div>
 					</div>
-					<Form />
+					<Form lists={lists} setActiveTab={setActiveTab} />
 				</div>
-				<Info />
+				<Info lists={lists} activeTab={activeTab} />
 			</Container>
 		</Section>
 	);

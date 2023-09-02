@@ -4,11 +4,18 @@ import { useForm } from 'react-hook-form';
 
 import clsx from 'clsx';
 
+import { api } from '~api/index';
+import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
+import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
 import { Button } from '~components/Buttons/Button';
 import { Checkbox } from '~components/inputs/Checkbox/Checkbox';
 import { Dropdown } from '~components/inputs/Dropdown/Dropdown';
 import { Tabs } from '~components/inputs/Tabs/Tabs';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
+import { LoaderOverlay } from '~components/LoaderOverlay/LoaderOverlay';
+import { Modal } from '~components/Modal/Modal';
+import ModalPop from '~components/ModalPop/ModalPop';
+import { Text } from '~components/Text/Text';
 import { isObjectEmpty } from '~helpers/isObjectEmpty';
 
 import { AREA_LIST } from './constants/AREA_LIST';
@@ -35,7 +42,17 @@ interface Field {
 
 type FormFieldsData = Record<string, Field>;
 
-export function Form() {
+interface FormProps {
+	lists: GetHelpLists;
+	setActiveTab: (tab: HelpCategories) => void;
+}
+
+export function Form({ lists, setActiveTab }: FormProps) {
+	const [isLoading, setIsLoading] = useState(false);
+	const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
+	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
+
 	const {
 		register,
 		unregister,
@@ -281,7 +298,7 @@ export function Form() {
 						required: 'Поле не може бути пустим',
 						minLength: { value: 12, message: 'Мінімальна кількість символів 12' },
 						pattern: {
-							value: /^[+]?380[\s][0-9]{2}[\s][0-9]{3}[\s]?[0-9]{2}[\s]?[0-9]{2}[\s]?$/,
+							value: /^[+]?380[\s]?[\s0-9]{12}$/,
 							message: 'Номер телефону повинен бути у форматі +380 11 111 11 11',
 						},
 					}),
@@ -307,9 +324,8 @@ export function Form() {
 	const [tabIndex, setTabIndex] = useState(0);
 
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { populationCity, consent, ...restData } = data;
-		const numbers = restData.phone.replace(/[\s+]/g, '');
+		setIsLoading(true);
+		const numbers = data.phone.replace(/[\s+]/g, '');
 		const phoneNumber = [
 			numbers.slice(0, 3),
 			numbers.slice(3, 5),
@@ -317,16 +333,49 @@ export function Form() {
 			numbers.slice(8, 10),
 			numbers.slice(10),
 		].join(' ');
-		console.log(formList[tabIndex].label);
-		console.table({ ...restData, phone: `+${phoneNumber}` });
+
+		const body = {
+			surname: data.surname,
+			name: data.name,
+			patrname: data.patronymic,
+			email: data.email,
+			street: data.populationStreet,
+			building: data.populationHouseNumber.toString(),
+			apartment: data.populationApartmentNumber.toString(),
+			certificateNumber:
+				data.idpCertificateNumber || data.disabilityCertificateNumber || data.birthCertificateNumber,
+			regionFrom: data.movementArea,
+			settlementFrom: data.movementCity,
+			phone: `+${phoneNumber}`,
+		};
+		const res = await api.lists.addNewPerson(lists[formList[tabIndex].name].id, body);
+		setIsLoading(false);
+		if ('data' in res) {
+			setIsModalSuccessOpen(true);
+		} else if ('error' in res) {
+			setErrorMessage('Перевірте, будь ласка, дані та спробуйте ще раз!');
+			setIsModalErrorOpen(true);
+		}
+	};
+
+	const handleErrorModalOnClose = () => {
+		setErrorMessage('');
+		setIsModalErrorOpen(false);
+	};
+
+	const handleSuccessModalOnClose = () => {
+		setIsModalSuccessOpen(false);
 	};
 
 	const tabFormVariantOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
-		const valueIndex = formList.findIndex((item) => item.label === value);
-		setTabIndex(valueIndex);
+		const newTabIndex = formList.findIndex((item) => item.label === value);
+		setTabIndex(newTabIndex);
+		setActiveTab(formList[newTabIndex].name);
 		unregister();
 	};
+
+	const disabledClass = !lists[formList[tabIndex].name].id && s.disabled;
 
 	return (
 		<div className={s.Form}>
@@ -336,7 +385,7 @@ export function Form() {
 				defaultValue={formList[tabIndex].label}
 				labels={formList.map((form) => form.label)}
 			/>
-			<form className={s.formFields} onSubmit={handleSubmit(onSubmit)}>
+			<form className={clsx(s.formFields, disabledClass)} onSubmit={handleSubmit(onSubmit)}>
 				{formList[tabIndex].fieldList.map((field) => {
 					if (!formFieldsData[field]) return null;
 					const condition = formFieldsData[field]?.condition;
@@ -390,9 +439,34 @@ export function Form() {
 				<Button className={s.submitButton} submit disabled={!watchConsent || !isValidFixed}>
 					Зареєструватись
 				</Button>
-				{/* {isLoading && <LoaderOverlay />} */}
-				{/* {(isSubmit && !isLoading) && <UserPageSuccessModal onClose={handlerSuccessModal} />} */}
-				{/* {(error && !isLoading) && <UserPageErrorModal onClose={handlerErrorModal} error={error} />} */}
+				{isLoading && <LoaderOverlay />}
+				{errorMessage && (
+					<ModalPop
+						type="error"
+						title={'Помилка реєстрації!'}
+						isOpen={isModalErrorOpen}
+						onClose={handleErrorModalOnClose}
+					>
+						{errorMessage}
+					</ModalPop>
+				)}
+				{isModalSuccessOpen && (
+					<ModalPop
+						isOpen={isModalSuccessOpen}
+						onClose={handleSuccessModalOnClose}
+						title={'Дякуємо за реєстрацію!'}
+					>
+						<Text variant="p">
+							Ми відправили листа на вашу електронну адресу з посиланням для підтвердження реєстрації.
+							<br />
+							Будь ласка, перевірте свою поштову скриньку та перейдіть за посиланням для завершення процесу
+							реєстрації.
+							<br />
+							<br />
+							{'Якщо ви не знайшли наш лист у папці "Вхідні", будь ласка, перевірте папку "Спам".'}
+						</Text>
+					</ModalPop>
+				)}
 			</form>
 		</div>
 	);

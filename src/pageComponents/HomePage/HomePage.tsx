@@ -1,4 +1,5 @@
 import { ArrowUpButton } from '~components/Buttons/ArrowUpButton';
+import type { HomeProps } from '~pages/index';
 
 import { AboutUs } from './blocks/AboutUs/AboutUs';
 import { GetHelp } from './blocks/GetHelp/GetHelp';
@@ -8,13 +9,17 @@ import { OurActivity } from './blocks/OurActivity/OurActivity';
 import { OurPartners } from './blocks/OurPartners/OurPartners';
 import { Projects } from './blocks/Projects/Projects';
 
-export function HomePage() {
+interface HomePageProps {
+	data: HomeProps;
+}
+
+export function HomePage({ data }: HomePageProps) {
 	return (
 		<>
 			<Hero />
 			<AboutUs />
 			<OurAchievements />
-			<GetHelp />
+			<GetHelp lists={data.getHelpLists} />
 			<OurActivity />
 			<Projects />
 			<OurPartners />

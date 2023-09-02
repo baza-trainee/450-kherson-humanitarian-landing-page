@@ -2,13 +2,21 @@ import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
+import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
+import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
 import { Text } from '~components/Text/Text';
 
-import { getSrcUrlFromTag } from './getSrcUrlFromTag';
+import { getImagePercentage } from './helpers/getImagePercentage';
+import { getSrcUrlFromTag } from './helpers/getSrcUrlFromTag';
 
 import s from './Info.module.scss';
 
-export function Info() {
+interface InfoProps {
+	lists: GetHelpLists;
+	activeTab: HelpCategories;
+}
+
+export function Info({ lists, activeTab }: InfoProps) {
 	const [mapSrc, setMapSrc] = useState('');
 
 	useEffect(() => {
@@ -21,16 +29,18 @@ export function Info() {
 		fetchMapIframe();
 	}, []);
 
+	const imgPercentage = getImagePercentage(lists[activeTab].personsCount, lists[activeTab].maxQuantity);
+
 	return (
 		<div className={s.Info}>
 			<div className={s.tracker}>
 				<Text variant="h3">На отримання наборів зареєстровано</Text>
 				<div className={s.trackerIndicator}>
-					<Image src={'/svg/getHelp/state-70.svg'} alt={'status'} width={120} height={120} />
+					<Image src={`/svg/getHelp/state-${imgPercentage}.svg`} alt={'status'} width={120} height={120} />
 					<div className={s.numbers}>
-						<Text variant="various2">155</Text>
+						<Text variant="various2">{lists[activeTab].personsCount}</Text>
 						<Text variant="various2">/</Text>
-						<Text variant="various2">200</Text>
+						<Text variant="various2">{lists[activeTab].maxQuantity}</Text>
 					</div>
 				</div>
 				<Text variant="subtitle">
