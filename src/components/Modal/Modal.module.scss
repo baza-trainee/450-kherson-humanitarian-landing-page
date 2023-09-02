@@ -1,4 +1,4 @@
-@use '~/styles/mixins' as *;
+@use "~/styles/mixins" as *;
 
 .modalContainer {
 	display: flex;
@@ -35,7 +35,7 @@
 	height: 14px;
 }
 
-.alert {
+.error {
 	background-color: var(--color--error-1);
 }
 
@@ -51,7 +51,7 @@
 .icon {
 	margin: 24px 24px 0 0;
 	color: var(--color--secondary-4);
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		margin: 32px 32px 0 0;
 	}
 }
