@@ -1,12 +1,14 @@
-@use '~/styles/mixins' as *;
+@use "~/styles/mixins" as *;
 
 .Info {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	box-shadow: 0px -3px 0px 0px rgba(58, 65, 111, 0) inset, 0px 2px 4px 0px rgba(45, 35, 66, 0.2),
+	box-shadow:
+		0px -3px 0px 0px rgba(58, 65, 111, 0) inset,
+		0px 2px 4px 0px rgba(45, 35, 66, 0.2),
 		0px 7px 10px 0px rgba(0, 0, 0, 0.1);
-	@include useScreen('desktop-sm') {
+	@include useScreen("tablet-xl") {
 		flex-grow: 1;
 		flex-basis: 0;
 		width: 737px;
@@ -22,10 +24,10 @@
 	padding: 16px 8px;
 	text-align: center;
 	background-color: var(--color--shades-2);
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		padding: 24px 106px;
 	}
-	@include useScreen('desktop-sm') {
+	@include useScreen("tablet-xl") {
 		height: 296px;
 		padding: 24px 82px;
 	}
@@ -36,7 +38,7 @@
 	flex-direction: column;
 	align-items: center;
 	row-gap: 16px;
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		flex-direction: row;
 		column-gap: 48px;
 	}
@@ -60,10 +62,10 @@
 	width: 100%;
 	height: 420px;
 	border: none;
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		height: 740px;
 	}
-	@include useScreen('desktop-sm') {
+	@include useScreen("tablet-xl") {
 		flex-grow: 1;
 		flex-basis: 0;
 		height: 100%;

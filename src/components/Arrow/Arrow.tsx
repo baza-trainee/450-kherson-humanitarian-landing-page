@@ -14,7 +14,11 @@ export function Arrow({ disabled, direction, className, onClick }: ArrowProps) {
 		<button className={className}>
 			<Icon
 				icon={direction ? 'icon--arrow-left' : 'icon--arrow-right'}
-				colors={{ default: 'var(--color--primary-3)' }}
+				colors={{
+					default: 'var(--color--primary-3)',
+					hover: 'var(--color--primary-4)',
+					click: 'var(--color--warning-1)',
+				}}
 				onClick={onClick}
 				disabled={disabled}
 			/>

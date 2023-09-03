@@ -1,20 +1,26 @@
 import { type ReactNode, useEffect } from 'react';
 
+import clsx from 'clsx';
+
 import { Icon } from '~components/Icon/Icon';
 import { Portal } from '~components/Portal/Portal';
+import type { NotificationTypes } from '~components/types/NotificationTypes';
 import { useKeyPress } from '~hooks/useKeyPress';
 import { useScrollLock } from '~hooks/useScrollLock';
 
 import s from './Modal.module.scss';
 
 interface ModalProps {
+	type?: NotificationTypes;
 	children: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export function Modal({ isOpen, onClose, children }: ModalProps) {
+export function Modal({ type = 'info', isOpen, onClose, children }: ModalProps) {
 	const { lockScroll, unlockScroll } = useScrollLock();
+
+	const decorClassName = clsx(s.decor, s[type ? type : '']);
 
 	useKeyPress('Escape', onClose);
 
@@ -30,7 +36,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
 		<Portal wrapperId="portal-modal">
 			<div className={s.modalContainer} onClick={onClose}>
 				<div className={s.modal} onClick={(e) => e.stopPropagation()}>
-					<div className={s.decor} />
+					<div className={decorClassName} />
 					<div className={s.close}>
 						<Icon
 							icon="icon--close"

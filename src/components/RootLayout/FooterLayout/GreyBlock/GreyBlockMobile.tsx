@@ -13,7 +13,7 @@ export function GreyBlockMobile() {
 		<>
 			<NavigationAndDocuments />
 			<div className={s.logoAndCallToAction}>
-				<Link href="#hero">
+				<Link href="#hero" scroll={false}>
 					<Image priority={true} src={logo} alt="logo" width={142} height={60} />
 				</Link>
 				<Text variant="h3">Давайте допоможемо разом</Text>

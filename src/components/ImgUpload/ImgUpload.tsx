@@ -24,6 +24,9 @@ export function ImgUpload() {
 
 	const clearFile = () => {
 		setImage('');
+		if (fileClick.current !== null) {
+			fileClick.current.value = '';
+		}
 	};
 
 	return (
