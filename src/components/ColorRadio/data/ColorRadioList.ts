@@ -1,4 +1,4 @@
-interface ColorPickField {
+interface ColorRadioField {
 	name: string;
 	value: string;
 	id: string;
@@ -6,12 +6,12 @@ interface ColorPickField {
 	isChecked?: boolean;
 }
 
-interface ColorPickCollection {
+interface ColorRadioCollection {
 	block: string;
-	fieldList: ColorPickField[];
+	fieldList: ColorRadioField[];
 }
 
-export const colorPickList: ColorPickCollection[] = [
+export const ColorRadioList: ColorRadioCollection[] = [
 	{
 		block: 'imgShadow',
 		fieldList: [

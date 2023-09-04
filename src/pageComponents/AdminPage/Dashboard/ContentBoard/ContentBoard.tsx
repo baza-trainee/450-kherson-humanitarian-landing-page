@@ -1,4 +1,4 @@
-import { ColorPickBlock } from '~components/ColorPick/ColorPickBlock';
+import { ColorRadioBlock } from '~components/ColorRadio/ColorRadioBlock';
 import { ImgUpload } from '~components/ImgUpload/ImgUpload';
 
 import s from './ContentBoard.module.scss';
@@ -11,12 +11,12 @@ export function ContentBoard({ nothing }: ContentBoardProps) {
 	return (
 		<div className={s.ContentBoard}>
 			<ImgUpload />
-			<ColorPickBlock block='imgShadow' />
+			<ColorRadioBlock block='imgShadow' />
 
 			<p>ContentBoard</p>
 			<p>ContentBoard</p>
 
-			<ColorPickBlock block='textColor' />
+			<ColorRadioBlock block='textColor' />
 		</div>
 	);
 }
