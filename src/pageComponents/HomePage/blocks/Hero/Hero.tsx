@@ -51,7 +51,7 @@ export function Hero() {
 	};
 
 	return (
-		<div ref={sliderRef} className={clsx('keen-slider', s.container)}>
+		<div ref={sliderRef} className={clsx('keen-slider', s.container)} id="hero">
 			{content.map((item: ContentItem) => (
 				<div
 					key={item.id}

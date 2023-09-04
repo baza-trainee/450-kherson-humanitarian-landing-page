@@ -20,7 +20,7 @@ export interface CheckboxProps extends ReactHTMLElementAttributes<CheckboxElemen
 }
 
 export const Checkbox = forwardRef<CheckboxElement, CheckboxProps>(
-	({ label, text, required, disabled, register, errors, className, ...rest }, ref) => {
+	({ label, text, required, disabled, register, errors, className, children, ...rest }, ref) => {
 		const error = errors ? errors[register?.name]?.message?.toString() : '';
 		const componentClass = [error && cs.error, disabled && cs.disabled, className];
 
@@ -36,9 +36,13 @@ export const Checkbox = forwardRef<CheckboxElement, CheckboxProps>(
 				<div className={s.elementsContainer}>
 					<label className={s.element}>
 						<input type="checkbox" value={text} className={s.input} ref={ref} {...register} {...rest} />
-						<Text variant="p" className={s.label}>
-							{text}
-						</Text>
+						{children ? (
+							<>{children}</>
+						) : (
+							<Text variant="p" className={s.label}>
+								{text}
+							</Text>
+						)}
 					</label>
 				</div>
 			</InputWrapper>
