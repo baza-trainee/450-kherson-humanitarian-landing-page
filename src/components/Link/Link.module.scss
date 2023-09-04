@@ -3,9 +3,7 @@
 .link {
 	position: relative;
 	text-decoration: none;
-	&:hover,
-	&:active,
-	&:focus {
+	@include useOnHover {
 		&::after {
 			opacity: 1;
 			position: absolute;
@@ -13,20 +11,20 @@
 			width: 100%;
 			height: 2px;
 			content: '';
-		}
-	}
-	&:hover {
-		&::after {
 			background: var(--color--gradient-1);
 		}
 		p {
 			color: var(--color--warning-1);
 		}
 	}
-
-	&:active,
-	&:focus {
+	@include useOnClick {
 		&::after {
+			opacity: 1;
+			position: absolute;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			content: '';
 			background: var(--color--primary-3);
 		}
 		p {
