@@ -72,13 +72,13 @@ export function Hero() {
 	};
 
 	const handlePrevClick = () => {
-		if (instanceRef.current && currentSlide > 0) {
+		if (instanceRef.current) {
 			instanceRef.current.prev();
 		}
 	};
 
 	const handleNextClick = () => {
-		if (instanceRef.current && currentSlide < instanceRef.current.track.details.slides.length - 1) {
+		if (instanceRef.current) {
 			instanceRef.current.next();
 		}
 	};
@@ -106,15 +106,7 @@ export function Hero() {
 			))}
 
 			{isScreenTabletSm ? (
-				<Arrows
-					loaded={loaded}
-					onPrevClick={handlePrevClick}
-					onNextClick={handleNextClick}
-					isPrevDisabled={currentSlide === 0}
-					isNextDisabled={
-						instanceRef?.current ? currentSlide === instanceRef.current.track.details.slides.length - 1 : true
-					}
-				/>
+				<Arrows loaded={loaded} onPrevClick={handlePrevClick} onNextClick={handleNextClick} />
 			) : (
 				<Dots
 					loaded={loaded}
