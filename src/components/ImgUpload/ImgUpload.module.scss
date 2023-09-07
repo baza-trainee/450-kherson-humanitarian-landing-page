@@ -21,7 +21,18 @@
 .img {
 	object-fit: contain;
 }
-
+.ImgShadow{
+	position: absolute;
+   width: 100%;
+   height: 100%;
+   transition: all .3s ease;
+}
+.whiteShadow{
+	background: var(--color--gradient-4);
+}
+.darkShadow{
+	background: var(--color--gradient-3);
+}
 .iconBlock {
 	display: flex;
 	flex-direction: column;

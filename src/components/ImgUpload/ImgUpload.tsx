@@ -1,14 +1,19 @@
 import { useRef, useState } from 'react';
 
+import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
 
 import s from './ImgUpload.module.scss';
-
-export function ImgUpload() {
+interface ImgUploadProps{
+	shadowValue: string;
+}
+export function ImgUpload({shadowValue}: ImgUploadProps) {
 	const [image, setImage] = useState<string>('');
 	const fileClick = useRef<HTMLInputElement>(null);
+
+	// console.log(shadowValue);
 
 	const changeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
@@ -48,6 +53,7 @@ export function ImgUpload() {
 						fill={true}
 						className={s.img}
 					/>}
+				<div className={clsx(s.ImgShadow, s[shadowValue])}/>
 			</div>
 			<div className={s.iconBlock}>
 				<Icon icon="icon--upload" className={s.icon} onClick={handleClick} />
