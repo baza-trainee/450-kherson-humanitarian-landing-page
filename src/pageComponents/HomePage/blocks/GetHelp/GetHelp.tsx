@@ -13,7 +13,7 @@ import { Info } from './Info/Info';
 import s from './GetHelp.module.scss';
 
 interface GetHelp {
-	lists: GetHelpLists;
+	lists?: GetHelpLists;
 }
 
 export function GetHelp({ lists }: GetHelp) {

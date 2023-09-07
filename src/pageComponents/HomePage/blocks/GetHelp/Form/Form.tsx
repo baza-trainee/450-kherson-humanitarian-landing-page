@@ -13,8 +13,7 @@ import { Dropdown } from '~components/inputs/Dropdown/Dropdown';
 import { Tabs } from '~components/inputs/Tabs/Tabs';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
 import { LoaderOverlay } from '~components/LoaderOverlay/LoaderOverlay';
-import { Modal } from '~components/Modal/Modal';
-import ModalPop from '~components/ModalPop/ModalPop';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 import { Text } from '~components/Text/Text';
 import { isObjectEmpty } from '~helpers/isObjectEmpty';
 
@@ -43,7 +42,7 @@ interface Field {
 type FormFieldsData = Record<string, Field>;
 
 interface FormProps {
-	lists: GetHelpLists;
+	lists?: GetHelpLists;
 	setActiveTab: (tab: HelpCategories) => void;
 }
 
@@ -340,7 +339,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 			settlementFrom: data.movementCity,
 			phone: data.phone,
 		};
-		const res = await api.lists.addNewPerson(lists[formList[tabIndex].name].id, body);
+		const res = lists ? await api.lists.addNewPerson(lists?.[formList[tabIndex].name].id, body) : {};
 		setIsLoading(false);
 		if ('data' in res) {
 			setIsModalSuccessOpen(true);
@@ -367,7 +366,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 		unregister();
 	};
 
-	const disabledClass = !lists[formList[tabIndex].name].id && s.disabled;
+	const disabledClass = !lists?.[formList[tabIndex].name].id && s.disabled;
 
 	return (
 		<div className={s.Form}>
