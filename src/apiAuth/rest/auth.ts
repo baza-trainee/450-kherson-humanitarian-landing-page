@@ -1,6 +1,6 @@
-import type { ApiResponse } from '~api/types/Responses/ApiResponse';
+import type { ApiResponse } from '~api/types/backend/Responses/ApiResponse';
 
-import { postAuthCommon } from './common/postAuthCommon';
+import { postAuthCommon } from '../common/postAuthCommon';
 
 interface AuthAdmin {
 	username: string;

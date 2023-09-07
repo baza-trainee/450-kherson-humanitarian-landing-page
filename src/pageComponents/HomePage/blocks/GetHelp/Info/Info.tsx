@@ -12,7 +12,7 @@ import { getSrcUrlFromTag } from './helpers/getSrcUrlFromTag';
 import s from './Info.module.scss';
 
 interface InfoProps {
-	lists: GetHelpLists;
+	lists?: GetHelpLists;
 	activeTab: HelpCategories;
 }
 
@@ -29,7 +29,10 @@ export function Info({ lists, activeTab }: InfoProps) {
 		fetchMapIframe();
 	}, []);
 
-	const imgPercentage = getImagePercentage(lists[activeTab].personsCount, lists[activeTab].maxQuantity);
+	const imgPercentage = getImagePercentage(
+		lists?.[activeTab].personsRegistered || 0,
+		lists?.[activeTab].availableSets || 0,
+	);
 
 	return (
 		<div className={s.Info}>
@@ -38,9 +41,9 @@ export function Info({ lists, activeTab }: InfoProps) {
 				<div className={s.trackerIndicator}>
 					<Image src={`/svg/getHelp/state-${imgPercentage}.svg`} alt={'status'} width={120} height={120} />
 					<div className={s.numbers}>
-						<Text variant="various2">{lists[activeTab].personsCount}</Text>
+						<Text variant="various2">{lists?.[activeTab].personsRegistered}</Text>
 						<Text variant="various2">/</Text>
-						<Text variant="various2">{lists[activeTab].maxQuantity}</Text>
+						<Text variant="various2">{lists?.[activeTab].availableSets}</Text>
 					</div>
 				</div>
 				<Text variant="subtitle">

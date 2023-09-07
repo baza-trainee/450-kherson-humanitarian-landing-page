@@ -1,5 +1,5 @@
 import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
-import type { ListResponse } from '~api/types/Responses/ListResponse';
+import type { ListResponse } from '~api/types/backend/Responses/ListResponse';
 
 export function getCategoryListsDTO(lists: ListResponse[]): CategoryList[] {
 	return lists.map((list) => ({

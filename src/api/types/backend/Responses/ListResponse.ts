@@ -1,3 +1,5 @@
+import type { PersonResponse } from './PersonResponse';
+
 export interface ListResponse {
 	changedDate?: string;
 	closeDate?: string;
@@ -11,4 +13,5 @@ export interface ListResponse {
 	type?: string;
 	updatedAt?: string;
 	_id?: string;
+	persons?: PersonResponse[];
 }
