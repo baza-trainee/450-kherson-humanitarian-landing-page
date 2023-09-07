@@ -1,8 +1,8 @@
+import type { ListQuantityResponse } from '~api/types/backend/Responses/ListQuantityResponse';
 import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
 import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
-import type { ListResponse } from '~api/types/Responses/ListResponse';
 
-export function getActiveListsDTO(lists: ListResponse[]): GetHelpLists {
+export function getActiveListsQuantityDTO(lists: ListQuantityResponse[]): GetHelpLists {
 	const tabs: Record<string, Record<string, HelpCategories>> = {
 		temp_moved: { name: 'idp' },
 		invalid: { name: 'invalid' },
@@ -16,8 +16,8 @@ export function getActiveListsDTO(lists: ListResponse[]): GetHelpLists {
 				tab[1].name as HelpCategories,
 				{
 					id: currentTabData?._id || '',
-					personsCount: currentTabData?.confirmedPersons || 0,
-					maxQuantity: currentTabData?.maxQuantity || 0,
+					personsRegistered: currentTabData?.confirmedPersons || 0,
+					availableSets: currentTabData?.maxQuantity || 0,
 				},
 			];
 		}),
