@@ -1,11 +1,13 @@
-import { createRequest } from '~api/common/base/createRequest';
-import { returnAxiosError } from '~api/helpers/returnAxiosError';
+import type { AxiosRequestConfig } from 'axios';
 
-export const deleteCommon = async <R>(endpoint: string) => {
-	try {
-		const { data, status } = await createRequest.delete<R>(endpoint);
-		return { data, status };
-	} catch (error) {
-		return returnAxiosError(error);
-	}
-};
+import { createRequest } from '~api/common/base/createRequest';
+
+import { requestWrapper } from './base/requestWrapper';
+
+export const deleteCommon = <R>(endpoint: string, params?: Record<string, string>) =>
+	requestWrapper((requestConfig: AxiosRequestConfig) =>
+		createRequest.get<R>(endpoint, {
+			params,
+			...requestConfig,
+		}),
+	);

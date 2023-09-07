@@ -4,7 +4,6 @@
 	padding-top: 32px;
 	padding-bottom: 32px;
 	background-color: var(--color--primary-1);
-	scroll-margin-top: 80px;
 	@include useScreen('desktop-sm') {
 		padding-top: 48px;
 		padding-bottom: 48px;

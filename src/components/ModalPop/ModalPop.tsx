@@ -16,7 +16,7 @@ interface ModalPop {
 	onClose: () => void;
 }
 
-export default function ModalPop({ type = 'info', title, isOpen, onClose, children }: ModalPop) {
+export function ModalPop({ type = 'info', title, isOpen, onClose, children }: ModalPop) {
 	const titleClassName = clsx(s.title, s[type ? type : '']);
 
 	return (
