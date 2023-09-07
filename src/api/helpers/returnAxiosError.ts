@@ -2,27 +2,27 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import router from 'next/router';
 
-import type { ResponseError } from '~api/types/Responses/ResponseError';
+import type { ErrorResponse } from '~api/types/backend/Responses/ErrorResponse';
 import { ROUTES } from '~constants/ROUTES';
 import { returnAppError } from '~helpers/returnAppError';
 
-export function returnAxiosError(error: unknown): ResponseError {
+export function returnAxiosError(error: unknown): ErrorResponse {
 	returnAppError(error);
 
+	const errorData = {
+		status: -1,
+		error: 'Unknown Error',
+	};
+
 	if (axios.isAxiosError(error)) {
-		// TODO: move unauth check to another place
-		if (error.response?.status === 403) {
+		if (typeof window !== 'undefined' && error.response?.status === 403) {
 			Cookies.remove('token');
 			router.push(ROUTES.login);
 		}
-		return {
-			status: error.response?.status || 500,
-			error: error.response?.data.message || 'Something went wrong on a server ¯\\_(ツ)_/¯!',
-		};
-	} else {
-		return {
-			status: 500,
-			error: 'Something went wrong on a server ¯\\_(ツ)_/¯!',
-		};
+
+		errorData.status = error.response?.status || errorData.status;
+		errorData.error = error.response?.data.message || errorData.error;
+		returnAppError(`${errorData.status} | ${errorData.error}`);
 	}
+	return errorData;
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 import { returnAxiosError } from '~api/helpers/returnAxiosError';
-import type { ApiResponse } from '~api/types/Responses/ApiResponse';
+import type { ApiResponse } from '~api/types/backend/Responses/ApiResponse';
 
 import { BASE_AUTH_URL } from './BASE_AUTH_URL';
 

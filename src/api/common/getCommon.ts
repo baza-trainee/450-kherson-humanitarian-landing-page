@@ -1,11 +1,14 @@
-import { createRequest } from '~api/common/base/createRequest';
-import { returnAxiosError } from '~api/helpers/returnAxiosError';
+import type { AxiosRequestConfig } from 'axios';
 
-export const getCommon = async <R>(endpoint: string) => {
-	try {
-		const { data, status } = await createRequest.get<R>(endpoint);
-		return { data, status };
-	} catch (error) {
-		return returnAxiosError(error);
-	}
-};
+import { createRequest } from '~api/common/base/createRequest';
+import type { ApiResponse } from '~api/types/backend/Responses/ApiResponse';
+
+import { requestWrapper } from './base/requestWrapper';
+
+export const getCommon = <R>(endpoint: string, params?: Record<string, string>): Promise<ApiResponse<R>> =>
+	requestWrapper((requestConfig: AxiosRequestConfig) =>
+		createRequest.get<R>(endpoint, {
+			params,
+			...requestConfig,
+		}),
+	);

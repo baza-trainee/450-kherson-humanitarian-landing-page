@@ -40,11 +40,11 @@ export function FooterLayout() {
 					</Text>
 					<div className={s.icons}>
 						{socials.map((social) => (
-							<Link target="_blank" href={social.href} className={s.iconSocial} key={social.id}>
+							<Link target="_blank" href={social.href} key={social.id}>
 								<Icon
-									className={s.icon}
 									icon={`icon--${social.name}`}
 									colors={{ default: 'var(--color--shades-1)', hover: 'var(--color--warning-1)' }}
+									clickable
 								/>
 							</Link>
 						))}

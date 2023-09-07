@@ -1,5 +1,5 @@
 export interface GetHelpList {
-	personsCount: number;
-	maxQuantity: number;
+	personsRegistered: number;
+	availableSets: number;
 	id: string;
 }

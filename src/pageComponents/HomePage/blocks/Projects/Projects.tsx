@@ -6,7 +6,7 @@ import { cardsData } from '~/data/projectsContent';
 import { Arrow } from '~components/Arrow/Arrow';
 import { Carousel } from '~components/Carousel/Carousel';
 import { Container } from '~components/Container/Container';
-import ModalPop from '~components/ModalPop/ModalPop';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 import { useHandleDrag } from '~hooks/useHandleDrag';
