@@ -1,12 +1,13 @@
-import { createRequest } from '~api/common/base/createRequest';
-import { returnAxiosError } from '~api/helpers/returnAxiosError';
+import type { AxiosRequestConfig } from 'axios';
 
-export const patchCommon = async <R, B>(endpoint: string, body: B) => {
-	try {
-		const { data, status } = await createRequest.patch<R>(endpoint, body);
-		return { data, status };
-	} catch (error) {
-		console.log('error: ', error);
-		return returnAxiosError(error);
-	}
-};
+import { createRequest } from '~api/common/base/createRequest';
+
+import { requestWrapper } from './base/requestWrapper';
+
+export const patchCommon = <R, B>(endpoint: string, body: B, params?: Record<string, string>) =>
+	requestWrapper((requestConfig: AxiosRequestConfig) =>
+		createRequest.patch<R>(endpoint, body, {
+			params,
+			...requestConfig,
+		}),
+	);
