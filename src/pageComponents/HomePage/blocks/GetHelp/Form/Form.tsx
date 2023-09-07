@@ -290,16 +290,16 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				type: 'text',
 				name: 'phone',
 				label: 'Номер телефону',
-				placeholder: '+380 11 111 11 11',
+				placeholder: '+380111111111',
 				required: true,
 				widthSize: 'fullWidth',
+				inputMaxLength: 13,
 				register: () =>
 					register('phone', {
 						required: 'Поле не може бути пустим',
-						minLength: { value: 12, message: 'Мінімальна кількість символів 12' },
 						pattern: {
-							value: /^[+]?380[\s]?[\s0-9]{12}$/,
-							message: 'Номер телефону повинен бути у форматі +380 11 111 11 11',
+							value: /^\+380[0-9]{9}$/,
+							message: 'Номер телефону повинен бути у форматі +380111111111',
 						},
 					}),
 			},
@@ -325,14 +325,6 @@ export function Form({ lists, setActiveTab }: FormProps) {
 
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
 		setIsLoading(true);
-		const numbers = data.phone.replace(/[\s+]/g, '');
-		const phoneNumber = [
-			numbers.slice(0, 3),
-			numbers.slice(3, 5),
-			numbers.slice(5, 8),
-			numbers.slice(8, 10),
-			numbers.slice(10),
-		].join(' ');
 
 		const body = {
 			surname: data.surname,
@@ -346,7 +338,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				data.idpCertificateNumber || data.disabilityCertificateNumber || data.birthCertificateNumber,
 			regionFrom: data.movementArea,
 			settlementFrom: data.movementCity,
-			phone: `+${phoneNumber}`,
+			phone: data.phone,
 		};
 		const res = await api.lists.addNewPerson(lists[formList[tabIndex].name].id, body);
 		setIsLoading(false);
