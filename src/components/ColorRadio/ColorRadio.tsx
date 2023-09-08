@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 
 import { Icon } from '~components/Icon/Icon';
-import { Text } from '~components/Text/Text';
 
 import s from './ColorRadio.module.scss';
 
@@ -9,11 +8,10 @@ interface ColorRadioProps {
 	nameColorRadio: string;
 	valueColorRadio: string;
 	isCheckedColorRadio?: boolean;
-	textValue?: string;
 	changeRadio?: (value: string) => void;
 }
 
-export function ColorRadio({ nameColorRadio, valueColorRadio, isCheckedColorRadio, textValue, changeRadio }: ColorRadioProps) {
+export function ColorRadio({ nameColorRadio, valueColorRadio, isCheckedColorRadio, changeRadio }: ColorRadioProps) {
 	const getRadioValue = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (changeRadio) {
 			changeRadio(event.target.value);
@@ -26,9 +24,6 @@ export function ColorRadio({ nameColorRadio, valueColorRadio, isCheckedColorRadi
 			{(valueColorRadio === 'blue' || valueColorRadio === 'black') ?
 				<Icon icon="icon--checked" className={s.icon} size="custom" width="12px" height="10px" colors={{default: 'var(--color--shades-1)'}}/> :
 				<Icon icon="icon--checked" className={s.icon} size="custom" width="12px" height="10px" />}
-			{!!textValue && (<Text variant='p' className={s.text}>
-				{textValue}
-			</Text>)}
 		</label >
 	);
 }

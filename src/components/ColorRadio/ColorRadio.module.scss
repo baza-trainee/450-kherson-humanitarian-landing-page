@@ -47,12 +47,23 @@
    margin-left: -18px;
 	transition: all .3s ease;
 }
-.darkShadow {
-	background: linear-gradient(90deg, rgba(0, 0, 0, 0.80) 0%, rgba(0, 0, 0, 0.00) 100%);
+
+.darkGradient {
+	background-image: url("../../../public/svg/gradient-dark.svg");
+}
+.liteGradient {
+	background-image: url("../../../public/svg/gradient-lite.svg");
+}
+.noGradient{
+	background-image: url("../../../public/svg/gradient-transparent.svg");
+}
+.darkGradient,
+.liteGradient,
+.noGradient{
+	background-repeat: no-repeat;
+   background-size: contain;
 }
 
-.noShadow,
-.whiteShadow,
 .white {
 	background-color: transparent;
 }

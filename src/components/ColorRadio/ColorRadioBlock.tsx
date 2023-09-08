@@ -15,7 +15,6 @@ export function ColorRadioBlock({ block, changeRadio }: ColorRadioBlockProps) {
 					key={i}
 					nameColorRadio={item.name}
 					valueColorRadio={item.value}
-					textValue={item.text}
 					isCheckedColorRadio={item.isChecked}
 					changeRadio={changeRadio}/>
 			))}

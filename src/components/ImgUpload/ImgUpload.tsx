@@ -7,9 +7,9 @@ import { Icon } from '~components/Icon/Icon';
 
 import s from './ImgUpload.module.scss';
 interface ImgUploadProps{
-	shadowValue: string;
+	gradientValue: string;
 }
-export function ImgUpload({shadowValue}: ImgUploadProps) {
+export function ImgUpload({gradientValue}: ImgUploadProps) {
 	const [image, setImage] = useState<string>('');
 	const fileClick = useRef<HTMLInputElement>(null);
 
@@ -43,7 +43,7 @@ export function ImgUpload({shadowValue}: ImgUploadProps) {
 					height={!image ? 100 : 300}
 					className={!image ? s.imgDefault: s.img}
 				/>
-				<div className={clsx(s.ImgShadow, s[shadowValue])}/>
+				<div className={clsx(s.ImgGradient, s[gradientValue])}/>
 			</div>
 			<div className={s.iconBlock}>
 				<Icon icon="icon--upload" className={s.icon} onClick={handleClick} />

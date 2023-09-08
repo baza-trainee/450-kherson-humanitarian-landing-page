@@ -13,26 +13,23 @@ interface ColorRadioCollection {
 
 export const ColorRadioList: ColorRadioCollection[] = [
 	{
-		block: 'imgShadow',
+		block: 'imgGradient',
 		fieldList: [
 			{
-				name: 'imgShadow',
-				value: 'whiteShadow',
-				id: 'whiteShadow',
-				text: 'світлий градієнт',
+				name: 'imgGradient',
+				value: 'liteGradient',
+				id: 'liteGradient',
 				isChecked: true,
 			},
 			{
-				name: 'imgShadow',
-				value: 'darkShadow',
-				id: 'darkShadow',
-				text: 'темний градієнт',
+				name: 'imgGradient',
+				value: 'darkGradient',
+				id: 'darkGradient',
 			},
 			{
-				name: 'imgShadow',
-				value: 'noShadow',
-				id: 'noShadow',
-				text: 'без градієнту',
+				name: 'imgGradient',
+				value: 'noGradient',
+				id: 'noGradient',
 			},
 		],
 	},
