@@ -1,12 +1,15 @@
 import { useRef, useState } from 'react';
 
+import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
 
 import s from './ImgUpload.module.scss';
-
-export function ImgUpload() {
+interface ImgUploadProps{
+	gradientValue: string;
+}
+export function ImgUpload({gradientValue}: ImgUploadProps) {
 	const [image, setImage] = useState<string>('');
 	const fileClick = useRef<HTMLInputElement>(null);
 
@@ -32,28 +35,23 @@ export function ImgUpload() {
 	return (
 		<div className={s.ImgUpload}>
 			<div className={s.imgBlock}>
-				{!image ?
-					<Image
-						priority={true}
-						src={'/svg/blank-img.svg'}
-						alt='card-img'
-						width={100}
-						height={100}
-						className={s.imgDefault}
-					/>
-					:
-					<Image
-						src={image}
-						alt='card-img'
-						fill={true}
-						className={s.img}
-					/>}
+				<Image
+					priority={true}
+					src={!image ? '/svg/blank-img.svg' : image}
+					alt='card-img'
+					width={!image ? 100 : 712}
+					height={!image ? 100 : 300}
+					className={!image ? s.imgDefault: s.img}
+				/>
+				<div className={clsx(s.ImgGradient, s[gradientValue])}/>
 			</div>
 			<div className={s.iconBlock}>
 				<Icon icon="icon--upload" className={s.icon} onClick={handleClick} />
 				<Icon icon="icon--trash" className={s.icon} onClick={clearFile} />
 			</div>
-			<input type='file' className={s.hidden} ref={fileClick} onChange={changeFile} accept='image/*, .png, .jpeg, .web' />
+			<label>
+				<input type='file' className={s.hidden} ref={fileClick} onChange={changeFile} accept='image/*, .png, .jpeg, .web' />
+			</label>
 		</div>
 	);
 }

@@ -23,7 +23,8 @@ $iconsSet: (
 	phone,
 	plus,
 	trash,
-	upload
+	upload,
+	checked
 );
 
 @include useSvgIcon($icons: $iconsSet);
