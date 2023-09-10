@@ -1,0 +1,91 @@
+.label {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+
+	&:before {
+		display: inline-block;
+		width: 32px;
+		height: 32px;
+		border: 1px solid var(--color--secondary-4);
+		border-radius: 100%;
+		content: "";
+		background-color: transparent;
+		background-clip: content-box;
+		transition: all 0.2s ease;
+	}
+}
+
+.input {
+	display: block;
+	border-radius: 8px;
+	outline: 0;
+	resize: none;
+
+	&[type="radio"] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		border: 0;
+		clip: rect(0 0 0 0);
+		overflow: hidden;
+	}
+
+}
+
+.bgSpan {
+	display: block;
+	width: 24px;
+	height: 24px;
+	margin-left: -28px;
+	border-radius: 100%;
+}
+.icon{
+	opacity: 0;
+   margin-left: -18px;
+	transition: all .3s ease;
+}
+
+.darkGradient {
+	background-image: url("../../../public/svg/gradient-dark.svg");
+}
+.liteGradient {
+	background-image: url("../../../public/svg/gradient-lite.svg");
+}
+.noGradient{
+	background-image: url("../../../public/svg/gradient-transparent.svg");
+}
+.darkGradient,
+.liteGradient,
+.noGradient{
+	background-repeat: no-repeat;
+   background-size: contain;
+}
+
+.white {
+	background-color: transparent;
+}
+
+.blue {
+	background-color: var(--color--primary-2);
+}
+
+.black {
+	background-color: var(--color--secondary-4);
+}
+
+.input[type="radio"]:checked+.bgSpan+.icon {
+	opacity: 1;
+}
+.text {
+	margin-left: 18px;
+	color: #000;
+}
+
+.ColorRadioBlock {
+	display: flex;
+	flex-direction: row;
+	column-gap: 24px;
+}
