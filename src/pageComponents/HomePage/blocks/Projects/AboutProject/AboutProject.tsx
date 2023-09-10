@@ -41,7 +41,7 @@ export default function AboutProject({ productId }: AboutProjectProps) {
 						</div>
 						<div className={s.duration}>
 							<Text variant="h6" className={s.staticText}>
-								Тривалість проекту:
+								Тривалість проєкту:
 							</Text>
 							<Text variant="h6" className={s.dynamicText}>
 								{description.duration}
