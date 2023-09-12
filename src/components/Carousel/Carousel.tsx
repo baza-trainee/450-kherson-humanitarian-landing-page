@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 
+import clsx from 'clsx';
 import type { MotionProps, PanInfo } from 'framer-motion';
 import { motion } from 'framer-motion';
 
@@ -14,9 +15,9 @@ export interface CarouselProps extends Omit<ReactHTMLElementAttributes<CarouselE
 }
 
 export const Carousel = forwardRef<CarouselElement, CarouselProps>(
-	({ children, animation, handleDragEnd, handleDragStart }, ref) => {
+	({ children, animation, handleDragEnd, handleDragStart, className }, ref) => {
 		return (
-			<div ref={ref} className={s.carousel}>
+			<div ref={ref} className={clsx(s.carousel, className)}>
 				<motion.div className={s.row} {...animation} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
 					{children}
 				</motion.div>
