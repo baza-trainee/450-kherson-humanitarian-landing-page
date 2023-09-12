@@ -34,7 +34,7 @@ export function ImgUpload({gradientValue}: ImgUploadProps) {
 
 	return (
 		<div className={s.ImgUpload}>
-			<div className={s.imgBlock}>
+			<div className={s.imgBlock} style={!image ? {border: '1px solid var(--color--secondary-2)'} : {border: 'none'}}>
 				<Image
 					priority={true}
 					src={!image ? '/svg/blank-img.svg' : image}
