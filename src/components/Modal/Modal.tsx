@@ -34,8 +34,9 @@ export function Modal({ type = 'info', isOpen, onClose, children }: ModalProps) 
 
 	return (
 		<Portal wrapperId="portal-modal">
-			<div className={s.modalContainer} onClick={onClose}>
-				<div className={s.modal} onClick={(e) => e.stopPropagation()}>
+			<>
+				<div className={s.modalContainer} onClick={onClose} />
+				<div className={s.modal}>
 					<div className={decorClassName} />
 					<div className={s.close}>
 						<Icon
@@ -49,7 +50,7 @@ export function Modal({ type = 'info', isOpen, onClose, children }: ModalProps) 
 					</div>
 					<div className={s.content}>{children}</div>
 				</div>
-			</div>
+			</>
 		</Portal>
 	);
 }
