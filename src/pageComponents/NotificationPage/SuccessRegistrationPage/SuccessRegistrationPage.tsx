@@ -5,7 +5,17 @@ import { Text } from '~components/Text/Text';
 
 import s from './SuccessRegistrationPage.module.scss';
 
-export function SuccessRegistrationPage() {
+interface ParsedUrlQuery {
+	issueDate?: string;
+	issueTime?: string;
+}
+
+interface SuccessRegistrationPageProps {
+	data: ParsedUrlQuery;
+}
+
+export function SuccessRegistrationPage(props: SuccessRegistrationPageProps) {
+	const { issueDate, issueTime } = props.data;
 	return (
 		<Section>
 			<Container className={s.container}>
@@ -18,7 +28,8 @@ export function SuccessRegistrationPage() {
 							Ви успішно зареєструвались на отримання гуманітарної допомоги
 						</Text>
 						<Text variant="p" className={s.description}>
-							Видача допомоги відбудеться дд.мм.рр о ……. годині за адресою: м. Кривий Ріг, вул. Гетьманська 39А.
+							{`Видача допомоги відбудеться ${issueDate} о ${issueTime} годині за адресою: м. Кривий Ріг, вул.
+							Гетьманська 39А.`}
 						</Text>
 					</div>
 					<ButtonLink href="/" className={s.button}>

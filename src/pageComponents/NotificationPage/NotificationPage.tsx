@@ -10,8 +10,8 @@ export function NotificationPage() {
 
 	return (
 		<main className={s.NotificationPage}>
-			{query.slug === 'success-registration' && <SuccessRegistrationPage />}
 			{query.slug === 'unsuccess-registration' && <UnsuccessRegistrationPage />}
+			{query.slug === 'success-registration' && <SuccessRegistrationPage data={query} />}
 		</main>
 	);
 }
