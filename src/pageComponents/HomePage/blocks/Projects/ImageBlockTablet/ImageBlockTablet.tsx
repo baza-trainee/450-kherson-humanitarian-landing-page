@@ -1,3 +1,5 @@
+import ReactPlayer from 'react-player';
+
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -6,6 +8,7 @@ import s from './ImageBlockTablet.module.scss';
 interface ImageBlockTabletProps {
 	imagesArray: {
 		src: string;
+		type: string;
 	}[];
 	width: number;
 	position: number;
@@ -17,17 +20,22 @@ export function ImageBlockTablet({ imagesArray, width, position }: ImageBlockTab
 			{imagesArray.map((image, index) => {
 				const borderImageClassName = position + 1 !== index ? s.img : clsx(s.img, s.active);
 				return (
-					<Image
-						key={image.src}
-						src={image.src}
-						alt=" "
-						width={width}
-						height={94}
-						className={borderImageClassName}
-						style={{ objectFit: 'cover' }}
-						draggable="false"
-						onMouseDown={(e) => e.preventDefault()}
-					/>
+					<div key={index} className={borderImageClassName}>
+						{image.type === 'video' ? (
+							<ReactPlayer key={image.src} light url={image.src} width={width} height="100%" playing={true} />
+						) : (
+							<Image
+								key={image.src}
+								src={image.src}
+								alt=" "
+								width={width}
+								height={94}
+								style={{ objectFit: 'cover', height: '100%' }}
+								draggable="false"
+								onMouseDown={(e) => e.preventDefault()}
+							/>
+						)}
+					</div>
 				);
 			})}
 		</div>
