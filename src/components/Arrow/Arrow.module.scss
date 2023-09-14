@@ -1,0 +1,30 @@
+@use '~/styles/mixins' as *;
+
+.button {
+	border: none;
+
+	.icon {
+		background-color: var(--color--primary-3);
+	}
+
+	@include useOnHover {
+		.icon {
+			background-color: var(--color--primary-4);
+		}
+	}
+
+	@include useOnClick {
+		.icon {
+			background-color: var(--color--warning-1);
+		}
+	}
+
+	@include useDisabled() {
+		cursor: not-allowed;
+		pointer-events: none;
+		.icon {
+			background-color: var(--color--secondary-4);
+			opacity: 60%;
+		}
+	}
+}

@@ -102,8 +102,9 @@ export function Projects() {
 						<CardBlock handleProductClick={handleProductClick} width={width} />
 					</Carousel>
 					<div className={s.blockArrow}>
-						<Arrow direction className={s.arrow} onClick={onLeft} disabled={position === 0} />
+						<Arrow direction="left" className={s.arrow} onClick={onLeft} disabled={position === 0} />
 						<Arrow
+							direction="right"
 							className={s.arrow}
 							onClick={onRight}
 							disabled={position === cardsData.length - visibleItems}

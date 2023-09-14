@@ -155,8 +155,8 @@ export function OurActivity() {
 
 					{isScreenDesktopSm && (
 						<>
-							<Arrow direction className={clsx(s.arrow, s.leftArrow)} onClick={() => paginate(-1)} />
-							<Arrow className={clsx(s.arrow, s.rightArrow)} onClick={() => paginate(1)} />
+							<Arrow direction="left" className={clsx(s.arrow, s.leftArrow)} onClick={() => paginate(-1)} />
+							<Arrow direction="right" className={clsx(s.arrow, s.rightArrow)} onClick={() => paginate(1)} />
 						</>
 					)}
 				</div>

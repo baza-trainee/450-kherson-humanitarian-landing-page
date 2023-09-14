@@ -10,9 +10,12 @@ interface ArrowsProps {
 	isNextDisabled: boolean;
 }
 
-function ArrowKeenSlider(props: { disabled: boolean; left?: boolean; onClick: (e: React.SyntheticEvent) => void }) {
-	const direction = props.left ? true : false;
-	return <Arrow direction={direction} onClick={props.onClick} disabled={props.disabled} className={s.arrow} />;
+function ArrowKeenSlider(props: {
+	disabled: boolean;
+	direction: 'left' | 'right';
+	onClick: (e: React.SyntheticEvent) => void;
+}) {
+	return <Arrow direction={props.direction} onClick={props.onClick} disabled={props.disabled} className={s.arrow} />;
 }
 
 export function Arrows({ loaded, onPrevClick, onNextClick, isPrevDisabled, isNextDisabled }: ArrowsProps) {
@@ -20,8 +23,8 @@ export function Arrows({ loaded, onPrevClick, onNextClick, isPrevDisabled, isNex
 		loaded && (
 			<div className={s.arrowsContainer}>
 				<div className={s.arrows}>
-					<ArrowKeenSlider left onClick={onPrevClick} disabled={isPrevDisabled} />
-					<ArrowKeenSlider onClick={onNextClick} disabled={isNextDisabled} />
+					<ArrowKeenSlider direction="left" onClick={onPrevClick} disabled={isPrevDisabled} />
+					<ArrowKeenSlider direction="right" onClick={onNextClick} disabled={isNextDisabled} />
 				</div>
 			</div>
 		)
