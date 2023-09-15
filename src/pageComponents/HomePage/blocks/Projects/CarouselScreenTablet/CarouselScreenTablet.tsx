@@ -71,7 +71,7 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 		<div className={s.imageContent}>
 			<ActiveImageTablet imagesArray={description.images} position={positionMini} />
 			<div className={s.container}>
-				<Arrow direction="left" className={s.arrow} onClick={onLeft} disabled={positionMini === -1} />
+				<Arrow type="secondary" direction="left" onClick={onLeft} disabled={positionMini === -1} />
 				<Carousel
 					ref={carouselMini}
 					animation={animationMini}
@@ -82,8 +82,8 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 					<ImageBlockTablet imagesArray={description.images} width={widthMini} position={positionMini} />
 				</Carousel>
 				<Arrow
+					type="secondary"
 					direction="right"
-					className={s.arrow}
 					onClick={onRight}
 					disabled={positionMini === description.images.length - visibleItems + 1}
 				/>

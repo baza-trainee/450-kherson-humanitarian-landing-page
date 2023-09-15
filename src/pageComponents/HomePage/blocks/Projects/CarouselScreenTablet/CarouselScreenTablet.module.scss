@@ -1,9 +1,9 @@
 @use '~/styles/mixins' as *;
 
 .container {
-	min-height: 94px;
 	display: flex;
 	align-items: center;
+	min-height: 94px;
 	gap: 8px;
 }
 
@@ -13,10 +13,10 @@
 	gap: 24px;
 }
 
-.arrow {
-	height: fit-content;
-	border: none;
-	background: rgba(255, 255, 255, 0.8);
-	box-shadow: 0px -3px 0px 0px rgba(58, 65, 111, 0) inset, 0px 2px 4px 0px rgba(45, 35, 66, 0.2),
-		0px 7px 10px -3px rgba(45, 35, 66, 0.1);
-}
+// .arrow {
+// 	height: fit-content;
+// 	border: none;
+// 	background: rgba(255, 255, 255, 0.8);
+// 	box-shadow: 0px -3px 0px 0px rgba(58, 65, 111, 0) inset, 0px 2px 4px 0px rgba(45, 35, 66, 0.2),
+// 		0px 7px 10px -3px rgba(45, 35, 66, 0.1);
+// }
