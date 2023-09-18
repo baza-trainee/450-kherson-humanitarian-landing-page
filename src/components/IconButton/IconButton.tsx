@@ -3,22 +3,24 @@ import type { SyntheticEvent } from 'react';
 import clsx from 'clsx';
 
 import { Icon } from '~components/Icon/Icon';
+import type { ComponentSizes } from '~components/types/ComponentSize';
 
-import s from './Arrow.module.scss';
+import s from './IconButton.module.scss';
 
-interface ArrowProps {
+interface IconButtonProps {
 	type?: 'primary' | 'secondary';
 	disabled?: boolean;
-	direction: 'left' | 'right';
+	icon: string;
 	className?: string;
 	onClick: (e: SyntheticEvent) => void;
+	size?: ComponentSizes;
 }
 
-export function Arrow({ type = 'primary', disabled, direction, className, onClick }: ArrowProps) {
+export function IconButton({ type = 'primary', disabled, icon, className, onClick, size }: IconButtonProps) {
 	const componentClass = type && s[type];
 	return (
 		<button className={clsx(s.button, className, componentClass)} onClick={onClick} disabled={disabled}>
-			<Icon className={s.icon} icon={`icon--arrow-${direction}`} />
+			<Icon className={s.icon} icon={`icon--${icon}`} size={size} />
 		</button>
 	);
 }

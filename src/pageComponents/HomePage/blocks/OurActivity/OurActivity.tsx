@@ -6,9 +6,9 @@ import Image from 'next/image';
 
 import { images } from '~/data/ourActivityData';
 import { Carousel3d } from '~/pageComponents/HomePage/blocks/OurActivity/Carousel3d/Carousel3d';
-import { Arrow } from '~components/Arrow/Arrow';
 import { Container } from '~components/Container/Container';
 import { Dots } from '~components/Dots/Dots';
+import { IconButton } from '~components/IconButton/IconButton';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 import { useScreenQuery } from '~hooks/useScreenQuery';
@@ -155,8 +155,16 @@ export function OurActivity() {
 
 					{isScreenDesktopSm && (
 						<>
-							<Arrow direction="left" className={clsx(s.arrow, s.leftArrow)} onClick={() => paginate(-1)} />
-							<Arrow direction="right" className={clsx(s.arrow, s.rightArrow)} onClick={() => paginate(1)} />
+							<IconButton
+								icon="arrow-left"
+								className={clsx(s.arrow, s.leftArrow)}
+								onClick={() => paginate(-1)}
+							/>
+							<IconButton
+								icon="arrow-right"
+								className={clsx(s.arrow, s.rightArrow)}
+								onClick={() => paginate(1)}
+							/>
 						</>
 					)}
 				</div>
