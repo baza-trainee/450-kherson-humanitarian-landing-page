@@ -58,7 +58,7 @@
 		min-width: 219px;
 		padding: 64.5px 16px;
 	}
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		padding: 48px 0 48px 64px;
 	}
 }
@@ -66,7 +66,7 @@
 .content {
 	align-self: center;
 	gap: 16px;
-	@include useScreen('desktop-md') {
+	@include useScreen('desktop-sm') {
 		align-self: flex-start;
 	}
 }
