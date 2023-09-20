@@ -1,7 +1,7 @@
 import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
-import type { ListResponse } from '~api/types/backend/Responses/ListResponse';
+import type { ListResponse } from '~api/types/backend/responses/ListResponse';
 
-export function getCategoryListsDTO(lists: ListResponse[]): CategoryList[] {
+export function transformCategoryListsDTO(lists: ListResponse[]): CategoryList[] {
 	return lists.map((list) => ({
 		personsRegistered: list.confirmedPersons || 0,
 		availableSets: list.maxQuantity || 0,

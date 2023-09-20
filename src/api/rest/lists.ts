@@ -1,24 +1,35 @@
-import { deleteCommon } from '~api/common/deleteCommon';
-import { getCommon } from '~api/common/getCommon';
-import { patchCommon } from '~api/common/pathCommon';
-import { postCommon } from '~api/common/postCommon';
-import type { ListRequest } from '~api/types/backend/Requests/ListRequest';
-import type { PersonRequest } from '~api/types/backend/Requests/PersonRequest';
-import type { ApiResponse } from '~api/types/backend/Responses/ApiResponse';
-import type { ListResponse } from '~api/types/backend/Responses/ListResponse';
+import type { AxiosRequestConfig } from 'axios';
 
-type ListsResponse = ListResponse[];
+import { commonDelete } from '~api/common/commonDelete';
+import { commonGet } from '~api/common/commonGet';
+import { commonPost } from '~api/common/commonPost';
+import type { ListRequest } from '~api/types/backend/requests/ListRequest';
+import type { ListResponse } from '~api/types/backend/responses/ListResponse';
+import type { ListsResponse } from '~api/types/backend/responses/ListsResponse';
 
-export const getActiveListsQuantity = (): Promise<ApiResponse<ListsResponse>> =>
-	getCommon<ListsResponse>('orders/quantity', { status: 'active' });
+import { transformActiveListsQuantityDTO } from './dto/list/transformActiveListsQuantityDTO';
+import { transformCategoryListsDTO } from './dto/list/transformCategoryListsDTO';
+import { transformListDTO } from './dto/list/transformListDTO';
 
-export const getListsByCategory = (type: string): Promise<ApiResponse<ListsResponse>> => getCommon('orders', { type });
+export const getActiveListsQuantity = () =>
+	commonGet<ListsResponse>('/orders/quantity', { params: { status: 'active' } }).then((resp) => {
+		if ('data' in resp) return { data: transformActiveListsQuantityDTO(resp.data) };
+		return { error: resp };
+	});
 
-export const getListById = (listId: string): Promise<ApiResponse<ListsResponse>> => getCommon(`order/${listId}`);
+export const getListsByCategory = (category: string) =>
+	commonGet<ListsResponse>('/orders', { params: { type: category } }).then((resp) => {
+		if ('data' in resp) return { data: transformCategoryListsDTO(resp.data) };
+		return { error: resp };
+	});
 
-export const addNewList = (body: ListRequest): Promise<ApiResponse<ListsResponse>> => postCommon('orders', body);
+export const getListById = (listId: string, requestConfig: AxiosRequestConfig) =>
+	commonGet<ListResponse>(`/order/${listId}`, requestConfig).then((resp) => {
+		if ('data' in resp) return { data: transformListDTO(resp.data) };
+		return { error: resp };
+	});
 
-export const removeList = (listId: string): Promise<ApiResponse<ListsResponse>> => deleteCommon(`order/${listId}`);
+export const addNewList = (body: ListRequest) =>
+	commonPost<ListsResponse, ListRequest>('/orders', body);
 
-export const addNewPerson = (listId: string, body: PersonRequest): Promise<ApiResponse<ListsResponse>> =>
-	patchCommon(`order/${listId}`, body);
+export const removeList = (listId: string) => commonDelete<ListsResponse>(`/order/${listId}`);
