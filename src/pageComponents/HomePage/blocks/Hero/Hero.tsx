@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import clsx from 'clsx';
 import { useKeenSlider } from 'keen-slider/react';
+import Image from 'next/image';
 
 import { Container } from '~components/Container/Container';
 import { Text } from '~components/Text/Text';
@@ -88,9 +89,16 @@ export function Hero() {
 			{content.map((item: ContentItem) => (
 				<div
 					key={item.id}
-					className={clsx('keen-slider__slide', s.background, s[item.banner.gradientColor])}
-					style={{ '--hero-image-url': `url(${item.banner.src})` } as React.CSSProperties}
+					className={clsx(s.itemContainer, 'keen-slider__slide')}
 				>
+					<Image
+						alt='hero-img'
+						src={item.banner.src}
+						fill
+						className={s.img}
+
+					/>
+					<div className={clsx(s.gradient, s[item.banner.gradientColor])} />
 					<Container className={s.content}>
 						<div className={s.text}>
 							<Text variant="h1" className={clsx(s.heading, s[item.title.color])} lineBreak>
@@ -102,6 +110,7 @@ export function Hero() {
 						</div>
 						<Buttons />
 					</Container>
+
 				</div>
 			))}
 
