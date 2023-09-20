@@ -1,18 +1,10 @@
-import { useEffect, useState } from 'react';
-
-import { getCategoryListsDTO } from '~api/dto/list/getCategoryListsDTO';
-import { api } from '~api/index';
-import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
-import type { ListRequest } from '~api/types/Requests/ListRequest';
+import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
+import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
+import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import { Loader } from '~components/Loader/Loader';
 
 import { ListTable } from './ListTable/ListTable';
 import { ModalAddList } from './ModalAddList/ModalAddList';
-
-interface ListsBoardProps {
-	tabId: string;
-	tabName: string;
-}
 
 export const categories: Record<string, ListRequest['type']> = {
 	idp: 'temp_moved',
@@ -20,34 +12,24 @@ export const categories: Record<string, ListRequest['type']> = {
 	child: 'child',
 };
 
-export function ListsBoard({ tabId, tabName }: ListsBoardProps) {
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState('');
+export function ListsBoard() {
+	const { activeTabId } = useTabsState((state) => ({
+		activeTabId: state.activeTabId,
+	}));
 
-	const [tabData, setTabData] = useState<CategoryList[] | null>(null);
-
-	useEffect(() => {
-		setTabData(null);
-		const fetchData = async () => {
-			setIsLoading(true);
-			setError('');
-
-			const resp = tabName ? await api.lists.getCategoriesList(categories[tabName]) : null;
-			if (resp && 'data' in resp) setTabData(getCategoryListsDTO(resp.data));
-
-			setIsLoading(false);
-		};
-		fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [tabName]);
+	const { isLoading, error, lists } = useListsState((state) => ({
+		isLoading: state.isLoading,
+		error: state.error,
+		lists: state.lists,
+	}));
 
 	return (
 		<>
-			{isLoading && !tabData && <Loader />}
-			{!isLoading && (
+			{(isLoading || !lists) && <Loader />}
+			{!isLoading && activeTabId && (
 				<>
-					{tabData && <ListTable lists={tabData} />}
-					<ModalAddList category={tabName} />
+					{lists && <ListTable lists={lists} />}
+					<ModalAddList category={activeTabId} />
 				</>
 			)}
 		</>
