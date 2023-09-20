@@ -11,6 +11,15 @@
 	row-gap: 16px;
 }
 
+.TabButton {
+	& > * {
+		display: block;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+}
+
 .active {
 	@include useActive;
 }
