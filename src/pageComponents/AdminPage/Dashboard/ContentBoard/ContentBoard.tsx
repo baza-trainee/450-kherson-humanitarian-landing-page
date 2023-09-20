@@ -1,21 +1,17 @@
+import { useRouter } from 'next/router';
+
 import { ListsBoard } from './Boards/ListsBoard/ListsBoard';
 import { TestBoard } from './Boards/TestBoard/TestBoard';
 
 import s from './ContentBoard.module.scss';
 
-interface ContentBoardProps {
-	slug?: string | string[];
-	activeTabId: string;
-	activeTabName: string;
-}
+export function ContentBoard() {
+	const { query } = useRouter();
 
-export function ContentBoard({ slug, activeTabId, activeTabName }: ContentBoardProps) {
 	return (
-		<>
-			<div className={s.ContentBoard}>
-				{slug === 'lists' && <ListsBoard tabId={activeTabId} tabName={activeTabName} />}
-				{slug === 'test' && <TestBoard tabId={activeTabId} tabName={activeTabName} />}
-			</div>
-		</>
+		<div className={s.ContentBoard}>
+			{query?.slug === 'lists' && <ListsBoard />}
+			{query?.slug === 'test' && <TestBoard />}
+		</div>
 	);
 }

@@ -1,31 +1,22 @@
-import { getActiveListsDTO } from '~api/dto/list/getActiveListsDTO';
-import { api } from '~api/index';
-
-import type { TabsData } from '../Tabs';
-
-export const fetchListData = async (): Promise<TabsData> => {
-	const resp = await api.lists.getActiveLists();
-	let data;
-	if ('data' in resp) data = getActiveListsDTO(resp.data);
-
+export async function fetchListData() {
 	return {
 		tabs: [
 			{
-				name: 'idp',
+				key: 'idp',
 				title: 'Допомога ВПО',
-				id: data?.idp.id || '',
+				id: 'temp_moved',
 			},
 			{
-				name: 'invalid',
+				key: 'invalid',
 				title: 'Допомога людям з інвалідністю',
-				id: data?.invalid.id || '',
+				id: 'invalid',
 			},
 			{
-				name: 'child',
+				key: 'child',
 				title: 'Допомога дітям',
-				id: data?.child.id || '',
+				id: 'child',
 			},
 		],
 		isEditable: false,
 	};
-};
+}

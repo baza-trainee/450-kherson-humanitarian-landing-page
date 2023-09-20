@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+
+import clsx from 'clsx';
+import { useRouter } from 'next/router';
 
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { Loader } from '~components/Loader/Loader';
+import { getIndexByKey } from '~helpers/getIndexByKey';
+import { useParams } from '~hooks/useParams';
 
+import { useListsState } from '../../store/useListsState';
+import { useTabsState } from '../../store/useTabsState';
 import { fetchListData } from './fetchHelpers/fetchListData';
 
 import s from './Tabs.module.scss';
 
 export interface Tab {
 	title: string;
-	name: string;
+	key: string;
 	id: string;
 }
 
@@ -19,59 +26,98 @@ export interface TabsData {
 	isEditable: boolean;
 }
 
-interface TabsProps {
-	slug?: string | string[];
-	activeTab: number;
-	setActiveTab: (activeTab: number) => void;
-	setActiveTabId: (activeTabId: string) => void;
-	setActiveTabName: (tabName: string) => void;
-}
+export function Tabs() {
+	const { isListLoading, getListsByCategory } = useListsState((state) => ({
+		isListLoading: state.isLoading,
+		getListsByCategory: state.getListsByCategory,
+	}));
+	const isDataLoading = isListLoading;
 
-export function Tabs({ slug, activeTab, setActiveTab, setActiveTabId, setActiveTabName }: TabsProps) {
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState('');
-	const [tabsData, setTabsData] = useState<TabsData | null>(null);
+	const router = useRouter();
+	const { query } = router;
+
+	const { setParams } = useParams();
+
+	const { isLoading, error, tabsData, activeTabId, setActiveTabId, getTabsData, setTabsData } =
+		useTabsState((state) => ({
+			isLoading: state.isLoading,
+			error: state.error,
+			activeTabId: state.activeTabId,
+			tabsData: state.tabsData,
+			setActiveTabId: state.setActiveTabId,
+			getTabsData: state.getTabsData,
+			setTabsData: state.setTabsData,
+		}));
 
 	useEffect(() => {
 		const fetchData = async () => {
-			setIsLoading(true);
-			setError('');
-			if (slug === 'lists') {
-				setTabsData(await fetchListData());
+			//* set fetching helpers function here ↓
+			if (query?.slug === 'lists') {
+				await getTabsData(fetchListData);
 			} else {
 				setTabsData(null);
 			}
-			setIsLoading(false);
 		};
 		fetchData();
-	}, [slug]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [query?.slug]);
+
+	useEffect(() => {
+		if (
+			(!query?.id && tabsData?.tabs[0].id) ||
+			(query?.id && tabsData && getIndexByKey(tabsData?.tabs, 'id', query?.id) < 0)
+		) {
+			setActiveTabId(tabsData?.tabs[0].id);
+			setParams({ id: tabsData?.tabs[0].id });
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [tabsData]);
+
+	useEffect(() => {
+		if (!activeTabId) {
+			setActiveTabId(query?.id?.toString() || '');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [query?.id]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			if (activeTabId) getListsByCategory(activeTabId);
+		};
+		if (activeTabId) fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [activeTabId]);
 
 	const isActiveType = (isActive: boolean) => (isActive ? 'primary' : 'secondary');
 	const isActiveClass = (isActive: boolean) => (isActive ? s.active : '');
 
-	const handleTabOnClick = (index: number) => {
-		setActiveTab(index);
-		setActiveTabId(tabsData?.tabs[index].id || '');
-		setActiveTabName(tabsData?.tabs[index].name || '');
+	const handleTabOnClick = (id: string) => {
+		setActiveTabId(id);
+		setParams({ id: id });
+	};
+
+	const handleAddNewTabOnClick = () => {
+		console.log('handleAddNewTabOnClick');
 	};
 
 	return (
 		<div className={s.Tabs}>
-			{isLoading && !tabsData && <Loader />}
-			{!isLoading && tabsData && (
+			{(isLoading || !activeTabId || !query?.id) && <Loader />}
+			{!isLoading && activeTabId && query?.id && tabsData && (
 				<>
-					{tabsData.tabs.map((tab, i) => (
+					{tabsData.tabs.map((tab) => (
 						<Button
 							key={tab.id}
-							type={isActiveType(tab.name === tabsData.tabs[activeTab].name)}
-							className={isActiveClass(tab.name === tabsData.tabs[activeTab].name)}
-							onClick={() => handleTabOnClick(i)}
+							type={isActiveType(tab.id === activeTabId)}
+							className={clsx(s.TabButton, isActiveClass(tab.id === activeTabId))}
+							onClick={() => handleTabOnClick(tab.id)}
+							disabled={isDataLoading && tab.id !== activeTabId}
 						>
 							{tab.title}
 						</Button>
 					))}
 					{tabsData.isEditable && (
-						<Button type="secondary">
+						<Button type="secondary" onClick={handleAddNewTabOnClick}>
 							<Icon
 								icon="icon--plus"
 								colors={{
