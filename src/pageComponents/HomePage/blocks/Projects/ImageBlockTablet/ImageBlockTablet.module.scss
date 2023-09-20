@@ -9,5 +9,7 @@
 }
 
 .img {
-	cursor: grab;
+	height: 94px;
+	cursor: not-allowed;
+	pointer-events: none;
 }

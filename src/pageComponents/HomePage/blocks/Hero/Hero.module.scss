@@ -1,12 +1,12 @@
-@use "~/styles/mixins" as *;
+@use '~/styles/mixins' as *;
 
 .container {
 	position: relative;
 	height: 528px;
-	@include useScreen("tablet-sm") {
+	@include useScreen('tablet-sm') {
 		height: 850px;
 	}
-	@include useScreen("desktop-md") {
+	@include useScreen('desktop-md') {
 		height: 680px;
 	}
 }
@@ -21,21 +21,21 @@
 	height: 528px;
 	padding: 0 16px 52px 16px;
 	gap: 10px;
-	@include useScreen("mobile-md") {
+	@include useScreen('mobile-md') {
 		gap: 20px;
 	}
-	@include useScreen("mobile-lg") {
+	@include useScreen('mobile-lg') {
 		gap: 30px;
 	}
-	@include useScreen("mobile-xl") {
+	@include useScreen('mobile-xl') {
 		gap: 40px;
 	}
-	@include useScreen("tablet-sm") {
+	@include useScreen('tablet-sm') {
 		height: 850px;
 		padding: 0 32px 104px 32px;
 		gap: 101px;
 	}
-	@include useScreen("desktop-md") {
+	@include useScreen('desktop-md') {
 		height: 680px;
 		padding: 0 0 88px 0;
 		gap: 64px;
@@ -43,15 +43,21 @@
 }
 
 .background {
-	--hero-image-url: url("/");
+	--hero-image-url: url('/');
 }
 
 .background {
 	background-color: lightgray 50%;
 	background-repeat: no-repeat;
 	background-attachment: local;
-	background-position: right;
+	background-position: 85% center;
 	background-size: cover;
+	@include useScreen('tablet-sm') {
+		background-position: 90% center;
+	}
+	@include useScreen('desktop-md') {
+		background-position: right;
+	}
 }
 
 .gradientBlack {
@@ -67,27 +73,27 @@
 	flex-direction: column;
 	gap: 14px;
 
-	@include useScreen("mobile-md") {
+	@include useScreen('mobile-md') {
 		gap: 16px;
 	}
-	@include useScreen("tablet-sm") {
+	@include useScreen('tablet-sm') {
 		width: 100%;
 		gap: 24px;
 	}
-	@include useScreen("desktop-md") {
+	@include useScreen('desktop-md') {
 		gap: 64px;
 	}
 }
 
 .heading {
 	width: 321px;
-	@include useScreen("mobile-lg") {
+	@include useScreen('mobile-lg') {
 		width: 400px;
 	}
-	@include useScreen("tablet-sm") {
+	@include useScreen('tablet-sm') {
 		width: 680px;
 	}
-	@include useScreen("desktop-md") {
+	@include useScreen('desktop-md') {
 		width: 675px;
 	}
 }
