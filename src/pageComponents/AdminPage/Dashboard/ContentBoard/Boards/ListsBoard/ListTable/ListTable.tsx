@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { ModalRemove } from '~/pageComponents/AdminPage/ModalRemove/ModalRemove';
 import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { api } from '~api/index';
@@ -13,8 +14,6 @@ import { Table } from '~components/Table/Table';
 import type { NotificationTypes } from '~components/types/NotificationTypes';
 import { ROUTES } from '~constants/ROUTES';
 import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
-
-import { ModalRemoveAsk } from './ModalRemoveAsk/ModalRemoveAsk';
 
 interface ListTableProps {
 	lists: CategoryList[] | null;
@@ -144,7 +143,7 @@ export function ListTable({ lists }: ListTableProps) {
 		<>
 			<Table columns={columns} data={lists} />
 			<LoaderOverlay />
-			<ModalRemoveAsk
+			<ModalRemove
 				isModalOpen={isModalRemoveOpen}
 				setIsModalOpen={setIsModalRemoveOpen}
 				onYesClick={handleOnModalRemoveYesClick}
