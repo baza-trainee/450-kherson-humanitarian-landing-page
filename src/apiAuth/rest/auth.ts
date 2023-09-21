@@ -1,4 +1,4 @@
-import type { ApiResponse } from '~api/types/backend/responses/ApiResponse';
+import type { ApiAxiosResponse } from '~api/types/backend/responses/ApiAxiosResponse';
 
 import { getAuthCommon } from '../common/getAuthCommon';
 import { postAuthCommon } from '../common/postAuthCommon';
@@ -12,9 +12,9 @@ interface AuthAdminResponse {
 	token: string;
 }
 
-export const login = async (body: AuthAdmin): Promise<ApiResponse<AuthAdminResponse>> =>
+export const login = async (body: AuthAdmin): Promise<ApiAxiosResponse<AuthAdminResponse>> =>
 	postAuthCommon('/api/auth/login', body);
 
 // TODO: replace get to correct delete or patch
-export const logout = async (): Promise<ApiResponse<AuthAdminResponse>> =>
+export const logout = async (): Promise<ApiAxiosResponse<AuthAdminResponse>> =>
 	getAuthCommon('/api/auth/logout');

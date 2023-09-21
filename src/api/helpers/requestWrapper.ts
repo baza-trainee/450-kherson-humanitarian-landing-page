@@ -1,13 +1,16 @@
 import type { AxiosRequestConfig } from 'axios';
 
 import { API_URL } from '~api/constants/API_URL';
-import type { ApiResponse } from '~api/types/backend/responses/ApiResponse';
+import type { ApiAxiosResponse } from '~api/types/backend/responses/ApiAxiosResponse';
 import { isClient } from '~helpers/isClient';
 import { returnAppError } from '~helpers/returnAppError';
 
 export const requestWrapper = async <T>(
-	callbackReq: (apiUrl: string, requestConfig?: AxiosRequestConfig) => Promise<ApiResponse<T>>,
-): Promise<ApiResponse<T>> => {
+	callbackReq: (
+		apiUrl: string,
+		requestConfig?: AxiosRequestConfig,
+	) => Promise<ApiAxiosResponse<T>>,
+): Promise<ApiAxiosResponse<T>> => {
 	const apiUrl = isClient() ? API_URL.client : API_URL.server;
 
 	try {
