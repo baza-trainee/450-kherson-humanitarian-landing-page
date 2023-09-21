@@ -19,8 +19,6 @@ export interface TextInputProps
 	errors?: FieldErrors<FieldValues>;
 	required?: boolean;
 	disabled?: boolean;
-	size?: number;
-	maxLength?: number;
 	hideError?: boolean;
 	info?: string;
 }
@@ -37,8 +35,6 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 			hideError,
 			info,
 			placeholder,
-			size,
-			maxLength,
 			className,
 			children,
 			...rest
@@ -65,8 +61,6 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 						type={type}
 						className={cs.input}
 						placeholder={placeholder}
-						size={size}
-						maxLength={maxLength}
 						ref={ref}
 						{...register}
 						{...rest}
