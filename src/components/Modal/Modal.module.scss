@@ -1,6 +1,6 @@
-@use '~/styles/mixins' as *;
+@use "~/styles/mixins" as *;
 
-.modalContainer {
+.backdrop {
 	z-index: 999;
 	position: fixed;
 	top: 50%;
@@ -54,7 +54,7 @@
 .icon {
 	margin: 24px 24px 0 0;
 	color: var(--color--secondary-4);
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		margin: 32px 32px 0 0;
 	}
 }
