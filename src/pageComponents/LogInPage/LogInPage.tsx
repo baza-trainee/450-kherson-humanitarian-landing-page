@@ -49,7 +49,7 @@ export function LogInPage() {
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
 		setIsLoading(true);
 
-		const res = await apiAuth.authAdmin({ username: data.login, password: data.password });
+		const res = await apiAuth.login({ username: data.login, password: data.password });
 		if ('data' in res) {
 			Cookies.set('token', res.data.token, { secure: true, expires: 1 });
 			router.push(ROUTES.admin);
