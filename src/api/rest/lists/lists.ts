@@ -7,9 +7,9 @@ import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import type { ListResponse } from '~api/types/backend/responses/ListResponse';
 import type { ListsResponse } from '~api/types/backend/responses/ListsResponse';
 
-import { transformActiveListsQuantityDTO } from './dto/list/transformActiveListsQuantityDTO';
-import { transformCategoryListsDTO } from './dto/list/transformCategoryListsDTO';
-import { transformListDTO } from './dto/list/transformListDTO';
+import { transformActiveListsQuantityDTO } from './dto/transformActiveListsQuantityDTO';
+import { transformCategoryListsDTO } from './dto/transformCategoryListsDTO';
+import { transformListDTO } from './dto/transformListDTO';
 
 export const getActiveListsQuantity = () =>
 	commonGet<ListsResponse>('/orders/quantity', { params: { status: 'active' } }).then((resp) => {
