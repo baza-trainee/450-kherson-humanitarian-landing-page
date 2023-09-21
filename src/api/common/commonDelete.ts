@@ -8,4 +8,4 @@ export const commonDelete = <R>(
 	endpoint: string,
 	requestConfig?: AxiosRequestConfig,
 ): Promise<ApiResponse<R>> =>
-	requestWrapper((apiUrl: string) => axios.get<R>(`${apiUrl}/${endpoint}`, requestConfig));
+	requestWrapper((apiUrl: string) => axios.delete<R>(`${apiUrl}/${endpoint}`, requestConfig));

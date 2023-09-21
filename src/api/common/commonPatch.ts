@@ -9,4 +9,4 @@ export const commonPatch = <R, B>(
 	body: B,
 	requestConfig?: AxiosRequestConfig,
 ): Promise<ApiResponse<R>> =>
-	requestWrapper((apiUrl: string) => axios.post<R>(`${apiUrl}/${endpoint}`, body, requestConfig));
+	requestWrapper((apiUrl: string) => axios.patch<R>(`${apiUrl}/${endpoint}`, body, requestConfig));
