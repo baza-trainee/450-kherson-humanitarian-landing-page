@@ -31,6 +31,7 @@ export function Tabs() {
 		isListLoading: state.isLoading,
 		getListsByCategory: state.getListsByCategory,
 	}));
+
 	const isDataLoading = isListLoading;
 
 	const router = useRouter();
