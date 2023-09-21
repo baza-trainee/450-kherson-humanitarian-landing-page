@@ -2,14 +2,14 @@ import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
 import { api } from '~api/index';
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
 import { LoaderOverlay } from '~components/LoaderOverlay/LoaderOverlay';
-import { Modal } from '~components/Modal/Modal';
-import ModalPop from '~components/ModalPop/ModalPop';
-import { Text } from '~components/Text/Text';
+import { ModalPop } from '~components/ModalPop/ModalPop';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 
 import { categories } from '../ListsBoard';
 
@@ -31,6 +31,10 @@ export function ModalAddList({ category }: ModalAddList) {
 	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
+	const { getListsByCategory } = useListsState((state) => ({
+		getListsByCategory: state.getListsByCategory,
+	}));
+
 	const {
 		register,
 		handleSubmit,
@@ -42,22 +46,16 @@ export function ModalAddList({ category }: ModalAddList) {
 	const registers = {
 		availableSets: register('availableSets', {
 			required: 'Поле не може бути пустим',
-			pattern: {
-				value: /^[\d]+$/,
-				message: 'Поле повинно містити тільки цифри',
-			},
+			min: { value: 5, message: '5 — мінімальна кількість наборів' },
+			max: { value: 1000, message: '1000 — максимальна кількість наборів' },
 		}),
 		issueDate: register('issueDate', {
 			required: 'Поле не може бути пустим',
-			// pattern: {
-			// 	value: /^[0-9]{2}\.[0-3]{2}\.20[0-9]{2}$/,
-			// 	message: 'Дата повинна бути у форматі 24.08.2091',
-			// },
 		}),
 		issueTime: register('issueTime', {
 			required: 'Поле не може бути пустим',
 			pattern: {
-				value: /^[0-2][0-9]:[0-5][0-9]$/,
+				value: /[0-2][0-9]:[0-5][0-9]/,
 				message: 'Час повинен бути у форматі 09:00',
 			},
 		}),
@@ -79,17 +77,20 @@ export function ModalAddList({ category }: ModalAddList) {
 			issueTime: data.issueTime,
 		};
 
-		console.log('body: ', body);
+		const resp = await api.lists.addNewList(body);
 
-		const res = await api.lists.addNewList(body);
-		console.log('res: ', res);
-		if ('data' in res) {
-			console.log('res: ', res);
+		if ('data' in resp) {
+			await getListsByCategory(category);
 		} else {
-			setErrorMessage('Помилка при створенні списку! Спробуйте пізніше!');
-			setIsModalErrorOpen(true);
-			setIsModalOpen(false);
+			const message = getErrorMessageFromCode(resp.status, {
+				400: 'Дата не може бути в минулому або список з такою датою вже існує!',
+				403: 'Користувач не авторизований!',
+				406: 'Недопустима кількість наборів! Поставте цифру менше та спробуйте ще раз',
+			});
+			setErrorMessage(message);
 		}
+
+		setIsModalOpen(false);
 		setIsLoading(false);
 	};
 
@@ -108,12 +109,12 @@ export function ModalAddList({ category }: ModalAddList) {
 
 	return (
 		<>
-			<Button type="secondary" onClick={handleAddNewList}>
-				<Icon icon="icon--plus" className={s.addIcon} />
+			<Button type="secondary" onClick={handleAddNewList} className={s.button}>
+				<Icon icon="icon--plus" className={s.icon} />
 			</Button>
 
 			<ModalPop title="Новий список" isOpen={isModalOpen} onClose={handleModalOnClose}>
-				<form className={s.formFields} onSubmit={handleSubmit(onSubmit)}>
+				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<TextInput
 						type="number"
 						register={registers.availableSets}
@@ -121,7 +122,6 @@ export function ModalAddList({ category }: ModalAddList) {
 						errors={errors}
 						label="Доступно наборів"
 						placeholder="200"
-						className={s.input}
 					/>
 					<TextInput
 						type="date"
@@ -130,7 +130,6 @@ export function ModalAddList({ category }: ModalAddList) {
 						errors={errors}
 						label="Дата видачі"
 						placeholder="24.08.2091"
-						className={s.input}
 					/>
 					<TextInput
 						type="time"
@@ -139,7 +138,6 @@ export function ModalAddList({ category }: ModalAddList) {
 						errors={errors}
 						label="Час видачі"
 						placeholder="09:00"
-						className={s.input}
 					/>
 					<Button submit>Створити</Button>
 				</form>
@@ -147,7 +145,12 @@ export function ModalAddList({ category }: ModalAddList) {
 
 			{isLoading && <LoaderOverlay />}
 			{errorMessage && (
-				<ModalPop type="error" title="Помилка" isOpen={isModalErrorOpen} onClose={handleErrorModalOnClose}>
+				<ModalPop
+					type="error"
+					title="Помилка при створенні списку!"
+					isOpen={isModalErrorOpen}
+					onClose={handleErrorModalOnClose}
+				>
 					{errorMessage}
 				</ModalPop>
 			)}
