@@ -1,72 +1,154 @@
+import { useState } from 'react';
+
+import { useRouter } from 'next/router';
+
+import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
+import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { api } from '~api/index';
 import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
 import { Icon } from '~components/Icon/Icon';
+import { Label } from '~components/Label/Label';
 import type { Column } from '~components/Table/Table';
 import { Table } from '~components/Table/Table';
+import type { NotificationTypes } from '~components/types/NotificationTypes';
+import { ROUTES } from '~constants/ROUTES';
+import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
-// import s from './ListTable.module.scss';
+import { ModalRemoveAsk } from './ModalRemoveAsk/ModalRemoveAsk';
 
 interface ListTableProps {
 	lists: CategoryList[] | null;
 }
 
-// personsRegistered: number;
-// availableSets: number;
-// issueDate: string;
-// issueTime: string;
-// listStatus: string;
-// id: string;
+type StatusTypes = Record<
+	string,
+	{
+		type: NotificationTypes;
+		title: string;
+	}
+>;
+
+const statusTypes: StatusTypes = {
+	ready: {
+		type: 'alert',
+		title: 'В черзі',
+	},
+	active: {
+		type: 'warn',
+		title: 'В процесі',
+	},
+	done: {
+		type: 'success',
+		title: 'Завершено',
+	},
+	archived: {
+		type: 'info',
+		title: 'Архів',
+	},
+};
 
 export function ListTable({ lists }: ListTableProps) {
+	const router = useRouter();
+
+	const { LoaderOverlay, showLoaderOverlay } = useLoaderOverlay();
+
+	const [isModalRemoveOpen, setIsModalRemoveOpen] = useState(false);
+
+	const [clickedListId, setClickedListId] = useState('');
+
+	const { getListsByCategory } = useListsState((state) => ({
+		getListsByCategory: state.getListsByCategory,
+	}));
+
+	const { activeTabId } = useTabsState((state) => ({
+		activeTabId: state.activeTabId,
+	}));
+
 	if (!lists) return;
-	console.log('lists: ', lists);
+
+	const handleDownloadListFileOnClick = async (listId: string) => {
+		const resp = await api.exportList.getListFileEndpointById(listId);
+		if ('data' in resp) window.open(resp.data.downloadUrl, '_blank');
+	};
+
+	const handleShowListOnClick = async (listId: string) => {
+		showLoaderOverlay();
+		router.push(`${ROUTES.admin}/list?id=${listId}`);
+	};
 
 	const handleRemoveOnClick = async (listId: string) => {
-		await api.lists.removeList(listId);
+		setClickedListId(listId);
+		setIsModalRemoveOpen(true);
+	};
+
+	const handleOnModalRemoveYesClick = async () => {
+		const resp = await api.lists.removeList(clickedListId);
+		if ('data' in resp) {
+			if (activeTabId) await getListsByCategory(activeTabId);
+		}
 	};
 
 	const columns: Column<(typeof lists)[number]>[] = [
 		{
 			key: 'personsRegistered',
 			header: 'Зареєстровано осіб',
-			width: 2,
 		},
 		{
 			key: 'availableSets',
 			header: 'Доступно наборів',
-			width: 2,
 		},
 		{
 			key: 'issueDate',
 			header: 'Дата видачі',
-			width: 2,
 		},
 		{
 			key: 'issueTime',
-			header: 'Час видачі',
-			width: 2,
+			header: 'Початок видачі',
 		},
 		{
 			key: 'listStatus',
 			header: 'Статус',
-			width: 2,
+			cell: (row) => (
+				<Label type={statusTypes[row.rowCell?.value as keyof typeof statusTypes]?.type}>
+					{statusTypes[row.rowCell?.value as keyof typeof statusTypes]?.title || ''}
+				</Label>
+			),
 		},
 		{
 			key: 'download',
 			width: '48px',
-			cell: (row) => <Icon icon="icon--download" onClick={() => console.log(row.rowAllValues.id)} />,
+			cell: (row) => (
+				<Icon
+					icon="icon--download"
+					onClick={() => handleDownloadListFileOnClick(row.rowAllValues.id)}
+				/>
+			),
 		},
 		{
 			key: 'show',
 			width: '48px',
-			cell: (row) => <Icon icon="icon--eye" onClick={() => console.log(row.rowAllValues.id)} />,
+			cell: (row) => (
+				<Icon icon="icon--eye" onClick={() => handleShowListOnClick(row.rowAllValues.id)} />
+			),
 		},
 		{
 			key: 'remove',
 			width: '48px',
-			cell: (row) => <Icon icon="icon--trash" onClick={() => handleRemoveOnClick(row.rowAllValues.id)} />,
+			cell: (row) => (
+				<Icon icon="icon--trash" onClick={() => handleRemoveOnClick(row.rowAllValues.id)} />
+			),
 		},
 	];
 
-	return <Table columns={columns} data={lists} />;
+	return (
+		<>
+			<Table columns={columns} data={lists} />
+			<LoaderOverlay />
+			<ModalRemoveAsk
+				isModalOpen={isModalRemoveOpen}
+				setIsModalOpen={setIsModalRemoveOpen}
+				onYesClick={handleOnModalRemoveYesClick}
+			/>
+		</>
+	);
 }
