@@ -2,10 +2,6 @@ import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
 import { requestWrapper } from '~api/helpers/requestWrapper';
-import type { ApiResponse } from '~api/types/backend/responses/ApiResponse';
 
-export const commonGet = <R>(
-	endpoint: string,
-	requestConfig?: AxiosRequestConfig,
-): Promise<ApiResponse<R>> =>
+export const commonGet = <R>(endpoint: string, requestConfig?: AxiosRequestConfig) =>
 	requestWrapper((apiUrl: string) => axios.get<R>(`${apiUrl}/${endpoint}`, requestConfig));
