@@ -1,18 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/router';
 
-import { apiAuth } from '~/apiAuth';
 import { Button } from '~components/Buttons/Button';
 import { Container } from '~components/Container/Container';
+import { PasswordInput } from '~components/inputs/PasswordInput/PasswordInput';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
-import { LoaderOverlay } from '~components/LoaderOverlay/LoaderOverlay';
-import { Modal } from '~components/Modal/Modal';
+import { CustomLink } from '~components/Link/Link';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
 import { ROUTES } from '~constants/ROUTES';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
+import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
+
+import { useLoginState } from './store/useLoginState';
 
 import s from './LogInPage.module.scss';
 
@@ -22,9 +26,34 @@ export interface FormFields {
 }
 
 export function LogInPage() {
-	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
-	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
+
+	const { error, isLogin, login } = useLoginState((state) => ({
+		isLoading: state.isLoading,
+		error: state.error,
+		isLogin: state.isLogin,
+		login: state.login,
+	}));
+
+	const { LoaderOverlay, showLoaderOverlay, hideLoaderOverlay } = useLoaderOverlay();
+
+	const router = useRouter();
+
+	useEffect(() => {
+		if (isLogin) router.push(ROUTES.admin);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isLogin]);
+
+	useEffect(() => {
+		if (error) {
+			const message = getErrorMessageFromCode(error?.status, {
+				400: 'Неправильний Логін або Пароль!',
+			});
+			setErrorMessage(message);
+			hideLoaderOverlay();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [error]);
 
 	const {
 		register,
@@ -43,24 +72,13 @@ export function LogInPage() {
 		}),
 	};
 
-	const router = useRouter();
-
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		setIsLoading(true);
-
-		const res = await apiAuth.login({ username: data.login, password: data.password });
-		if ('data' in res) {
-			router.push(ROUTES.admin);
-		} else {
-			setErrorMessage('Помилка авторизації. Перевірте, будь ласка, дані та спробуйте ще раз!');
-			setIsModalErrorOpen(true);
-			setIsLoading(false);
-		}
+		showLoaderOverlay();
+		await login(data.login, data.password);
 	};
 
 	const handleErrorModalOnClose = () => {
 		setErrorMessage('');
-		setIsModalErrorOpen(false);
 	};
 
 	return (
@@ -95,12 +113,15 @@ export function LogInPage() {
 					</form>
 				</Container>
 			</Section>
-			{isLoading && <LoaderOverlay />}
-			{errorMessage && (
-				<Modal isOpen={isModalErrorOpen} onClose={handleErrorModalOnClose}>
-					{errorMessage}
-				</Modal>
-			)}
+			<ModalPop
+				type="error"
+				title="Помилка авторизації"
+				isOpen={!!errorMessage}
+				onClose={handleErrorModalOnClose}
+			>
+				{errorMessage}
+			</ModalPop>
+			<LoaderOverlay />
 		</>
 	);
 }
