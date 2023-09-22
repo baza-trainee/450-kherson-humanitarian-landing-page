@@ -11,11 +11,12 @@ export type BackdropElement = HTMLButtonElement;
 export interface BackdropProps extends ReactHTMLElementAttributes<BackdropElement> {
 	opacity?: number;
 	disabled?: boolean;
+	clickable?: boolean;
 	show: boolean;
 }
 
 export const Backdrop = forwardRef<BackdropElement, BackdropProps>(
-	({ className, disabled, show, opacity, ...rest }, ref) => {
+	({ className, disabled, clickable, show, opacity, ...rest }, ref) => {
 		const backdropRef = useRef<HTMLButtonElement>(null);
 
 		useEffect(() => {
@@ -23,7 +24,7 @@ export const Backdrop = forwardRef<BackdropElement, BackdropProps>(
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [backdropRef]);
 
-		const componentClass = [disabled && s.disabled, show && s.show];
+		const componentClass = [disabled && s.disabled, show && s.show, clickable && s.clickable];
 
 		return (
 			<button

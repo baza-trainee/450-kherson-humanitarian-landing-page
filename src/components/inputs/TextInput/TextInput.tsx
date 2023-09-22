@@ -9,15 +9,16 @@ import cs from '../commonStyle.module.scss';
 
 export type TextInputElement = HTMLInputElement;
 
-export interface TextInputProps extends ReactHTMLElementAttributes<TextInputElement> {
-	type?: string; // TODO: fix missing type in TextInputElement
+export interface TextInputProps
+	extends ReactHTMLElementAttributes<
+		TextInputElement,
+		React.InputHTMLAttributes<TextInputElement>
+	> {
 	label?: string;
 	register?: FieldValues;
 	errors?: FieldErrors<FieldValues>;
 	required?: boolean;
 	disabled?: boolean;
-	size?: number;
-	maxLength?: number;
 	hideError?: boolean;
 	info?: string;
 }
@@ -34,9 +35,8 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 			hideError,
 			info,
 			placeholder,
-			size,
-			maxLength,
 			className,
+			children,
 			...rest
 		},
 		ref,
@@ -61,12 +61,11 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 						type={type}
 						className={cs.input}
 						placeholder={placeholder}
-						size={size}
-						maxLength={maxLength}
 						ref={ref}
 						{...register}
 						{...rest}
 					/>
+					{children}
 				</InputWrapper>
 			</label>
 		);

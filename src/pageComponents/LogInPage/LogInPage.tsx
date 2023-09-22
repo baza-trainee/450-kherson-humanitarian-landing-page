@@ -2,7 +2,6 @@ import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 
 import { apiAuth } from '~/apiAuth';
@@ -49,9 +48,8 @@ export function LogInPage() {
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
 		setIsLoading(true);
 
-		const res = await apiAuth.authAdmin({ username: data.login, password: data.password });
+		const res = await apiAuth.login({ username: data.login, password: data.password });
 		if ('data' in res) {
-			Cookies.set('token', res.data.token, { secure: true, expires: 1 });
 			router.push(ROUTES.admin);
 		} else {
 			setErrorMessage('Помилка авторизації. Перевірте, будь ласка, дані та спробуйте ще раз!');
@@ -91,7 +89,7 @@ export function LogInPage() {
 							placeholder="Пароль"
 							className={s.input}
 						/>
-						<Button submit>Зареєструватися</Button>
+						<Button submit>Увійти</Button>
 					</form>
 				</Container>
 			</Section>

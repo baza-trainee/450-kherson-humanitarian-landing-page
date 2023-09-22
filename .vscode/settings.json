@@ -14,11 +14,6 @@
 			"match": "\\.scss$",
 			"runIn": "vscode",
 			"commandBeforeSaving": "sort-css-declarations.sort-all"
-		},
-		{
-			"match": "\\.ts[x]?$",
-			"runIn": "vscode",
-			"commandBeforeSaving": "typescript.removeUnusedImports"
 		}
 	]
 }
