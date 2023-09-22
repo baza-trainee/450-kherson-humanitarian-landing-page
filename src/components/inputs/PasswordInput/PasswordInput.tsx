@@ -4,7 +4,6 @@ import { Icon } from '~components/Icon/Icon';
 
 import { TextInput, type TextInputProps } from '../TextInput/TextInput';
 
-// import s from './PasswordInput.module.scss';
 import ics from '../iconCommonStyle.module.scss';
 
 export type TextInputElement = HTMLInputElement;

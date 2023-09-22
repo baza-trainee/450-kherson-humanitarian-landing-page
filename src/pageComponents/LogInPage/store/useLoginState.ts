@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { apiAuth } from '~/apiAuth';
-import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
+import type { ErrorResponse } from '~api/types/responses/ErrorResponse';
 import { returnAppError } from '~helpers/returnAppError';
 
 interface UseLoginState {
