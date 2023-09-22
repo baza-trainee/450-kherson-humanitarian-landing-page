@@ -1,6 +1,6 @@
 import { commonPatch } from '~api/common/commonPatch';
-import type { PersonRequest } from '~api/types/backend/requests/PersonRequest';
-import type { ListsResponse } from '~api/types/backend/responses/ListsResponse';
+import type { PersonRequest } from '~api/types/requests/PersonRequest';
+import type { ListsResponse } from '~api/types/responses/ListsResponse';
 
 export const addNewPerson = (listId: string, body: PersonRequest) =>
 	commonPatch<ListsResponse, PersonRequest>(`/order/${listId}`, body).then((resp) => {

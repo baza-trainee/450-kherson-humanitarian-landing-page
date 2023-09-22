@@ -1,5 +1,5 @@
 import type { List } from '~api/types/Admin/Lists/List';
-import type { ListResponse } from '~api/types/backend/responses/ListResponse';
+import type { ListResponse } from '~api/types/responses/ListResponse';
 
 export function transformListDTO(list: ListResponse): List {
 	if (!list?.persons) return [];

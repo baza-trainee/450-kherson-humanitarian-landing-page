@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { api } from '~api/index';
 import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
-import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
+import type { ErrorResponse } from '~api/types/responses/ErrorResponse';
 import { returnAppError } from '~helpers/returnAppError';
 
 interface UseListsState {
