@@ -16,10 +16,14 @@
 	padding: 48px;
 	border-radius: 5px;
 	background-color: var(--color--shades-1);
-	row-gap: 24px;
 	justify-self: center;
+	row-gap: 24px;
 }
 
 .input {
 	width: 100%;
+}
+
+.link {
+	align-self: end;
 }

@@ -88,6 +88,9 @@ export function LogInPage() {
 							placeholder="Пароль"
 							className={s.input}
 						/>
+						<CustomLink className={s.link} variant={'h4'} href={ROUTES.recoverPassword}>
+							Забули пароль?
+						</CustomLink>
 						<Button submit>Увійти</Button>
 					</form>
 				</Container>
