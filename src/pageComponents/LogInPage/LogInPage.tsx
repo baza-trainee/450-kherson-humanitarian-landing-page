@@ -80,8 +80,7 @@ export function LogInPage() {
 							placeholder="Логін"
 							className={s.input}
 						/>
-						<TextInput
-							type="password"
+						<PasswordInput
 							register={registers.password}
 							required
 							errors={errors}
