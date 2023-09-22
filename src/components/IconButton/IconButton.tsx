@@ -20,7 +20,7 @@ export function IconButton({ type = 'primary', disabled, icon, className, onClic
 	const componentClass = type && s[type];
 	return (
 		<button className={clsx(s.button, className, componentClass)} onClick={onClick} disabled={disabled}>
-			<Icon className={s.icon} icon={`icon--${icon}`} size={size} />
+			<Icon className={s.icon} icon={icon} size={size} />
 		</button>
 	);
 }

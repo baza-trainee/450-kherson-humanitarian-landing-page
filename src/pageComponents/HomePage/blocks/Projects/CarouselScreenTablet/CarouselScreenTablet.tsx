@@ -71,7 +71,7 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 		<div className={s.imageContent}>
 			<ActiveImageTablet imagesArray={description.images} position={positionMini} />
 			<div className={s.container}>
-				<IconButton type="secondary" icon="arrow-left" onClick={onLeft} disabled={positionMini === -1} />
+				<IconButton type="secondary" icon="icon--arrow-left" onClick={onLeft} disabled={positionMini === -1} />
 				<Carousel
 					ref={carouselMini}
 					animation={animationMini}
@@ -83,7 +83,7 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 				</Carousel>
 				<IconButton
 					type="secondary"
-					icon="arrow-right"
+					icon="icon--arrow-right"
 					onClick={onRight}
 					disabled={positionMini === description.images.length - visibleItems + 1}
 				/>

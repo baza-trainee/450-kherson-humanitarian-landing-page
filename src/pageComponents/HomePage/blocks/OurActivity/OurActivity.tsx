@@ -156,12 +156,12 @@ export function OurActivity() {
 					{isScreenDesktopSm && (
 						<>
 							<IconButton
-								icon="arrow-left"
+								icon="icon--arrow-left"
 								className={clsx(s.arrow, s.leftArrow)}
 								onClick={() => paginate(-1)}
 							/>
 							<IconButton
-								icon="arrow-right"
+								icon="icon--arrow-right"
 								className={clsx(s.arrow, s.rightArrow)}
 								onClick={() => paginate(1)}
 							/>

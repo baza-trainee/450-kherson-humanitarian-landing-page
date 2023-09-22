@@ -102,9 +102,9 @@ export function Projects() {
 						<CardBlock handleProductClick={handleProductClick} width={width} />
 					</Carousel>
 					<div className={s.blockArrow}>
-						<IconButton icon="arrow-left" className={s.arrow} onClick={onLeft} disabled={position === 0} />
+						<IconButton icon="icon--arrow-left" className={s.arrow} onClick={onLeft} disabled={position === 0} />
 						<IconButton
-							icon="arrow-right"
+							icon="icon--arrow-right"
 							className={s.arrow}
 							onClick={onRight}
 							disabled={position === cardsData.length - visibleItems}

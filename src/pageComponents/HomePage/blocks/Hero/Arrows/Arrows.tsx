@@ -21,8 +21,8 @@ export function Arrows({ loaded, onPrevClick, onNextClick }: ArrowsProps) {
 		loaded && (
 			<div className={s.arrowsContainer}>
 				<div className={s.arrows}>
-					<ArrowKeenSlider type="secondary" icon="arrow-left" onClick={onPrevClick} />
-					<ArrowKeenSlider type="secondary" icon="arrow-right" onClick={onNextClick} />
+					<ArrowKeenSlider type="secondary" icon="icon--arrow-left" onClick={onPrevClick} />
+					<ArrowKeenSlider type="secondary" icon="icon--arrow-right" onClick={onNextClick} />
 				</div>
 			</div>
 		)
