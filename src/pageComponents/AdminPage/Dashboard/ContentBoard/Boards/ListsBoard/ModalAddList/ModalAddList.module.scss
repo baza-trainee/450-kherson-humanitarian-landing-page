@@ -1,0 +1,25 @@
+@use "~/styles/mixins" as *;
+
+.form {
+	display: flex;
+	flex-direction: column;
+	row-gap: 12px;
+}
+
+.button {
+	width: 214px;
+	.icon {
+		background-color: var(--color--primary-3);
+	}
+
+	@include useOnHover {
+		.icon {
+			background-color: var(--color--secondary-4);
+		}
+	}
+	@include useOnClick {
+		.icon {
+			background-color: var(--color--shades-1);
+		}
+	}
+}

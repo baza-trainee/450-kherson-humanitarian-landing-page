@@ -52,6 +52,7 @@ export function ModalHelpUs({ onClose }: ModalHelpUsProps) {
 						Банківський переказ
 					</Text>
 					<Tabs
+						className={s.fontSize}
 						onChange={tabModalVariantOnChange}
 						name="modalVariant"
 						defaultValue={modalList[tabIndex].label}

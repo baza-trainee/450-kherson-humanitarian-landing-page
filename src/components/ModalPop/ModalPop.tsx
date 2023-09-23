@@ -10,21 +10,41 @@ import s from './ModalPop.module.scss';
 
 interface ModalPop {
 	type?: NotificationTypes;
-	title: string;
-	children: ReactNode;
+	title?: string;
+	children?: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
+	primaryButton?: () => React.ReactElement;
+	secondaryButton?: () => React.ReactElement;
 }
 
-export function ModalPop({ type = 'info', title, isOpen, onClose, children }: ModalPop) {
-	const titleClassName = clsx(s.title, s[type ? type : '']);
+export function ModalPop({
+	type = 'info',
+	title,
+	isOpen,
+	onClose,
+	primaryButton,
+	secondaryButton,
+	children,
+}: ModalPop) {
+	const titleClassName = type && s[type];
 
 	return (
-		<Modal isOpen={isOpen} onClose={onClose} type={type}>
-			<Text variant="h2" className={titleClassName}>
-				{title}
-			</Text>
-			<div className={s.container}>{children}</div>
+		<Modal className={s.modal} isOpen={isOpen} onClose={onClose} type={type}>
+			<div className={s.container}>
+				{title && (
+					<Text variant="h2" className={clsx(titleClassName)}>
+						{title}
+					</Text>
+				)}
+				{children}
+				{(primaryButton || secondaryButton) && (
+					<div className={s.buttons}>
+						{primaryButton && primaryButton()}
+						{secondaryButton && secondaryButton()}
+					</div>
+				)}
+			</div>
 		</Modal>
 	);
 }

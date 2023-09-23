@@ -9,4 +9,5 @@ export const navigationList = [
 	{ slug: 'footer', title: 'Футер' },
 	{ slug: 'congratulations', title: 'Вітаємо' },
 	{ slug: 'donations', title: 'Донати' },
+	{ slug: 'lists', title: 'Списки' },
 ];

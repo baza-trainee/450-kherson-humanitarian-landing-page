@@ -11,13 +11,16 @@
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	cursor: pointer;
 
 	background-color: var(--color--shades-1);
 	animation-name: hide-blackout;
 
 	animation-duration: 0.3s;
 	animation-fill-mode: forwards;
+
+	&.clickable {
+		cursor: pointer;
+	}
 }
 
 .Backdrop.show {

@@ -6,9 +6,6 @@ import { ROUTES } from '~constants/ROUTES';
 export function middleware(request: NextRequest) {
 	const token = request.cookies.get('token');
 
-	const requestHeaders = new Headers(request.headers);
-	requestHeaders.set('Authorization', `Bearer ${token}`);
-
 	const pathname = request.nextUrl.pathname;
 
 	if (!token && pathname.startsWith(ROUTES.admin)) {
@@ -23,3 +20,7 @@ export function middleware(request: NextRequest) {
 		return NextResponse.redirect(new URL(`${ROUTES.admin}/lists`, request.url));
 	}
 }
+
+export const config = {
+	matcher: ['/login/:path*', '/admin/:path*'],
+};

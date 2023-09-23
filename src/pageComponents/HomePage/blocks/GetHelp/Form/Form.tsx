@@ -84,7 +84,8 @@ export function Form({ lists, setActiveTab }: FormProps) {
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
 						},
 					}),
 			},
@@ -102,7 +103,8 @@ export function Form({ lists, setActiveTab }: FormProps) {
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
 						},
 					}),
 			},
@@ -120,7 +122,8 @@ export function Form({ lists, setActiveTab }: FormProps) {
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу та апострофу',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, дефісу та апострофу',
 						},
 					}),
 			},
@@ -166,7 +169,8 @@ export function Form({ lists, setActiveTab }: FormProps) {
 						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
 						pattern: {
 							value: /^\d[0-9А-Яа-яІіЇїЄєҐґЁё-]*$/,
-							message: 'Поле може містити тільки цифри, літери кирилиці та символи слешу та дефісу',
+							message:
+								'Поле може містити тільки цифри, літери кирилиці та символи слешу та дефісу',
 						},
 					}),
 			},
@@ -246,7 +250,8 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				widthSize: 'fullWidth',
 				register: () =>
 					register('movementArea', {
-						validate: (value) => AREA_LIST.includes(value) || 'Повинна бути обрана область зі списку',
+						validate: (value) =>
+							AREA_LIST.includes(value) || 'Повинна бути обрана область зі списку',
 						required: 'Повинна бути обрана область',
 					}),
 				options: AREA_LIST,
@@ -265,7 +270,8 @@ export function Form({ lists, setActiveTab }: FormProps) {
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-.]+$/,
-							message: 'Поле може містити тільки літери кирилиці та символи пробілу, крапки, дефісу, апострофу',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, крапки, дефісу, апострофу',
 						},
 					}),
 			},
@@ -334,12 +340,16 @@ export function Form({ lists, setActiveTab }: FormProps) {
 			building: data.populationHouseNumber.toString(),
 			apartment: data.populationApartmentNumber.toString(),
 			certificateNumber:
-				data.idpCertificateNumber || data.disabilityCertificateNumber || data.birthCertificateNumber,
+				data.idpCertificateNumber ||
+				data.disabilityCertificateNumber ||
+				data.birthCertificateNumber,
 			regionFrom: data.movementArea,
 			settlementFrom: data.movementCity,
 			phone: data.phone,
 		};
-		const res = lists ? await api.lists.addNewPerson(lists?.[formList[tabIndex].name].id, body) : {};
+		const res = lists
+			? await api.persons.addNewPerson(lists?.[formList[tabIndex].name].id, body)
+			: {};
 		setIsLoading(false);
 		if ('data' in res) {
 			setIsModalSuccessOpen(true);
@@ -448,13 +458,16 @@ export function Form({ lists, setActiveTab }: FormProps) {
 						title={'Дякуємо за реєстрацію!'}
 					>
 						<Text variant="p">
-							Ми відправили листа на вашу електронну адресу з посиланням для підтвердження реєстрації.
-							<br />
-							Будь ласка, перевірте свою поштову скриньку та перейдіть за посиланням для завершення процесу
+							Ми відправили листа на вашу електронну адресу з посиланням для підтвердження
 							реєстрації.
 							<br />
+							Будь ласка, перевірте свою поштову скриньку та перейдіть за посиланням для
+							завершення процесу реєстрації.
 							<br />
-							{'Якщо ви не знайшли наш лист у папці "Вхідні", будь ласка, перевірте папку "Спам".'}
+							<br />
+							{
+								'Якщо ви не знайшли наш лист у папці "Вхідні", будь ласка, перевірте папку "Спам".'
+							}
 						</Text>
 					</ModalPop>
 				)}

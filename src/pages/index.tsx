@@ -1,5 +1,4 @@
 import { HomePage } from '~/pageComponents/HomePage/HomePage';
-import { getActiveListsQuantityDTO } from '~api/dto/list/getActiveListsQuantityDTO';
 import { api } from '~api/index';
 import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
 import { Meta } from '~components/Meta/Meta';
@@ -23,8 +22,8 @@ export default function Home(data: HomeProps) {
 export async function getServerSideProps() {
 	const props = {} as HomeProps;
 
-	const activeListsData = await api.lists.getActiveListsQuantity();
-	if ('data' in activeListsData) props.getHelpLists = getActiveListsQuantityDTO(activeListsData.data);
+	const resp = await api.lists.getActiveListsQuantity();
+	if ('data' in resp) props.getHelpLists = resp.data;
 
 	return { props };
 }

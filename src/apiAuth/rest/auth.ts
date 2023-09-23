@@ -1,5 +1,6 @@
-import type { ApiResponse } from '~api/types/backend/Responses/ApiResponse';
+import type { ApiResponse } from '~api/types/responses/ApiResponse';
 
+import { getAuthCommon } from '../common/getAuthCommon';
 import { postAuthCommon } from '../common/postAuthCommon';
 
 interface AuthAdmin {
@@ -11,5 +12,9 @@ interface AuthAdminResponse {
 	token: string;
 }
 
-export const authAdmin = async (body: AuthAdmin): Promise<ApiResponse<AuthAdminResponse>> =>
-	postAuthCommon('auth/login', body);
+export const login = async (body: AuthAdmin): Promise<ApiResponse<AuthAdminResponse>> =>
+	postAuthCommon('/api/auth/login', body);
+
+// TODO: replace get to correct delete or patch
+export const logout = async (): Promise<ApiResponse<AuthAdminResponse>> =>
+	getAuthCommon('/api/auth/logout');

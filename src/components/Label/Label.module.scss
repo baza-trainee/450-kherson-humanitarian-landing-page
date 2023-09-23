@@ -7,6 +7,7 @@
 	border-radius: 5px;
 	color: var(--color--secondary-4);
 	text-transform: uppercase;
+	background-color: var(--color--primary-1);
 }
 
 .success {
@@ -21,6 +22,6 @@
 	background-color: var(--color--warning-1);
 }
 
-.alert {
+.error {
 	background-color: var(--color--error-1);
 }

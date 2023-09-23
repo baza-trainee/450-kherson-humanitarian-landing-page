@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
 
 import clsx from 'clsx';
-import { redirect } from 'next/dist/server/api-utils';
 
 import type { ComponentSizes } from '~components/types/ComponentSize';
 
@@ -27,19 +26,51 @@ export interface IconProps extends ReactHTMLElementAttributes<IconElement> {
 
 export const Icon = forwardRef<IconElement, IconProps>(
 	(
-		{ icon, colors, size = 'default', width, height, disabled, clickable, onClick, className, style, ...rest },
+		{
+			icon,
+			colors,
+			size = 'default',
+			width,
+			height,
+			disabled,
+			clickable,
+			onClick,
+			className,
+			style,
+			...rest
+		},
 		ref,
 	) => {
-		const componentClass = [(onClick || clickable) && s.clickable, disabled && s.disabled, size && s[size]];
+		const componentClass = [
+			(onClick || clickable) && s.clickable,
+			disabled && s.disabled,
+			size && s[size],
+		];
 
 		const customSizeStyle = size === 'custom' && width && height ? { width, height } : {};
 
-		const customDefaultColorStyle = colors?.default ? { '--icon--background-color': colors?.default } : {};
-		const customHoverColorStyle = colors?.hover ? { '--icon--background-color-hover': colors?.hover } : {};
-		const customClickColorStyle = colors?.click ? { '--icon--background-color-click': colors?.click } : {};
+		const customDefaultColorStyle = colors?.default
+			? { '--icon--background-color': colors?.default }
+			: null;
+
+		let customHoverColorStyle = colors?.default
+			? { '--icon--background-color-hover': colors?.default }
+			: null;
+		customHoverColorStyle = colors?.hover
+			? { '--icon--background-color-hover': colors?.hover }
+			: customHoverColorStyle;
+
+		let customClickColorStyle = colors?.default
+			? { '--icon--background-color-click': colors?.default }
+			: null;
+		customClickColorStyle = colors?.click
+			? { '--icon--background-color-click': colors?.click }
+			: customClickColorStyle;
+
 		const customDisabledColorStyle = colors?.disabled
 			? { '--icon--background-color-disabled': colors?.disabled }
 			: null;
+
 		const customDisabledOpacityColorStyle =
 			colors?.disabledOpacity && colors?.disabledOpacity >= 0
 				? { '--icon--background-color-disabled-opacity': `${colors?.disabledOpacity}%` }
