@@ -13,7 +13,9 @@
 	}
 
 	@include useScreen('desktop-md') {
+		max-width: 1440px;
 		height: 680px;
+		margin: 0 auto;
 	}
 }
 
@@ -108,7 +110,6 @@
 
 	@include useScreen('desktop-md') {
 		object-position: initial;
-		object-fit: fill;
 	}
 }
 
