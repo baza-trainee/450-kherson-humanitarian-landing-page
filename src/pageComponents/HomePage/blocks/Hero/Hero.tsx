@@ -96,7 +96,7 @@ export function Hero() {
 						src={item.banner.src}
 						fill
 						className={s.img}
-
+						priority={false}
 					/>
 					<div className={clsx(s.gradient, s[item.banner.gradientColor])} />
 					<Container className={s.content}>

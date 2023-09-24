@@ -101,9 +101,10 @@
 }
 
 .img {
+	width: auto;
+	height: auto;
 	object-position: 85%;
 	object-fit: cover;
-
 	@include useScreen('tablet-sm') {
 		object-position: 90%;
 	}
