@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { ModalRemove } from '~/pageComponents/AdminPage/ModalRemove/ModalRemove';
-import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
+import { ModalRemove } from '~/pageComponents/AdminPage/components/ModalRemove/ModalRemove';
+import { statusTypes } from '~/pageComponents/AdminPage/data/statusTypes';
+import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { api } from '~api/index';
 import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
@@ -11,7 +12,6 @@ import { Icon } from '~components/Icon/Icon';
 import { Label } from '~components/Label/Label';
 import type { Column } from '~components/Table/Table';
 import { Table } from '~components/Table/Table';
-import type { NotificationTypes } from '~components/types/NotificationTypes';
 import { ROUTES } from '~constants/ROUTES';
 import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
@@ -19,35 +19,9 @@ interface ListTableProps {
 	lists: CategoryList[] | null;
 }
 
-type StatusTypes = Record<
-	string,
-	{
-		type: NotificationTypes;
-		title: string;
-	}
->;
-
-const statusTypes: StatusTypes = {
-	ready: {
-		type: 'alert',
-		title: 'В черзі',
-	},
-	active: {
-		type: 'warn',
-		title: 'В процесі',
-	},
-	done: {
-		type: 'success',
-		title: 'Завершено',
-	},
-	archived: {
-		type: 'info',
-		title: 'Архів',
-	},
-};
-
 export function ListTable({ lists }: ListTableProps) {
 	const router = useRouter();
+	const { query } = router;
 
 	const { LoaderOverlay, showLoaderOverlay } = useLoaderOverlay();
 
@@ -55,12 +29,12 @@ export function ListTable({ lists }: ListTableProps) {
 
 	const [clickedListId, setClickedListId] = useState('');
 
-	const { getListsByCategory } = useListsState((state) => ({
-		getListsByCategory: state.getListsByCategory,
-	}));
-
 	const { activeTabId } = useTabsState((state) => ({
 		activeTabId: state.activeTabId,
+	}));
+
+	const { getBoardDataById } = useBoardsState((state) => ({
+		getBoardDataById: state.getBoardDataById,
 	}));
 
 	if (!lists) return;
@@ -82,8 +56,8 @@ export function ListTable({ lists }: ListTableProps) {
 
 	const handleOnModalRemoveYesClick = async () => {
 		const resp = await api.lists.removeList(clickedListId);
-		if ('data' in resp) {
-			if (activeTabId) await getListsByCategory(activeTabId);
+		if ('data' in resp && activeTabId && query?.slug) {
+			getBoardDataById(query?.slug?.toString(), activeTabId);
 		}
 	};
 

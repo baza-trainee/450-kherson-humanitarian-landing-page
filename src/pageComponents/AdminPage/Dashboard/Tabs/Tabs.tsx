@@ -9,7 +9,7 @@ import { Loader } from '~components/Loader/Loader';
 import { getIndexByKey } from '~helpers/getIndexByKey';
 import { useParams } from '~hooks/useParams';
 
-import { useListsState } from '../../store/useListsState';
+import { useBoardsState } from '../../store/useBoardsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchListData } from './fetchHelpers/fetchListData';
 
@@ -17,7 +17,6 @@ import s from './Tabs.module.scss';
 
 export interface Tab {
 	title: string;
-	key: string;
 	id: string;
 }
 
@@ -27,22 +26,19 @@ export interface TabsData {
 }
 
 export function Tabs() {
-	const { isListLoading, getListsByCategory } = useListsState((state) => ({
-		isListLoading: state.isLoading,
-		getListsByCategory: state.getListsByCategory,
+	const { isDataLoading, getBoardDataById } = useBoardsState((state) => ({
+		isDataLoading: state.isLoading,
+		getBoardDataById: state.getBoardDataById,
 	}));
-
-	const isDataLoading = isListLoading;
 
 	const router = useRouter();
 	const { query } = router;
 
 	const { setParams } = useParams();
 
-	const { isLoading, error, tabsData, activeTabId, setActiveTabId, getTabsData, setTabsData } =
+	const { isLoading, tabsData, activeTabId, setActiveTabId, getTabsData, setTabsData } =
 		useTabsState((state) => ({
 			isLoading: state.isLoading,
-			error: state.error,
 			activeTabId: state.activeTabId,
 			tabsData: state.tabsData,
 			setActiveTabId: state.setActiveTabId,
@@ -83,7 +79,9 @@ export function Tabs() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			if (activeTabId) getListsByCategory(activeTabId);
+			if (activeTabId && query?.slug) {
+				getBoardDataById(query?.slug?.toString(), activeTabId);
+			}
 		};
 		if (activeTabId) fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps

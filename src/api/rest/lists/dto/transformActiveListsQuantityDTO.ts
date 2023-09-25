@@ -3,17 +3,17 @@ import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
 import type { ListQuantityResponse } from '~api/types/responses/ListQuantityResponse';
 
 export function transformActiveListsQuantityDTO(lists: ListQuantityResponse[]): GetHelpLists {
-	const tabs: Record<string, Record<string, HelpCategories>> = {
+	const categories: Record<string, Record<string, HelpCategories>> = {
 		temp_moved: { name: 'idp' },
 		invalid: { name: 'invalid' },
 		child: { name: 'child' },
 	};
 
 	return Object.fromEntries(
-		Object.entries(tabs).map((tab) => {
-			const currentTabData = lists.find((list) => list.type === tab[0]);
+		Object.entries(categories).map((category) => {
+			const currentTabData = lists.find((list) => list.type === category[0]);
 			return [
-				tab[1].name as HelpCategories,
+				category[1].name as HelpCategories,
 				{
 					id: currentTabData?._id || '',
 					personsRegistered: currentTabData?.confirmedPersons || 0,
