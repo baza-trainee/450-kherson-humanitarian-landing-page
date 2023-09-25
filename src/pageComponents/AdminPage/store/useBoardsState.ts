@@ -5,25 +5,30 @@ import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
 import type { ErrorResponse } from '~api/types/responses/ErrorResponse';
 import { returnAppError } from '~helpers/returnAppError';
 
-interface UseListsState {
+interface UseBoardsState {
 	isLoading: boolean;
 	error: ErrorResponse | null;
-	lists: CategoryList[] | null;
-	getListsByCategory: (category: string) => Promise<void>;
+	listsBoardData: CategoryList[] | null;
+	getBoardDataById: (name: string, id: string) => Promise<void>;
 }
 
-export const useListsState = create<UseListsState>((set) => ({
+export const useBoardsState = create<UseBoardsState>((set) => ({
 	isLoading: false,
 	error: null,
-	lists: null,
-	getListsByCategory: async (category) => {
+	listsBoardData: null,
+	getBoardDataById: async (name, id) => {
 		set({ isLoading: true });
 
-		const resp = await api.lists.getListsByCategory(category);
 		try {
-			if ('data' in resp) {
-				set({ lists: resp.data });
-			} else {
+			let resp;
+
+			//* add block data fetch here ↓↓↓
+			if (name === 'lists') {
+				resp = await api.lists.getListsByCategory(id);
+				if ('data' in resp) set({ listsBoardData: resp.data });
+			}
+
+			if (resp && 'error' in resp) {
 				set({ error: resp.error });
 			}
 		} catch (error) {
