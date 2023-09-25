@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { ModalRemove } from '~/pageComponents/AdminPage/components/ModalRemove/ModalRemove';
-import { ModalRemove } from '~/pageComponents/AdminPage/ModalRemove/ModalRemove';
-import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
+import { statusTypes } from '~/pageComponents/AdminPage/data/statusTypes';
 import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { api } from '~api/index';
@@ -19,33 +18,6 @@ import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 interface ListTableProps {
 	lists: CategoryList[] | null;
 }
-
-type StatusTypes = Record<
-	string,
-	{
-		type: NotificationTypes;
-		title: string;
-	}
->;
-
-const statusTypes: StatusTypes = {
-	ready: {
-		type: 'alert',
-		title: 'В черзі',
-	},
-	active: {
-		type: 'warn',
-		title: 'В процесі',
-	},
-	done: {
-		type: 'success',
-		title: 'Завершено',
-	},
-	archived: {
-		type: 'info',
-		title: 'Архів',
-	},
-};
 
 export function ListTable({ lists }: ListTableProps) {
 	const router = useRouter();
