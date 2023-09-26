@@ -1,15 +1,12 @@
 import { useRef, useState } from 'react';
 
-import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
 
 import s from './ImgUpload.module.scss';
-interface ImgUploadProps{
-	gradientValue: string;
-}
-export function ImgUpload({gradientValue}: ImgUploadProps) {
+
+export function ImgUpload() {
 	const [image, setImage] = useState<string>('');
 	const fileClick = useRef<HTMLInputElement>(null);
 
@@ -43,7 +40,6 @@ export function ImgUpload({gradientValue}: ImgUploadProps) {
 					height={!image ? 100 : 300}
 					className={!image ? s.imgDefault: s.img}
 				/>
-				<div className={clsx(s.ImgGradient, s[gradientValue])}/>
 			</div>
 			<div className={s.iconBlock}>
 				<Icon icon="icon--upload" className={s.icon} onClick={handleClick} />
