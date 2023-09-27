@@ -5,17 +5,17 @@ import { Text } from '~components/Text/Text';
 
 import s from './ImgUploadWrapper.module.scss';
 interface ImgUploadProps{
-	gradientValue?: string;
-	titleValue?: string;
-	subtitleValue?: string;
-	titleColor?: 'blue' | 'black' | 'white';
-	subtitleColor?: 'blue' | 'black' | 'white';
+	gradientValue: string;
+	titleValue: string;
+	subtitleValue: string;
+	titleColor: string;
+	subtitleColor: string;
 }
-export function ImgUploadWrapper({gradientValue = 'noGradient',
-	titleValue = 'Надаємо гуманітарні набори потребуючим',
-	subtitleValue = 'м. Кривий Ріг',
-	titleColor = 'blue',
-	subtitleColor = 'black'}: ImgUploadProps){
+export function ImgUploadWrapper({gradientValue,
+	titleValue,
+	subtitleValue ,
+	titleColor,
+	subtitleColor}: ImgUploadProps){
 	return(
 		<div className={s.ImgUpload}>
 			<ImgUpload />

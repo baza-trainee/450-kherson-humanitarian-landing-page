@@ -2,7 +2,6 @@ interface ColorRadioField {
 	name: string;
 	value: string;
 	id: string;
-	text?: string;
 	isChecked?: boolean;
 }
 
@@ -34,23 +33,44 @@ export const ColorRadioList: ColorRadioCollection[] = [
 		],
 	},
 	{
-		block: 'textColor',
+		block: 'titleColor',
 		fieldList: [
 			{
-				name: 'textColor',
+				name: 'titleColor',
 				value: 'blue',
-				id: 'blue',
+				id: 'titleColorBlue',
 				isChecked: true,
 			},
 			{
-				name: 'textColor',
+				name: 'titleColor',
 				value: 'black',
-				id: 'black',
+				id: 'titleColorBlack',
 			},
 			{
-				name: 'textColor',
+				name: 'titleColor',
 				value: 'white',
-				id: 'white',
+				id: 'titleColorWhite',
+			},
+		],
+	},
+	{
+		block: 'subtitleColor',
+		fieldList: [
+			{
+				name: 'subtitleColor',
+				value: 'blue',
+				id: 'subtitleColorBlue',
+				isChecked: true,
+			},
+			{
+				name: 'subtitleColor',
+				value: 'black',
+				id: 'subtitleColorBlack',
+			},
+			{
+				name: 'subtitleColor',
+				value: 'white',
+				id: 'subtitleColorWhite',
 			},
 		],
 	}

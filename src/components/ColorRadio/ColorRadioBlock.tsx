@@ -4,7 +4,7 @@ import { ColorRadioList } from './data/ColorRadioList';
 import s from './ColorRadio.module.scss';
 interface ColorRadioBlockProps {
 	block: string;
-	changeRadio?: (value: string) => void;
+	changeRadio?: (value: string, name: string) => void;
 }
 export function ColorRadioBlock({ block, changeRadio }: ColorRadioBlockProps) {
 	const ColorRadioIndex = ColorRadioList.findIndex((item) => item.block === block);
@@ -13,9 +13,10 @@ export function ColorRadioBlock({ block, changeRadio }: ColorRadioBlockProps) {
 			{ColorRadioList[ColorRadioIndex].fieldList.map((item, i) => (
 				<ColorRadio
 					key={i}
-					nameColorRadio={item.name}
-					valueColorRadio={item.value}
-					isCheckedColorRadio={item.isChecked}
+					name={item.name}
+					value={item.value}
+					id={item.id}
+					isChecked={item.isChecked}
 					changeRadio={changeRadio}/>
 			))}
 		</div>
