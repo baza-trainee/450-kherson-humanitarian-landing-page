@@ -86,7 +86,7 @@ export function Hero() {
 
 	return (
 		<div ref={sliderRef} className={clsx('keen-slider', s.container)} id="hero">
-			{content.map((item: ContentItem) => (
+			{content.map((item, i) => (
 				<div
 					key={item.id}
 					className={clsx(s.itemContainer, 'keen-slider__slide')}
@@ -96,7 +96,7 @@ export function Hero() {
 						src={item.banner.src}
 						fill
 						className={s.img}
-						priority={false}
+						priority={i===0}
 					/>
 					<div className={clsx(s.gradient, s[item.banner.gradientColor])} />
 					<Container className={s.content}>
