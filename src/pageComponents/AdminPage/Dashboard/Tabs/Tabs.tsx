@@ -11,7 +11,7 @@ import { useParams } from '~hooks/useParams';
 
 import { useListsState } from '../../store/useListsState';
 import { useTabsState } from '../../store/useTabsState';
-import { fetchListData } from './fetchHelpers/fetchListData';
+import { fetchHeroData, fetchListData } from './fetchHelpers/fetchListData';
 
 import s from './Tabs.module.scss';
 
@@ -55,6 +55,9 @@ export function Tabs() {
 			//* set fetching helpers function here ↓
 			if (query?.slug === 'lists') {
 				await getTabsData(fetchListData);
+			} else
+			if (query?.slug === 'hero') {
+				await getTabsData(fetchHeroData);
 			} else {
 				setTabsData(null);
 			}
