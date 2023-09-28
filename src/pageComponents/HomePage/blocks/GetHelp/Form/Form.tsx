@@ -12,10 +12,11 @@ import { Checkbox } from '~components/inputs/Checkbox/Checkbox';
 import { Dropdown } from '~components/inputs/Dropdown/Dropdown';
 import { Tabs } from '~components/inputs/Tabs/Tabs';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
-import { LoaderOverlay } from '~components/LoaderOverlay/LoaderOverlay';
 import { ModalPop } from '~components/ModalPop/ModalPop';
 import { Text } from '~components/Text/Text';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 import { isObjectEmpty } from '~helpers/isObjectEmpty';
+import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
 import { AREA_LIST } from './constants/AREA_LIST';
 import { formList } from './data/formList';
@@ -47,7 +48,6 @@ interface FormProps {
 }
 
 export function Form({ lists, setActiveTab }: FormProps) {
-	const [isLoading, setIsLoading] = useState(false);
 	const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
@@ -328,8 +328,10 @@ export function Form({ lists, setActiveTab }: FormProps) {
 
 	const [tabIndex, setTabIndex] = useState(0);
 
+	const { LoaderOverlay, showLoaderOverlay, hideLoaderOverlay } = useLoaderOverlay();
+
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		setIsLoading(true);
+		showLoaderOverlay();
 
 		const body = {
 			surname: data.surname,
@@ -347,11 +349,16 @@ export function Form({ lists, setActiveTab }: FormProps) {
 			settlementFrom: data.movementCity,
 			phone: data.phone,
 		};
-		const res = lists
+
+		const resp = lists
 			? await api.persons.addNewPerson(lists?.[formList[tabIndex].name].id, body)
-			: {};
-		setIsLoading(false);
-		if ('data' in res) {
+			: null;
+
+		hideLoaderOverlay();
+
+		if (!resp) return;
+
+		if ('data' in resp) {
 			setIsModalSuccessOpen(true);
 		} else if ('error' in res) {
 			setErrorMessage('Перевірте, будь ласка, дані та спробуйте ще раз!');
@@ -440,7 +447,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				<Button className={s.submitButton} submit disabled={!watchConsent || !isValidFixed}>
 					Зареєструватись
 				</Button>
-				{isLoading && <LoaderOverlay />}
+				<LoaderOverlay />
 				{errorMessage && (
 					<ModalPop
 						type="error"
