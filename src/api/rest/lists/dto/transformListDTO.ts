@@ -1,5 +1,5 @@
 import type { ListResponse } from '~api/types/backend/responses/ListResponse';
-import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
+import type { HelpCategories } from '~api/types/getHelpBlock/HelpCategories';
 import type { List } from '~api/types/lists/List';
 
 export function transformListDTO(list: ListResponse): List {
