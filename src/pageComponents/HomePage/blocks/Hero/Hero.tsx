@@ -10,7 +10,6 @@ import { useScreenQuery } from '~hooks/useScreenQuery';
 
 import { Arrows } from './Arrows/Arrows';
 import { Buttons } from './Buttons/Buttons';
-import type { ContentItem } from './data/content';
 import { content } from './data/content';
 import { Dots } from './Dots/Dots';
 
@@ -87,16 +86,13 @@ export function Hero() {
 	return (
 		<div ref={sliderRef} className={clsx('keen-slider', s.container)} id="hero">
 			{content.map((item, i) => (
-				<div
-					key={item.id}
-					className={clsx(s.itemContainer, 'keen-slider__slide')}
-				>
+				<div key={item.id} className={clsx(s.itemContainer, 'keen-slider__slide')}>
 					<Image
-						alt='hero-img'
+						alt="hero-img"
 						src={item.banner.src}
 						fill
 						className={s.img}
-						priority={i===0}
+						priority={i === 0}
 					/>
 					<div className={clsx(s.gradient, s[item.banner.gradientColor])} />
 					<Container className={s.content}>
@@ -110,7 +106,6 @@ export function Hero() {
 						</div>
 						<Buttons />
 					</Container>
-
 				</div>
 			))}
 
@@ -120,7 +115,9 @@ export function Hero() {
 				<Dots
 					loaded={loaded}
 					currentSlide={currentSlide}
-					slidesCount={instanceRef?.current ? instanceRef.current.track.details.slides.length : 0}
+					slidesCount={
+						instanceRef?.current ? instanceRef.current.track.details.slides.length : 0
+					}
 					onDotClick={handleDotClick}
 				/>
 			)}
