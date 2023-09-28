@@ -2,7 +2,7 @@ import type { GetServerSidePropsContext } from 'next';
 
 import { ListPage } from '~/pageComponents/AdminPage/pages/ListPage/ListPage';
 import { api } from '~api/index';
-import type { List } from '~api/types/Admin/Lists/List';
+import type { List } from '~api/types/lists/List';
 import { Meta } from '~components/Meta/Meta';
 import { APP } from '~constants/APP';
 

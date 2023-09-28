@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
 import { api } from '~api/index';
-import type { ListRequest } from '~api/types/requests/ListRequest';
+import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { TextInput } from '~components/inputs/TextInput/TextInput';

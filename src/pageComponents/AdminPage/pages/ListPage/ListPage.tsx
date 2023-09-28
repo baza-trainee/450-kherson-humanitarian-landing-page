@@ -1,4 +1,4 @@
-import type { List } from '~api/types/Admin/Lists/List';
+import type { List } from '~api/types/lists/List';
 import type { Column } from '~components/Table/Table';
 import { Table } from '~components/Table/Table';
 import { Text } from '~components/Text/Text';

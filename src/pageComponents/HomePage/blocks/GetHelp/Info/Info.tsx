@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-import type { GetHelpInfo } from '~api/types/GetHelp/GetHelpInfo';
-import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
-import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
+import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
+import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
+import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
 import { Text } from '~components/Text/Text';
 
 import { getImagePercentage } from './helpers/getImagePercentage';
