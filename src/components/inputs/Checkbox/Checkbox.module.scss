@@ -30,14 +30,18 @@
 		width: 20px;
 		height: 20px;
 		border-radius: 2px;
-		content: '';
-		background-color: var(--color--primary-3);
+		content: "";
+		background-color: var(--color--shades-1);
 		transition: 60ms transform ease-in-out;
 		transform: scale(0);
 		clip-path: polygon(11% 55%, 19% 48%, 41% 70%, 79% 15%, 88% 22%, 43% 88%);
 	}
 
+	&:checked {
+		background-color: var(--color--primary-3);
+	}
+
 	&:checked::before {
-		transform: scale(1);
+		transform: scale(0.8);
 	}
 }
