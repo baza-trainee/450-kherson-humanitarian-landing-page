@@ -40,7 +40,7 @@ export function LogInPage() {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (isLogin) router.push(ROUTES.admin);
+		if (isLogin) router.push(ROUTES.adminHome);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLogin]);
 
