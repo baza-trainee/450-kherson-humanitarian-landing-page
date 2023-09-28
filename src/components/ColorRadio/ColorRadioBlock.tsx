@@ -1,3 +1,5 @@
+import type { FieldValues } from 'react-hook-form';
+
 import { ColorRadio } from './ColorRadio';
 import { ColorRadioList } from './data/ColorRadioList';
 
@@ -5,8 +7,9 @@ import s from './ColorRadio.module.scss';
 interface ColorRadioBlockProps {
 	block: string;
 	changeRadio?: (value: string, name: string) => void;
+	register?: FieldValues;
 }
-export function ColorRadioBlock({ block, changeRadio }: ColorRadioBlockProps) {
+export function ColorRadioBlock({ block, changeRadio, register }: ColorRadioBlockProps) {
 	const ColorRadioIndex = ColorRadioList.findIndex((item) => item.block === block);
 	return (
 		<div className={s.ColorRadioBlock}>
@@ -17,7 +20,9 @@ export function ColorRadioBlock({ block, changeRadio }: ColorRadioBlockProps) {
 					value={item.value}
 					id={item.id}
 					isChecked={item.isChecked}
-					changeRadio={changeRadio}/>
+					changeRadio={changeRadio}
+					{...register}
+				/>
 			))}
 		</div>
 	);

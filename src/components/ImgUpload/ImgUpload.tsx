@@ -1,12 +1,16 @@
 import { useRef, useState } from 'react';
+import type { FieldValues } from 'react-hook-form';
 
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
 
 import s from './ImgUpload.module.scss';
+interface ImgUploadProps{
+	register?: FieldValues;
+}
 
-export function ImgUpload() {
+export function ImgUpload({register}: ImgUploadProps) {
 	const [image, setImage] = useState<string>('');
 	const fileClick = useRef<HTMLInputElement>(null);
 
@@ -46,7 +50,7 @@ export function ImgUpload() {
 				<Icon icon="icon--trash" className={s.icon} onClick={clearFile} />
 			</div>
 			<label>
-				<input type='file' className={s.hidden} ref={fileClick} onChange={changeFile} accept='image/*, .png, .jpeg, .web' />
+				<input type='file' className={s.hidden} ref={fileClick} onChange={changeFile} accept='image/*, .png, .jpeg, .web' {...register}/>
 			</label>
 		</div>
 	);
