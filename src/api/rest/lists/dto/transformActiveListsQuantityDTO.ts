@@ -1,6 +1,6 @@
 import type { ListQuantityResponse } from '~api/types/backend/responses/ListQuantityResponse';
-import type { GetHelpLists } from '~api/types/getHelpBlock/GetHelpLists';
-import type { HelpCategories } from '~api/types/getHelpBlock/HelpCategories';
+import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
+import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
 
 export function transformActiveListsQuantityDTO(lists: ListQuantityResponse[]): GetHelpLists {
 	const categories: Record<string, Record<string, HelpCategories>> = {
