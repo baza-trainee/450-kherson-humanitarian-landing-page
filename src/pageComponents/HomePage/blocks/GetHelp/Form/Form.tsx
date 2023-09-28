@@ -12,10 +12,11 @@ import { Checkbox } from '~components/inputs/Checkbox/Checkbox';
 import { Dropdown } from '~components/inputs/Dropdown/Dropdown';
 import { Tabs } from '~components/inputs/Tabs/Tabs';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
-import { LoaderOverlay } from '~components/LoaderOverlay/LoaderOverlay';
 import { ModalPop } from '~components/ModalPop/ModalPop';
 import { Text } from '~components/Text/Text';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 import { isObjectEmpty } from '~helpers/isObjectEmpty';
+import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
 import { AREA_LIST } from './constants/AREA_LIST';
 import { formList } from './data/formList';
@@ -47,10 +48,8 @@ interface FormProps {
 }
 
 export function Form({ lists, setActiveTab }: FormProps) {
-	const [isLoading, setIsLoading] = useState(false);
 	const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
-	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
 
 	const {
 		register,
@@ -169,8 +168,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
 						pattern: {
 							value: /^\d[0-9А-Яа-яІіЇїЄєҐґЁё-]*$/,
-							message:
-								'Поле може містити тільки цифри, літери кирилиці та символи слешу та дефісу',
+							message: 'Поле може містити тільки цифри, літери кирилиці та символ дефісу',
 						},
 					}),
 			},
@@ -328,8 +326,10 @@ export function Form({ lists, setActiveTab }: FormProps) {
 
 	const [tabIndex, setTabIndex] = useState(0);
 
+	const { LoaderOverlay, showLoaderOverlay, hideLoaderOverlay } = useLoaderOverlay();
+
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		setIsLoading(true);
+		showLoaderOverlay();
 
 		const body = {
 			surname: data.surname,
@@ -347,21 +347,33 @@ export function Form({ lists, setActiveTab }: FormProps) {
 			settlementFrom: data.movementCity,
 			phone: data.phone,
 		};
-		const res = lists
+
+		const resp = lists
 			? await api.persons.addNewPerson(lists?.[formList[tabIndex].name].id, body)
-			: {};
-		setIsLoading(false);
-		if ('data' in res) {
+			: null;
+
+		hideLoaderOverlay();
+
+		if (!resp) return;
+
+		if ('data' in resp) {
 			setIsModalSuccessOpen(true);
-		} else if ('error' in res) {
-			setErrorMessage('Перевірте, будь ласка, дані та спробуйте ще раз!');
-			setIsModalErrorOpen(true);
+		} else {
+			const message = getErrorMessageFromCode(resp.status, {
+				406: 'Невірно заповнені поля. Перевірте інформацію та спробуйте ще раз',
+				432: 'Немає доступних набрів',
+				433: 'Список не активний',
+				434: 'Реєстрація закрита або список заповнений',
+				435: 'Ваш e-mail вже зареєстрований',
+				436: 'Не вдалося зареєструвати. Спробуйте пізніше',
+				500: 'Спробуйте пізніше',
+			});
+			setErrorMessage(message);
 		}
 	};
 
 	const handleErrorModalOnClose = () => {
 		setErrorMessage('');
-		setIsModalErrorOpen(false);
 	};
 
 	const handleSuccessModalOnClose = () => {
@@ -440,12 +452,12 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				<Button className={s.submitButton} submit disabled={!watchConsent || !isValidFixed}>
 					Зареєструватись
 				</Button>
-				{isLoading && <LoaderOverlay />}
+				<LoaderOverlay />
 				{errorMessage && (
 					<ModalPop
 						type="error"
 						title={'Помилка реєстрації!'}
-						isOpen={isModalErrorOpen}
+						isOpen={!!errorMessage}
 						onClose={handleErrorModalOnClose}
 					>
 						{errorMessage}
