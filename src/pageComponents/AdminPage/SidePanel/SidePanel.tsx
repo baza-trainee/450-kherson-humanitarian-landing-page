@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { apiAuth } from '~/apiAuth';
+import { useLoginState } from '~/pageComponents/LogInPage/store/useLoginState';
 import { Icon } from '~components/Icon/Icon';
 import { ROUTES } from '~constants/ROUTES';
 import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
@@ -22,8 +23,13 @@ export function SidePanel() {
 		return router.query.slug === slug && s.active;
 	};
 
+	const { logout } = useLoginState((state) => ({
+		logout: state.logout,
+	}));
+
 	const handleLogOutButtonOnClick = async () => {
 		showLoaderOverlay();
+		logout();
 		await apiAuth.logout();
 		router.push(ROUTES.login);
 	};
