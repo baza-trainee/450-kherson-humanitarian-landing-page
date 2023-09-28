@@ -50,7 +50,6 @@ interface FormProps {
 export function Form({ lists, setActiveTab }: FormProps) {
 	const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
-	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
 
 	const {
 		register,
@@ -360,15 +359,22 @@ export function Form({ lists, setActiveTab }: FormProps) {
 
 		if ('data' in resp) {
 			setIsModalSuccessOpen(true);
-		} else if ('error' in res) {
-			setErrorMessage('Перевірте, будь ласка, дані та спробуйте ще раз!');
-			setIsModalErrorOpen(true);
+		} else {
+			const message = getErrorMessageFromCode(resp.status, {
+				406: 'Невірно заповнені поля. Перевірте інформацію та спробуйте ще раз',
+				432: 'Немає доступних набрів',
+				433: 'Список не активний',
+				434: 'Реєстрація закрита або список заповнений',
+				435: 'Ваш e-mail вже зареєстрований',
+				436: 'Не вдалося зареєструвати. Спробуйте пізніше',
+				500: 'Спробуйте пізніше',
+			});
+			setErrorMessage(message);
 		}
 	};
 
 	const handleErrorModalOnClose = () => {
 		setErrorMessage('');
-		setIsModalErrorOpen(false);
 	};
 
 	const handleSuccessModalOnClose = () => {
@@ -452,7 +458,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 					<ModalPop
 						type="error"
 						title={'Помилка реєстрації!'}
-						isOpen={isModalErrorOpen}
+						isOpen={!!errorMessage}
 						onClose={handleErrorModalOnClose}
 					>
 						{errorMessage}
