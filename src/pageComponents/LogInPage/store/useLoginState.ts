@@ -9,6 +9,7 @@ interface UseLoginState {
 	error: ErrorResponse | null;
 	isLogin: boolean;
 	login: (login: string, password: string) => Promise<void>;
+	logout: () => void;
 }
 
 export const useLoginState = create<UseLoginState>((set) => ({
@@ -17,7 +18,9 @@ export const useLoginState = create<UseLoginState>((set) => ({
 	isLogin: false,
 	login: async (login, password) => {
 		set({ isLoading: true });
+		set({ error: null });
 		set({ isLogin: false });
+
 		try {
 			const resp = await apiAuth.login({ username: login, password: password });
 			if ('data' in resp) {
@@ -30,5 +33,8 @@ export const useLoginState = create<UseLoginState>((set) => ({
 		} finally {
 			set({ isLoading: false });
 		}
+	},
+	logout: () => {
+		set({ isLogin: false });
 	},
 }));
