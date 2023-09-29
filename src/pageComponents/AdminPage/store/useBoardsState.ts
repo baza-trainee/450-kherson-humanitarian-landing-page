@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 import { api } from '~api/index';
-import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
-import type { ErrorResponse } from '~api/types/responses/ErrorResponse';
+import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
+import type { CategoryList } from '~api/types/lists/CategoryList';
 import { returnAppError } from '~helpers/returnAppError';
 
 interface UseBoardsState {

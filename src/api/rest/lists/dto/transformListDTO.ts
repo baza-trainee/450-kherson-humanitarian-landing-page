@@ -1,6 +1,6 @@
-import type { List } from '~api/types/Admin/Lists/List';
-import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
-import type { ListResponse } from '~api/types/responses/ListResponse';
+import type { ListResponse } from '~api/types/backend/responses/ListResponse';
+import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
+import type { List } from '~api/types/lists/List';
 
 export function transformListDTO(list: ListResponse): List {
 	const categories: Record<string, HelpCategories> = {

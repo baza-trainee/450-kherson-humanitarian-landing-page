@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig } from 'axios';
 
 import { API_URL } from '~api/constants/API_URL';
-import type { ApiResponse } from '~api/types/responses/ApiResponse';
+import type { ApiResponse } from '~api/types/backend/responses/ApiResponse';
 import { isClient } from '~helpers/isClient';
 import { returnAppError } from '~helpers/returnAppError';
 

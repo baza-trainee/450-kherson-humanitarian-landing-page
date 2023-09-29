@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import type { ErrorResponse } from '~api/types/responses/ErrorResponse';
+import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
 import { returnAppError } from '~helpers/returnAppError';
 
 import type { TabsData } from '../Dashboard/Tabs/Tabs';

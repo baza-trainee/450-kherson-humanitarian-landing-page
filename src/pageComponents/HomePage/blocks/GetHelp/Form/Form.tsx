@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
 import { api } from '~api/index';
-import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
-import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
+import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
+import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
 import { Button } from '~components/Buttons/Button';
 import { Checkbox } from '~components/inputs/Checkbox/Checkbox';
 import { Dropdown } from '~components/inputs/Dropdown/Dropdown';

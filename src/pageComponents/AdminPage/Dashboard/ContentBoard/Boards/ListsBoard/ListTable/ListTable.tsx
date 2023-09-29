@@ -7,7 +7,7 @@ import { statusTypes } from '~/pageComponents/AdminPage/data/statusTypes';
 import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { api } from '~api/index';
-import type { CategoryList } from '~api/types/Admin/Lists/CategoryList';
+import type { CategoryList } from '~api/types/lists/CategoryList';
 import { Icon } from '~components/Icon/Icon';
 import { Label } from '~components/Label/Label';
 import type { Column } from '~components/Table/Table';

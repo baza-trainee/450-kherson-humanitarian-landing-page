@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
 import { api } from '~api/index';
-import type { ListRequest } from '~api/types/requests/ListRequest';
+import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
@@ -91,9 +91,8 @@ export function ModalAddList() {
 			}
 		} else {
 			const message = getErrorMessageFromCode(resp.status, {
-				400: 'Дата не може бути в минулому або список з такою датою вже існує!',
-				403: 'Користувач не авторизований!',
-				406: 'Недопустима кількість наборів! Поставте цифру менше та спробуйте ще раз',
+				406: 'Дата не може бути в минулому!',
+				439: 'Список з такою датою вже існує!',
 			});
 			setErrorMessage(message);
 		}
