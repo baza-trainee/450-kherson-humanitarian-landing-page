@@ -9,6 +9,7 @@ import { Icon } from '~components/Icon/Icon';
 import { ROUTES } from '~constants/ROUTES';
 import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
+import { useTabsState } from '../store/useTabsState';
 import { navigationList } from './navigationList';
 import logo from '/public/svg/logo.svg';
 
@@ -27,9 +28,14 @@ export function SidePanel() {
 		logout: state.logout,
 	}));
 
+	const { setActiveTabId } = useTabsState((state) => ({
+		setActiveTabId: state.setActiveTabId,
+	}));
+
 	const handleLogOutButtonOnClick = async () => {
 		showLoaderOverlay();
 		logout();
+		setActiveTabId(null);
 		await apiAuth.logout();
 		router.push(ROUTES.login);
 	};
