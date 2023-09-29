@@ -18,6 +18,7 @@ export const useBoardsState = create<UseBoardsState>((set) => ({
 	listsBoardData: null,
 	getBoardDataById: async (name, id) => {
 		set({ isLoading: true });
+		set({ error: null });
 
 		try {
 			let resp;

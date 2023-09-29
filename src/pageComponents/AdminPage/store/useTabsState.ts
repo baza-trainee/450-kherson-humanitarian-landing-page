@@ -25,6 +25,8 @@ export const useTabsState = create<UseTabsState>((set) => ({
 	},
 	getTabsData: async (callback) => {
 		set({ isLoading: true });
+		set({ error: null });
+
 		try {
 			const resp = await callback();
 			if ('tabs' in resp) {
