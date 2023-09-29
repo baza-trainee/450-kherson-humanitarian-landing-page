@@ -47,7 +47,8 @@ export function LogInPage() {
 	useEffect(() => {
 		if (error) {
 			const message = getErrorMessageFromCode(error?.status, {
-				400: 'Неправильний Логін або Пароль!',
+				403: 'Неправильний логін та/або пароль!',
+				500: 'Помилка на сервері. Спробуйте пізніше!',
 			});
 			setErrorMessage(message);
 			hideLoaderOverlay();
