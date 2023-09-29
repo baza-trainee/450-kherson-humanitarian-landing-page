@@ -1,5 +1,4 @@
 import image1 from '~assets/images/projects/projects-image1.png';
-import image1_1 from '~assets/images/projects/projects-image1_1.png';
 import image1_2 from '~assets/images/projects/projects-image1_2.png';
 import image1_3 from '~assets/images/projects/projects-image1_3.png';
 import image2 from '~assets/images/projects/projects-image2.png';
@@ -11,7 +10,6 @@ import image3_1 from '~assets/images/projects/projects-image3_1.png';
 import image3_2 from '~assets/images/projects/projects-image3_2.png';
 import image3_3 from '~assets/images/projects/projects-image3_3.png';
 import image4 from '~assets/images/projects/projects-image4.png';
-import image5 from '~assets/images/projects/projects-image5.png';
 
 export const cardsData = [
 	{
@@ -153,42 +151,6 @@ export const cardsData = [
 			square: 257,
 			duration: '10.07.2022 - 28.08.2022',
 			patron: 'Кошти для цього проєкту були передані від Української Спілки Нижньої Саксонії',
-		},
-	},
-	{
-		id: image5.src,
-		src: image5.src,
-		title: 'Допомога лікарням та центрам первинної медичної допомоги',
-		status: {
-			wait: false,
-			inprogress: false,
-			finished: true,
-		},
-		description: {
-			images: [
-				{
-					src: image3.src,
-					type: 'img',
-				},
-				{
-					src: image3_1.src,
-					type: 'img',
-				},
-				{
-					src: image3_2.src,
-					type: 'img',
-				},
-				{
-					src: image3_3.src,
-					type: 'img',
-				},
-			],
-			title: 'Ремонт даху Високопільського центру первинної медико-санітарної допомоги',
-			text: 'З початком повномасштабного вторгнення Херсонська область перебувала під постійними обстрілами та ракетними ударами. Саме смт. Високопілля було повністю окуповане з початку квітня. За цей час сама лікарня була вщент зруйнована. А влада надала нове напів зруйноване приміщення, яке потребувало ремонту. Тому директор центру звернулась до нас з проханням допомогти відремонтувати тимчасову будівлю первинної амбулаторії, щоб люди вже могли отримувати послуги медичних лікарів.',
-			square: 100,
-			duration: '01.03.2023 - 01.04.2023',
-			patron:
-				'Завдяки фінансовій підтримці Угорської Екуменічної служби було відремонтовано дах центру, закуплено медичні ліжка та постільну білизну для денного стаціонару.',
 		},
 	},
 ];
