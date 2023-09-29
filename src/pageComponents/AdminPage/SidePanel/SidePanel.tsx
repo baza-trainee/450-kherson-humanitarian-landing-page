@@ -38,7 +38,9 @@ export function SidePanel() {
 		<>
 			<aside className={s.SidePanel}>
 				<div className={s.logo}>
-					<Image src={logo} alt="logo" width={200} height={80} />
+					<Link href={ROUTES.home}>
+						<Image src={logo} alt="logo" width={200} height={80} />
+					</Link>
 				</div>
 				<nav className={s.navigation}>
 					{navigationList.map((listItem) => (
