@@ -1,0 +1,21 @@
+.TableRow {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+
+	&:hover {
+		background-color: var(--color--shades-2);
+	}
+
+	border-bottom: 1px solid var(--color--secondary-2);
+}
+
+.cell {
+	display: flex;
+	padding: 12px;
+	overflow: hidden;
+	& > * {
+		inline-size: 100%;
+		overflow-wrap: break-word;
+	}
+}

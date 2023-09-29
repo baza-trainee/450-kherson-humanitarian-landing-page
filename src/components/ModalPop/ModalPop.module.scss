@@ -3,26 +3,21 @@
 .container {
 	display: flex;
 	flex-direction: column;
-	min-width: 100%;
-	padding: 0 16px 16px 16px;
+	max-width: calc(100vw - 8px);
+	padding: 16px 24px 24px;
 	overflow-x: hidden;
+	row-gap: 24px;
+
 	@include useScreen("tablet-sm") {
-		max-width: calc(100vw - 50px);
-		padding: 0px 42px 42px 42px;
-	}
-	@include useScreen("desktop-sm") {
-		max-width: calc(100vw - 24px);
+		max-width: calc(100vw - 48px);
+		padding: 16px 48px 48px;
 	}
 }
 
-.title {
-	padding: 4px 16px 24px 16px;
-	@include useScreen("tablet-sm") {
-		padding: 4px 42px 48px 42px;
-	}
-	@include useScreen("desktop-sm") {
-		padding: 4px 42px 64px 42px;
-	}
+.buttons {
+	display: inline-flex;
+	justify-content: center;
+	column-gap: 24px;
 }
 
 .error {

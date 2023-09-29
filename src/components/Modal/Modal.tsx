@@ -13,11 +13,12 @@ import s from './Modal.module.scss';
 interface ModalProps {
 	type?: NotificationTypes;
 	children: ReactNode;
+	className?: string;
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export function Modal({ type = 'info', isOpen, onClose, children }: ModalProps) {
+export function Modal({ type = 'info', isOpen, onClose, className, children }: ModalProps) {
 	const { lockScroll, unlockScroll } = useScrollLock();
 
 	const decorClassName = clsx(s.decor, s[type ? type : '']);
@@ -34,8 +35,9 @@ export function Modal({ type = 'info', isOpen, onClose, children }: ModalProps) 
 
 	return (
 		<Portal wrapperId="portal-modal">
-			<div className={s.modalContainer} onClick={onClose}>
-				<div className={s.modal} onClick={(e) => e.stopPropagation()}>
+			<>
+				<div className={s.backdrop} onClick={onClose} />
+				<div className={clsx(s.modal, className)}>
 					<div className={decorClassName} />
 					<div className={s.close}>
 						<Icon
@@ -49,7 +51,7 @@ export function Modal({ type = 'info', isOpen, onClose, children }: ModalProps) 
 					</div>
 					<div className={s.content}>{children}</div>
 				</div>
-			</div>
+			</>
 		</Portal>
 	);
 }

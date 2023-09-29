@@ -106,3 +106,12 @@
 .buttonHelpUs {
 	width: 214px;
 }
+
+.fontSize {
+	h4 {
+		font-size: 16px;
+		@include useScreen('tablet-sm') {
+			font-size: 24px;
+		}
+	}
+}

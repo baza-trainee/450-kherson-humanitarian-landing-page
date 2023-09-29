@@ -1,93 +1,151 @@
-@use "~/styles/mixins" as *;
+@use '~/styles/mixins' as *;
 
 .container {
 	position: relative;
 	height: 528px;
-	@include useScreen("tablet-sm") {
+
+	@include useScreen('tablet-sm') {
 		height: 850px;
 	}
-	@include useScreen("desktop-md") {
+
+	@include useScreen('tablet-xl') {
+		height: 100vh;
+	}
+
+	@include useScreen('desktop-md') {
+		max-width: 1440px;
 		height: 680px;
+		margin: 0 auto;
 	}
 }
 
 .content {
 	display: flex;
+	z-index: 555;
+	position: relative;
 	flex-direction: column;
 	justify-content: flex-end;
 	align-items: flex-start;
 	width: 100%;
-	height: 100%;
 	height: 528px;
 	padding: 0 16px 52px 16px;
 	gap: 10px;
-	@include useScreen("mobile-md") {
+
+	@include useScreen('mobile-md') {
 		gap: 20px;
 	}
-	@include useScreen("mobile-lg") {
+
+	@include useScreen('mobile-lg') {
 		gap: 30px;
 	}
-	@include useScreen("mobile-xl") {
+
+	@include useScreen('mobile-xl') {
 		gap: 40px;
 	}
-	@include useScreen("tablet-sm") {
+
+	@include useScreen('tablet-sm') {
 		height: 850px;
 		padding: 0 32px 104px 32px;
 		gap: 101px;
 	}
-	@include useScreen("desktop-md") {
+
+	@include useScreen('tablet-xl') {
+		height: 100vh;
+		padding: 80px 0 70px 35px;
+		gap: 48px;
+	}
+
+	@include useScreen('desktop-md') {
 		height: 680px;
 		padding: 0 0 88px 0;
 		gap: 64px;
 	}
 }
 
-.background {
-	--hero-image-url: url("/");
+.itemContainer {
+	position: relative;
+	min-width: 100%;
+	height: 528px;
+	@include useScreen('tablet-sm') {
+		height: 850px;
+	}
+
+	@include useScreen('tablet-xl') {
+		height: 100vh;
+	}
+
+	@include useScreen('desktop-md') {
+		height: 680px;
+	}
 }
 
-.background {
-	background-color: lightgray 50%;
-	background-repeat: no-repeat;
-	background-attachment: local;
-	background-position: right;
-	background-size: cover;
+.gradient {
+	z-index: 11;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 
-.gradientBlack {
-	background-image: linear-gradient(270deg, rgba(0, 0, 0, 0.08) 29.01%, rgba(0, 0, 0, 0.8) 100%), var(--hero-image-url);
+.darkGradient {
+	background: var(--color--gradient-3);
 }
 
-.gradientWhite {
-	background-image: var(--hero-image-url);
+.liteGradient {
+	background: var(--color--gradient-4);
+}
+
+.noGradient {
+	background: transparent;
+}
+
+.img {
+	width: auto;
+	height: auto;
+	object-position: 85%;
+	object-fit: cover;
+	@include useScreen('tablet-sm') {
+		object-position: 90%;
+	}
+
+	@include useScreen('desktop-md') {
+		object-position: initial;
+	}
 }
 
 .text {
 	display: flex;
 	flex-direction: column;
+	text-wrap: balance;
 	gap: 14px;
 
-	@include useScreen("mobile-md") {
+	@include useScreen('mobile-md') {
 		gap: 16px;
 	}
-	@include useScreen("tablet-sm") {
+
+	@include useScreen('tablet-sm') {
 		width: 100%;
 		gap: 24px;
 	}
-	@include useScreen("desktop-md") {
+
+	@include useScreen('desktop-md') {
 		gap: 64px;
 	}
 }
 
 .heading {
 	width: 321px;
-	@include useScreen("mobile-lg") {
+
+	@include useScreen('mobile-lg') {
 		width: 400px;
 	}
-	@include useScreen("tablet-sm") {
+
+	@include useScreen('tablet-sm') {
 		width: 680px;
 	}
-	@include useScreen("desktop-md") {
+
+	@include useScreen('desktop-md') {
 		width: 675px;
 	}
 }

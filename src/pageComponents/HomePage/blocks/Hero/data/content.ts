@@ -8,7 +8,7 @@ export interface ContentItem {
 		value: string;
 		color: string;
 	};
-	banner: { src: string; gradientColor: 'gradientWhite' | 'gradientBlack' };
+	banner: { src: string; gradientColor: 'liteGradient' | 'darkGradient' | 'noGradient' };
 }
 
 export const content: ContentItem[] = [
@@ -19,7 +19,7 @@ export const content: ContentItem[] = [
 			color: 'blue',
 		},
 		subtitle: { value: 'м. Кривий Ріг', color: 'black' },
-		banner: { src: '/hero/banner-1.jpg', gradientColor: 'gradientWhite' },
+		banner: { src: '/hero/banner-1.jpg', gradientColor: 'noGradient' },
 	},
 	{
 		id: 2,
@@ -28,7 +28,7 @@ export const content: ContentItem[] = [
 			color: 'white',
 		},
 		subtitle: { value: 'м. Кривий Ріг', color: 'white' },
-		banner: { src: '/hero/banner-2.jpg', gradientColor: 'gradientBlack' },
+		banner: { src: '/hero/banner-2.jpg', gradientColor: 'darkGradient' },
 	},
 	{
 		id: 3,
@@ -37,6 +37,6 @@ export const content: ContentItem[] = [
 			color: 'white',
 		},
 		subtitle: { value: 'м. Кривий Ріг', color: 'white' },
-		banner: { src: '/hero/banner-3.jpg', gradientColor: 'gradientBlack' },
+		banner: { src: '/hero/banner-3.jpg', gradientColor: 'darkGradient' },
 	},
 ];
