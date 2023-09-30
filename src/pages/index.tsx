@@ -1,7 +1,7 @@
 import { HomePage } from '~/pageComponents/HomePage/HomePage';
 import { api } from '~api/index';
-import type { GetHelpInfo } from '~api/types/GetHelp/GetHelpInfo';
-import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
+import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
+import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
 import { Meta } from '~components/Meta/Meta';
 import { RootLayout } from '~components/RootLayout/RootLayout';
 import { APP } from '~constants/APP';

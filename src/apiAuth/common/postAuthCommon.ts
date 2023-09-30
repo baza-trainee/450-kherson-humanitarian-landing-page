@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import type { ApiResponse } from '~api/types/responses/ApiResponse';
+import type { ApiResponse } from '~api/types/backend/responses/ApiResponse';
 import { returnAppError } from '~helpers/returnAppError';
 
 export const postAuthCommon = async <R, B>(endpoint: string, body: B): Promise<ApiResponse<R>> => {

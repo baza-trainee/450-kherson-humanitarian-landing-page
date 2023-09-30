@@ -40,14 +40,15 @@ export function LogInPage() {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (isLogin) router.push(ROUTES.admin);
+		if (isLogin) router.push(ROUTES.adminHome);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLogin]);
 
 	useEffect(() => {
 		if (error) {
 			const message = getErrorMessageFromCode(error?.status, {
-				400: 'Неправильний Логін або Пароль!',
+				403: 'Неправильний логін та/або пароль!',
+				500: 'Помилка на сервері. Спробуйте пізніше!',
 			});
 			setErrorMessage(message);
 			hideLoaderOverlay();

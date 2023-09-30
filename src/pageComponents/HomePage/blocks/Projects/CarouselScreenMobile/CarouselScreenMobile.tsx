@@ -35,7 +35,10 @@ export function CarouselScreenMobile({ arrayIndex }: CarouselScreenMobileProps) 
 	useHandleResize(handleResize);
 
 	const onRight = () => {
-		if (position < description.images.length - 1 && position !== description.images.length - visibleItems) {
+		if (
+			position < description.images.length - 1 &&
+			position !== description.images.length - visibleItems
+		) {
 			setPosition(position + 1);
 		}
 	};
@@ -60,14 +63,9 @@ export function CarouselScreenMobile({ arrayIndex }: CarouselScreenMobileProps) 
 			left: `${position * (-width - 16)}px`,
 			scale: 1,
 		},
-		transition: {
-			type: 'spring',
-			stiffness: 260,
-			damping: 20,
-		},
 		drag: 'x',
 		dragConstraints: { left: 0, right: 0 },
-		dragElastic: 0.7,
+		dragElastic: 0.2,
 	};
 
 	return (

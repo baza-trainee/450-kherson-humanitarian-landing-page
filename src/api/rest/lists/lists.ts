@@ -3,9 +3,9 @@ import type { AxiosRequestConfig } from 'axios';
 import { commonDelete } from '~api/common/commonDelete';
 import { commonGet } from '~api/common/commonGet';
 import { commonPost } from '~api/common/commonPost';
-import type { ListRequest } from '~api/types/requests/ListRequest';
-import type { ListResponse } from '~api/types/responses/ListResponse';
-import type { ListsResponse } from '~api/types/responses/ListsResponse';
+import type { ListRequest } from '~api/types/backend/requests/ListRequest';
+import type { ListResponse } from '~api/types/backend/responses/ListResponse';
+import type { ListsResponse } from '~api/types/backend/responses/ListsResponse';
 
 import { transformActiveListsQuantityDTO } from './dto/transformActiveListsQuantityDTO';
 import { transformCategoryListsDTO } from './dto/transformCategoryListsDTO';

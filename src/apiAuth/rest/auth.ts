@@ -1,4 +1,4 @@
-import type { ApiResponse } from '~api/types/responses/ApiResponse';
+import type { ApiResponse } from '~api/types/backend/responses/ApiResponse';
 
 import { getAuthCommon } from '../common/getAuthCommon';
 import { postAuthCommon } from '../common/postAuthCommon';

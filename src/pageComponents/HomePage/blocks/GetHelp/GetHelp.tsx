@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import type { GetHelpInfo } from '~api/types/GetHelp/GetHelpInfo';
-import type { GetHelpLists } from '~api/types/GetHelp/GetHelpLists';
-import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
+import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
+import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
+import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
 import { Container } from '~components/Container/Container';
 import { Icon } from '~components/Icon/Icon';
 import { Section } from '~components/Section/Section';

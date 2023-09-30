@@ -1,6 +1,6 @@
 import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
-import type { ListRequest } from '~api/types/requests/ListRequest';
+import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import { Loader } from '~components/Loader/Loader';
 
 import { ListTable } from './ListTable/ListTable';
