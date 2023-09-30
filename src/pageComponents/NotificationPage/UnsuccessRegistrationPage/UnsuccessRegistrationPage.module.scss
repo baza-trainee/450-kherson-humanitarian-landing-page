@@ -1,21 +1,5 @@
 @use '~/styles/mixins' as *;
 
-// .container {
-// 	display: flex;
-// 	flex-direction: column;
-// 	justify-content: center;
-// 	width: 572px;
-// 	min-height: calc(100vh - 82px);
-// 	padding: 24px 0;
-// 	row-gap: 48px;
-// }
-
 .title {
 	color: var(--color--error-1);
 }
-
-// .text {
-// 	display: flex;
-// 	flex-direction: column;
-// 	gap: 24px;
-// }
