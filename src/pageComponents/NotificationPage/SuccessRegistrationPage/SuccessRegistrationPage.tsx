@@ -3,7 +3,6 @@ import { Text } from '~components/Text/Text';
 import s from './SuccessRegistrationPage.module.scss';
 
 interface ParsedUrlQuery {
-	// slug: string;
 	issueDate?: string;
 	issueTime?: string;
 }

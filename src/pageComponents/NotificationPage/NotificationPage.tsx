@@ -27,7 +27,7 @@ export function NotificationPage({ queryData }: NotificationPageProps) {
 						<div className={s.content}>
 							{
 								{
-									'unsuccess-registration': <UnsuccessRegistrationPage />,
+									'unsuccess-registration': <UnsuccessRegistrationPage data={queryData} />,
 									'success-registration': <SuccessRegistrationPage data={queryData} />,
 								}[slug]
 							}
