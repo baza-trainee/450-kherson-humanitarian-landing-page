@@ -8,7 +8,12 @@ import s from './NavigationAndDocuments.module.scss';
 export function NavigationAndDocuments() {
 	return (
 		<div className={s.NavigationAndDocuments}>
-			<NavigationList navigation={navigation} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
+			<NavigationList
+				navigation={navigation}
+				variant="footer"
+				navStyle={s.navigation}
+				linkStyle={s.underline}
+			/>
 			<NavigationList
 				download
 				target="_blank"
