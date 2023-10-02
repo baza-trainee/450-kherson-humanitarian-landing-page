@@ -10,7 +10,6 @@ export function NavigationAndDocuments() {
 		<div className={s.NavigationAndDocuments}>
 			<NavigationList navigation={navigation} variant="footer" navStyle={s.navigation} linkStyle={s.underline} />
 			<NavigationList
-				download
 				target="_blank"
 				navigation={documents}
 				variant="footer"
