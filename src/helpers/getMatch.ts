@@ -1,6 +1,6 @@
-export function getMatch<C extends string | number, M>(
-	code: C,
-	values: Record<C, M> & { _: M },
+export function getMatch<M>(
+	code: string | number | undefined | null = null,
+	values: Record<string | number | symbol, M> & { _: M },
 ): M {
-	return values[code] || values._;
+	return code ? values[code] : values._;
 }
