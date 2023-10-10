@@ -9,7 +9,7 @@ interface UseBoardsState {
 	isLoading: boolean;
 	error: ErrorResponse | null;
 	listsBoardData: CategoryList[] | null;
-	getBoardDataById: (name: string, id: string) => Promise<void>;
+	getBoardDataById: (name: string, id: string | null) => Promise<void>;
 }
 
 export const useBoardsState = create<UseBoardsState>((set) => ({
@@ -23,8 +23,8 @@ export const useBoardsState = create<UseBoardsState>((set) => ({
 		try {
 			let resp;
 
-			//* add block data fetch here ↓↓↓
-			if (name === 'lists') {
+			//* add block data fetch here ↓
+			if (name === 'lists' && id) {
 				resp = await api.lists.getListsByCategory(id);
 				if ('data' in resp) set({ listsBoardData: resp.data });
 			}
