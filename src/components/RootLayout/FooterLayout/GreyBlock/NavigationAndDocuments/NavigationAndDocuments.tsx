@@ -15,7 +15,6 @@ export function NavigationAndDocuments() {
 				linkStyle={s.underline}
 			/>
 			<NavigationList
-				download
 				target="_blank"
 				navigation={documents}
 				variant="footer"

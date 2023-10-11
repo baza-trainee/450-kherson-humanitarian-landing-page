@@ -14,9 +14,4 @@ export const documents = [
 		href: 'https://450kr.com/resources/documents/company/Privacy_Policy.pdf',
 		name: 'Конфіденційність',
 	},
-	{
-		id: 4, href: 'https://450kr.com/resources/documents/company/Constitution.pdf',
-		name: 'Статут ГО'
-	},
-	{ id: 5, href: '#', name: 'Звітність ГО' },
 ];
