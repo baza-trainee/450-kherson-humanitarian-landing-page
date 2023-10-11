@@ -12,6 +12,7 @@ import { useParams } from '~hooks/useParams';
 import { useBoardsState } from '../../store/useBoardsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchListData } from './fetchHelpers/fetchListData';
+import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
 
 import s from './Tabs.module.scss';
 
@@ -51,6 +52,8 @@ export function Tabs() {
 			//* set fetching helpers function here ↓
 			if (query?.slug === 'lists') {
 				await getTabsData(fetchListData);
+			} else if (query?.slug === 'our-activity') {
+				await getTabsData(fetchOurActivityData);
 			} else {
 				setTabsData(null);
 			}

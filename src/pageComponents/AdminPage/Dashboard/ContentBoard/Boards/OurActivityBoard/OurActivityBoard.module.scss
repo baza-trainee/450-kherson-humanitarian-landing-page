@@ -1,0 +1,14 @@
+.buttons {
+	display: flex;
+	justify-content: space-between;
+	max-width: 752px;
+
+	& button {
+		width: 214px;
+	}
+}
+
+.delete {
+	border-color: var(--color--error-1);
+	color: var(--color--error-1);
+}
