@@ -7,9 +7,10 @@ import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { Loader } from '~components/Loader/Loader';
 import { getIndexByKey } from '~helpers/getIndexByKey';
+import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
 
-import { useListsState } from '../../store/useListsState';
+import { useBoardsState } from '../../store/useBoardsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchHeroData, fetchListData } from './fetchHelpers/fetchListData';
 
@@ -17,7 +18,6 @@ import s from './Tabs.module.scss';
 
 export interface Tab {
 	title: string;
-	key: string;
 	id: string;
 }
 
@@ -27,22 +27,19 @@ export interface TabsData {
 }
 
 export function Tabs() {
-	const { isListLoading, getListsByCategory } = useListsState((state) => ({
-		isListLoading: state.isLoading,
-		getListsByCategory: state.getListsByCategory,
-	}));
-
-	const isDataLoading = isListLoading;
-
 	const router = useRouter();
 	const { query } = router;
 
 	const { setParams } = useParams();
 
-	const { isLoading, error, tabsData, activeTabId, setActiveTabId, getTabsData, setTabsData } =
+	const { isDataLoading, getBoardDataById } = useBoardsState((state) => ({
+		isDataLoading: state.isLoading,
+		getBoardDataById: state.getBoardDataById,
+	}));
+
+	const { isLoading, tabsData, activeTabId, setActiveTabId, getTabsData, setTabsData } =
 		useTabsState((state) => ({
 			isLoading: state.isLoading,
-			error: state.error,
 			activeTabId: state.activeTabId,
 			tabsData: state.tabsData,
 			setActiveTabId: state.setActiveTabId,
@@ -50,43 +47,40 @@ export function Tabs() {
 			setTabsData: state.setTabsData,
 		}));
 
+	//* 1. Get page route and fetch tabs data
+	//* Set fetching helpers function here ↓
 	useEffect(() => {
-		const fetchData = async () => {
-			//* set fetching helpers function here ↓
-			if (query?.slug === 'lists') {
-				await getTabsData(fetchListData);
-			} else
-			if (query?.slug === 'hero') {
-				await getTabsData(fetchHeroData);
-			} else {
-				setTabsData(null);
-			}
-		};
+		const fetchData = getMatch(query?.slug?.toString(), {
+			lists: async () => await getTabsData(fetchListData),
+			hero: async () => await getTabsData(fetchHeroData),
+			_: () => setTabsData(null),
+		});
+
 		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.slug]);
 
+	//* 2. Check is id in address or is id correct
+	//* and if its needed set id to url params
 	useEffect(() => {
 		if (
-			(!query?.id && tabsData?.tabs[0].id) ||
+			!query?.id ||
 			(query?.id && tabsData && getIndexByKey(tabsData?.tabs, 'id', query?.id) < 0)
 		) {
-			setActiveTabId(tabsData?.tabs[0].id);
-			setParams({ id: tabsData?.tabs[0].id });
+			if (tabsData?.tabs[0].id) {
+				setParams({ id: tabsData?.tabs[0].id });
+				setActiveTabId(tabsData?.tabs[0].id);
+			}
+		} else if (query?.id) {
+			setActiveTabId(query?.id?.toString());
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tabsData]);
 
-	useEffect(() => {
-		if (!activeTabId) {
-			setActiveTabId(query?.id?.toString() || '');
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [query?.id]);
-
+	//* 3. Fetch boards data when tab changed
 	useEffect(() => {
 		const fetchData = async () => {
-			if (activeTabId) getListsByCategory(activeTabId);
+			if (query?.slug) getBoardDataById(query?.slug?.toString(), activeTabId);
 		};
 		if (activeTabId) fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,8 +100,8 @@ export function Tabs() {
 
 	return (
 		<div className={s.Tabs}>
-			{(isLoading || !activeTabId || !query?.id) && <Loader />}
-			{!isLoading && activeTabId && query?.id && tabsData && (
+			{(isLoading || !tabsData) && <Loader />}
+			{!isLoading && tabsData && (
 				<>
 					{tabsData.tabs.map((tab) => (
 						<Button

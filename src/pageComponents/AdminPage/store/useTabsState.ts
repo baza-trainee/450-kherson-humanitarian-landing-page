@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import type { ErrorResponse } from '~api/types/responses/ErrorResponse';
+import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
 import { returnAppError } from '~helpers/returnAppError';
 
 import type { TabsData } from '../Dashboard/Tabs/Tabs';
@@ -25,6 +25,8 @@ export const useTabsState = create<UseTabsState>((set) => ({
 	},
 	getTabsData: async (callback) => {
 		set({ isLoading: true });
+		set({ error: null });
+
 		try {
 			const resp = await callback();
 			if ('tabs' in resp) {

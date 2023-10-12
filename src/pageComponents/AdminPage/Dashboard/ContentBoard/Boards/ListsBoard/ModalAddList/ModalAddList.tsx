@@ -2,16 +2,17 @@ import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
+import { useRouter } from 'next/router';
+
+import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
 import { api } from '~api/index';
+import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
 import { LoaderOverlay } from '~components/LoaderOverlay/LoaderOverlay';
 import { ModalPop } from '~components/ModalPop/ModalPop';
 import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
-
-import { categories } from '../ListsBoard';
 
 import s from './ModalAddList.module.scss';
 
@@ -21,18 +22,16 @@ export interface FormFields {
 	issueTime: string;
 }
 
-interface ModalAddList {
-	category: string;
-}
+export function ModalAddList() {
+	const router = useRouter();
+	const { query } = router;
 
-export function ModalAddList({ category }: ModalAddList) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
-	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const { getListsByCategory } = useListsState((state) => ({
-		getListsByCategory: state.getListsByCategory,
+	const { getBoardDataById } = useBoardsState((state) => ({
+		getBoardDataById: state.getBoardDataById,
 	}));
 
 	const {
@@ -70,8 +69,15 @@ export function ModalAddList({ category }: ModalAddList) {
 		const year = inputDate.getFullYear();
 		const issueDate = `${day}.${month}.${year}`;
 
+		const id = query.id?.toString();
+		let listId: ListRequest['type'] = 'temp_moved';
+
+		if (id === 'temp_moved' || id === 'invalid' || id === 'child') {
+			listId = id;
+		}
+
 		const body = {
-			type: categories[category],
+			type: listId,
 			maxQuantity: data.availableSets,
 			issueDate: issueDate,
 			issueTime: data.issueTime,
@@ -80,12 +86,13 @@ export function ModalAddList({ category }: ModalAddList) {
 		const resp = await api.lists.addNewList(body);
 
 		if ('data' in resp) {
-			await getListsByCategory(category);
+			if (query?.slug) {
+				await getBoardDataById(query?.slug?.toString(), listId);
+			}
 		} else {
 			const message = getErrorMessageFromCode(resp.status, {
-				400: 'Дата не може бути в минулому або список з такою датою вже існує!',
-				403: 'Користувач не авторизований!',
-				406: 'Недопустима кількість наборів! Поставте цифру менше та спробуйте ще раз',
+				406: 'Дата не може бути в минулому!',
+				439: 'Список з такою датою вже існує!',
 			});
 			setErrorMessage(message);
 		}
@@ -96,7 +103,6 @@ export function ModalAddList({ category }: ModalAddList) {
 
 	const handleErrorModalOnClose = () => {
 		setErrorMessage('');
-		setIsModalErrorOpen(false);
 	};
 
 	const handleAddNewList = () => {
@@ -148,7 +154,7 @@ export function ModalAddList({ category }: ModalAddList) {
 				<ModalPop
 					type="error"
 					title="Помилка при створенні списку!"
-					isOpen={isModalErrorOpen}
+					isOpen={!!errorMessage}
 					onClose={handleErrorModalOnClose}
 				>
 					{errorMessage}

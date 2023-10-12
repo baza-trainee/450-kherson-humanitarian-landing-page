@@ -1,6 +1,6 @@
-import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
+import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
-import type { ListRequest } from '~api/types/requests/ListRequest';
+import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import { Loader } from '~components/Loader/Loader';
 
 import { ListTable } from './ListTable/ListTable';
@@ -17,19 +17,18 @@ export function ListsBoard() {
 		activeTabId: state.activeTabId,
 	}));
 
-	const { isLoading, error, lists } = useListsState((state) => ({
+	const { isLoading, listsBoardData } = useBoardsState((state) => ({
 		isLoading: state.isLoading,
-		error: state.error,
-		lists: state.lists,
+		listsBoardData: state.listsBoardData,
 	}));
 
 	return (
 		<>
-			{(isLoading || !lists) && <Loader />}
-			{!isLoading && activeTabId && (
+			{(isLoading || !listsBoardData) && <Loader />}
+			{!isLoading && activeTabId && listsBoardData && (
 				<>
-					{lists && <ListTable lists={lists} />}
-					<ModalAddList category={activeTabId} />
+					<ListTable lists={listsBoardData} />
+					<ModalAddList />
 				</>
 			)}
 		</>

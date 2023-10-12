@@ -64,8 +64,8 @@
 
 .itemContainer {
 	position: relative;
+	min-width: 100%;
 	height: 528px;
-
 	@include useScreen('tablet-sm') {
 		height: 850px;
 	}

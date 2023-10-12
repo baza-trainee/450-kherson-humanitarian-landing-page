@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { apiAuth } from '~/apiAuth';
+import { useLoginState } from '~/pageComponents/LogInPage/store/useLoginState';
 import { Icon } from '~components/Icon/Icon';
 import { ROUTES } from '~constants/ROUTES';
 import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
+import { useTabsState } from '../store/useTabsState';
 import { navigationList } from './navigationList';
 import logo from '/public/svg/logo.svg';
 
@@ -22,8 +24,18 @@ export function SidePanel() {
 		return router.query.slug === slug && s.active;
 	};
 
+	const { logout } = useLoginState((state) => ({
+		logout: state.logout,
+	}));
+
+	const { setActiveTabId } = useTabsState((state) => ({
+		setActiveTabId: state.setActiveTabId,
+	}));
+
 	const handleLogOutButtonOnClick = async () => {
 		showLoaderOverlay();
+		logout();
+		setActiveTabId(null);
 		await apiAuth.logout();
 		router.push(ROUTES.login);
 	};
@@ -32,7 +44,9 @@ export function SidePanel() {
 		<>
 			<aside className={s.SidePanel}>
 				<div className={s.logo}>
-					<Image src={logo} alt="logo" width={200} height={80} />
+					<Link href={ROUTES.home}>
+						<Image src={logo} alt="logo" width={200} height={80} />
+					</Link>
 				</div>
 				<nav className={s.navigation}>
 					{navigationList.map((listItem) => (
