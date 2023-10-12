@@ -12,6 +12,7 @@ import { useParams } from '~hooks/useParams';
 import { useBoardsState } from '../../store/useBoardsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchListData } from './fetchHelpers/fetchListData';
+import { getOurAchievementsData } from './fetchHelpers/getOurAchievementsData';
 
 import s from './Tabs.module.scss';
 
@@ -51,6 +52,19 @@ export function Tabs() {
 			//* set fetching helpers function here ↓
 			if (query?.slug === 'lists') {
 				await getTabsData(fetchListData);
+			} else {
+				setTabsData(null);
+			}
+		};
+		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [query?.slug]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			//* set fetching helpers function here ↓
+			if (query?.slug === 'our-achievements') {
+				await getTabsData(getOurAchievementsData);
 			} else {
 				setTabsData(null);
 			}
