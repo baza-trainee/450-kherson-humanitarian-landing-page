@@ -1,29 +1,32 @@
-import { useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import type { FieldValues } from 'react-hook-form';
 
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
 
 import s from './ImgUpload.module.scss';
+
+export type ImgUploadElement = HTMLInputElement;
+
 interface ImgUploadProps {
 	register?: FieldValues;
+	watch?: (name: string) => FieldValues;
 }
 
-export function ImgUpload({ register }: ImgUploadProps) {
+export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(({ register, watch }, ref) => {
 	const [image, setImage] = useState<string>('');
-	const fileClick = useRef<HTMLInputElement>(null);
 
-	const changeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files) {
-			setImage(URL.createObjectURL(event.target.files[0]));
-		}
-	};
+	const files = watch ? watch(register ? register.name : null) : null;
 
-	const handleClick = () => {
-		if (fileClick.current !== null) {
-			fileClick.current.click();
+	useEffect(() => {
+		if (watch && files) {
+			if (typeof files === 'string') {
+				setImage(files);
+			} else setImage(URL.createObjectURL(files[0]));
 		}
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [files]);
 
 	return (
 		<div className={s.ImgUpload}>
@@ -34,7 +37,7 @@ export function ImgUpload({ register }: ImgUploadProps) {
 				<Image
 					priority={true}
 					src={!image ? '/svg/blank-img.svg' : image}
-					alt="card-img"
+					alt="hero-img"
 					width={!image ? 100 : 712}
 					height={!image ? 100 : 300}
 					className={!image ? s.imgDefault : s.img}
@@ -42,17 +45,11 @@ export function ImgUpload({ register }: ImgUploadProps) {
 			</div>
 			<label>
 				<div className={s.iconBlock}>
-					<Icon icon="icon--upload" className={s.icon} onClick={handleClick} />
+					<Icon icon="icon--upload" className={s.icon} />
 				</div>
-				<input
-					type="file"
-					className={s.hidden}
-					ref={fileClick}
-					onChange={changeFile}
-					accept="image/*, .png, .jpeg, .web"
-					{...register}
-				/>
+				<input type="file" className={s.hidden} ref={ref} accept="image/*, .png, .jpeg, .web" {...register} />
 			</label>
 		</div>
 	);
-}
+});
+ImgUpload.displayName = 'ImgUpload';
