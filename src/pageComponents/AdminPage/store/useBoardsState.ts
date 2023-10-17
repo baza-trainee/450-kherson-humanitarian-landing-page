@@ -26,8 +26,8 @@ export const useBoardsState = create<UseBoardsState>((set) => ({
 		try {
 			let resp;
 
-			//* add block data fetch here ↓↓↓
-			if (name === 'lists') {
+			//* add block data fetch here ↓
+			if (name === 'lists' && id) {
 				resp = await api.lists.getListsByCategory(id);
 				if ('data' in resp) set({ listsBoardData: resp.data });
 			} else if (name === 'our-activity') {
