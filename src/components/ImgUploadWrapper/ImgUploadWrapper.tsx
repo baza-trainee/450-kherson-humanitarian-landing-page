@@ -22,7 +22,7 @@ export function ImgUploadWrapper({gradientValue,
 	register}: ImgUploadWrapperProps){
 	return(
 		<div className={s.ImgUpload}>
-			<ImgUpload {...register}/>
+			<ImgUpload register={register}/>
 			<div className={clsx(s.ImgGradient, s[gradientValue])}/>
 			<div className={s.text}>
 				<Text variant="h2" className={clsx(s.heading, s[titleColor])} lineBreak>
