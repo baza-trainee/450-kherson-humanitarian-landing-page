@@ -21,7 +21,7 @@ export function ColorRadioBlock({ block, changeRadio, register }: ColorRadioBloc
 					id={item.id}
 					isChecked={item.isChecked}
 					changeRadio={changeRadio}
-					{...register}
+					register={register}
 				/>
 			))}
 		</div>
