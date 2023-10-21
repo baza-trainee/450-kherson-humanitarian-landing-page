@@ -10,7 +10,7 @@ import { getIndexByKey } from '~helpers/getIndexByKey';
 import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
 
-import { useBoardsState } from '../../store/useBoardsState';
+import { useListsState } from '../../store/useListsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchListData } from './fetchHelpers/fetchListData';
 
@@ -32,10 +32,8 @@ export function Tabs() {
 
 	const { setParams } = useParams();
 
-	const { isDataLoading, getBoardDataById } = useBoardsState((state) => ({
-		isDataLoading: state.isLoading,
-		getBoardDataById: state.getBoardDataById,
-	}));
+	const isListsDataLoading = useListsState((state) => state.isLoading);
+	const isDataLoading = isListsDataLoading;
 
 	const { isLoading, tabsData, activeTabId, setActiveTabId, getTabsData, setTabsData } =
 		useTabsState((state) => ({

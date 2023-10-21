@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/router';
 
-import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
+import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
 import { api } from '~api/index';
 import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import { Button } from '~components/Buttons/Button';
@@ -30,9 +30,7 @@ export function ModalAddList() {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const { getBoardDataById } = useBoardsState((state) => ({
-		getBoardDataById: state.getBoardDataById,
-	}));
+	const getBoardDataById = useListsState((state) => state.getBoardDataById);
 
 	const {
 		register,
@@ -86,9 +84,7 @@ export function ModalAddList() {
 		const resp = await api.lists.addNewList(body);
 
 		if ('data' in resp) {
-			if (query?.slug) {
-				await getBoardDataById(query?.slug?.toString(), listId);
-			}
+			await getBoardDataById(listId);
 		} else {
 			const message = getErrorMessageFromCode(resp.status, {
 				406: 'Дата не може бути в минулому!',
