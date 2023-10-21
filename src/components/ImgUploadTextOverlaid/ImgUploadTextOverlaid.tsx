@@ -5,12 +5,9 @@ import clsx from 'clsx';
 import { ImgUpload } from '~components/ImgUpload/ImgUpload';
 import { Text } from '~components/Text/Text';
 
-import s from './ImgUploadWrapper.module.scss';
-<<<<<<< Updated upstream
+import s from './ImgUploadTextOverlaid.module.scss';
 
-=======
->>>>>>> Stashed changes
-interface ImgUploadWrapperProps {
+interface ImgUploadTextOverlaidProps {
 	gradientValue: string;
 	titleValue: string;
 	subtitleValue: string;
@@ -19,11 +16,8 @@ interface ImgUploadWrapperProps {
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
 }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
-export function ImgUploadWrapper({
+export function ImgUploadTextOverlaid({
 	gradientValue,
 	titleValue,
 	subtitleValue,
@@ -31,7 +25,7 @@ export function ImgUploadWrapper({
 	subtitleColor,
 	register,
 	watch,
-}: ImgUploadWrapperProps) {
+}: ImgUploadTextOverlaidProps) {
 	return (
 		<div className={s.ImgUpload}>
 			<ImgUpload register={register} watch={watch} />
