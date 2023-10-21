@@ -1,10 +1,10 @@
 import { forwardRef, useEffect, useState } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
-import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
+import { BASE_URL } from '~constants/BASE_URL';
 
 import s from './ImgUpload.module.scss';
 
@@ -19,32 +19,28 @@ interface ImgUploadProps {
 export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
 	({ register, watch, error }, ref) => {
 		const [image, setImage] = useState<string>('');
-		const apiUrl = process.env.BASE_URL;
 
 		const file = watch ? watch(register ? register.name : null) : null;
 
 		useEffect(() => {
 			if (watch && file) {
 				if (typeof file === 'string') {
-					process.env.NODE_ENV === 'development'
-						? setImage(`${apiUrl}${file}`)
-						: setImage(file);
+					const imgUrl = process.env.NODE_ENV === 'development' ? `${BASE_URL}${file}` : file;
+					setImage(imgUrl);
 				} else setImage(URL.createObjectURL(file[0]));
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [file]);
 
+		const borderStyle = !image
+			? { border: '1px solid var(--color--secondary-2)' }
+			: { border: 'none' };
+
 		return (
 			<div className={s.ImgUpload}>
 				<div
 					className={s.imgBlock}
-					style={
-						error
-							? { border: '1px solid var(--color--error-1)' }
-							: !image
-							? { border: '1px solid var(--color--secondary-2)' }
-							: { border: 'none' }
-					}
+					style={error ? { border: '1px solid var(--color--error-1)' } : borderStyle}
 				>
 					<Image
 						priority={true}

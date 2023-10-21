@@ -15,6 +15,7 @@ interface ImgUploadWrapperProps {
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
 }
+
 export function ImgUploadWrapper({
 	gradientValue,
 	titleValue,
