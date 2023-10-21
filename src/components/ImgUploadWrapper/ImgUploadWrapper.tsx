@@ -6,6 +6,10 @@ import { ImgUpload } from '~components/ImgUpload/ImgUpload';
 import { Text } from '~components/Text/Text';
 
 import s from './ImgUploadWrapper.module.scss';
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
 interface ImgUploadWrapperProps {
 	gradientValue: string;
 	titleValue: string;
@@ -15,7 +19,10 @@ interface ImgUploadWrapperProps {
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
 }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 export function ImgUploadWrapper({
 	gradientValue,
 	titleValue,
