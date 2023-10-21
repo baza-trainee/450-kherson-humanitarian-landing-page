@@ -1,4 +1,4 @@
-import { Arrow } from '~components/Arrow/Arrow';
+import { IconButton } from '~components/IconButton/IconButton';
 
 import s from './Arrows.module.scss';
 
@@ -6,22 +6,23 @@ interface ArrowsProps {
 	loaded: boolean;
 	onPrevClick: () => void;
 	onNextClick: () => void;
-	isPrevDisabled: boolean;
-	isNextDisabled: boolean;
 }
 
-function ArrowKeenSlider(props: { disabled: boolean; left?: boolean; onClick: (e: React.SyntheticEvent) => void }) {
-	const direction = props.left ? true : false;
-	return <Arrow direction={direction} onClick={props.onClick} disabled={props.disabled} className={s.arrow} />;
+function ArrowKeenSlider(props: {
+	type: 'primary' | 'secondary';
+	icon: string;
+	onClick: (e: React.SyntheticEvent) => void;
+}) {
+	return <IconButton type={props.type} icon={props.icon} onClick={props.onClick} className={s.arrow} />;
 }
 
-export function Arrows({ loaded, onPrevClick, onNextClick, isPrevDisabled, isNextDisabled }: ArrowsProps) {
+export function Arrows({ loaded, onPrevClick, onNextClick }: ArrowsProps) {
 	return (
 		loaded && (
 			<div className={s.arrowsContainer}>
 				<div className={s.arrows}>
-					<ArrowKeenSlider left onClick={onPrevClick} disabled={isPrevDisabled} />
-					<ArrowKeenSlider onClick={onNextClick} disabled={isNextDisabled} />
+					<ArrowKeenSlider type="secondary" icon="icon--arrow-left" onClick={onPrevClick} />
+					<ArrowKeenSlider type="secondary" icon="icon--arrow-right" onClick={onNextClick} />
 				</div>
 			</div>
 		)

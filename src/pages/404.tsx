@@ -1,4 +1,4 @@
-import { Page404 } from '~/pageComponents/Page404/Page404';
+import { Page404 } from '~/pageComponents/404Page/404Page';
 import { LayoutLite } from '~components/LayoutLite/LayoutLite';
 import { Meta } from '~components/Meta/Meta';
 import { APP } from '~constants/APP';

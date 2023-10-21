@@ -45,10 +45,10 @@ export function Carousel3d({
 		}
 	};
 
-	const { handleDragEnd, handleDragStart } = useHandleDrag(
-		() => paginate(1),
-		() => paginate(-1),
-	);
+	const { handleDragEnd, handleDragStart } = useHandleDrag({
+		callbackRight: () => paginate(1),
+		callbackLeft: () => paginate(-1),
+	});
 
 	return (
 		<div className={className}>

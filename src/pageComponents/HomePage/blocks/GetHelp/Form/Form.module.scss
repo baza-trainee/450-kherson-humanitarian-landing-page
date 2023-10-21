@@ -1,4 +1,4 @@
-@use '~/styles/mixins' as *;
+@use "~/styles/mixins" as *;
 
 .Form {
 	display: flex;
@@ -21,12 +21,18 @@
 
 .field {
 	display: flex;
-	align-self: flex-end;
 	grid-column: span 2;
 }
 
 .halfWidth {
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		grid-column: span 1;
 	}
+}
+
+.disabled {
+	opacity: 60%;
+	cursor: not-allowed;
+	user-select: none;
+	pointer-events: none;
 }

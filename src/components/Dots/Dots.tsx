@@ -5,7 +5,7 @@ import type { StaticImageData } from 'next/image';
 import s from './Dots.module.scss';
 
 interface Props {
-	items: StaticImageData[];
+	items: StaticImageData[] | { src: string }[];
 	activeIndex: number;
 	paginateTo: (index: number) => void;
 }

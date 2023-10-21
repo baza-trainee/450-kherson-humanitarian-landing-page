@@ -1,4 +1,4 @@
-@use '~/styles/mixins' as *;
+@use "~/styles/mixins" as *;
 
 .MainLayout {
 	display: flex;
@@ -6,11 +6,11 @@
 	flex-direction: column;
 	gap: 48px;
 
-	@include useScreen('tablet-sm') {
+	@include useScreen("tablet-sm") {
 		gap: 80px;
 	}
 
-	@include useScreen('desktop-sm') {
+	@include useScreen("desktop-sm") {
 		gap: 100px;
 	}
 }

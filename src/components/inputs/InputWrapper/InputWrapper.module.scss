@@ -1,5 +1,6 @@
 .InputWrapper {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	width: 100%;
 	row-gap: 8px;
@@ -35,11 +36,15 @@
 	row-gap: 5px;
 }
 
-.errorText {
+.infoText {
 	min-height: 15px;
-	color: var(--color--error-1);
+	color: var(--color--secondary-3);
 	font-style: normal;
 	font-weight: 400;
 	font-size: var(--font-size--subtitle-mobile);
 	line-height: normal;
+}
+
+.errorText {
+	color: var(--color--error-1);
 }

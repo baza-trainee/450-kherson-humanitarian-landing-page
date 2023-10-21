@@ -4,12 +4,19 @@ import { useForm } from 'react-hook-form';
 
 import clsx from 'clsx';
 
+import { api } from '~api/index';
+import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
+import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
 import { Button } from '~components/Buttons/Button';
 import { Checkbox } from '~components/inputs/Checkbox/Checkbox';
 import { Dropdown } from '~components/inputs/Dropdown/Dropdown';
 import { Tabs } from '~components/inputs/Tabs/Tabs';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
+import { ModalPop } from '~components/ModalPop/ModalPop';
+import { Text } from '~components/Text/Text';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 import { isObjectEmpty } from '~helpers/isObjectEmpty';
+import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
 import { AREA_LIST } from './constants/AREA_LIST';
 import { formList } from './data/formList';
@@ -35,7 +42,15 @@ interface Field {
 
 type FormFieldsData = Record<string, Field>;
 
-export function Form() {
+interface FormProps {
+	lists?: GetHelpLists;
+	setActiveTab: (tab: HelpCategories) => void;
+}
+
+export function Form({ lists, setActiveTab }: FormProps) {
+	const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
+
 	const {
 		register,
 		unregister,
@@ -68,7 +83,8 @@ export function Form() {
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
 						},
 					}),
 			},
@@ -86,7 +102,8 @@ export function Form() {
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, дефісу, апострофу',
 						},
 					}),
 			},
@@ -104,7 +121,8 @@ export function Form() {
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-]+$/,
-							message: 'Поле може містити тільки літери кирилиці та символи пробілу, дефісу та апострофу',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, дефісу та апострофу',
 						},
 					}),
 			},
@@ -150,7 +168,7 @@ export function Form() {
 						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
 						pattern: {
 							value: /^\d[0-9А-Яа-яІіЇїЄєҐґЁё-]*$/,
-							message: 'Поле може містити тільки цифри, літери кирилиці та символи слешу та дефісу',
+							message: 'Поле може містити тільки цифри, літери кирилиці та символ дефісу',
 						},
 					}),
 			},
@@ -230,7 +248,8 @@ export function Form() {
 				widthSize: 'fullWidth',
 				register: () =>
 					register('movementArea', {
-						validate: (value) => AREA_LIST.includes(value) || 'Повинна бути обрана область зі списку',
+						validate: (value) =>
+							AREA_LIST.includes(value) || 'Повинна бути обрана область зі списку',
 						required: 'Повинна бути обрана область',
 					}),
 				options: AREA_LIST,
@@ -249,7 +268,8 @@ export function Form() {
 						minLength: { value: 2, message: 'Мінімальна кількість символів 2' },
 						pattern: {
 							value: /^[\sА-Яа-яІіЇїЄєҐґЁё'-.]+$/,
-							message: 'Поле може містити тільки літери кирилиці та символи пробілу, крапки, дефісу, апострофу',
+							message:
+								'Поле може містити тільки літери кирилиці та символи пробілу, крапки, дефісу, апострофу',
 						},
 					}),
 			},
@@ -273,16 +293,16 @@ export function Form() {
 				type: 'text',
 				name: 'phone',
 				label: 'Номер телефону',
-				placeholder: '+380 11 111 11 11',
+				placeholder: '+380111111111',
 				required: true,
 				widthSize: 'fullWidth',
+				inputMaxLength: 13,
 				register: () =>
 					register('phone', {
 						required: 'Поле не може бути пустим',
-						minLength: { value: 12, message: 'Мінімальна кількість символів 12' },
 						pattern: {
-							value: /^[+]?380[\s][0-9]{2}[\s][0-9]{3}[\s]?[0-9]{2}[\s]?[0-9]{2}[\s]?$/,
-							message: 'Номер телефону повинен бути у форматі +380 11 111 11 11',
+							value: /^\+380[0-9]{9}$/,
+							message: 'Номер телефону повинен бути у форматі +380111111111',
 						},
 					}),
 			},
@@ -306,27 +326,69 @@ export function Form() {
 
 	const [tabIndex, setTabIndex] = useState(0);
 
+	const { LoaderOverlay, showLoaderOverlay, hideLoaderOverlay } = useLoaderOverlay();
+
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { populationCity, consent, ...restData } = data;
-		const numbers = restData.phone.replace(/[\s+]/g, '');
-		const phoneNumber = [
-			numbers.slice(0, 3),
-			numbers.slice(3, 5),
-			numbers.slice(5, 8),
-			numbers.slice(8, 10),
-			numbers.slice(10),
-		].join(' ');
-		console.log(formList[tabIndex].label);
-		console.table({ ...restData, phone: `+${phoneNumber}` });
+		showLoaderOverlay();
+
+		const body = {
+			surname: data.surname,
+			name: data.name,
+			patrname: data.patronymic,
+			email: data.email,
+			street: data.populationStreet,
+			building: data.populationHouseNumber.toString(),
+			apartment: data.populationApartmentNumber.toString(),
+			certificateNumber:
+				data.idpCertificateNumber ||
+				data.disabilityCertificateNumber ||
+				data.birthCertificateNumber,
+			regionFrom: data.movementArea,
+			settlementFrom: data.movementCity,
+			phone: data.phone,
+		};
+
+		const resp = lists
+			? await api.persons.addNewPerson(lists?.[formList[tabIndex].name].id, body)
+			: null;
+
+		hideLoaderOverlay();
+
+		if (!resp) return;
+
+		if ('data' in resp) {
+			setIsModalSuccessOpen(true);
+		} else {
+			const message = getErrorMessageFromCode(resp.status, {
+				406: 'Невірно заповнені поля. Перевірте інформацію та спробуйте ще раз',
+				432: 'Немає доступних набрів',
+				433: 'Список не активний',
+				434: 'Реєстрація закрита або список заповнений',
+				435: 'Ваш e-mail вже зареєстрований',
+				436: 'Не вдалося зареєструвати. Спробуйте пізніше',
+				500: 'Спробуйте пізніше',
+			});
+			setErrorMessage(message);
+		}
+	};
+
+	const handleErrorModalOnClose = () => {
+		setErrorMessage('');
+	};
+
+	const handleSuccessModalOnClose = () => {
+		setIsModalSuccessOpen(false);
 	};
 
 	const tabFormVariantOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
-		const valueIndex = formList.findIndex((item) => item.label === value);
-		setTabIndex(valueIndex);
+		const newTabIndex = formList.findIndex((item) => item.label === value);
+		setTabIndex(newTabIndex);
+		setActiveTab(formList[newTabIndex].name);
 		unregister();
 	};
+
+	const disabledClass = !lists?.[formList[tabIndex].name].id && s.disabled;
 
 	return (
 		<div className={s.Form}>
@@ -336,7 +398,7 @@ export function Form() {
 				defaultValue={formList[tabIndex].label}
 				labels={formList.map((form) => form.label)}
 			/>
-			<form className={s.formFields} onSubmit={handleSubmit(onSubmit)}>
+			<form className={clsx(s.formFields, disabledClass)} onSubmit={handleSubmit(onSubmit)}>
 				{formList[tabIndex].fieldList.map((field) => {
 					if (!formFieldsData[field]) return null;
 					const condition = formFieldsData[field]?.condition;
@@ -390,9 +452,37 @@ export function Form() {
 				<Button className={s.submitButton} submit disabled={!watchConsent || !isValidFixed}>
 					Зареєструватись
 				</Button>
-				{/* {isLoading && <LoaderOverlay />} */}
-				{/* {(isSubmit && !isLoading) && <UserPageSuccessModal onClose={handlerSuccessModal} />} */}
-				{/* {(error && !isLoading) && <UserPageErrorModal onClose={handlerErrorModal} error={error} />} */}
+				<LoaderOverlay />
+				{errorMessage && (
+					<ModalPop
+						type="error"
+						title={'Помилка реєстрації!'}
+						isOpen={!!errorMessage}
+						onClose={handleErrorModalOnClose}
+					>
+						{errorMessage}
+					</ModalPop>
+				)}
+				{isModalSuccessOpen && (
+					<ModalPop
+						isOpen={isModalSuccessOpen}
+						onClose={handleSuccessModalOnClose}
+						title={'Дякуємо за реєстрацію!'}
+					>
+						<Text variant="p">
+							Ми відправили листа на вашу електронну адресу з посиланням для підтвердження
+							реєстрації.
+							<br />
+							Будь ласка, перевірте свою поштову скриньку та перейдіть за посиланням для
+							завершення процесу реєстрації.
+							<br />
+							<br />
+							{
+								'Якщо ви не знайшли наш лист у папці "Вхідні", будь ласка, перевірте папку "Спам".'
+							}
+						</Text>
+					</ModalPop>
+				)}
 			</form>
 		</div>
 	);

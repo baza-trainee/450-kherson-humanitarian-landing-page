@@ -1,17 +1,15 @@
-import { ImgUpload } from '~components/ImgUpload/ImgUpload';
+import { useRouter } from 'next/router';
+
+import { ListsBoard } from './Boards/ListsBoard/ListsBoard';
 
 import s from './ContentBoard.module.scss';
 
-interface ContentBoardProps {
-	nothing?: unknown;
-}
+export function ContentBoard() {
+	const { query } = useRouter();
 
-export function ContentBoard({ nothing }: ContentBoardProps) {
 	return (
 		<div className={s.ContentBoard}>
-			<ImgUpload />
-			<p>ContentBoard</p>
-			<p>ContentBoard</p>
+			{query?.slug === 'lists' && <ListsBoard />}
 		</div>
 	);
 }

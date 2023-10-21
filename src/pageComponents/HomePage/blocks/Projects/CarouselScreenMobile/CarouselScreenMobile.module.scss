@@ -1,0 +1,18 @@
+.singleCarousel {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 16px;
+}
+
+.smallCarousel {
+	min-height: 253px;
+}
+
+.dots {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 10px;
+	gap: 18px;
+}

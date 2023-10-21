@@ -9,6 +9,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:react/jsx-runtime',
 		'next/core-web-vitals',
+		'plugin:storybook/recommended',
 		'./.eslintrc-typescript.cjs',
 		'prettier',
 	],
@@ -20,7 +21,7 @@ module.exports = {
 	},
 	plugins: ['react', '@typescript-eslint', 'simple-import-sort'],
 	rules: {
-		'indent': ['error', 'tab', {SwitchCase: 1}],
+		indent: ['off'],
 		'linebreak-style': ['error', 'unix'],
 		quotes: ['error', 'single', { avoidEscape: true }],
 		semi: ['error', 'always'],

@@ -7,6 +7,7 @@
 	align-items: center;
 	width: 100%;
 	padding-top: 48px;
+	overflow-x: hidden;
 	@include useScreen('tablet-sm') {
 		flex-direction: row;
 		padding-top: 80px;
@@ -118,12 +119,5 @@
 	gap: 22px;
 	@include useScreen('tablet-sm') {
 		gap: 18px;
-	}
-}
-
-.iconSocial {
-	color: var(--color--shades-1);
-	&:hover {
-		color: var(--color--warning-1);
 	}
 }

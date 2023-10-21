@@ -16,6 +16,7 @@ $iconsSet: (
 	edit,
 	email,
 	eye,
+	eye-off,
 	facebook,
 	instagram,
 	location,
@@ -23,7 +24,8 @@ $iconsSet: (
 	phone,
 	plus,
 	trash,
-	upload
+	upload,
+	checked
 );
 
 @include useSvgIcon($icons: $iconsSet);

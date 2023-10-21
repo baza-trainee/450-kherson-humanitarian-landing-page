@@ -1,6 +1,9 @@
+import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
+
 import type { FormFields } from '../types/FormFields';
 
 interface FormInputCollection {
+	name: HelpCategories;
 	label: string;
 	fieldList: (keyof FormFields)[];
 }
@@ -9,6 +12,7 @@ type FormList = FormInputCollection[];
 
 export const formList: FormList = [
 	{
+		name: 'idp',
 		label: 'Допомога ВПО',
 		fieldList: [
 			'surname',
@@ -27,6 +31,7 @@ export const formList: FormList = [
 		],
 	},
 	{
+		name: 'invalid',
 		label: 'Допомога людям з інвалідністю',
 		fieldList: [
 			'surname',
@@ -45,6 +50,7 @@ export const formList: FormList = [
 		],
 	},
 	{
+		name: 'child',
 		label: 'Допомога дітям',
 		fieldList: [
 			'surname',
