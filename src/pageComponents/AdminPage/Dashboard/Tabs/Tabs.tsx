@@ -65,24 +65,18 @@ export function Tabs() {
 			!query?.id ||
 			(query?.id && tabsData && getIndexByKey(tabsData?.tabs, 'id', query?.id) < 0)
 		) {
-			if (tabsData?.tabs[0].id) {
+			if (tabsData?.tabs?.length && tabsData?.tabs[0].id) {
 				setParams({ id: tabsData?.tabs[0].id });
 				setActiveTabId(tabsData?.tabs[0].id);
+			} else if (tabsData?.isEditable) {
+				setParams({ id: 'empty' });
+				setActiveTabId('empty');
 			}
 		} else if (query?.id) {
 			setActiveTabId(query?.id?.toString());
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tabsData]);
-
-	//* 3. Fetch boards data when tab changed
-	useEffect(() => {
-		const fetchData = async () => {
-			if (query?.slug) getBoardDataById(query?.slug?.toString(), activeTabId);
-		};
-		if (activeTabId) fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [activeTabId]);
 
 	const isActiveType = (isActive: boolean) => (isActive ? 'primary' : 'secondary');
 	const isActiveClass = (isActive: boolean) => (isActive ? s.active : '');
@@ -113,7 +107,11 @@ export function Tabs() {
 						</Button>
 					))}
 					{tabsData.isEditable && (
-						<Button type="secondary" onClick={handleAddNewTabOnClick}>
+						<Button
+							type="secondary"
+							onClick={handleAddNewTabOnClick}
+							disabled={isDataLoading}
+						>
 							<Icon
 								icon="icon--plus"
 								colors={{
