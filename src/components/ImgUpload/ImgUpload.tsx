@@ -27,28 +27,27 @@ export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
 				if (typeof file === 'string') {
 					const imgUrl = process.env.NODE_ENV === 'development' ? `${BASE_URL}${file}` : file;
 					setImage(imgUrl);
-				} else setImage(URL.createObjectURL(file[0]));
+				} else if (file.length > 0) {
+					setImage(URL.createObjectURL(file[0]));
+				} else setImage('');
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [file]);
 
-		const borderStyle = !image
-			? { border: '1px solid var(--color--secondary-2)' }
-			: { border: 'none' };
+		let borderStyle = { border: '1px solid var(--color--secondary-2)' };
+		if (error) borderStyle = { border: '1px solid var(--color--error-1)' };
+		if (image) borderStyle = { border: 'none' };
 
 		return (
 			<div className={s.ImgUpload}>
-				<div
-					className={s.imgBlock}
-					style={error ? { border: '1px solid var(--color--error-1)' } : borderStyle}
-				>
+				<div className={s.imgBlock} style={borderStyle}>
 					<Image
 						priority={true}
-						src={!image ? '/svg/blank-img.svg' : image}
-						alt="hero-img"
-						width={!image ? 100 : 712}
-						height={!image ? 100 : 300}
-						className={!image ? s.imgDefault : s.img}
+						src={image ? image : '/svg/blank-img.svg'}
+						alt="main-hero-board-image"
+						width={image ? 712 : 100}
+						height={image ? 300 : 100}
+						className={image ? s.img : s.imgDefault}
 					/>
 				</div>
 				<label>
