@@ -14,8 +14,8 @@ interface ModalPop {
 	children?: ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
-	primaryButton?: () => React.ReactElement;
-	secondaryButton?: () => React.ReactElement;
+	leftButton?: () => React.ReactElement;
+	rightButton?: () => React.ReactElement;
 }
 
 export function ModalPop({
@@ -23,8 +23,8 @@ export function ModalPop({
 	title,
 	isOpen,
 	onClose,
-	primaryButton,
-	secondaryButton,
+	leftButton,
+	rightButton,
 	children,
 }: ModalPop) {
 	const titleClassName = type && s[type];
@@ -38,10 +38,10 @@ export function ModalPop({
 					</Text>
 				)}
 				{children}
-				{(primaryButton || secondaryButton) && (
+				{(leftButton || rightButton) && (
 					<div className={s.buttons}>
-						{primaryButton && primaryButton()}
-						{secondaryButton && secondaryButton()}
+						{leftButton && leftButton()}
+						{rightButton && rightButton()}
 					</div>
 				)}
 			</div>
