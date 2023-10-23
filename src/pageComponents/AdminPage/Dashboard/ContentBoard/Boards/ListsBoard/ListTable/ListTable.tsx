@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { ModalRemove } from '~/pageComponents/AdminPage/components/ModalRemove/ModalRemove';
 import { statusTypes } from '~/pageComponents/AdminPage/data/statusTypes';
-import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
+import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { api } from '~api/index';
 import type { CategoryList } from '~api/types/lists/CategoryList';
@@ -21,7 +21,6 @@ interface ListTableProps {
 
 export function ListTable({ lists }: ListTableProps) {
 	const router = useRouter();
-	const { query } = router;
 
 	const { LoaderOverlay, showLoaderOverlay } = useLoaderOverlay();
 
@@ -33,9 +32,7 @@ export function ListTable({ lists }: ListTableProps) {
 		activeTabId: state.activeTabId,
 	}));
 
-	const { getBoardDataById } = useBoardsState((state) => ({
-		getBoardDataById: state.getBoardDataById,
-	}));
+	const getBoardDataById = useListsState((state) => state.getBoardDataById);
 
 	if (!lists) return;
 
@@ -56,9 +53,7 @@ export function ListTable({ lists }: ListTableProps) {
 
 	const handleOnModalRemoveYesClick = async () => {
 		const resp = await api.lists.removeList(clickedListId);
-		if ('data' in resp && activeTabId && query?.slug) {
-			getBoardDataById(query?.slug?.toString(), activeTabId);
-		}
+		if ('data' in resp && activeTabId) getBoardDataById(activeTabId);
 	};
 
 	const columns: Column<(typeof lists)[number]>[] = [
