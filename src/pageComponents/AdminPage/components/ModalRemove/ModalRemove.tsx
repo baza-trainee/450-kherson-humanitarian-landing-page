@@ -28,12 +28,12 @@ export function ModalRemove({
 			title={'Видалити?'}
 			isOpen={isModalOpen}
 			onClose={handleOnNoClick}
-			primaryButton={() => (
+			leftButton={() => (
 				<Button type="secondary" onClick={handleOnYesClick}>
 					Так
 				</Button>
 			)}
-			secondaryButton={() => <Button onClick={handleOnNoClick}>Ніт</Button>}
+			rightButton={() => <Button onClick={handleOnNoClick}>Ніт</Button>}
 		/>
 	);
 }

@@ -1,4 +1,6 @@
-import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
+import { useEffect } from 'react';
+
+import { useListsState } from '~/pageComponents/AdminPage/store/useListsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import type { ListRequest } from '~api/types/backend/requests/ListRequest';
 import { Loader } from '~components/Loader/Loader';
@@ -13,14 +15,21 @@ export const categories: Record<string, ListRequest['type']> = {
 };
 
 export function ListsBoard() {
-	const { activeTabId } = useTabsState((state) => ({
-		activeTabId: state.activeTabId,
-	}));
+	const activeTabId = useTabsState((state) => state.activeTabId);
 
-	const { isLoading, listsBoardData } = useBoardsState((state) => ({
+	const { isLoading, listsBoardData, getBoardDataById } = useListsState((state) => ({
 		isLoading: state.isLoading,
 		listsBoardData: state.listsBoardData,
+		getBoardDataById: state.getBoardDataById,
 	}));
+
+	useEffect(() => {
+		const fetchData = async () => {
+			if (activeTabId) getBoardDataById(activeTabId);
+		};
+		if (activeTabId) fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [activeTabId]);
 
 	return (
 		<>
