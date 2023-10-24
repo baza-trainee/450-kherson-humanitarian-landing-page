@@ -8,8 +8,16 @@ interface ColorRadioBlockProps {
 	block: string;
 	changeRadio?: (value: string, name: string) => void;
 	register?: FieldValues;
+	value?: string;
+	watch?: (name: string) => FieldValues;
 }
-export function ColorRadioBlock({ block, changeRadio, register }: ColorRadioBlockProps) {
+export function ColorRadioBlock({
+	block,
+	changeRadio,
+	register,
+	value,
+	watch,
+}: ColorRadioBlockProps) {
 	const ColorRadioIndex = ColorRadioList.findIndex((item) => item.block === block);
 	return (
 		<div className={s.ColorRadioBlock}>
@@ -19,9 +27,10 @@ export function ColorRadioBlock({ block, changeRadio, register }: ColorRadioBloc
 					name={item.name}
 					value={item.value}
 					id={item.id}
-					isChecked={item.isChecked}
+					isChecked={item.value === value ? true : item.isChecked}
 					changeRadio={changeRadio}
 					register={register}
+					watch={watch}
 				/>
 			))}
 		</div>

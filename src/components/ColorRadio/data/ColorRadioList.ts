@@ -12,21 +12,21 @@ interface ColorRadioCollection {
 
 export const ColorRadioList: ColorRadioCollection[] = [
 	{
-		block: 'imgGradient',
+		block: 'imageGradient',
 		fieldList: [
 			{
-				name: 'imgGradient',
-				value: 'liteGradient',
-				id: 'liteGradient',
+				name: 'imageGradient',
+				value: 'lightGradient',
+				id: 'lightGradient',
 				isChecked: true,
 			},
 			{
-				name: 'imgGradient',
+				name: 'imageGradient',
 				value: 'darkGradient',
 				id: 'darkGradient',
 			},
 			{
-				name: 'imgGradient',
+				name: 'imageGradient',
 				value: 'noGradient',
 				id: 'noGradient',
 			},
@@ -73,5 +73,5 @@ export const ColorRadioList: ColorRadioCollection[] = [
 				id: 'subtitleColorWhite',
 			},
 		],
-	}
+	},
 ];
