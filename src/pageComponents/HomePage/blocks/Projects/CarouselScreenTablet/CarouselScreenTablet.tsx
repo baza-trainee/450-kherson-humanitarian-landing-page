@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import type { MotionProps } from 'framer-motion';
 
 import { cardsData } from '~/data/projectsContent';
-import { Arrow } from '~components/Arrow/Arrow';
 import { Carousel } from '~components/Carousel/Carousel';
+import { IconButton } from '~components/IconButton/IconButton';
 import { useHandleDrag } from '~hooks/useHandleDrag';
 
 import ActiveImageTablet from '../ActiveImageTablet/ActiveImageTablet';
@@ -51,14 +51,9 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 			left: `${positionMini * (-widthMini - gap)}px`,
 			scale: 1,
 		},
-		transition: {
-			type: 'spring',
-			stiffness: 260,
-			damping: 20,
-		},
 		drag: 'x',
 		dragConstraints: { left: 0, right: 0 },
-		dragElastic: 0.7,
+		dragElastic: 0.2,
 	};
 
 	useEffect(() => {
@@ -71,7 +66,12 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 		<div className={s.imageContent}>
 			<ActiveImageTablet imagesArray={description.images} position={positionMini} />
 			<div className={s.container}>
-				<Arrow direction className={s.arrow} onClick={onLeft} disabled={positionMini === -1} />
+				<IconButton
+					type="secondary"
+					icon="icon--arrow-left"
+					onClick={onLeft}
+					disabled={positionMini === -1}
+				/>
 				<Carousel
 					ref={carouselMini}
 					animation={animationMini}
@@ -79,10 +79,15 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 					handleDragStart={handleDragStart}
 					className={s.smallCarousel}
 				>
-					<ImageBlockTablet imagesArray={description.images} width={widthMini} position={positionMini} />
+					<ImageBlockTablet
+						imagesArray={description.images}
+						width={widthMini}
+						position={positionMini}
+					/>
 				</Carousel>
-				<Arrow
-					className={s.arrow}
+				<IconButton
+					type="secondary"
+					icon="icon--arrow-right"
 					onClick={onRight}
 					disabled={positionMini === description.images.length - visibleItems + 1}
 				/>

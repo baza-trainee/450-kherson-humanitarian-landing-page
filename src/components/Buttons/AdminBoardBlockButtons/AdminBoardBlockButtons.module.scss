@@ -1,0 +1,20 @@
+.buttons {
+	display: flex;
+	justify-content: space-between;
+	max-width: 752px;
+	padding-top: 16px;
+
+	& button {
+		width: 214px;
+	}
+}
+
+.leftSide {
+	display: flex;
+	gap: 16px;
+}
+
+.delete {
+	border-color: var(--color--error-1);
+	color: var(--color--error-1);
+}

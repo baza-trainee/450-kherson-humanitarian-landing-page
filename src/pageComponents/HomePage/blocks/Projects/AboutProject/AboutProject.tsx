@@ -33,15 +33,15 @@ export default function AboutProject({ productId }: AboutProjectProps) {
 					<div className={s.reportData}>
 						<div className={s.square}>
 							<Text variant="h6" className={s.staticText}>
-								Площа виконаних робіт:
+								Об&apos;єм виконаних робіт:
 							</Text>
 							<Text variant="h6" className={s.dynamicText}>
-								{description.square}
+								{`${description.square}м2`}
 							</Text>
 						</div>
 						<div className={s.duration}>
 							<Text variant="h6" className={s.staticText}>
-								Тривалість проекту:
+								Тривалість проєкту:
 							</Text>
 							<Text variant="h6" className={s.dynamicText}>
 								{description.duration}

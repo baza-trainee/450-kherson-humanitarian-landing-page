@@ -1,11 +1,11 @@
 @use '~/styles/mixins' as *;
 
 .container {
+	display: flex;
+	justify-content: center;
 	width: 100%;
 	max-width: 100%;
 	min-height: 422px;
-	display: flex;
-	justify-content: center;
 	@include useScreen('mobile-xl') {
 		min-height: 437px;
 	}
@@ -13,16 +13,16 @@
 
 .card {
 	display: flex;
-	flex-direction: column;
 	position: relative;
+	flex-direction: column;
+	cursor: pointer;
 	background-color: var(--color--shades-1);
-	cursor: grab;
 }
 
 .text {
+	padding: 16px;
 	font-size: var(--font-size--h5);
 	line-height: 150%;
-	padding: 16px;
 	@include useScreen('tablet-xl') {
 		padding: 24px;
 	}
@@ -30,10 +30,10 @@
 
 .img {
 	width: auto;
-	height: auto;
-	max-height: 286px;
-	min-height: 286px;
 	max-width: 100%;
+	height: auto;
+	min-height: 286px;
+	max-height: 286px;
 	@include useScreen('mobile-xl') {
 		min-height: 296px;
 		max-height: 296px;
@@ -41,10 +41,10 @@
 }
 
 .label {
-	border-radius: 5px;
+	position: absolute;
 	top: 8px;
 	right: 8px;
-	position: absolute;
+	border-radius: 5px;
 	@include useScreen('mobile-xl') {
 		top: 16px;
 		right: 12px;
@@ -53,8 +53,8 @@
 
 .status {
 	padding: 4px 8px;
-	text-transform: uppercase;
 	color: var(--color--secondary-4);
+	text-transform: uppercase;
 }
 
 .wait {

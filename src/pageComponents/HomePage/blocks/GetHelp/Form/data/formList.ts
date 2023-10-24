@@ -1,4 +1,4 @@
-import type { HelpCategories } from '~api/types/GetHelp/HelpCategories';
+import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
 
 import type { FormFields } from '../types/FormFields';
 

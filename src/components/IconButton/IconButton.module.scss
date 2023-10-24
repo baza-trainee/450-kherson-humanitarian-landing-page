@@ -1,0 +1,73 @@
+@use '~/styles/mixins' as *;
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 32px;
+	height: 32px;
+}
+
+.primary {
+	border: none;
+	border-style: none;
+	background: transparent;
+
+	.icon {
+		background: var(--color--primary-3);
+	}
+
+	@include useOnHover {
+		.icon {
+			background: var(--color--gradient-1);
+		}
+	}
+
+	@include useOnClick {
+		.icon {
+			background: var(--color--primary-4);
+		}
+	}
+
+	@include useDisabled() {
+		.icon {
+			background: var(--color--secondary-2);
+		}
+	}
+}
+
+.secondary {
+	opacity: 80%;
+	border-width: 2px;
+	border-style: solid;
+	border-color: transparent;
+	border-radius: 3px;
+	background: var(--color--shades-1);
+	box-shadow: 0px -3px 0px 0px rgba(58, 65, 111, 0) inset, 0px 2px 4px 0px rgba(45, 35, 66, 0.2),
+		0px 7px 10px -3px rgba(45, 35, 66, 0.1);
+
+	.icon {
+		background: var(--color--primary-3);
+	}
+
+	@include useOnHover {
+		background: linear-gradient(var(--color--shades-1), var(--color--shades-1)) padding-box,
+			var(--color--gradient-1) border-box;
+		.icon {
+			background: var(--color--secondary-4);
+		}
+	}
+
+	@include useOnClick {
+		background: var(--color--primary-4);
+		.icon {
+			background: var(--color--shades-1);
+		}
+	}
+
+	@include useDisabled() {
+		.icon {
+			background: var(--color--secondary-2);
+		}
+	}
+}

@@ -19,8 +19,8 @@
 }
 
 .wrapper {
-	position: relative;
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
@@ -43,10 +43,10 @@
 }
 
 .slider {
-	height: 346px;
 	display: flex;
-	gap: 16px;
+	height: 346px;
 	padding-right: calc(100% - 286px);
+	gap: 16px;
 	@include useScreen('mobile-lg') {
 		padding-right: 0;
 	}
@@ -63,24 +63,21 @@
 }
 
 .card {
-	width: 573px;
-	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: transparent;
+	width: 573px;
+	height: 100%;
 	cursor: grab;
+	background-color: transparent;
 }
 
 .arrow {
-	background-color: var(--color--shades-1);
-	border-style: none;
-	width: 32px;
-	height: 32px;
+	z-index: 4;
 	position: absolute;
 	top: 55%;
+	background-color: var(--color--shades-1);
 	transform: translateY(-50%);
-	z-index: 4;
 }
 
 .leftArrow {
@@ -92,12 +89,12 @@
 }
 
 .dots {
-	min-height: 72px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 18px;
+	min-height: 72px;
 	padding-right: 16px;
+	gap: 18px;
 	@include useScreen('mobile-lg') {
 		padding-right: 0;
 	}

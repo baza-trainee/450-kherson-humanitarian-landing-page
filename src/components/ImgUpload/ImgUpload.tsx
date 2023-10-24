@@ -1,57 +1,69 @@
-import { useRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
+import type { FieldValues } from 'react-hook-form';
 
-import clsx from 'clsx';
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
+import { BASE_URL } from '~constants/BASE_URL';
 
 import s from './ImgUpload.module.scss';
-interface ImgUploadProps{
-	gradientValue: string;
+
+export type ImgUploadElement = HTMLInputElement;
+
+interface ImgUploadProps {
+	register?: FieldValues;
+	watch?: (name: string) => FieldValues;
+	error?: string;
 }
-export function ImgUpload({gradientValue}: ImgUploadProps) {
-	const [image, setImage] = useState<string>('');
-	const fileClick = useRef<HTMLInputElement>(null);
 
-	const changeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files) {
-			setImage(URL.createObjectURL(event.target.files[0]));
-		}
-	};
+export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
+	({ register, watch, error }, ref) => {
+		const [image, setImage] = useState<string>('');
 
-	const handleClick = () => {
-		if (fileClick.current !== null) {
-			fileClick.current.click();
-		}
-	};
+		const file = watch ? watch(register ? register.name : null) : null;
 
-	const clearFile = () => {
-		setImage('');
-		if (fileClick.current !== null) {
-			fileClick.current.value = '';
-		}
-	};
+		useEffect(() => {
+			if (watch && file) {
+				if (typeof file === 'string') {
+					const imgUrl = process.env.NODE_ENV === 'development' ? `${BASE_URL}${file}` : file;
+					setImage(imgUrl);
+				} else if (file.length > 0) {
+					setImage(URL.createObjectURL(file[0]));
+				} else setImage('');
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [file]);
 
-	return (
-		<div className={s.ImgUpload}>
-			<div className={s.imgBlock}>
-				<Image
-					priority={true}
-					src={!image ? '/svg/blank-img.svg' : image}
-					alt='card-img'
-					width={!image ? 100 : 712}
-					height={!image ? 100 : 300}
-					className={!image ? s.imgDefault: s.img}
-				/>
-				<div className={clsx(s.ImgGradient, s[gradientValue])}/>
+		let borderStyle = { border: '1px solid var(--color--secondary-2)' };
+		if (error) borderStyle = { border: '1px solid var(--color--error-1)' };
+		if (image) borderStyle = { border: 'none' };
+
+		return (
+			<div className={s.ImgUpload}>
+				<div className={s.imgBlock} style={borderStyle}>
+					<Image
+						priority={true}
+						src={image ? image : '/svg/blank-img.svg'}
+						alt="main-hero-board-image"
+						width={image ? 712 : 100}
+						height={image ? 300 : 100}
+						className={image ? s.img : s.imgDefault}
+					/>
+				</div>
+				<label>
+					<div className={s.iconBlock}>
+						<Icon icon="icon--upload" className={s.icon} />
+					</div>
+					<input
+						type="file"
+						className={s.hidden}
+						ref={ref}
+						accept="image/*, .png, .jpeg, .web"
+						{...register}
+					/>
+				</label>
 			</div>
-			<div className={s.iconBlock}>
-				<Icon icon="icon--upload" className={s.icon} onClick={handleClick} />
-				<Icon icon="icon--trash" className={s.icon} onClick={clearFile} />
-			</div>
-			<label>
-				<input type='file' className={s.hidden} ref={fileClick} onChange={changeFile} accept='image/*, .png, .jpeg, .web' />
-			</label>
-		</div>
-	);
-}
+		);
+	},
+);
+ImgUpload.displayName = 'ImgUpload';

@@ -3,9 +3,9 @@ import { useRef, useState } from 'react';
 import type { MotionProps } from 'framer-motion';
 
 import { cardsData } from '~/data/projectsContent';
-import { Arrow } from '~components/Arrow/Arrow';
 import { Carousel } from '~components/Carousel/Carousel';
 import { Container } from '~components/Container/Container';
+import { IconButton } from '~components/IconButton/IconButton';
 import { ModalPop } from '~components/ModalPop/ModalPop';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
@@ -78,14 +78,9 @@ export function Projects() {
 			left: `${position * (-width - gap)}px`,
 			scale: 1,
 		},
-		transition: {
-			type: 'spring',
-			stiffness: 260,
-			damping: 20,
-		},
 		drag: 'x',
 		dragConstraints: { left: 0, right: 0 },
-		dragElastic: 0.7,
+		dragElastic: 0.2,
 	};
 
 	return (
@@ -102,8 +97,14 @@ export function Projects() {
 						<CardBlock handleProductClick={handleProductClick} width={width} />
 					</Carousel>
 					<div className={s.blockArrow}>
-						<Arrow direction className={s.arrow} onClick={onLeft} disabled={position === 0} />
-						<Arrow
+						<IconButton
+							icon="icon--arrow-left"
+							className={s.arrow}
+							onClick={onLeft}
+							disabled={position === 0}
+						/>
+						<IconButton
+							icon="icon--arrow-right"
 							className={s.arrow}
 							onClick={onRight}
 							disabled={position === cardsData.length - visibleItems}
