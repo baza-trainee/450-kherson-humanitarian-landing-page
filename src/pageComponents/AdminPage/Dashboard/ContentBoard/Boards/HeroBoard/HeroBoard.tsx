@@ -4,22 +4,22 @@ import { useForm } from 'react-hook-form';
 
 import { useHeroesState } from '~/pageComponents/AdminPage/store/useHeroesState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
-import { api } from '~api/index';
-// import { getHeroBanners } from '~api/rest/hero/hero';
-// import type { Hero } from '~api/types/hero/Hero';
 import { Button } from '~components/Buttons/Button';
 import { ColorRadioBlock } from '~components/ColorRadio/ColorRadioBlock';
-import { ImgUploadWrapper } from '~components/ImgUploadWrapper/ImgUploadWrapper';
+import { ImgUploadTextOverlaid } from '~components/ImgUploadTextOverlaid/ImgUploadTextOverlaid';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
+// import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
 import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 
+import { fetchHeroData } from '../../../Tabs/fetchHelpers/fetchHeroData';
+
 import s from './HeroBoard.module.scss';
 
 interface FormFields {
-	img: FileList | string;
-	imgGradient: string;
+	image: FileList | string;
+	imageGradient: string;
 	title: string;
 	titleColor: string;
 	subtitle: string;
@@ -37,15 +37,25 @@ export function HeroBoard() {
 	const [titleLength, setTitleLength] = useState<number>(0);
 	const [subtitleLength, setSubtitleLength] = useState<number>(0);
 
-	const { activeTabId } = useTabsState((state) => ({
+	const { activeTabId, getTabsData } = useTabsState((state) => ({
 		activeTabId: state.activeTabId,
+		getTabsData: state.getTabsData,
 	}));
 
-	const { isLoading, error, heroBoardData, getHeroBoardById } = useHeroesState((state) => ({
+	const {
+		isLoading,
+		heroBoardData,
+		getHeroBoardById,
+		changeHeroBoard,
+		addNewHeroBoard,
+		deleteHeroBoard,
+	} = useHeroesState((state) => ({
 		isLoading: state.isLoading,
-		error: state.error,
 		heroBoardData: state.heroBoardData,
 		getHeroBoardById: state.getHeroBoardById,
+		changeHeroBoard: state.changeHeroBoard,
+		addNewHeroBoard: state.addNewHeroBoard,
+		deleteHeroBoard: state.deleteHeroBoard,
 	}));
 
 	useEffect(() => {
@@ -55,17 +65,18 @@ export function HeroBoard() {
 		if (activeTabId) fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeTabId]);
-	// console.log('heroBoardData', heroBoardData); //------------------------log
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		setValue,
+		watch,
 	} = useForm<FormFields>({
 		mode: 'onChange',
 		defaultValues: {
-			img: '',
-			imgGradient: '',
+			image: '',
+			imageGradient: '',
 			title: '',
 			titleColor: '',
 			subtitle: '',
@@ -75,13 +86,12 @@ export function HeroBoard() {
 
 	useEffect(() => {
 		if (heroBoardData) {
-			setValue('img', heroBoardData?.view.picture.image);
-			setValue('imgGradient', heroBoardData.view.color);
+			setValue('image', heroBoardData?.view.picture.image);
+			setValue('imageGradient', heroBoardData.view.color);
 			setValue('title', heroBoardData.title.text);
 			setValue('titleColor', heroBoardData.title.color);
 			setValue('subtitle', heroBoardData.subtitle.text);
 			setValue('subtitleColor', heroBoardData.subtitle.color);
-			// console.log('heroBoardData', heroBoardData);
 			setTitleValue(heroBoardData.title.text);
 			setSubtitleValue(heroBoardData.subtitle.text);
 			setTitleLength(heroBoardData.title.text.length);
@@ -93,27 +103,55 @@ export function HeroBoard() {
 	if (!heroBoardData) return;
 
 	const registers = {
-		img: register('img'),
-		imgGradient: register('imgGradient'),
+		image: register('image'),
+		imageGradient: register('imageGradient'),
 		title: register('title'),
 		titleColor: register('titleColor'),
 		subtitle: register('subtitle'),
 		subtitleColor: register('subtitleColor'),
 	};
 
+	const convertToBase64 = async (file: File): Promise<string> => {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				if (reader.result) {
+					resolve(reader.result.toString());
+				} else {
+					reject(new Error('Failed to read file'));
+				}
+			};
+			reader.readAsDataURL(file);
+		});
+	};
+
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		console.log('form data', data);
-		const url = typeof data.img[0] === 'string' ? '' : URL.createObjectURL(data.img[0]);
-		const type = typeof data.img[0] === 'string' ? '' : data.img[0].type;
+		let image, type, view;
+
+		try {
+			if (data.image.length > 0 && typeof data.image !== 'string') {
+				image = await convertToBase64(data.image[0]);
+				type = data.image[0].type;
+				console.log('image', image);
+				console.log('imageAfterCut', image.split(',')[1]);
+			}
+		} catch (error) {
+			console.error('Error:', error);
+		}
+
+		if (data.image === heroBoardData.view.picture.image) view = { color: data.imageGradient };
+		else
+			view = {
+				picture: {
+					mime_type: type,
+					image: image,
+				},
+				color: data.imageGradient,
+			};
 
 		const body = {
-			view: {
-				// picture: {
-				// 	mime_type: type,
-				// 	image: url,
-				// },
-				color: data.imgGradient,
-			},
+			id: activeTabId ? activeTabId : '',
+			view: view,
 			title: {
 				text: data.title,
 				color: data.titleColor,
@@ -123,18 +161,9 @@ export function HeroBoard() {
 				color: data.subtitleColor,
 			},
 		};
-		// const resp = await api.hero.addNewHeroBoard(body);
 
-		// if ('data' in resp && activeTabId) {
-		// 	await getHeroBoardById(activeTabId);
-		// } else {
-		// 	const message = getErrorMessageFromCode(resp.status, {
-		// 		400: 'Дата не може бути в минулому або список з такою датою вже існує!',
-		// 		403: 'Користувач не авторизований!',
-		// 		406: 'Недопустима кількість наборів! Поставте цифру менше та спробуйте ще раз',
-		// 	});
-		// 	setErrorMessage(message);
-		// }
+		console.log('form data', data);
+		await changeHeroBoard(body);
 	};
 
 	const handleErrorModalOnClose = () => {
@@ -143,8 +172,7 @@ export function HeroBoard() {
 	};
 
 	const changeRadio = (value: string, name: string): void => {
-		console.log('changeRadio');
-		if (name === 'imgGradient') {
+		if (name === 'imageGradient') {
 			setGradient(value);
 		} else if (name === 'titleColor') {
 			setTitleColor(value);
@@ -163,23 +191,33 @@ export function HeroBoard() {
 		setSubtitleLength(event.target.value.length);
 	};
 
+	const handleDelete = async () => {
+		if (activeTabId) {
+			await deleteHeroBoard(activeTabId);
+			await getTabsData(fetchHeroData);
+		}
+	};
+
 	return (
 		<>
 			{(isLoading || !heroBoardData) && <Loader />}
-			{!isLoading && heroBoardData && (
+			{!isLoading && activeTabId && heroBoardData && (
 				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-					<ImgUploadWrapper
+					<ImgUploadTextOverlaid
 						gradientValue={gradient}
 						titleColor={titleColor}
 						subtitleColor={subtitleColor}
 						titleValue={titleValue}
 						subtitleValue={subtitleValue}
-						register={registers.img}
+						register={registers.image}
+						watch={watch}
 					/>
 					<ColorRadioBlock
 						block="imgGradient"
 						changeRadio={changeRadio}
-						register={registers.imgGradient}
+						register={registers.imageGradient}
+						value={heroBoardData.view.color}
+						watch={watch}
 					/>
 					<TextInput
 						register={registers.title}
@@ -194,6 +232,8 @@ export function HeroBoard() {
 						block="titleColor"
 						changeRadio={changeRadio}
 						register={registers.titleColor}
+						value={heroBoardData.title.color}
+						watch={watch}
 					/>
 					<TextInput
 						register={registers.subtitle}
@@ -208,9 +248,11 @@ export function HeroBoard() {
 						block="subtitleColor"
 						changeRadio={changeRadio}
 						register={registers.subtitleColor}
+						value={heroBoardData.subtitle.color}
+						watch={watch}
 					/>
 					<div className={s.buttonsBlock}>
-						<Button type="secondary" className={s.btn}>
+						<Button type="secondary" className={s.btn} onClick={handleDelete}>
 							Видалити блок
 						</Button>
 						<Button type="secondary" className={s.btn}>

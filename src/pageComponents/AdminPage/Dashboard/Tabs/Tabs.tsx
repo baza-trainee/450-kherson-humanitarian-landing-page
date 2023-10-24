@@ -13,6 +13,7 @@ import { useParams } from '~hooks/useParams';
 import { useListsState } from '../../store/useListsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
+import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
 
 import s from './Tabs.module.scss';
@@ -51,10 +52,10 @@ export function Tabs() {
 	useEffect(() => {
 		const fetchData = getMatch(query?.slug?.toString(), {
 			lists: async () => await getTabsData(fetchListData),
+			hero: async () => await getTabsData(fetchHeroData),
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			_: () => setTabsData(null),
 		});
-
 		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.slug]);

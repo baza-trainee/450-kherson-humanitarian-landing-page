@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import { api } from '~api/index';
+import type { HeroRequest } from '~api/types/backend/requests/HeroRequest';
 import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
 import type { HeroResponse } from '~api/types/backend/responses/HeroResponse';
 import { returnAppError } from '~helpers/returnAppError';
@@ -10,6 +11,9 @@ interface UseHeroesState {
 	error: ErrorResponse | null;
 	heroBoardData: HeroResponse | null;
 	getHeroBoardById: (id: string) => Promise<void>;
+	changeHeroBoard: (body: HeroRequest) => Promise<void>;
+	addNewHeroBoard: (body: HeroRequest) => Promise<void>;
+	deleteHeroBoard: (id: string) => Promise<void>;
 }
 
 export const useHeroesState = create<UseHeroesState>((set) => ({
@@ -26,6 +30,44 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			} else {
 				set({ error: resp.error });
 			}
+		} catch (error) {
+			set({ error: returnAppError(error) });
+		} finally {
+			set({ isLoading: false });
+		}
+	},
+	changeHeroBoard: async (body: HeroRequest) => {
+		set({ isLoading: true });
+		set({ error: null });
+		try {
+			const resp = await api.hero.changeHeroBoard(body);
+			if ('data' in resp) {
+				set({ heroBoardData: resp.data });
+			} else {
+				set({ error: resp.error });
+			}
+		} catch (error) {
+			set({ error: returnAppError(error) });
+		} finally {
+			set({ isLoading: false });
+		}
+	},
+	addNewHeroBoard: async (body: HeroRequest) => {
+		set({ isLoading: true });
+		set({ error: null });
+		try {
+			await api.hero.addNewHeroBoard(body);
+		} catch (error) {
+			set({ error: returnAppError(error) });
+		} finally {
+			set({ isLoading: false });
+		}
+	},
+	deleteHeroBoard: async (id) => {
+		set({ isLoading: true });
+		set({ error: null });
+		try {
+			await api.hero.removeHero(id);
 		} catch (error) {
 			set({ error: returnAppError(error) });
 		} finally {

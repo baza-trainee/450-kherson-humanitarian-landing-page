@@ -2,8 +2,8 @@ export interface HeroRequest {
 	id?: string;
 	view: {
 		picture?: {
-			mime_type: string;
-			image: string;
+			mime_type?: string;
+			image?: string;
 		};
 		color: string;
 	};
