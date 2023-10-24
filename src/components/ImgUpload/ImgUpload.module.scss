@@ -23,21 +23,6 @@
 	object-fit: cover;
 }
 
-.ImgGradient {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	transition: all 0.3s ease;
-}
-
-.liteGradient {
-	background: var(--color--gradient-4);
-}
-
-.darkGradient {
-	background: var(--color--gradient-3);
-}
-
 .iconBlock {
 	display: flex;
 	flex-direction: column;
