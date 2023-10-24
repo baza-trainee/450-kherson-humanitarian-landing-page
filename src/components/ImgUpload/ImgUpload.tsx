@@ -1,91 +1,69 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
 import Image from 'next/image';
 
 import { Icon } from '~components/Icon/Icon';
+import { BASE_URL } from '~constants/BASE_URL';
 
 import s from './ImgUpload.module.scss';
+
+export type ImgUploadElement = HTMLInputElement;
+
 interface ImgUploadProps {
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
-	defaultImageUrl?: string;
+	error?: string;
 }
-export function ImgUpload({ register, watch, defaultImageUrl = '' }: ImgUploadProps) {
-	const [image, setImage] = useState<string>(defaultImageUrl);
-	// const fileClick = useRef<HTMLInputElement>(null);
 
-	const files = watch ? watch(register ? register.name : null) : null;
+export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
+	({ register, watch, error }, ref) => {
+		const [image, setImage] = useState<string>('');
 
-	const setFileImages = (filesList: FileList | null) => {
-		if (filesList && filesList.length > 0) {
-			if (typeof filesList === 'string') {
-				setImage(filesList);
-			} else {
-				const fileImage = URL.createObjectURL(filesList[0]);
-				setImage(fileImage);
+		const file = watch ? watch(register ? register.name : null) : null;
+
+		useEffect(() => {
+			if (watch && file) {
+				if (typeof file === 'string') {
+					const imgUrl = process.env.NODE_ENV === 'development' ? `${BASE_URL}${file}` : file;
+					setImage(imgUrl);
+				} else if (file.length > 0) {
+					setImage(URL.createObjectURL(file[0]));
+				} else setImage('');
 			}
-		}
-	};
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [file]);
 
-	useEffect(() => {
-		if (watch && files) setFileImages(files as FileList);
+		let borderStyle = { border: '1px solid var(--color--secondary-2)' };
+		if (error) borderStyle = { border: '1px solid var(--color--error-1)' };
+		if (image) borderStyle = { border: 'none' };
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [files]);
-
-	const handleInputOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (!watch && defaultImageUrl) setFileImages(event.target.files);
-	};
-
-	// const changeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-	// 	if (event.target.files) {
-	// 		setImage(URL.createObjectURL(event.target.files[0]));
-	// 	}
-	// };
-
-	// const handleClick = () => {
-	// 	console.log(fileClick.current);
-	// 	if (fileClick.current) {
-	// 		fileClick.current.click();
-	// 	}
-	// };
-
-	const clearFile = () => {
-		setImage('');
-		if (fileClick.current) fileClick.current.value = '';
-	};
-
-	return (
-		<div className={s.ImgUpload}>
-			<div
-				className={s.imgBlock}
-				style={!image ? { border: '1px solid var(--color--secondary-2)' } : { border: 'none' }}
-			>
-				<Image
-					priority={true}
-					src={!image ? '/svg/blank-img.svg' : image}
-					alt="card-img"
-					width={!image ? 100 : 712}
-					height={!image ? 100 : 300}
-					className={!image ? s.imgDefault : s.img}
-				/>
+		return (
+			<div className={s.ImgUpload}>
+				<div className={s.imgBlock} style={borderStyle}>
+					<Image
+						priority={true}
+						src={image ? image : '/svg/blank-img.svg'}
+						alt="main-hero-board-image"
+						width={image ? 712 : 100}
+						height={image ? 300 : 100}
+						className={image ? s.img : s.imgDefault}
+					/>
+				</div>
+				<label>
+					<div className={s.iconBlock}>
+						<Icon icon="icon--upload" className={s.icon} />
+					</div>
+					<input
+						type="file"
+						className={s.hidden}
+						ref={ref}
+						accept="image/*, .png, .jpeg, .web"
+						{...register}
+					/>
+				</label>
 			</div>
-			<div className={s.iconBlock}>
-				{/* <Icon icon="icon--upload" className={s.icon} onClick={handleClick} /> */}
-				<Icon icon="icon--trash" className={s.icon} onClick={clearFile} />
-			</div>
-			<label>
-				<input
-					type="file"
-					className={s.hidden}
-					// ref={fileClick}
-					onChange={handleInputOnChange}
-					accept="image/*, .png, .jpeg, .web"
-					{...register}
-				/>
-				<Icon icon="icon--upload" className={s.icon} />
-			</label>
-		</div>
-	);
-}
+		);
+	},
+);
+ImgUpload.displayName = 'ImgUpload';
