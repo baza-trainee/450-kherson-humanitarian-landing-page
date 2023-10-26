@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 
+import { ChangePasswordBoard } from './Boards/ChangePasswordBoard/ChangePasswordBoard';
 import { ListsBoard } from './Boards/ListsBoard/ListsBoard';
 import { OurAchievements } from './Boards/OurAchievements/OurAchievements';
 
@@ -13,6 +14,7 @@ export function ContentBoard() {
 			{query?.slug === 'lists' && <ListsBoard />}
 
 			{query?.slug === 'our-achievements' && <OurAchievements />}
+			{query?.slug === 'change-password' && <ChangePasswordBoard />}
 		</div>
 	);
 }
