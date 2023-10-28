@@ -84,12 +84,26 @@ export function Tabs() {
 	const isActiveClass = (isActive: boolean) => (isActive ? s.active : '');
 
 	const handleTabOnClick = (id: string) => {
+		if (tabsData) {
+			if (tabsData.tabs.find((item) => item.id === '')) {
+				tabsData.tabs.pop();
+			}
+		}
 		setActiveTabId(id);
 		setParams({ id: id });
 	};
 
 	const handleAddNewTabOnClick = () => {
-		console.log('handleAddNewTabOnClick');
+		if (tabsData) {
+			if (tabsData.tabs.find((item) => item.id === '')) {
+				setActiveTabId('');
+				setParams({ id: '' });
+			} else {
+				tabsData.tabs.push({ title: `Банер ${tabsData.tabs.length + 1}`, id: '' });
+				setActiveTabId('');
+				setParams({ id: '' });
+			}
+		}
 	};
 
 	return (
