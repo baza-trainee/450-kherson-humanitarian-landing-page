@@ -2,17 +2,19 @@ import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import imageCompression from 'browser-image-compression';
+
 import { useHeroesState } from '~/pageComponents/AdminPage/store/useHeroesState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
-import { Button } from '~components/Buttons/Button';
+import AdminBoardBlockButtons from '~components/Buttons/AdminBoardBlockButtons/AdminBoardBlockButtons';
 import { ColorRadioBlock } from '~components/ColorRadio/ColorRadioBlock';
 import { ImgUploadTextOverlaid } from '~components/ImgUploadTextOverlaid/ImgUploadTextOverlaid';
 import { TextInput } from '~components/inputs/TextInput/TextInput';
 // import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
-import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 
+// import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 import { fetchHeroData } from '../../../Tabs/fetchHelpers/fetchHeroData';
 
 import s from './HeroBoard.module.scss';
@@ -69,7 +71,7 @@ export function HeroBoard() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		// formState: { errors },
 		setValue,
 		watch,
 	} = useForm<FormFields>({
@@ -96,9 +98,24 @@ export function HeroBoard() {
 			setSubtitleValue(heroBoardData.subtitle.text);
 			setTitleLength(heroBoardData.title.text.length);
 			setSubtitleLength(heroBoardData.subtitle.text.length);
+			setGradient(heroBoardData.view.color);
+			setSubtitleColor(heroBoardData.subtitle.color);
+			setTitleColor(heroBoardData.title.color);
+		}
+		if (!activeTabId) {
+			setValue('image', '');
+			setValue('imageGradient', '');
+			setValue('title', '');
+			setValue('titleColor', '');
+			setValue('subtitle', '');
+			setValue('subtitleColor', '');
+			setTitleValue('');
+			setSubtitleValue('');
+			setTitleLength(0);
+			setSubtitleLength(0);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [heroBoardData]);
+	}, [heroBoardData, activeTabId]);
 
 	if (!heroBoardData) return;
 
@@ -111,47 +128,39 @@ export function HeroBoard() {
 		subtitleColor: register('subtitleColor'),
 	};
 
-	const convertToBase64 = async (file: File): Promise<string> => {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				if (reader.result) {
-					resolve(reader.result.toString());
-				} else {
-					reject(new Error('Failed to read file'));
-				}
-			};
-			reader.readAsDataURL(file);
-		});
-	};
-
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		let image, type, view;
+		let image = '',
+			type = '';
+		const options = {
+			maxSizeMB: 0.488,
+			maxWidthOrHeight: 1920,
+		};
 
 		try {
 			if (data.image.length > 0 && typeof data.image !== 'string') {
-				image = await convertToBase64(data.image[0]);
+				const compressedFile = await imageCompression(data.image[0], options);
+
+				await imageCompression
+					.getDataUrlFromFile(compressedFile)
+					.then((dataImage) => (image = dataImage.toString()));
 				type = data.image[0].type;
-				console.log('image', image);
-				console.log('imageAfterCut', image.split(',')[1]);
 			}
 		} catch (error) {
 			console.error('Error:', error);
 		}
 
-		if (data.image === heroBoardData.view.picture.image) view = { color: data.imageGradient };
-		else
-			view = {
-				picture: {
-					mime_type: type,
-					image: image,
-				},
-				color: data.imageGradient,
-			};
-
 		const body = {
 			id: activeTabId ? activeTabId : '',
-			view: view,
+			view:
+				data.image === heroBoardData.view.picture.image && !image
+					? { color: data.imageGradient }
+					: {
+							picture: {
+								mime_type: type,
+								image: image.split(',')[1],
+							},
+							color: data.imageGradient,
+					  },
 			title: {
 				text: data.title,
 				color: data.titleColor,
@@ -162,8 +171,8 @@ export function HeroBoard() {
 			},
 		};
 
-		console.log('form data', data);
-		await changeHeroBoard(body);
+		console.log('body', body);
+		activeTabId ? await changeHeroBoard(body) : await addNewHeroBoard(body);
 	};
 
 	const handleErrorModalOnClose = () => {
@@ -191,6 +200,10 @@ export function HeroBoard() {
 		setSubtitleLength(event.target.value.length);
 	};
 
+	const handleUndoChanges = () => {
+		console.log('handleUndoChanges');
+	};
+
 	const handleDelete = async () => {
 		if (activeTabId) {
 			await deleteHeroBoard(activeTabId);
@@ -201,7 +214,7 @@ export function HeroBoard() {
 	return (
 		<>
 			{(isLoading || !heroBoardData) && <Loader />}
-			{!isLoading && activeTabId && heroBoardData && (
+			{!isLoading && (
 				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<ImgUploadTextOverlaid
 						gradientValue={gradient}
@@ -213,10 +226,10 @@ export function HeroBoard() {
 						watch={watch}
 					/>
 					<ColorRadioBlock
-						block="imgGradient"
+						block="imageGradient"
 						changeRadio={changeRadio}
 						register={registers.imageGradient}
-						value={heroBoardData.view.color}
+						value={gradient}
 						watch={watch}
 					/>
 					<TextInput
@@ -232,7 +245,7 @@ export function HeroBoard() {
 						block="titleColor"
 						changeRadio={changeRadio}
 						register={registers.titleColor}
-						value={heroBoardData.title.color}
+						value={titleColor}
 						watch={watch}
 					/>
 					<TextInput
@@ -248,20 +261,14 @@ export function HeroBoard() {
 						block="subtitleColor"
 						changeRadio={changeRadio}
 						register={registers.subtitleColor}
-						value={heroBoardData.subtitle.color}
+						value={subtitleColor}
 						watch={watch}
 					/>
-					<div className={s.buttonsBlock}>
-						<Button type="secondary" className={s.btn} onClick={handleDelete}>
-							Видалити блок
-						</Button>
-						<Button type="secondary" className={s.btn}>
-							Скасувати зміни
-						</Button>
-						<Button type="primary" submit className={s.btn}>
-							Зберегти
-						</Button>
-					</div>
+					<AdminBoardBlockButtons
+						submit
+						handleUndoChanges={handleUndoChanges}
+						handleDelete={handleDelete}
+					/>
 				</form>
 			)}
 			{errorMessage && (
