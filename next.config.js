@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
+	poweredByHeader: false,
 	env: {
 		BASE_URL: process.env.BASE_URL,
 	},
