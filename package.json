@@ -51,6 +51,8 @@
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-simple-import-sort": "^10.0.0",
 		"eslint-plugin-storybook": "^0.6.13",
+		"husky": "^8.0.3",
+		"lint-staged": "^15.0.2",
 		"modern-normalize": "^2.0.0",
 		"postcss": "^8.4.28",
 		"prettier": "^2.8.8",
