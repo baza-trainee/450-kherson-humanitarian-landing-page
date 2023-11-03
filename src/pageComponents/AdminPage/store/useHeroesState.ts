@@ -1,15 +1,16 @@
 import { create } from 'zustand';
 
 import { api } from '~api/index';
+import { transformHeroBoardDTO } from '~api/rest/hero/dto/transformHeroBoardDTO';
 import type { HeroRequest } from '~api/types/backend/requests/HeroRequest';
 import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
-import type { HeroResponse } from '~api/types/backend/responses/HeroResponse';
+import type { Hero } from '~api/types/hero/Hero';
 import { returnAppError } from '~helpers/returnAppError';
 
 interface UseHeroesState {
 	isLoading: boolean;
 	error: ErrorResponse | null;
-	heroBoardData: HeroResponse | null;
+	heroBoardData: Hero | null;
 	getHeroBoardById: (id: string) => Promise<void>;
 	changeHeroBoard: (body: HeroRequest) => Promise<void>;
 	addNewHeroBoard: (body: HeroRequest) => Promise<void>;
@@ -42,7 +43,7 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		try {
 			const resp = await api.hero.changeHeroBoard(body);
 			if ('data' in resp) {
-				set({ heroBoardData: resp.data });
+				if (resp.data) set({ heroBoardData: transformHeroBoardDTO(resp.data) });
 			} else {
 				set({ error: resp.error });
 			}

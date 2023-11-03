@@ -1,8 +1,8 @@
 export interface Hero {
 	id?: string;
-	img: string;
-	imgType?: string;
-	imgGradient: string;
+	imageType?: string;
+	image: string;
+	imageGradient: string;
 	title: string;
 	titleColor: string;
 	subtitle: string;

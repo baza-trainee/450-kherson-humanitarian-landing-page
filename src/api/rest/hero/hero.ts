@@ -6,6 +6,8 @@ import type { HeroRequest } from '~api/types/backend/requests/HeroRequest';
 import type { HeroIdsResponse } from '~api/types/backend/responses/HeroIdsResponse';
 import type { HeroResponse } from '~api/types/backend/responses/HeroResponse';
 
+import { transformHeroBoardDTO } from './dto/transformHeroBoardDTO';
+
 export const getHeroIds = () =>
 	commonGet<HeroIdsResponse>('/heroes/ids').then((resp) => {
 		if ('data' in resp) {
@@ -16,7 +18,7 @@ export const getHeroIds = () =>
 
 export const getHeroBoardById = (heroId: string) =>
 	commonGet<HeroResponse>(`/hero/${heroId}`).then((resp) => {
-		if ('data' in resp) return { data: resp.data };
+		if ('data' in resp) return { data: transformHeroBoardDTO(resp.data) };
 		return { error: resp };
 	});
 
