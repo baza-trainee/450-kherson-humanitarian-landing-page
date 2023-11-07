@@ -1,4 +1,4 @@
-import type { FieldValues } from 'react-hook-form';
+import type { FieldErrors, FieldValues } from 'react-hook-form';
 
 import clsx from 'clsx';
 
@@ -15,6 +15,7 @@ interface ImgUploadTextOverlaidProps {
 	subtitleColor: string;
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
+	errors?: FieldErrors<FieldValues>;
 }
 
 export function ImgUploadTextOverlaid({
@@ -25,10 +26,11 @@ export function ImgUploadTextOverlaid({
 	subtitleColor,
 	register,
 	watch,
+	errors,
 }: ImgUploadTextOverlaidProps) {
 	return (
 		<div className={s.ImgUpload}>
-			<ImgUpload register={register} watch={watch} />
+			<ImgUpload register={register} watch={watch} errors={errors} />
 			<div className={clsx(s.ImgGradient, s[gradientValue])} />
 			<div className={s.text}>
 				<Text variant="h2" className={clsx(s.heading, s[titleColor])} lineBreak>
