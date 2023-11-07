@@ -12,6 +12,7 @@ interface UseHeroesState {
 	error: ErrorResponse | null;
 	heroBoardData: Hero | null;
 	getHeroBoardById: (id: string) => Promise<void>;
+	addNewEmptyHeroBoard: () => Promise<void>;
 	changeHeroBoard: (body: HeroRequest) => Promise<void>;
 	addNewHeroBoard: (body: HeroRequest) => Promise<void>;
 	deleteHeroBoard: (id: string) => Promise<void>;
@@ -25,17 +26,32 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		set({ isLoading: true });
 		set({ error: null });
 		try {
-			const resp = await api.hero.getHeroBoardById(id);
-			if ('data' in resp) {
-				set({ heroBoardData: resp.data });
-			} else {
-				set({ error: resp.error });
+			if (id !== 'new') {
+				const resp = await api.hero.getHeroBoardById(id);
+				if ('data' in resp) {
+					set({ heroBoardData: resp.data });
+				} else {
+					set({ error: resp.error });
+				}
 			}
 		} catch (error) {
 			set({ error: returnAppError(error) });
 		} finally {
 			set({ isLoading: false });
 		}
+	},
+	addNewEmptyHeroBoard: async () => {
+		set({
+			heroBoardData: {
+				image: '',
+				imageGradient: '',
+				title: '',
+				titleColor: '',
+				subtitle: '',
+				subtitleColor: '',
+			},
+		});
+		set({ isLoading: false });
 	},
 	changeHeroBoard: async (body: HeroRequest) => {
 		set({ isLoading: true });

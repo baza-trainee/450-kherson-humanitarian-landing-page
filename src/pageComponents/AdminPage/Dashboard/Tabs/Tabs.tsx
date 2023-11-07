@@ -85,7 +85,7 @@ export function Tabs() {
 
 	const handleTabOnClick = (id: string) => {
 		if (tabsData) {
-			if (tabsData.tabs.find((item) => item.id === '')) {
+			if (tabsData.tabs.find((item) => item.id === 'new')) {
 				tabsData.tabs.pop();
 			}
 		}
@@ -95,13 +95,14 @@ export function Tabs() {
 
 	const handleAddNewTabOnClick = () => {
 		if (tabsData) {
-			if (tabsData.tabs.find((item) => item.id === '')) {
-				setActiveTabId('');
-				setParams({ id: '' });
+			if (tabsData.tabs.find((item) => item.id === 'new')) {
+				setActiveTabId('new');
+				setParams({ id: 'new' });
 			} else {
-				tabsData.tabs.push({ title: `Банер ${tabsData.tabs.length + 1}`, id: '' });
-				setActiveTabId('');
-				setParams({ id: '' });
+				tabsData.tabs.push({ title: `Банер ${tabsData.tabs.length + 1}`, id: 'new' });
+				//TODO: change to all  used func
+				setActiveTabId('new');
+				setParams({ id: 'new' });
 			}
 		}
 	};
