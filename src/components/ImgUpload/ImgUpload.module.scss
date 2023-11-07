@@ -9,14 +9,26 @@
 .imgBlock {
 	display: flex;
 	position: relative;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	width: 712px;
 	height: 300px;
 	text-align: center;
+	gap: 20px;
 }
 
 .imgDefault {
 	margin: 0 auto;
+}
+
+.imgError {
+	color: var(--color--error-1);
+}
+
+.imgErrorMsg {
+	// margin-top: 20px;
+	color: var(--color--error-1);
 }
 
 .img {
