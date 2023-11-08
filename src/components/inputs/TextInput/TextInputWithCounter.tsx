@@ -34,6 +34,7 @@ export const TextInputWithCounter = forwardRef<
 		const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 			const newValue = event.target.value;
 			setValue(newValue);
+			register?.onChange(event);
 		};
 
 		return (
