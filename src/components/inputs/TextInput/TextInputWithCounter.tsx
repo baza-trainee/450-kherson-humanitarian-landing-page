@@ -5,10 +5,29 @@ import { TextInput } from './TextInput';
 
 export type TextInputWithCounterElement = TextInputElement;
 
-export type TextInputWithCounterProps = Omit<TextInputProps, 'info'>;
+export interface TextInputWithCounterProps extends Omit<TextInputProps, 'info'> {
+	maxLength: number;
+}
 
-export const TextInputWithCounter = forwardRef<TextInputWithCounterElement, TextInputWithCounterProps>(
-	({ label, required, disabled, register, errors, placeholder, size, maxLength, className, ...rest }, ref) => {
+export const TextInputWithCounter = forwardRef<
+	TextInputWithCounterElement,
+	TextInputWithCounterProps
+>(
+	(
+		{
+			label,
+			required,
+			disabled,
+			register,
+			errors,
+			placeholder,
+			size,
+			maxLength,
+			className,
+			...rest
+		},
+		ref,
+	) => {
 		const [value, setValue] = useState('');
 
 		const countMessage = `Символів ${value.length}/${maxLength}`;
@@ -22,9 +41,9 @@ export const TextInputWithCounter = forwardRef<TextInputWithCounterElement, Text
 				label={label}
 				required={required}
 				errors={errors}
-				hideError={true}
 				disabled={disabled}
-				info={countMessage}
+				infoMessage={countMessage}
+				showInfo={true}
 				placeholder={placeholder}
 				size={size}
 				maxLength={maxLength}

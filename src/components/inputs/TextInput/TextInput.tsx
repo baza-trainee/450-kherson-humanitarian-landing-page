@@ -19,8 +19,9 @@ export interface TextInputProps
 	errors?: FieldErrors<FieldValues>;
 	required?: boolean;
 	disabled?: boolean;
-	hideError?: boolean;
-	info?: string;
+	showError?: boolean;
+	infoMessage?: string;
+	showInfo?: boolean;
 }
 
 export const TextInput = forwardRef<TextInputElement, TextInputProps>(
@@ -32,8 +33,9 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 			disabled,
 			register,
 			errors,
-			hideError,
-			info,
+			showError,
+			infoMessage,
+			showInfo,
 			placeholder,
 			className,
 			children,
@@ -41,21 +43,24 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 		},
 		ref,
 	) => {
-		const error = errors ? errors[register?.name]?.message?.toString() : '';
-		const componentClass = [error && cs.error, disabled && cs.disabled];
+		const isError = errors?.[register?.name] ? true : false;
+		const errorMessage = errors?.[register?.name]?.message?.toString() || '';
+
+		const componentClass = [isError && cs.error, disabled && cs.disabled];
 		const disabledClass = [disabled && cs.disabled];
 
 		return (
 			<label className={clsx(disabledClass, className)}>
 				<InputWrapper
 					label={label}
-					error={error}
+					isError={isError}
 					required={required}
 					disabled={disabled}
 					className={clsx(componentClass)}
-					showError={Boolean(errors && !hideError)}
-					showInfo={!!info}
-					info={info}
+					errorMessage={errorMessage}
+					showError={showError}
+					infoMessage={infoMessage || ''}
+					showInfo={showInfo}
 				>
 					<input
 						type={type}
