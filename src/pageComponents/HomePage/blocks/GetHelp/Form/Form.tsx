@@ -38,6 +38,7 @@ interface Field {
 	condition?: string;
 	text?: string;
 	defaultValue?: string;
+	autoComplete?: string;
 }
 
 type FormFieldsData = Record<string, Field>;
@@ -77,6 +78,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				required: true,
 				inputMaxLength: 30,
 				widthSize: 'fullWidth',
+				autoComplete: 'family-name',
 				register: () =>
 					register('surname', {
 						required: 'Поле не може бути пустим',
@@ -96,6 +98,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				required: true,
 				inputMaxLength: 30,
 				widthSize: 'fullWidth',
+				autoComplete: 'given-name',
 				register: () =>
 					register('name', {
 						required: 'Поле не може бути пустим',
@@ -115,6 +118,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				required: true,
 				inputMaxLength: 30,
 				widthSize: 'fullWidth',
+				autoComplete: 'patronymic-name',
 				register: () =>
 					register('patronymic', {
 						required: 'Поле не може бути пустим',
@@ -133,6 +137,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				required: true,
 				disabled: true,
 				widthSize: 'fullWidth',
+				autoComplete: 'address-level2',
 				register: () => register('populationCity', {}),
 			},
 			populationStreet: {
@@ -143,6 +148,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				required: true,
 				inputMaxLength: 30,
 				widthSize: 'fullWidth',
+				autoComplete: 'street-address',
 				register: () =>
 					register('populationStreet', {
 						required: 'Поле не може бути пустим',
@@ -162,6 +168,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				required: true,
 				inputMaxLength: 5,
 				widthSize: 'halfWidth',
+				autoComplete: 'house-number',
 				register: () =>
 					register('populationHouseNumber', {
 						required: 'Поле не може бути пустим',
@@ -179,6 +186,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				placeholder: '11',
 				inputMaxLength: 5,
 				widthSize: 'halfWidth',
+				autoComplete: 'apartment',
 				register: () =>
 					register('populationApartmentNumber', {
 						minLength: { value: 1, message: 'Мінімальна кількість символів 1' },
@@ -262,6 +270,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				required: true,
 				inputMaxLength: 30,
 				widthSize: 'fullWidth',
+				autoComplete: 'address-level2',
 				register: () =>
 					register('movementCity', {
 						required: 'Поле не може бути пустим',
@@ -280,6 +289,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				placeholder: 't.shevchenko@gmail.com',
 				required: true,
 				widthSize: 'fullWidth',
+				autoComplete: 'email',
 				register: () =>
 					register('email', {
 						required: 'Поле не може бути пустим',
@@ -297,6 +307,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 				required: true,
 				widthSize: 'fullWidth',
 				inputMaxLength: 13,
+				autoComplete: 'tel',
 				register: () =>
 					register('phone', {
 						required: 'Поле не може бути пустим',
@@ -416,6 +427,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 									placeholder={formFieldsData[field].placeholder}
 									className={clsx(s.field, s[formFieldsData[field].widthSize])}
 									maxLength={formFieldsData[field].inputMaxLength}
+									autoComplete={formFieldsData[field].autoComplete}
 								/>
 							);
 						case 'dropdown':
