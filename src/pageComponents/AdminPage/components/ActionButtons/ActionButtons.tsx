@@ -12,7 +12,7 @@ interface AdminBlockButtonsProps {
 	isDataValid: boolean;
 }
 
-export default function AdminBoardBlockButtons({
+export default function ActionButtons({
 	onSave,
 	onReset,
 	onRemove,
