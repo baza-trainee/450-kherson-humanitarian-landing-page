@@ -5,7 +5,7 @@ import { ModalPop } from '~components/ModalPop/ModalPop';
 
 import s from './ActionButtons.module.scss';
 
-interface AdminBlockButtonsProps {
+interface ActionButtonsProps {
 	onSave: () => void;
 	onReset: () => void;
 	onRemove?: () => void;
@@ -17,7 +17,7 @@ export default function ActionButtons({
 	onReset,
 	onRemove,
 	isDataValid,
-}: AdminBlockButtonsProps) {
+}: ActionButtonsProps) {
 	const [isModalRemoveOpen, setIsModalRemoveOpen] = useState(false);
 	const [isModalResetOpen, setIsModalResetOpen] = useState(false);
 	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
