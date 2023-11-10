@@ -4,13 +4,12 @@ import { useForm } from 'react-hook-form';
 
 import imageCompression from 'browser-image-compression';
 
-import AdminBoardBlockButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
+import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
 import { useHeroesState } from '~/pageComponents/AdminPage/store/useHeroesState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { ColorRadioBlock } from '~components/ColorRadio/ColorRadioBlock';
 import { ImgUploadTextOverlaid } from '~components/ImgUploadTextOverlaid/ImgUploadTextOverlaid';
-import { TextInput } from '~components/inputs/TextInput/TextInput';
-// import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
+import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 
 import { fetchHeroData } from '../../../Tabs/fetchHelpers/fetchHeroData';
@@ -47,6 +46,7 @@ export function HeroBoard() {
 		deleteHeroBoard,
 		addNewEmptyHeroBoard,
 	} = useHeroesState((state) => ({
+		isSuccess: state.isSuccess,
 		isLoading: state.isLoading,
 		heroBoardData: state.heroBoardData,
 		getHeroBoardById: state.getHeroBoardById,
@@ -72,6 +72,7 @@ export function HeroBoard() {
 		setValue,
 		watch,
 		reset,
+		clearErrors,
 	} = useForm<FormFields>({
 		mode: 'onSubmit',
 	});
@@ -89,6 +90,7 @@ export function HeroBoard() {
 			setGradient(heroBoardData.imageGradient);
 			setSubtitleColor(heroBoardData.subtitleColor);
 			setTitleColor(heroBoardData.titleColor);
+			clearErrors();
 		}
 		if (activeTabId === 'new') {
 			setValue('image', '');
@@ -102,6 +104,7 @@ export function HeroBoard() {
 			setGradient('lightGradient');
 			setSubtitleColor('blue');
 			setTitleColor('blue');
+			clearErrors();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [heroBoardData, activeTabId]);
@@ -114,13 +117,13 @@ export function HeroBoard() {
 			required: true,
 		}),
 		title: register('title', {
-			required: 'Поле не може бути пустим',
+			required: true,
 		}),
 		titleColor: register('titleColor', {
 			required: true,
 		}),
 		subtitle: register('subtitle', {
-			required: 'Поле не може бути пустим',
+			required: true,
 		}),
 		subtitleColor: register('subtitleColor', {
 			required: true,
@@ -169,27 +172,19 @@ export function HeroBoard() {
 				color: data.subtitleColor,
 			},
 		};
-
 		activeTabId === 'new' ? await addNewHeroBoard(body) : await changeHeroBoard(body);
+		//TODO: modal on succeed
 	};
-
-	const changeRadio = (value: string, name: string): void => {
-		if (name === 'imageGradient') {
-			setGradient(value);
-		} else if (name === 'titleColor') {
-			setTitleColor(value);
-		} else if (name === 'subtitleColor') {
-			setSubtitleColor(value);
-		}
-	};
-
-	const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setTitleValue(event.target.value);
-	};
-
-	const changeSubtitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setSubtitleValue(event.target.value);
-	};
+	useEffect(() => {
+		watch((value) => {
+			if (value.imageGradient) setGradient(value.imageGradient);
+			if (value.title) setTitleValue(value.title);
+			if (value.titleColor) setTitleColor(value.titleColor);
+			if (value.subtitle) setSubtitleValue(value.subtitle);
+			if (value.subtitleColor) setSubtitleColor(value.subtitleColor);
+		});
+		// return () => subscription.unsubscribe();
+	}, [watch]);
 
 	const handleOnModalCancelYesClick = () => {
 		if (heroBoardData) {
@@ -219,7 +214,10 @@ export function HeroBoard() {
 	return (
 		<>
 			{(isLoading || !heroBoardData) && activeTabId !== 'empty' && <Loader />}
-			{!isLoading && activeTabId && activeTabId === 'empty' && <div>Порожнє</div>}
+			{
+				!isLoading && activeTabId && activeTabId === 'empty' && <div>Порожнє</div>
+				//TODO: empty div
+			}
 			{!isLoading && (
 				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<ImgUploadTextOverlaid
@@ -234,45 +232,34 @@ export function HeroBoard() {
 					/>
 					<ColorRadioBlock
 						block="imageGradient"
-						changeRadio={changeRadio}
 						register={registers.imageGradient}
 						watch={watch}
 					/>
-					<TextInput
+					<TextInputWithCounter
 						register={registers.title}
 						required
 						label="Заголовок"
 						placeholder=""
-						info={`Символів ${titleValue.length}/90`}
-						onChange={changeTitle}
 						maxLength={90}
 						errors={errors}
-						hideError
+						showInfo
 					/>
-					<ColorRadioBlock
-						block="titleColor"
-						changeRadio={changeRadio}
-						register={registers.titleColor}
-						watch={watch}
-					/>
-					<TextInput
+					<ColorRadioBlock block="titleColor" register={registers.titleColor} watch={watch} />
+					<TextInputWithCounter
 						register={registers.subtitle}
 						required
 						label="Підзаголовок"
 						placeholder=""
-						info={`Символів ${subtitleValue.length}/40`}
-						onChange={changeSubtitle}
 						maxLength={40}
 						errors={errors}
-						hideError
+						showInfo
 					/>
 					<ColorRadioBlock
 						block="subtitleColor"
-						changeRadio={changeRadio}
 						register={registers.subtitleColor}
 						watch={watch}
 					/>
-					<AdminBoardBlockButtons
+					<ActionButtons
 						onRemove={activeTabId !== 'new' ? handleOnModalRemoveYesClick : undefined}
 						onReset={handleOnModalCancelYesClick}
 						onSave={handleSubmit(onSubmit)}
