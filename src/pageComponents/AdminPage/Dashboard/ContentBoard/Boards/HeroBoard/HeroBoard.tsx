@@ -7,10 +7,12 @@ import imageCompression from 'browser-image-compression';
 import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
 import { useHeroesState } from '~/pageComponents/AdminPage/store/useHeroesState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
+import { Button } from '~components/Buttons/Button';
 import { ColorRadioBlock } from '~components/ColorRadio/ColorRadioBlock';
 import { ImgUploadTextOverlaid } from '~components/ImgUploadTextOverlaid/ImgUploadTextOverlaid';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 
 import { fetchHeroData } from '../../../Tabs/fetchHelpers/fetchHeroData';
 
@@ -38,6 +40,7 @@ export function HeroBoard() {
 	}));
 
 	const {
+		isSuccess,
 		isLoading,
 		heroBoardData,
 		getHeroBoardById,
@@ -45,6 +48,7 @@ export function HeroBoard() {
 		addNewHeroBoard,
 		deleteHeroBoard,
 		addNewEmptyHeroBoard,
+		setIsSuccess,
 	} = useHeroesState((state) => ({
 		isSuccess: state.isSuccess,
 		isLoading: state.isLoading,
@@ -54,6 +58,7 @@ export function HeroBoard() {
 		addNewHeroBoard: state.addNewHeroBoard,
 		deleteHeroBoard: state.deleteHeroBoard,
 		addNewEmptyHeroBoard: state.addNewEmptyHeroBoard,
+		setIsSuccess: state.setIsSuccess,
 	}));
 
 	useEffect(() => {
@@ -173,7 +178,6 @@ export function HeroBoard() {
 			},
 		};
 		activeTabId === 'new' ? await addNewHeroBoard(body) : await changeHeroBoard(body);
-		//TODO: modal on succeed
 	};
 	useEffect(() => {
 		watch((value) => {
@@ -183,8 +187,8 @@ export function HeroBoard() {
 			if (value.subtitle) setSubtitleValue(value.subtitle);
 			if (value.subtitleColor) setSubtitleColor(value.subtitleColor);
 		});
-		// return () => subscription.unsubscribe();
-	}, [watch]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [watch, heroBoardData]);
 
 	const handleOnModalCancelYesClick = () => {
 		if (heroBoardData) {
@@ -265,6 +269,16 @@ export function HeroBoard() {
 						onSave={handleSubmit(onSubmit)}
 						isDataValid={isValid}
 					/>
+					{isSuccess && (
+						<ModalPop
+							isOpen={isSuccess}
+							onClose={setIsSuccess}
+							title="Вітаємо!"
+							leftButton={() => <Button onClick={setIsSuccess}>Ок</Button>}
+						>
+							Ваші дані успішно збережено
+						</ModalPop>
+					)}
 				</form>
 			)}
 		</>

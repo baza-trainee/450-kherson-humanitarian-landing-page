@@ -8,6 +8,7 @@ import type { Hero } from '~api/types/hero/Hero';
 import { returnAppError } from '~helpers/returnAppError';
 
 interface UseHeroesState {
+	isSuccess: boolean;
 	isLoading: boolean;
 	error: ErrorResponse | null;
 	heroBoardData: Hero | null;
@@ -16,9 +17,11 @@ interface UseHeroesState {
 	changeHeroBoard: (body: HeroRequest) => Promise<void>;
 	addNewHeroBoard: (body: HeroRequest) => Promise<void>;
 	deleteHeroBoard: (id: string) => Promise<void>;
+	setIsSuccess: () => void;
 }
 
 export const useHeroesState = create<UseHeroesState>((set) => ({
+	isSuccess: false,
 	isLoading: false,
 	error: null,
 	heroBoardData: null,
@@ -40,6 +43,9 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			set({ isLoading: false });
 		}
 	},
+	setIsSuccess: () => {
+		set({ isSuccess: false });
+	},
 	addNewEmptyHeroBoard: async () => {
 		set({
 			heroBoardData: {
@@ -59,7 +65,10 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		try {
 			const resp = await api.hero.changeHeroBoard(body);
 			if ('data' in resp) {
-				if (resp.data) set({ heroBoardData: transformHeroBoardDTO(resp.data) });
+				if (resp.data) {
+					set({ heroBoardData: transformHeroBoardDTO(resp.data) });
+					set({ isSuccess: true });
+				}
 			} else {
 				set({ error: resp.error });
 			}
@@ -73,7 +82,8 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		set({ isLoading: true });
 		set({ error: null });
 		try {
-			await api.hero.addNewHeroBoard(body);
+			const resp = await api.hero.addNewHeroBoard(body);
+			if ('data' in resp) set({ isSuccess: true });
 		} catch (error) {
 			set({ error: returnAppError(error) });
 		} finally {
