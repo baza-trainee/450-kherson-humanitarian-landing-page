@@ -15,6 +15,7 @@ import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
 
 import { fetchHeroData } from '../../../Tabs/fetchHelpers/fetchHeroData';
+import { EmptyBoard } from '../EmptyBoard/EmptyBoard';
 
 import s from './HeroBoard.module.scss';
 
@@ -234,14 +235,11 @@ export function HeroBoard() {
 			await getTabsData(fetchHeroData);
 		}
 	};
-	//TODO: empty?
+
 	return (
 		<>
 			{(isLoading || !heroBoardData) && activeTabId !== 'empty' && <Loader />}
-			{
-				!isLoading && activeTabId && activeTabId === 'empty' && <div>Порожнє</div>
-				//TODO: empty div
-			}
+			{!isLoading && activeTabId && activeTabId === 'empty' && <EmptyBoard />}
 			{!isLoading && activeTabId !== 'empty' && heroBoardData && (
 				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<ImgUploadTextOverlaid
