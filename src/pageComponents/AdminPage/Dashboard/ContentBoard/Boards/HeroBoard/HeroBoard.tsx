@@ -70,7 +70,9 @@ export function HeroBoard() {
 		const fetchData = async () => {
 			if (activeTabId) await getHeroBoardById(activeTabId);
 		};
+		//*set data from server into state
 		if (activeTabId !== 'new' && activeTabId !== 'empty') fetchData();
+		//* if new form, set empty state
 		else addNewEmptyHeroBoard();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeTabId]);
@@ -89,6 +91,7 @@ export function HeroBoard() {
 
 	useEffect(() => {
 		if (heroBoardData) {
+			//* set data from state into form to display
 			setValue('image', heroBoardData.image);
 			setValue('imageGradient', heroBoardData.imageGradient);
 			setValue('title', heroBoardData.title);
@@ -104,6 +107,7 @@ export function HeroBoard() {
 			setIsBlocked(false);
 		}
 		if (activeTabId === 'new') {
+			//* set empty or default values
 			setValue('image', '');
 			setValue('imageGradient', 'lightGradient');
 			setValue('title', '');
@@ -185,6 +189,7 @@ export function HeroBoard() {
 			},
 		};
 		activeTabId === 'new' ? await addNewHeroBoard(body) : await changeHeroBoard(body);
+		// *after saving into server need to set IsBlocked to false in order to click between tabs
 		setIsBlocked(false);
 	};
 
@@ -195,6 +200,7 @@ export function HeroBoard() {
 			if (value.titleColor) setTitleColor(value.titleColor);
 			if (value.subtitle) setSubtitleValue(value.subtitle);
 			if (value.subtitleColor) setSubtitleColor(value.subtitleColor);
+			//* need to check if some changes at form, then set isBlocked to true, in order to block clicking between tabs
 			if (
 				value.image !== heroBoardData?.image ||
 				value.imageGradient !== heroBoardData?.imageGradient ||
@@ -287,30 +293,34 @@ export function HeroBoard() {
 						onSave={handleSubmit(onSubmit)}
 						isDataValid={isValid}
 					/>
-					{isSuccess && (
-						<ModalPop
-							isOpen={isSuccess}
-							onClose={setIsSuccess}
-							title="Вітаємо!"
-							leftButton={() => <Button onClick={setIsSuccess}>Ок</Button>}
-						>
-							Ваші дані успішно збережено
-						</ModalPop>
-					)}
-					{isModalChangesOpen && (
-						<ModalPop
-							isOpen={isModalChangesOpen}
-							onClose={setIsSuccess}
-							title="Увага!"
-							type="error"
-							leftButton={() => (
-								<Button onClick={() => setIsModalChangesOpen(false)}>Зрозуміло</Button>
-							)}
-						>
-							На сторінці є незбережені зміни. Для продовження необхідно зберегти або
-							скасувати зміни
-						</ModalPop>
-					)}
+					{
+						isSuccess && (
+							<ModalPop
+								isOpen={isSuccess}
+								onClose={setIsSuccess}
+								title="Вітаємо!"
+								leftButton={() => <Button onClick={setIsSuccess}>Ок</Button>}
+							>
+								Ваші дані успішно збережено
+							</ModalPop>
+						) //add modal on success saving data on server
+					}
+					{
+						isModalChangesOpen && (
+							<ModalPop
+								isOpen={isModalChangesOpen}
+								onClose={setIsSuccess}
+								title="Увага!"
+								type="error"
+								leftButton={() => (
+									<Button onClick={() => setIsModalChangesOpen(false)}>Зрозуміло</Button>
+								)}
+							>
+								На сторінці є незбережені зміни. Для продовження необхідно зберегти або
+								скасувати зміни
+							</ModalPop>
+						) //add modal on clicking between tabs if are changes in form
+					}
 				</form>
 			)}
 		</>
