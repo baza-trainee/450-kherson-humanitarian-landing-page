@@ -34,10 +34,14 @@ export function HeroBoard() {
 	const [titleValue, setTitleValue] = useState<string>('');
 	const [subtitleValue, setSubtitleValue] = useState<string>('');
 
-	const { activeTabId, getTabsData } = useTabsState((state) => ({
-		activeTabId: state.activeTabId,
-		getTabsData: state.getTabsData,
-	}));
+	const { isModalChangesOpen, activeTabId, getTabsData, setIsBlocked, setIsModalChangesOpen } =
+		useTabsState((state) => ({
+			isModalChangesOpen: state.isModalChangesOpen,
+			activeTabId: state.activeTabId,
+			getTabsData: state.getTabsData,
+			setIsBlocked: state.setIsBlocked,
+			setIsModalChangesOpen: state.setIsModalChangesOpen,
+		}));
 
 	const {
 		isSuccess,
@@ -96,6 +100,7 @@ export function HeroBoard() {
 			setSubtitleColor(heroBoardData.subtitleColor);
 			setTitleColor(heroBoardData.titleColor);
 			clearErrors();
+			setIsBlocked(false);
 		}
 		if (activeTabId === 'new') {
 			setValue('image', '');
@@ -110,6 +115,7 @@ export function HeroBoard() {
 			setSubtitleColor('blue');
 			setTitleColor('blue');
 			clearErrors();
+			setIsBlocked(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [heroBoardData, activeTabId]);
@@ -178,7 +184,9 @@ export function HeroBoard() {
 			},
 		};
 		activeTabId === 'new' ? await addNewHeroBoard(body) : await changeHeroBoard(body);
+		setIsBlocked(false);
 	};
+
 	useEffect(() => {
 		watch((value) => {
 			if (value.imageGradient) setGradient(value.imageGradient);
@@ -186,11 +194,21 @@ export function HeroBoard() {
 			if (value.titleColor) setTitleColor(value.titleColor);
 			if (value.subtitle) setSubtitleValue(value.subtitle);
 			if (value.subtitleColor) setSubtitleColor(value.subtitleColor);
+			if (
+				value.image !== heroBoardData?.image ||
+				value.imageGradient !== heroBoardData?.imageGradient ||
+				value.subtitle !== heroBoardData?.subtitle ||
+				value.subtitleColor !== heroBoardData?.subtitleColor ||
+				value.title !== heroBoardData?.title ||
+				value.titleColor !== heroBoardData?.titleColor
+			) {
+				setIsBlocked(true);
+			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [watch, heroBoardData]);
 
-	const handleOnModalCancelYesClick = () => {
+	const handleOnModalCancelYesClick = async () => {
 		if (heroBoardData) {
 			setTitleValue(heroBoardData.title);
 			setSubtitleValue(heroBoardData.subtitle);
@@ -205,6 +223,8 @@ export function HeroBoard() {
 				subtitle: heroBoardData.subtitle,
 				subtitleColor: heroBoardData.subtitleColor,
 			});
+			setIsBlocked(false);
+			if (activeTabId === 'new') await getTabsData(fetchHeroData);
 		}
 	};
 
@@ -222,7 +242,7 @@ export function HeroBoard() {
 				!isLoading && activeTabId && activeTabId === 'empty' && <div>Порожнє</div>
 				//TODO: empty div
 			}
-			{!isLoading && (
+			{!isLoading && activeTabId !== 'empty' && heroBoardData && (
 				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<ImgUploadTextOverlaid
 						gradientValue={gradient}
@@ -277,6 +297,20 @@ export function HeroBoard() {
 							leftButton={() => <Button onClick={setIsSuccess}>Ок</Button>}
 						>
 							Ваші дані успішно збережено
+						</ModalPop>
+					)}
+					{isModalChangesOpen && (
+						<ModalPop
+							isOpen={isModalChangesOpen}
+							onClose={setIsSuccess}
+							title="Увага!"
+							type="error"
+							leftButton={() => (
+								<Button onClick={() => setIsModalChangesOpen(false)}>Зрозуміло</Button>
+							)}
+						>
+							На сторінці є незбережені зміни. Для продовження необхідно зберегти або
+							скасувати зміни
 						</ModalPop>
 					)}
 				</form>
