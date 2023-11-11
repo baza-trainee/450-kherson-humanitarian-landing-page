@@ -17,25 +17,50 @@ export interface DropdownProps extends ReactHTMLElementAttributes<DropdownElemen
 	options: string[];
 	register?: FieldValues;
 	errors?: FieldErrors<FieldValues>;
+	showError?: boolean;
+	infoMessage?: string;
+	showInfo?: boolean;
 	required?: boolean;
 	disabled?: boolean;
 	defaultValue?: string;
 }
 
 export const Dropdown = forwardRef<DropdownElement, DropdownProps>(
-	({ label, placeholder, required, disabled, options, register, errors, defaultValue, className, ...rest }, ref) => {
-		const error = errors ? errors[register?.name]?.message?.toString() : '';
-		const componentClass = [error && cs.error, disabled && cs.disabled];
+	(
+		{
+			label,
+			placeholder,
+			required,
+			disabled,
+			options,
+			register,
+			errors,
+			showError,
+			infoMessage,
+			showInfo,
+			defaultValue,
+			className,
+			...rest
+		},
+		ref,
+	) => {
+		const isError = errors?.[register?.name] ? true : false;
+		const errorMessage = errors?.[register?.name]?.message?.toString() || '';
+
+		const componentClass = [isError && cs.error, disabled && cs.disabled];
 
 		return (
 			<label className={className}>
 				<InputWrapper
 					label={label}
-					error={error}
+					isError={isError}
 					required={required}
 					disabled={disabled}
 					className={clsx(componentClass)}
-					showError={!!errors}
+					errorMessage={errorMessage}
+					showError={showError}
+					infoMessage={infoMessage || ''}
+					showInfo={showInfo}
 				>
 					<div className={s.inputContainer}>
 						<select

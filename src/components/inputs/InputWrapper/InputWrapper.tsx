@@ -13,17 +13,35 @@ export interface InputWrapperCommonProps {
 	showError?: boolean;
 }
 
-interface InputWrapperProps extends ReactHTMLElementAttributes<InputWrapperElement>, InputWrapperCommonProps {
-	info?: string;
+interface InputWrapperProps
+	extends ReactHTMLElementAttributes<InputWrapperElement>,
+		InputWrapperCommonProps {
+	isError?: boolean;
+	errorMessage?: string;
+	infoMessage?: string;
 	showInfo?: boolean;
-	error?: string;
 }
 
 const NON_BREAKING_SPACE = '\xA0';
 
 export const InputWrapper = forwardRef<InputWrapperElement, InputWrapperProps>(
-	({ label, info, showInfo, required, disabled, error, className, showError, children, ...rest }, ref) => {
-		const containerClass = [error && s.error, disabled && s.disabled];
+	(
+		{
+			label,
+			required,
+			disabled,
+			isError,
+			className,
+			errorMessage,
+			showError,
+			infoMessage,
+			showInfo,
+			children,
+			...rest
+		},
+		ref,
+	) => {
+		const containerClass = [isError && s.error, disabled && s.disabled];
 		const labelString = label && label?.trim().length > 0 ? label : NON_BREAKING_SPACE;
 
 		return (
@@ -32,14 +50,16 @@ export const InputWrapper = forwardRef<InputWrapperElement, InputWrapperProps>(
 					<div className={s.label}>
 						<p className={s.labelText}>
 							{labelString}
-							{required && label.trim().length > 0 && <span className={s.labelRequired}>*</span>}
+							{required && label.trim().length > 0 && (
+								<span className={s.labelRequired}>*</span>
+							)}
 						</p>
 					</div>
 				)}
 				<div className={s.inputBlockContainer}>
 					{children}
-					{showError && <p className={clsx(s.infoText, s.errorText)}>{error}</p>}
-					{showInfo && <p className={s.infoText}>{info}</p>}
+					{showError && <p className={clsx(s.infoText, s.errorText)}>{errorMessage}</p>}
+					{showInfo && <p className={s.infoText}>{infoMessage}</p>}
 				</div>
 			</div>
 		);

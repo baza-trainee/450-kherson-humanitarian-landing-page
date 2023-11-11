@@ -428,6 +428,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 									className={clsx(s.field, s[formFieldsData[field].widthSize])}
 									maxLength={formFieldsData[field].inputMaxLength}
 									autoComplete={formFieldsData[field].autoComplete}
+									showError
 								/>
 							);
 						case 'dropdown':
@@ -443,6 +444,7 @@ export function Form({ lists, setActiveTab }: FormProps) {
 									placeholder={formFieldsData[field].placeholder}
 									options={formFieldsData[field].options || []}
 									className={clsx(s.field, s[formFieldsData[field].widthSize])}
+									showError
 								/>
 							);
 						case 'checkbox':
