@@ -50,8 +50,8 @@ export const FormUsage: Story = {
 		style: { width: 300 },
 		register: { name: 'fieldName' },
 		errors: {},
-		hideError: false,
-		info: '',
+		showError: true,
+		infoMessage: '',
 	},
 };
 

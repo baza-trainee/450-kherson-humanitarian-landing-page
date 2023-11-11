@@ -22,9 +22,11 @@ interface ColorRadioProps {
 export const ColorRadio = forwardRef<ColorRadioElement, ColorRadioProps>(
 	({ name, value, id, isChecked, changeRadio, register, watch }, ref) => {
 		const radioValue = watch ? watch(register ? register.name : null) : null;
+		const radioIsChecked =
+			typeof radioValue === 'string' && radioValue ? radioValue === value : isChecked;
 
 		useEffect(() => {
-			if (watch && radioValue && changeRadio) {
+			if (radioValue && changeRadio) {
 				if (typeof radioValue === 'string') changeRadio(radioValue, name);
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +39,7 @@ export const ColorRadio = forwardRef<ColorRadioElement, ColorRadioProps>(
 					name={name}
 					value={value}
 					id={id}
-					defaultChecked={isChecked}
+					defaultChecked={radioIsChecked}
 					className={s.input}
 					ref={ref}
 					{...register}
