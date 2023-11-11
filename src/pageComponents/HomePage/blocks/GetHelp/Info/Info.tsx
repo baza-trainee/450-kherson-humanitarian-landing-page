@@ -4,6 +4,7 @@ import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
 import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
 import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
 import { Text } from '~components/Text/Text';
+import { getMatch } from '~helpers/getMatch';
 
 import { getImagePercentage } from './helpers/getImagePercentage';
 
@@ -24,20 +25,33 @@ export function Info({ lists, activeTab, info }: InfoProps) {
 	return (
 		<div className={s.Info}>
 			<div className={s.tracker}>
-				<Text variant="h3">На отримання наборів зареєстровано</Text>
-				<div className={s.trackerIndicator}>
-					<Image
-						src={`/svg/getHelp/state-${imgPercentage}.svg`}
-						alt={'status'}
-						width={120}
-						height={120}
-					/>
-					<div className={s.numbers}>
-						<Text variant="various2">{lists?.[activeTab].personsRegistered || 0}</Text>
-						<Text variant="various2">/</Text>
-						<Text variant="various2">{lists?.[activeTab].availableSets || 0}</Text>
-					</div>
-				</div>
+				{lists && lists?.[activeTab].availableSets > 0 ? (
+					<>
+						<Text variant="h3">На отримання наборів зареєстровано</Text>
+						<div className={s.trackerIndicator}>
+							<Image
+								src={`/svg/getHelp/state-${imgPercentage}.svg`}
+								alt={'status'}
+								width={120}
+								height={120}
+							/>
+							<div className={s.numbers}>
+								<Text variant="various2">{lists?.[activeTab].personsRegistered || 0}</Text>
+								<Text variant="various2">/</Text>
+								<Text variant="various2">{lists?.[activeTab].availableSets || 0}</Text>
+							</div>
+						</div>
+					</>
+				) : (
+					<Text variant="h3">
+						{getMatch(activeTab, {
+							idp: 'Немає доступних наборів для ВПО',
+							invalid: 'Немає доступних наборів для людей з інвалідністю',
+							child: 'Немає доступних наборів для дітей',
+							_: null,
+						})}
+					</Text>
+				)}
 
 				<Text variant="subtitle">
 					Місцезнаходження пункту видачі гуманітарної допомоги:
