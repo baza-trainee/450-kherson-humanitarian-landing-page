@@ -1,0 +1,54 @@
+.ImgUpload {
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	width: 752px;
+	height: 300px;
+}
+
+.ImgGradient {
+	position: absolute;
+	width: 712px;
+	height: 300px;
+	transition: all 0.3s ease;
+}
+
+.lightGradient {
+	background: var(--color--gradient-4);
+}
+
+.darkGradient {
+	background: var(--color--gradient-3);
+}
+
+.text {
+	display: flex;
+	position: absolute;
+	top: 80px;
+	left: 40px;
+	flex-direction: column;
+	text-wrap: balance;
+	gap: 32px;
+}
+
+.heading {
+	width: 317px;
+	font-size: 18px;
+	line-height: 25.2px;
+}
+
+.sub {
+	font-size: 10px;
+}
+
+.white {
+	color: var(--color--shades-1);
+}
+
+.blue {
+	color: var(--color--primary-3);
+}
+
+.black {
+	color: var(--color--secondary-4);
+}

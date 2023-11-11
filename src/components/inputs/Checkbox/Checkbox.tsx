@@ -13,29 +13,62 @@ import s from './Checkbox.module.scss';
 
 export type CheckboxElement = HTMLInputElement;
 
-export interface CheckboxProps extends ReactHTMLElementAttributes<CheckboxElement>, InputWrapperCommonProps {
+export interface CheckboxProps
+	extends ReactHTMLElementAttributes<CheckboxElement>,
+		InputWrapperCommonProps {
 	text: string;
 	register?: FieldValues;
 	errors?: FieldErrors<FieldValues>;
+	showError?: boolean;
+	infoMessage?: string;
+	showInfo?: boolean;
 }
 
 export const Checkbox = forwardRef<CheckboxElement, CheckboxProps>(
-	({ label, text, required, disabled, register, errors, className, children, ...rest }, ref) => {
-		const error = errors ? errors[register?.name]?.message?.toString() : '';
-		const componentClass = [error && cs.error, disabled && cs.disabled, className];
+	(
+		{
+			label,
+			text,
+			required,
+			disabled,
+			register,
+			errors,
+			showError,
+			infoMessage,
+			showInfo,
+			className,
+			children,
+			...rest
+		},
+		ref,
+	) => {
+		const isError = errors?.[register?.name] ? true : false;
+		const errorMessage = errors?.[register?.name]?.message?.toString() || '';
+
+		const componentClass = [isError && cs.error, disabled && cs.disabled, className];
 
 		return (
 			<InputWrapper
 				label={label}
-				error={error}
+				isError={isError}
 				required={required}
 				disabled={disabled}
 				className={clsx(componentClass)}
-				showError={!!errors}
+				errorMessage={errorMessage}
+				showError={showError}
+				infoMessage={infoMessage || ''}
+				showInfo={showInfo}
 			>
 				<div className={s.elementsContainer}>
 					<label className={s.element}>
-						<input type="checkbox" value={text} className={s.input} ref={ref} {...register} {...rest} />
+						<input
+							type="checkbox"
+							value={text}
+							className={s.input}
+							ref={ref}
+							{...register}
+							{...rest}
+						/>
 						{children ? (
 							<>{children}</>
 						) : (

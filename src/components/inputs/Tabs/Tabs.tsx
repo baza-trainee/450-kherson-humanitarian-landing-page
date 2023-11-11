@@ -13,7 +13,9 @@ import s from './Tabs.module.scss';
 
 export type TabsElement = HTMLInputElement;
 
-export interface TabsProps extends ReactHTMLElementAttributes<TabsElement>, InputWrapperCommonProps {
+export interface TabsProps
+	extends ReactHTMLElementAttributes<TabsElement>,
+		InputWrapperCommonProps {
 	name: string;
 	labels: (string | number)[];
 	defaultValue?: string;
@@ -22,14 +24,30 @@ export interface TabsProps extends ReactHTMLElementAttributes<TabsElement>, Inpu
 }
 
 export const Tabs = forwardRef<TabsElement, TabsProps>(
-	({ label, required, disabled, register, errors, name, defaultValue, labels, className, ...rest }, ref) => {
-		const error = errors ? errors[register?.name]?.message?.toString() : '';
-		const componentClass = [error && cs.error, disabled && cs.disabled, className];
+	(
+		{
+			label,
+			required,
+			disabled,
+			register,
+			errors,
+			name,
+			defaultValue,
+			labels,
+			className,
+			...rest
+		},
+		ref,
+	) => {
+		const isError = errors?.[register?.name] ? true : false;
+		const errorMessage = errors?.[register?.name]?.message?.toString() || '';
+		const componentClass = [isError && cs.error, disabled && cs.disabled, className];
 
 		return (
 			<InputWrapper
 				label={label}
-				error={error}
+				isError={isError}
+				errorMessage={errorMessage}
 				required={required}
 				disabled={disabled}
 				className={clsx(componentClass)}
