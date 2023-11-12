@@ -1,5 +1,5 @@
 import { commonGet } from '~api/common/commonGet';
-import { clientPut } from '~api/common/commonPut';
+import { commonPut } from '~api/common/commonPut';
 import type { AboutUsFundRequest } from '~api/types/backend/requests/AboutUsFundRequest';
 import type { AboutUsRequest } from '~api/types/backend/requests/AboutUsRequest';
 import type { AboutUsFundResponse } from '~api/types/backend/responses/AboutUsFundResponse';
@@ -17,39 +17,25 @@ export const getAboutUsFund = () =>
 	});
 
 export const changeAboutUsFund = (body: AboutUsFundRequest) =>
-	clientPut<AboutUsFundResponse, AboutUsFundRequest>('/fund/', body).then((resp) => {
+	commonPut<AboutUsFundResponse, AboutUsFundRequest>('/fund/', body).then((resp) => {
 		if ('data' in resp) {
-			return { data: resp.data };
+			return { data: transformAboutUsFundDTO(resp.data) };
 		}
 		return { error: resp };
 	});
-export const getAboutUsTeam = () =>
-	commonGet<AboutUsResponse>('/team').then((resp) => {
+
+export const getAboutUs = (id: string) =>
+	commonGet<AboutUsResponse>(`/${id}`).then((resp) => {
 		if ('data' in resp) {
 			return { data: transformAboutUsDTO(resp.data) };
 		}
 		return { error: resp };
 	});
 
-export const changeAboutUsTeam = (body: AboutUsRequest) =>
-	clientPut<AboutUsResponse, AboutUsRequest>('/team/', body).then((resp) => {
-		if ('data' in resp) {
-			return { data: resp.data };
-		}
-		return { error: resp };
-	});
-export const getAboutUsHistory = () =>
-	commonGet<AboutUsResponse>('/history').then((resp) => {
+export const changeAboutUs = (body: AboutUsRequest, id: string) =>
+	commonPut<AboutUsResponse, AboutUsRequest>(`/${id}`, body).then((resp) => {
 		if ('data' in resp) {
 			return { data: transformAboutUsDTO(resp.data) };
-		}
-		return { error: resp };
-	});
-
-export const changeAboutUsHistory = (body: AboutUsRequest) =>
-	clientPut<AboutUsResponse, AboutUsRequest>('/history/', body).then((resp) => {
-		if ('data' in resp) {
-			return { data: resp.data };
 		}
 		return { error: resp };
 	});
