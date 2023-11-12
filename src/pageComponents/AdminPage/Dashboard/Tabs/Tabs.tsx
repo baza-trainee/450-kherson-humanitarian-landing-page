@@ -82,8 +82,13 @@ export function Tabs() {
 			(query?.id && tabsData && getIndexByKey(tabsData?.tabs, 'id', query?.id) < 0)
 		) {
 			if (tabsData?.tabs?.length && tabsData?.tabs[0].id) {
-				setParams({ id: tabsData?.tabs[0].id });
-				setActiveTabId(tabsData?.tabs[0].id);
+				if (activeTabId === 'new') {
+					setParams({ id: tabsData?.tabs[tabsData?.tabs?.length - 1].id });
+					setActiveTabId(tabsData?.tabs[tabsData?.tabs?.length - 1].id);
+				} else {
+					setParams({ id: tabsData?.tabs[0].id });
+					setActiveTabId(tabsData?.tabs[0].id);
+				}
 			} else if (tabsData?.isEditable) {
 				setParams({ id: 'empty' });
 				setActiveTabId('empty');
