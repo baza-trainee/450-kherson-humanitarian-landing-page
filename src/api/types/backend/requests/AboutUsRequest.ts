@@ -1,5 +1,5 @@
 export interface AboutUsRequest {
-	picture: {
+	picture?: {
 		mime_type: string;
 		image: string;
 	};

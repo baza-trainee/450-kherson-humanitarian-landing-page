@@ -2,12 +2,16 @@ import { useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import imageCompression from 'browser-image-compression';
+
 import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
 import { UseAboutUsState } from '~/pageComponents/AdminPage/store/useAboutUsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
+import { Button } from '~components/Buttons/Button';
 import { ImgUpload } from '~components/ImgUpload/ImgUpload';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 
 import s from './AboutUsBoard.module.scss';
 
@@ -23,6 +27,7 @@ export function AboutUsBoard() {
 		isSuccess,
 		isLoading,
 		aboutUsData,
+		setIsSuccess,
 		getAboutUsDataById,
 		changeAboutUsDataBoard,
 		changeAboutUsFundDataBoard,
@@ -30,6 +35,7 @@ export function AboutUsBoard() {
 		isSuccess: state.isSuccess,
 		isLoading: state.isLoading,
 		aboutUsData: state.aboutUsData,
+		setIsSuccess: state.setIsSuccess,
 		getAboutUsDataById: state.getAboutUsDataById,
 		changeAboutUsDataBoard: state.changeAboutUsDataBoard,
 		changeAboutUsFundDataBoard: state.changeAboutUsFundDataBoard,
@@ -90,24 +96,71 @@ export function AboutUsBoard() {
 	}, [aboutUsData, activeTabId]);
 
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		console.log('submit data', data);
+		let image = '',
+			type = '';
+		const options = {
+			maxSizeMB: 0.488,
+			maxWidthOrHeight: 1920,
+		};
+
+		try {
+			if (data.image.length > 0 && typeof data.image !== 'string') {
+				const compressedFile = await imageCompression(data.image[0], options);
+
+				await imageCompression
+					.getDataUrlFromFile(compressedFile)
+					.then((dataImage) => (image = dataImage.toString()));
+				type = data.image[0].type;
+			} else image = aboutUsData?.image || '';
+		} catch (error) {
+			console.error('Error imageCompression:', error); //-----------------------------log
+		}
+		if (activeTabId == 'fund') {
+			const body = {
+				picture: {
+					mime_type: type,
+					image: image.split(',')[1],
+				},
+			};
+			console.log('body', body);
+
+			await changeAboutUsFundDataBoard(body);
+		} else {
+			if (data.title && data.text && activeTabId) {
+				const body =
+					data.image === aboutUsData?.image
+						? {
+								title: data.title,
+								text: data.text,
+						  }
+						: {
+								picture: {
+									mime_type: type,
+									image: image.split(',')[1],
+								},
+								title: data.title,
+								text: data.text,
+						  };
+				await changeAboutUsDataBoard(body, activeTabId);
+			}
+		}
 	};
 
 	const handleOnModalCancelYesClick = async () => {
-		if (aboutUsData && activeTabId === 'fund') {
-			reset({
-				image: aboutUsData.image,
-			});
-		}
-		if (aboutUsData && activeTabId !== 'fund') {
-			reset({
-				image: aboutUsData.image,
-				title: aboutUsData.title,
-				text: aboutUsData.text,
-			});
+		if (aboutUsData) {
+			if (activeTabId === 'fund') {
+				reset({
+					image: aboutUsData.image,
+				});
+			} else {
+				reset({
+					image: aboutUsData.image,
+					title: aboutUsData.title,
+					text: aboutUsData.text,
+				});
+			}
 		}
 	};
-	console.log('errors', errors);
 
 	return (
 		<>
@@ -144,6 +197,18 @@ export function AboutUsBoard() {
 						onSave={handleSubmit(onSubmit)}
 						isDataValid={isValid}
 					/>
+					{
+						isSuccess && (
+							<ModalPop
+								isOpen={isSuccess}
+								onClose={setIsSuccess}
+								title="Вітаємо!"
+								leftButton={() => <Button onClick={setIsSuccess}>Ок</Button>}
+							>
+								Ваші дані успішно збережено
+							</ModalPop>
+						) //add modal on success saving data on server
+					}
 				</form>
 			)}
 		</>

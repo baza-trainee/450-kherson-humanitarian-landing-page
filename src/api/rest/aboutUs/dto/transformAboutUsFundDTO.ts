@@ -2,6 +2,6 @@ import type { AboutUsFundResponse } from '~api/types/backend/responses/AboutUsFu
 
 export function transformAboutUsFundDTO(aboutUsBoard: AboutUsFundResponse) {
 	return {
-		image: aboutUsBoard.picture.path,
+		image: aboutUsBoard.picture.image,
 	};
 }

@@ -1,5 +1,5 @@
-export interface AboutUsFundResponse{
+export interface AboutUsFundResponse {
 	picture: {
-		path: string;
-	}
+		image: string;
+	};
 }

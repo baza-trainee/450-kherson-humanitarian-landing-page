@@ -16,12 +16,16 @@ interface UseAboutUsState {
 	getAboutUsDataById: (id: string) => Promise<void>;
 	changeAboutUsDataBoard: (body: AboutUsRequest, id: string) => Promise<void>;
 	changeAboutUsFundDataBoard: (body: AboutUsFundRequest) => Promise<void>;
+	setIsSuccess: () => void;
 }
 export const UseAboutUsState = create<UseAboutUsState>((set) => ({
 	isSuccess: false,
 	isLoading: false,
 	error: null,
 	aboutUsData: null,
+	setIsSuccess: () => {
+		set({ isSuccess: false });
+	},
 	getAboutUsDataById: async (id) => {
 		set({ isLoading: true });
 		set({ error: null });
