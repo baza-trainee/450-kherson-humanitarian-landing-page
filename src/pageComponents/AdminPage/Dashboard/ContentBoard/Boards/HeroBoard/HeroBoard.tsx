@@ -191,14 +191,17 @@ export function HeroBoard() {
 		activeTabId === 'new' ? await addNewHeroBoard(body) : await changeHeroBoard(body);
 		// *after saving into server need to set IsBlocked to false in order to click between tabs
 		setIsBlocked(false);
+		await getTabsData(fetchHeroData);
 	};
 
 	useEffect(() => {
 		watch((value) => {
 			if (value.imageGradient) setGradient(value.imageGradient);
 			if (value.title) setTitleValue(value.title);
+			if (value.title === '') setTitleValue('');
 			if (value.titleColor) setTitleColor(value.titleColor);
 			if (value.subtitle) setSubtitleValue(value.subtitle);
+			if (value.subtitle === '') setSubtitleValue('');
 			if (value.subtitleColor) setSubtitleColor(value.subtitleColor);
 			//* need to check if some changes at form, then set isBlocked to true, in order to block clicking between tabs
 			if (
