@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { api } from '~api/index';
 import type { AboutUs } from '~api/types/aboutUs/aboutUs';
-import type { AboutUsFund } from '~api/types/aboutUs/aboutUsFund';
+// import type { AboutUsFund } from '~api/types/aboutUs/aboutUsFund';
 import type { AboutUsFundRequest } from '~api/types/backend/requests/AboutUsFundRequest';
 import type { AboutUsRequest } from '~api/types/backend/requests/AboutUsRequest';
 import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
@@ -12,7 +12,7 @@ interface UseAboutUsState {
 	isSuccess: boolean;
 	isLoading: boolean;
 	error: ErrorResponse | null;
-	aboutUsData: AboutUs | AboutUsFund | null;
+	aboutUsData: AboutUs | null;
 	getAboutUsDataById: (id: string) => Promise<void>;
 	changeAboutUsDataBoard: (body: AboutUsRequest, id: string) => Promise<void>;
 	changeAboutUsFundDataBoard: (body: AboutUsFundRequest) => Promise<void>;
@@ -41,8 +41,10 @@ export const UseAboutUsState = create<UseAboutUsState>((set) => ({
 	changeAboutUsFundDataBoard: async (body) => {
 		try {
 			const resp = await api.aboutUs.changeAboutUsFund(body);
-			if ('data' in resp) set({ aboutUsData: resp.data });
-
+			if ('data' in resp) {
+				set({ aboutUsData: resp.data });
+				set({ isSuccess: true });
+			}
 			if (resp && 'error' in resp) set({ error: resp.error });
 		} catch (error) {
 			set({ error: returnAppError(error) });
@@ -53,8 +55,10 @@ export const UseAboutUsState = create<UseAboutUsState>((set) => ({
 	changeAboutUsDataBoard: async (body, id) => {
 		try {
 			const resp = await api.aboutUs.changeAboutUs(body, id);
-			if ('data' in resp) set({ aboutUsData: resp.data });
-
+			if ('data' in resp) {
+				set({ aboutUsData: resp.data });
+				set({ isSuccess: true });
+			}
 			if (resp && 'error' in resp) set({ error: resp.error });
 		} catch (error) {
 			set({ error: returnAppError(error) });
