@@ -9,6 +9,8 @@ import { ImgUpload } from '~components/ImgUpload/ImgUpload';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 
+import s from './AboutUsBoard.module.scss';
+
 interface FormFields {
 	image: FileList | string;
 	title?: string;
@@ -111,7 +113,7 @@ export function AboutUsBoard() {
 		<>
 			{(isLoading || !aboutUsData) && activeTabId !== 'empty' && <Loader />}
 			{!isLoading && activeTabId !== 'empty' && aboutUsData && (
-				<form onSubmit={handleSubmit(onSubmit)}>
+				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<ImgUpload register={registers.image} watch={watch} errors={errors} />
 					{activeTabId !== 'fund' && (
 						<>
