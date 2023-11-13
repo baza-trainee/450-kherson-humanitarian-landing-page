@@ -10,6 +10,7 @@ import { getIndexByKey } from '~helpers/getIndexByKey';
 import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
 
+import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
@@ -31,11 +32,14 @@ export interface TabsData {
 export function Tabs() {
 	const router = useRouter();
 	const { query } = router;
+
 	const [tabsTitleName, setTabsTitleName] = useState<string>('');
+
 	const { setParams } = useParams();
 
 	const isListsDataLoading = useListsState((state) => state.isLoading);
-	const isDataLoading = isListsDataLoading;
+	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
+	const isDataLoading = isListsDataLoading || isHeroDataLoading;
 
 	const {
 		isBlocked,
