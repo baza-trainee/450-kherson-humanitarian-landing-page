@@ -18,7 +18,7 @@ interface UseAboutUsState {
 	changeAboutUsFundDataBoard: (body: AboutUsFundRequest) => Promise<void>;
 	setIsSuccess: () => void;
 }
-export const UseAboutUsState = create<UseAboutUsState>((set) => ({
+export const useAboutUsState = create<UseAboutUsState>((set) => ({
 	isSuccess: false,
 	isLoading: false,
 	error: null,
