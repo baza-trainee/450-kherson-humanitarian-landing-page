@@ -312,7 +312,7 @@ export function HeroBoard() {
 						isModalChangesOpen && (
 							<ModalPop
 								isOpen={isModalChangesOpen}
-								onClose={setIsSuccess}
+								onClose={() => setIsModalChangesOpen(false)}
 								title="Увага!"
 								type="error"
 								leftButton={() => (
