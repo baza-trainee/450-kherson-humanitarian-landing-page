@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef } from 'react';
 import type { FieldValues } from 'react-hook-form';
 
 import clsx from 'clsx';
@@ -14,23 +14,15 @@ interface ColorRadioProps {
 	value: string;
 	id: string;
 	isChecked?: boolean;
-	changeRadio?: (value: string, name: string) => void;
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
 }
 
 export const ColorRadio = forwardRef<ColorRadioElement, ColorRadioProps>(
-	({ name, value, id, isChecked, changeRadio, register, watch }, ref) => {
+	({ name, value, id, isChecked, register, watch }, ref) => {
 		const radioValue = watch ? watch(register ? register.name : null) : null;
 		const radioIsChecked =
 			typeof radioValue === 'string' && radioValue ? radioValue === value : isChecked;
-
-		useEffect(() => {
-			if (radioValue && changeRadio) {
-				if (typeof radioValue === 'string') changeRadio(radioValue, name);
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [radioValue]);
 
 		return (
 			<label htmlFor={id} className={s.label}>
@@ -55,7 +47,13 @@ export const ColorRadio = forwardRef<ColorRadioElement, ColorRadioProps>(
 						colors={{ default: 'var(--color--shades-1)' }}
 					/>
 				) : (
-					<Icon icon="icon--checked" className={s.icon} size="custom" width="12px" height="10px" />
+					<Icon
+						icon="icon--checked"
+						className={s.icon}
+						size="custom"
+						width="12px"
+						height="10px"
+					/>
 				)}
 			</label>
 		);
