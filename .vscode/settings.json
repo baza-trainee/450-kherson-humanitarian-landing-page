@@ -5,7 +5,10 @@
 		"source.fixAll": false,
 		"source.fixAll.eslint": true
 	},
-	"cSpell.words": ["clsx"],
+	"cSpell.words": [
+		"clsx",
+		"zustand"
+	],
 	"cSpell.language": "uk,en,lorem",
 	"files.eol": "\n",
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
