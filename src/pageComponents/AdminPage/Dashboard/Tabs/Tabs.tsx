@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
@@ -14,6 +14,7 @@ import { useListsState } from '../../store/useListsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchAboutUsData } from './fetchHelpers/fetchAboutUsData';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
+import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
 
 import s from './Tabs.module.scss';
@@ -31,27 +32,42 @@ export interface TabsData {
 export function Tabs() {
 	const router = useRouter();
 	const { query } = router;
-
+	const [tabsTitleName, setTabsTitleName] = useState<string>('');
 	const { setParams } = useParams();
 
 	const isListsDataLoading = useListsState((state) => state.isLoading);
 	const isDataLoading = isListsDataLoading;
 
-	const { isLoading, tabsData, activeTabId, setActiveTabId, getTabsData, setTabsData } =
-		useTabsState((state) => ({
-			isLoading: state.isLoading,
-			activeTabId: state.activeTabId,
-			tabsData: state.tabsData,
-			setActiveTabId: state.setActiveTabId,
-			getTabsData: state.getTabsData,
-			setTabsData: state.setTabsData,
-		}));
+	const {
+		isBlocked,
+		isLoading,
+		tabsData,
+		activeTabId,
+		setActiveTabId,
+		getTabsData,
+		setTabsData,
+		setIsModalChangesOpen,
+	} = useTabsState((state) => ({
+		isBlocked: state.isBlocked,
+		isLoading: state.isLoading,
+		activeTabId: state.activeTabId,
+		tabsData: state.tabsData,
+		setActiveTabId: state.setActiveTabId,
+		getTabsData: state.getTabsData,
+		setTabsData: state.setTabsData,
+		setIsModalChangesOpen: state.setIsModalChangesOpen,
+	}));
 
 	//* 1. Get page route and fetch tabs data
 	//* Set fetching helpers function here ↓
+	// If isEditable set Title to your block setTabsTitleName('Your title name')
 	useEffect(() => {
 		const fetchData = getMatch(query?.slug?.toString(), {
 			lists: async () => await getTabsData(fetchListData),
+			hero: async () => {
+				await getTabsData(fetchHeroData);
+				setTabsTitleName('Банер');
+			},
 			'about-us': async () => await getTabsData(fetchAboutUsData),
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			_: () => setTabsData(null),
@@ -68,8 +84,13 @@ export function Tabs() {
 			(query?.id && tabsData && getIndexByKey(tabsData?.tabs, 'id', query?.id) < 0)
 		) {
 			if (tabsData?.tabs?.length && tabsData?.tabs[0].id) {
-				setParams({ id: tabsData?.tabs[0].id });
-				setActiveTabId(tabsData?.tabs[0].id);
+				if (activeTabId === 'new') {
+					setParams({ id: tabsData?.tabs[tabsData?.tabs?.length - 1].id });
+					setActiveTabId(tabsData?.tabs[tabsData?.tabs?.length - 1].id);
+				} else {
+					setParams({ id: tabsData?.tabs[0].id });
+					setActiveTabId(tabsData?.tabs[0].id);
+				}
 			} else if (tabsData?.isEditable) {
 				setParams({ id: 'empty' });
 				setActiveTabId('empty');
@@ -84,12 +105,35 @@ export function Tabs() {
 	const isActiveClass = (isActive: boolean) => (isActive ? s.active : '');
 
 	const handleTabOnClick = (id: string) => {
-		setActiveTabId(id);
-		setParams({ id: id });
+		if (isBlocked) setIsModalChangesOpen(true);
+		else {
+			if (tabsData) {
+				if (tabsData.tabs.find((item) => item.id === 'new')) {
+					tabsData.tabs.pop();
+				}
+			}
+			setActiveTabId(id);
+			setParams({ id: id });
+		}
 	};
 
 	const handleAddNewTabOnClick = () => {
-		console.log('handleAddNewTabOnClick');
+		if (isBlocked) setIsModalChangesOpen(true);
+		else {
+			if (tabsData) {
+				if (tabsData.tabs.find((item) => item.id === 'new')) {
+					setActiveTabId('new');
+					setParams({ id: 'new' });
+				} else {
+					tabsData.tabs.push({
+						title: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
+						id: 'new',
+					});
+					setActiveTabId('new');
+					setParams({ id: 'new' });
+				}
+			}
+		}
 	};
 
 	return (

@@ -20,3 +20,4 @@ export async function fetchListData() {
 		isEditable: false,
 	};
 }
+
