@@ -1,14 +1,5 @@
 .form {
+	row-gap: 16px;
 	display: flex;
 	flex-direction: column;
-	row-gap: 16px;
-}
-.buttonsBlock{
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	column-gap: 16px;
-}
-.btn{
-	width: 214px;
 }
