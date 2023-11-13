@@ -69,26 +69,14 @@ export function Tabs() {
 				setTabsTitleName('Банер');
 			},
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
+			'our-achievements': async () => await getTabsData(getOurAchievementsData),
 			_: () => setTabsData(null),
 		});
 		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.slug]);
 
-	//* 2. Check is id in address or is id correct
-	//* and if its needed set id to url params
-	useEffect(() => {
-		const fetchData = async () => {
-			//* set fetching helpers function here ↓
-			if (query?.slug === 'our-achievements') {
-				await getTabsData(getOurAchievementsData);
-			} else {
-				setTabsData(null);
-			}
-		};
-		fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [query?.slug]);
+	
 
 	useEffect(() => {
 		if (
