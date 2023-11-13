@@ -62,15 +62,17 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 					infoMessage={infoMessage || ''}
 					showInfo={showInfo}
 				>
-					<input
-						type={type}
-						className={cs.input}
-						placeholder={placeholder}
-						ref={ref}
-						{...register}
-						{...rest}
-					/>
-					{children}
+					<div className={cs.inputContainer}>
+						<input
+							type={type}
+							className={cs.input}
+							placeholder={placeholder}
+							ref={ref}
+							{...register}
+							{...rest}
+						/>
+						{children}
+					</div>
 				</InputWrapper>
 			</label>
 		);
