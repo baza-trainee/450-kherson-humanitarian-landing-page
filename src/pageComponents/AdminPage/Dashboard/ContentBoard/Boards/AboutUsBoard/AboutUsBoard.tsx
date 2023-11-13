@@ -22,7 +22,14 @@ interface FormFields {
 }
 
 export function AboutUsBoard() {
-	const activeTabId = useTabsState((state) => state.activeTabId);
+	const { isModalChangesOpen, activeTabId, setIsBlocked, setIsModalChangesOpen } = useTabsState(
+		(state) => ({
+			isModalChangesOpen: state.isModalChangesOpen,
+			activeTabId: state.activeTabId,
+			setIsBlocked: state.setIsBlocked,
+			setIsModalChangesOpen: state.setIsModalChangesOpen,
+		}),
+	);
 	const {
 		isSuccess,
 		isLoading,
@@ -146,6 +153,20 @@ export function AboutUsBoard() {
 		}
 	};
 
+	useEffect(() => {
+		watch((value) => {
+			//* need to check if some changes at form, then set isBlocked to true, in order to block clicking between tabs
+			if (
+				value.image !== aboutUsData?.image ||
+				value.title !== aboutUsData?.title ||
+				value.text !== aboutUsData?.text
+			) {
+				setIsBlocked(true);
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [watch, aboutUsData]);
+
 	const handleOnModalCancelYesClick = async () => {
 		if (aboutUsData) {
 			if (activeTabId === 'fund') {
@@ -208,6 +229,22 @@ export function AboutUsBoard() {
 								Ваші дані успішно збережено
 							</ModalPop>
 						) //add modal on success saving data on server
+					}
+					{
+						isModalChangesOpen && (
+							<ModalPop
+								isOpen={isModalChangesOpen}
+								onClose={() => setIsModalChangesOpen(false)}
+								title="Увага!"
+								type="error"
+								leftButton={() => (
+									<Button onClick={() => setIsModalChangesOpen(false)}>Зрозуміло</Button>
+								)}
+							>
+								На сторінці є незбережені зміни. Для продовження необхідно зберегти або
+								скасувати зміни
+							</ModalPop>
+						) //add modal on clicking between tabs if are changes in form
 					}
 				</form>
 			)}
