@@ -1,10 +1,9 @@
+import type { PictureRequest } from './PictureRequest';
+
 export interface HeroRequest {
 	id?: string;
 	view: {
-		picture?: {
-			mime_type?: string;
-			image?: string;
-		};
+		picture?: PictureRequest;
 		color: string;
 	};
 	title: {
