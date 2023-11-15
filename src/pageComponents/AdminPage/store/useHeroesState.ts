@@ -57,7 +57,6 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 				subtitleColor: '',
 			},
 		});
-		set({ isLoading: false });
 	},
 	changeHeroBoard: async (body: HeroRequest) => {
 		set({ isLoading: true });
@@ -79,15 +78,12 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		}
 	},
 	addNewHeroBoard: async (body: HeroRequest) => {
-		set({ isLoading: true });
 		set({ error: null });
 		try {
 			const resp = await api.hero.addNewHeroBoard(body);
 			if ('data' in resp) set({ isSuccess: true });
 		} catch (error) {
 			set({ error: returnAppError(error) });
-		} finally {
-			set({ isLoading: false });
 		}
 	},
 	deleteHeroBoard: async (id) => {
