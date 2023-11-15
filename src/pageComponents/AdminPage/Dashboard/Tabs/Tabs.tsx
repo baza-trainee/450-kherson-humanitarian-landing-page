@@ -112,6 +112,7 @@ export function Tabs() {
 			if (tabsData) {
 				if (tabsData.tabs.find((item) => item.id === 'new')) {
 					tabsData.tabs.pop();
+					tabsData.isEditable = true;
 				}
 			}
 			setActiveTabId(id);
@@ -123,17 +124,13 @@ export function Tabs() {
 		if (isBlocked) setIsModalChangesOpen(true);
 		else {
 			if (tabsData) {
-				if (tabsData.tabs.find((item) => item.id === 'new')) {
-					setActiveTabId('new');
-					setParams({ id: 'new' });
-				} else {
-					tabsData.tabs.push({
-						title: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
-						id: 'new',
-					});
-					setActiveTabId('new');
-					setParams({ id: 'new' });
-				}
+				tabsData.tabs.push({
+					title: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
+					id: 'new',
+				});
+				tabsData.isEditable = false;
+				setActiveTabId('new');
+				setParams({ id: 'new' });
 			}
 		}
 	};
