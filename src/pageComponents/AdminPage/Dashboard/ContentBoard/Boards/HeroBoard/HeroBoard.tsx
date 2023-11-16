@@ -311,22 +311,6 @@ export function HeroBoard() {
 							</ModalPop>
 						) //add modal on success saving data on server
 					}
-					{/* {
-						isModalChangesOpen && (
-							<ModalPop
-								isOpen={isModalChangesOpen}
-								onClose={() => setIsModalChangesOpen(false)}
-								title="Увага!"
-								type="error"
-								leftButton={() => (
-									<Button onClick={() => setIsModalChangesOpen(false)}>Зрозуміло</Button>
-								)}
-							>
-								На сторінці є незбережені зміни. Для продовження необхідно зберегти або
-								скасувати зміни
-							</ModalPop>
-						) //add modal on clicking between tabs if are changes in form
-					} */}
 				</form>
 			)}
 			<LoaderOverlay />
