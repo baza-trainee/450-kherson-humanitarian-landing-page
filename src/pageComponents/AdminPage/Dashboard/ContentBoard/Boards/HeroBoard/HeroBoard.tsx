@@ -13,7 +13,6 @@ import { ImgUploadTextOverlaid } from '~components/ImgUploadTextOverlaid/ImgUplo
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
-import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
 import { fetchHeroData } from '../../../Tabs/fetchHelpers/fetchHeroData';
 import { EmptyBoard } from '../EmptyBoard/EmptyBoard';
@@ -36,8 +35,6 @@ export function HeroBoard() {
 	const [titleValue, setTitleValue] = useState<string>('');
 	const [subtitleValue, setSubtitleValue] = useState<string>('');
 
-	const { LoaderOverlay, showLoaderOverlay, hideLoaderOverlay } = useLoaderOverlay();
-
 	const { activeTabId, getTabsData, setIsTabsClickBlocked } = useTabsState((state) => ({
 		activeTabId: state.activeTabId,
 		getTabsData: state.getTabsData,
@@ -48,6 +45,7 @@ export function HeroBoard() {
 		isModalOnSuccessSaveOpen,
 		isLoading,
 		heroBoardData,
+		stateError,
 		getHeroBoardById,
 		updateHeroBoard,
 		addNewHeroBoard,
@@ -58,6 +56,7 @@ export function HeroBoard() {
 		isModalOnSuccessSaveOpen: state.isModalOnSuccessSaveOpen,
 		isLoading: state.isLoading,
 		heroBoardData: state.heroBoardData,
+		stateError: state.error,
 		getHeroBoardById: state.getHeroBoardById,
 		updateHeroBoard: state.updateHeroBoard,
 		addNewHeroBoard: state.addNewHeroBoard,
@@ -145,9 +144,9 @@ export function HeroBoard() {
 			required: true,
 		}),
 	};
+	console.log('err', stateError); //-----------------log
 
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
-		showLoaderOverlay();
 		let image = '',
 			type = '';
 		const options = {
@@ -192,7 +191,6 @@ export function HeroBoard() {
 		activeTabId === 'new' ? await addNewHeroBoard(body) : await updateHeroBoard(body);
 		// *after saving into server need to set IsBlocked to false in order to click between tabs
 		setIsTabsClickBlocked(false);
-		hideLoaderOverlay();
 		await getTabsData(fetchHeroData);
 	};
 
@@ -215,6 +213,8 @@ export function HeroBoard() {
 				value.titleColor !== heroBoardData?.titleColor
 			) {
 				setIsTabsClickBlocked(true); //*if are changes, set block
+			} else {
+				setIsTabsClickBlocked(false);
 			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -298,7 +298,7 @@ export function HeroBoard() {
 						isDataValid={isValid}
 					/>
 					{
-						isModalOnSuccessSaveOpen && activeTabId !== 'empty' && (
+						isModalOnSuccessSaveOpen && (
 							<ModalPop
 								isOpen={isModalOnSuccessSaveOpen}
 								onClose={setIsModalOnSuccessSaveClose}
@@ -313,7 +313,6 @@ export function HeroBoard() {
 					}
 				</form>
 			)}
-			<LoaderOverlay />
 		</>
 	);
 }

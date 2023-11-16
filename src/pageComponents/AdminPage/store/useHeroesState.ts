@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 
 import { api } from '~api/index';
-import { transformHeroBoardDTO } from '~api/rest/hero/dto/transformHeroBoardDTO';
 import type { HeroRequest } from '~api/types/backend/requests/HeroRequest';
 import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
 import type { Hero } from '~api/types/hero/Hero';
@@ -50,11 +49,11 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		set({
 			heroBoardData: {
 				image: '',
-				imageGradient: '',
+				imageGradient: 'lightGradient',
 				title: '',
-				titleColor: '',
+				titleColor: 'blue',
 				subtitle: '',
-				subtitleColor: '',
+				subtitleColor: 'blue',
 			},
 		});
 	},
@@ -65,7 +64,7 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			const resp = await api.hero.updateHeroBoard(body);
 			if ('data' in resp) {
 				if (resp.data) {
-					set({ heroBoardData: transformHeroBoardDTO(resp.data) });
+					set({ heroBoardData: resp.data });
 					set({ isModalOnSuccessSaveOpen: true });
 				}
 			} else {
@@ -78,6 +77,7 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		}
 	},
 	addNewHeroBoard: async (body: HeroRequest) => {
+		set({ isLoading: true });
 		set({ error: null });
 		try {
 			const resp = await api.hero.addNewHeroBoard(body);
@@ -89,6 +89,7 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 	deleteHeroBoard: async (id) => {
 		set({ isLoading: true });
 		set({ error: null });
+		set({ heroBoardData: null });
 		try {
 			await api.hero.removeHero(id);
 		} catch (error) {

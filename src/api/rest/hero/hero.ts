@@ -28,7 +28,7 @@ export const addNewHeroBoard = (body: HeroRequest) =>
 export const updateHeroBoard = (body: HeroRequest) =>
 	commonPut<HeroResponse, HeroRequest>('/hero/', body).then((resp) => {
 		if ('data' in resp) {
-			return { data: resp.data };
+			return { data: transformHeroBoardDTO(resp.data) };
 		}
 		return { error: resp };
 	});
