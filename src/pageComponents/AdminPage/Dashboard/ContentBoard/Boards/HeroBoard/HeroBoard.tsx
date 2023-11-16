@@ -13,6 +13,7 @@ import { ImgUploadTextOverlaid } from '~components/ImgUploadTextOverlaid/ImgUplo
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
+import { useLoaderOverlay } from '~hooks/useLoaderOverlay';
 
 import { fetchHeroData } from '../../../Tabs/fetchHelpers/fetchHeroData';
 import { EmptyBoard } from '../EmptyBoard/EmptyBoard';
@@ -35,35 +36,34 @@ export function HeroBoard() {
 	const [titleValue, setTitleValue] = useState<string>('');
 	const [subtitleValue, setSubtitleValue] = useState<string>('');
 
-	const { isModalChangesOpen, activeTabId, getTabsData, setIsBlocked, setIsModalChangesOpen } =
-		useTabsState((state) => ({
-			isModalChangesOpen: state.isModalChangesOpen,
-			activeTabId: state.activeTabId,
-			getTabsData: state.getTabsData,
-			setIsBlocked: state.setIsBlocked,
-			setIsModalChangesOpen: state.setIsModalChangesOpen,
-		}));
+	const { LoaderOverlay, showLoaderOverlay, hideLoaderOverlay } = useLoaderOverlay();
+
+	const { activeTabId, getTabsData, setIsTabsClickBlocked } = useTabsState((state) => ({
+		activeTabId: state.activeTabId,
+		getTabsData: state.getTabsData,
+		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
+	}));
 
 	const {
-		isSuccess,
+		isModalOnSuccessSaveOpen,
 		isLoading,
 		heroBoardData,
 		getHeroBoardById,
-		changeHeroBoard,
+		updateHeroBoard,
 		addNewHeroBoard,
 		deleteHeroBoard,
 		addNewEmptyHeroBoard,
-		setIsSuccess,
+		setIsModalOnSuccessSaveClose,
 	} = useHeroesState((state) => ({
-		isSuccess: state.isSuccess,
+		isModalOnSuccessSaveOpen: state.isModalOnSuccessSaveOpen,
 		isLoading: state.isLoading,
 		heroBoardData: state.heroBoardData,
 		getHeroBoardById: state.getHeroBoardById,
-		changeHeroBoard: state.changeHeroBoard,
+		updateHeroBoard: state.updateHeroBoard,
 		addNewHeroBoard: state.addNewHeroBoard,
 		deleteHeroBoard: state.deleteHeroBoard,
 		addNewEmptyHeroBoard: state.addNewEmptyHeroBoard,
-		setIsSuccess: state.setIsSuccess,
+		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 	}));
 
 	useEffect(() => {
@@ -104,7 +104,7 @@ export function HeroBoard() {
 			setSubtitleColor(heroBoardData.subtitleColor);
 			setTitleColor(heroBoardData.titleColor);
 			clearErrors();
-			setIsBlocked(false);
+			setIsTabsClickBlocked(false); //*if new data from server, than not block tabs clicking
 		}
 		if (activeTabId === 'new') {
 			//* set empty or default values
@@ -120,7 +120,7 @@ export function HeroBoard() {
 			setSubtitleColor('blue');
 			setTitleColor('blue');
 			clearErrors();
-			setIsBlocked(false);
+			setIsTabsClickBlocked(false); //*if new empty board, than not block tabs clicking
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [heroBoardData, activeTabId]);
@@ -147,6 +147,7 @@ export function HeroBoard() {
 	};
 
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
+		showLoaderOverlay();
 		let image = '',
 			type = '';
 		const options = {
@@ -188,9 +189,10 @@ export function HeroBoard() {
 				color: data.subtitleColor,
 			},
 		};
-		activeTabId === 'new' ? await addNewHeroBoard(body) : await changeHeroBoard(body);
+		activeTabId === 'new' ? await addNewHeroBoard(body) : await updateHeroBoard(body);
 		// *after saving into server need to set IsBlocked to false in order to click between tabs
-		setIsBlocked(false);
+		setIsTabsClickBlocked(false);
+		hideLoaderOverlay();
 		await getTabsData(fetchHeroData);
 	};
 
@@ -212,7 +214,7 @@ export function HeroBoard() {
 				value.title !== heroBoardData?.title ||
 				value.titleColor !== heroBoardData?.titleColor
 			) {
-				setIsBlocked(true);
+				setIsTabsClickBlocked(true); //*if are changes, set block
 			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -233,8 +235,7 @@ export function HeroBoard() {
 				subtitle: heroBoardData.subtitle,
 				subtitleColor: heroBoardData.subtitleColor,
 			});
-			setIsBlocked(false);
-			if (activeTabId === 'new') await getTabsData(fetchHeroData);
+			setIsTabsClickBlocked(false);
 		}
 	};
 
@@ -297,18 +298,20 @@ export function HeroBoard() {
 						isDataValid={isValid}
 					/>
 					{
-						isSuccess && (
+						isModalOnSuccessSaveOpen && activeTabId !== 'empty' && (
 							<ModalPop
-								isOpen={isSuccess}
-								onClose={setIsSuccess}
+								isOpen={isModalOnSuccessSaveOpen}
+								onClose={setIsModalOnSuccessSaveClose}
 								title="Вітаємо!"
-								leftButton={() => <Button onClick={setIsSuccess}>Ок</Button>}
+								leftButton={() => (
+									<Button onClick={setIsModalOnSuccessSaveClose}>Ок</Button>
+								)}
 							>
 								Ваші дані успішно збережено
 							</ModalPop>
 						) //add modal on success saving data on server
 					}
-					{
+					{/* {
 						isModalChangesOpen && (
 							<ModalPop
 								isOpen={isModalChangesOpen}
@@ -323,9 +326,10 @@ export function HeroBoard() {
 								скасувати зміни
 							</ModalPop>
 						) //add modal on clicking between tabs if are changes in form
-					}
+					} */}
 				</form>
 			)}
+			<LoaderOverlay />
 		</>
 	);
 }
