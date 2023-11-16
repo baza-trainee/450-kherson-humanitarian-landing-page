@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { Loader } from '~components/Loader/Loader';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 import { getIndexByKey } from '~helpers/getIndexByKey';
 import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
@@ -34,6 +35,7 @@ export function Tabs() {
 	const { query } = router;
 
 	const [tabsTitleName, setTabsTitleName] = useState<string>('');
+	const [isModalTabsClickBlockedOpen, setIsModalTabsClickBlockedOpen] = useState<boolean>(false);
 
 	const { setParams } = useParams();
 
@@ -42,23 +44,21 @@ export function Tabs() {
 	const isDataLoading = isListsDataLoading || isHeroDataLoading;
 
 	const {
-		isBlocked,
+		isTabsClickBlocked,
 		isLoading,
 		tabsData,
 		activeTabId,
 		setActiveTabId,
 		getTabsData,
 		setTabsData,
-		setIsModalChangesOpen,
 	} = useTabsState((state) => ({
-		isBlocked: state.isBlocked,
+		isTabsClickBlocked: state.isTabsClickBlocked,
 		isLoading: state.isLoading,
 		activeTabId: state.activeTabId,
 		tabsData: state.tabsData,
 		setActiveTabId: state.setActiveTabId,
 		getTabsData: state.getTabsData,
 		setTabsData: state.setTabsData,
-		setIsModalChangesOpen: state.setIsModalChangesOpen,
 	}));
 
 	//* 1. Get page route and fetch tabs data
@@ -107,7 +107,7 @@ export function Tabs() {
 	const isActiveClass = (isActive: boolean) => (isActive ? s.active : '');
 
 	const handleTabOnClick = (id: string) => {
-		if (isBlocked) setIsModalChangesOpen(true);
+		if (isTabsClickBlocked) setIsModalTabsClickBlockedOpen(true);
 		else {
 			if (tabsData) {
 				if (tabsData.tabs.find((item) => item.id === 'new')) {
@@ -121,7 +121,7 @@ export function Tabs() {
 	};
 
 	const handleAddNewTabOnClick = () => {
-		if (isBlocked) setIsModalChangesOpen(true);
+		if (isTabsClickBlocked) setIsModalTabsClickBlockedOpen(true);
 		else {
 			if (tabsData) {
 				tabsData.tabs.push({
@@ -165,6 +165,24 @@ export function Tabs() {
 							/>
 						</Button>
 					)}
+					{
+						isModalTabsClickBlockedOpen && (
+							<ModalPop
+								isOpen={isModalTabsClickBlockedOpen}
+								onClose={() => setIsModalTabsClickBlockedOpen(false)}
+								title="Увага!"
+								type="error"
+								leftButton={() => (
+									<Button onClick={() => setIsModalTabsClickBlockedOpen(false)}>
+										Зрозуміло
+									</Button>
+								)}
+							>
+								На сторінці є незбережені зміни. Для продовження необхідно зберегти або
+								скасувати зміни
+							</ModalPop>
+						) //modal on clicking between tabs if are changes in form
+					}
 				</>
 			)}
 		</div>

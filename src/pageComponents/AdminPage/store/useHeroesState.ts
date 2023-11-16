@@ -8,20 +8,20 @@ import type { Hero } from '~api/types/hero/Hero';
 import { returnAppError } from '~helpers/returnAppError';
 
 interface UseHeroesState {
-	isSuccess: boolean;
+	isModalOnSuccessSaveOpen: boolean;
 	isLoading: boolean;
 	error: ErrorResponse | null;
 	heroBoardData: Hero | null;
 	getHeroBoardById: (id: string) => Promise<void>;
 	addNewEmptyHeroBoard: () => Promise<void>;
-	changeHeroBoard: (body: HeroRequest) => Promise<void>;
+	updateHeroBoard: (body: HeroRequest) => Promise<void>;
 	addNewHeroBoard: (body: HeroRequest) => Promise<void>;
 	deleteHeroBoard: (id: string) => Promise<void>;
-	setIsSuccess: () => void;
+	setIsModalOnSuccessSaveClose: () => void;
 }
 
 export const useHeroesState = create<UseHeroesState>((set) => ({
-	isSuccess: false,
+	isModalOnSuccessSaveOpen: false,
 	isLoading: false,
 	error: null,
 	heroBoardData: null,
@@ -43,8 +43,8 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			set({ isLoading: false });
 		}
 	},
-	setIsSuccess: () => {
-		set({ isSuccess: false });
+	setIsModalOnSuccessSaveClose: () => {
+		set({ isModalOnSuccessSaveOpen: false });
 	},
 	addNewEmptyHeroBoard: async () => {
 		set({
@@ -58,15 +58,15 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			},
 		});
 	},
-	changeHeroBoard: async (body: HeroRequest) => {
+	updateHeroBoard: async (body: HeroRequest) => {
 		set({ isLoading: true });
 		set({ error: null });
 		try {
-			const resp = await api.hero.changeHeroBoard(body);
+			const resp = await api.hero.updateHeroBoard(body);
 			if ('data' in resp) {
 				if (resp.data) {
 					set({ heroBoardData: transformHeroBoardDTO(resp.data) });
-					set({ isSuccess: true });
+					set({ isModalOnSuccessSaveOpen: true });
 				}
 			} else {
 				set({ error: resp.error });
@@ -81,7 +81,7 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		set({ error: null });
 		try {
 			const resp = await api.hero.addNewHeroBoard(body);
-			if ('data' in resp) set({ isSuccess: true });
+			if ('data' in resp) set({ isModalOnSuccessSaveOpen: true });
 		} catch (error) {
 			set({ error: returnAppError(error) });
 		}

@@ -25,7 +25,7 @@ export const getHeroBoardById = (heroId: string) =>
 export const addNewHeroBoard = (body: HeroRequest) =>
 	commonPost<HeroResponse, HeroRequest>('/hero', body);
 
-export const changeHeroBoard = (body: HeroRequest) =>
+export const updateHeroBoard = (body: HeroRequest) =>
 	commonPut<HeroResponse, HeroRequest>('/hero/', body).then((resp) => {
 		if ('data' in resp) {
 			return { data: resp.data };
