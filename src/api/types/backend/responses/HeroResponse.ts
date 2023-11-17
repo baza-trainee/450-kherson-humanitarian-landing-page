@@ -1,9 +1,9 @@
+import type { PictureResponse } from './PictureResponse ';
+
 export interface HeroResponse {
 	id: string;
 	view: {
-		picture: {
-			image: string;
-		};
+		picture: PictureResponse;
 		color: string;
 	};
 	title: {

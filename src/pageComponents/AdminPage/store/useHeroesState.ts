@@ -1,27 +1,26 @@
 import { create } from 'zustand';
 
 import { api } from '~api/index';
-import { transformHeroBoardDTO } from '~api/rest/hero/dto/transformHeroBoardDTO';
 import type { HeroRequest } from '~api/types/backend/requests/HeroRequest';
 import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
 import type { Hero } from '~api/types/hero/Hero';
 import { returnAppError } from '~helpers/returnAppError';
 
 interface UseHeroesState {
-	isSuccess: boolean;
+	isModalOnSuccessSaveOpen: boolean;
 	isLoading: boolean;
 	error: ErrorResponse | null;
 	heroBoardData: Hero | null;
 	getHeroBoardById: (id: string) => Promise<void>;
-	addNewEmptyHeroBoard: () => Promise<void>;
-	changeHeroBoard: (body: HeroRequest) => Promise<void>;
+	addNewEmptyHeroBoard: () => void;
+	updateHeroBoardById: (body: HeroRequest) => Promise<void>;
 	addNewHeroBoard: (body: HeroRequest) => Promise<void>;
-	deleteHeroBoard: (id: string) => Promise<void>;
-	setIsSuccess: () => void;
+	deleteHeroBoardById: (id: string) => Promise<void>;
+	setIsModalOnSuccessSaveClose: () => void;
 }
 
 export const useHeroesState = create<UseHeroesState>((set) => ({
-	isSuccess: false,
+	isModalOnSuccessSaveOpen: false,
 	isLoading: false,
 	error: null,
 	heroBoardData: null,
@@ -43,32 +42,30 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			set({ isLoading: false });
 		}
 	},
-	setIsSuccess: () => {
-		set({ isSuccess: false });
+	setIsModalOnSuccessSaveClose: () => {
+		set({ isModalOnSuccessSaveOpen: false });
 	},
-	addNewEmptyHeroBoard: async () => {
+	addNewEmptyHeroBoard: () => {
+		set({ error: null });
 		set({
 			heroBoardData: {
 				image: '',
-				imageGradient: '',
+				imageGradient: 'lightGradient',
 				title: '',
-				titleColor: '',
+				titleColor: 'blue',
 				subtitle: '',
-				subtitleColor: '',
+				subtitleColor: 'blue',
 			},
 		});
-		set({ isLoading: false });
 	},
-	changeHeroBoard: async (body: HeroRequest) => {
+	updateHeroBoardById: async (body: HeroRequest) => {
 		set({ isLoading: true });
 		set({ error: null });
 		try {
-			const resp = await api.hero.changeHeroBoard(body);
+			const resp = await api.hero.updateHeroBoard(body);
 			if ('data' in resp) {
-				if (resp.data) {
-					set({ heroBoardData: transformHeroBoardDTO(resp.data) });
-					set({ isSuccess: true });
-				}
+				set({ heroBoardData: resp.data });
+				set({ isModalOnSuccessSaveOpen: true });
 			} else {
 				set({ error: resp.error });
 			}
@@ -83,16 +80,15 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 		set({ error: null });
 		try {
 			const resp = await api.hero.addNewHeroBoard(body);
-			if ('data' in resp) set({ isSuccess: true });
+			if ('data' in resp) set({ isModalOnSuccessSaveOpen: true });
 		} catch (error) {
 			set({ error: returnAppError(error) });
-		} finally {
-			set({ isLoading: false });
 		}
 	},
-	deleteHeroBoard: async (id) => {
+	deleteHeroBoardById: async (id) => {
 		set({ isLoading: true });
 		set({ error: null });
+		set({ heroBoardData: null });
 		try {
 			await api.hero.removeHero(id);
 		} catch (error) {
