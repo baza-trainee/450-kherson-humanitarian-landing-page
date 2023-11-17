@@ -47,9 +47,9 @@ export function HeroBoard() {
 		heroBoardData,
 		stateError,
 		getHeroBoardById,
-		updateHeroBoard,
+		updateHeroBoardById,
 		addNewHeroBoard,
-		deleteHeroBoard,
+		deleteHeroBoardById,
 		addNewEmptyHeroBoard,
 		setIsModalOnSuccessSaveClose,
 	} = useHeroesState((state) => ({
@@ -58,12 +58,14 @@ export function HeroBoard() {
 		heroBoardData: state.heroBoardData,
 		stateError: state.error,
 		getHeroBoardById: state.getHeroBoardById,
-		updateHeroBoard: state.updateHeroBoard,
+		updateHeroBoardById: state.updateHeroBoardById,
 		addNewHeroBoard: state.addNewHeroBoard,
-		deleteHeroBoard: state.deleteHeroBoard,
+		deleteHeroBoardById: state.deleteHeroBoardById,
 		addNewEmptyHeroBoard: state.addNewEmptyHeroBoard,
 		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 	}));
+
+	const [errorMessage, setErrorMessage] = useState('');
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -75,6 +77,15 @@ export function HeroBoard() {
 		else addNewEmptyHeroBoard();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeTabId]);
+
+	useEffect(() => {
+		//*set message to show in Modal Error
+		if (stateError) {
+			if (stateError.status === 406)
+				setErrorMessage('Не правильно введені дані. Можливо є зайві символи');
+			if (stateError.status === 500) setErrorMessage(stateError.message);
+		}
+	}, [stateError]);
 
 	const {
 		register,
@@ -144,7 +155,6 @@ export function HeroBoard() {
 			required: true,
 		}),
 	};
-	console.log('err', stateError); //-----------------log
 
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
 		let image = '',
@@ -188,7 +198,7 @@ export function HeroBoard() {
 				color: data.subtitleColor,
 			},
 		};
-		activeTabId === 'new' ? await addNewHeroBoard(body) : await updateHeroBoard(body);
+		activeTabId === 'new' ? await addNewHeroBoard(body) : await updateHeroBoardById(body);
 		// *after saving into server need to set IsBlocked to false in order to click between tabs
 		setIsTabsClickBlocked(false);
 		await getTabsData(fetchHeroData);
@@ -241,7 +251,7 @@ export function HeroBoard() {
 
 	const handleOnModalRemoveYesClick = async () => {
 		if (activeTabId) {
-			await deleteHeroBoard(activeTabId);
+			await deleteHeroBoardById(activeTabId);
 			await getTabsData(fetchHeroData);
 		}
 	};
@@ -311,6 +321,16 @@ export function HeroBoard() {
 							</ModalPop>
 						) //add modal on success saving data on server
 					}
+					{errorMessage && (
+						<ModalPop
+							type="error"
+							title="Помилка при збереженні!"
+							isOpen={!!errorMessage}
+							onClose={() => setErrorMessage('')}
+						>
+							{errorMessage}
+						</ModalPop>
+					)}
 				</form>
 			)}
 		</>

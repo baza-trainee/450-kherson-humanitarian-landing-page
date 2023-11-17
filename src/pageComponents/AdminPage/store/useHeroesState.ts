@@ -12,10 +12,10 @@ interface UseHeroesState {
 	error: ErrorResponse | null;
 	heroBoardData: Hero | null;
 	getHeroBoardById: (id: string) => Promise<void>;
-	addNewEmptyHeroBoard: () => Promise<void>;
-	updateHeroBoard: (body: HeroRequest) => Promise<void>;
+	addNewEmptyHeroBoard: () => void;
+	updateHeroBoardById: (body: HeroRequest) => Promise<void>;
 	addNewHeroBoard: (body: HeroRequest) => Promise<void>;
-	deleteHeroBoard: (id: string) => Promise<void>;
+	deleteHeroBoardById: (id: string) => Promise<void>;
 	setIsModalOnSuccessSaveClose: () => void;
 }
 
@@ -45,7 +45,8 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 	setIsModalOnSuccessSaveClose: () => {
 		set({ isModalOnSuccessSaveOpen: false });
 	},
-	addNewEmptyHeroBoard: async () => {
+	addNewEmptyHeroBoard: () => {
+		set({ error: null });
 		set({
 			heroBoardData: {
 				image: '',
@@ -57,16 +58,14 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			},
 		});
 	},
-	updateHeroBoard: async (body: HeroRequest) => {
+	updateHeroBoardById: async (body: HeroRequest) => {
 		set({ isLoading: true });
 		set({ error: null });
 		try {
 			const resp = await api.hero.updateHeroBoard(body);
 			if ('data' in resp) {
-				if (resp.data) {
-					set({ heroBoardData: resp.data });
-					set({ isModalOnSuccessSaveOpen: true });
-				}
+				set({ heroBoardData: resp.data });
+				set({ isModalOnSuccessSaveOpen: true });
 			} else {
 				set({ error: resp.error });
 			}
@@ -86,7 +85,7 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			set({ error: returnAppError(error) });
 		}
 	},
-	deleteHeroBoard: async (id) => {
+	deleteHeroBoardById: async (id) => {
 		set({ isLoading: true });
 		set({ error: null });
 		set({ heroBoardData: null });
