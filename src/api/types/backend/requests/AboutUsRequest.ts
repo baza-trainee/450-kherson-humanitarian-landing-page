@@ -1,8 +1,7 @@
+import type { PictureRequest } from './PictureRequest';
+
 export interface AboutUsRequest {
-	picture?: {
-		mime_type: string;
-		image: string;
-	};
+	picture?: PictureRequest;
 	title: string;
 	text: string;
 }

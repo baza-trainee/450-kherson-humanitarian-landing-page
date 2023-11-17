@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import imageCompression from 'browser-image-compression';
 
 import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
-import { UseAboutUsState } from '~/pageComponents/AdminPage/store/useAboutUsState';
+import { useAboutUsState } from '~/pageComponents/AdminPage/store/useAboutUsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { Button } from '~components/Buttons/Button';
 import { ImgUpload } from '~components/ImgUpload/ImgUpload';
@@ -22,30 +22,27 @@ interface FormFields {
 }
 
 export function AboutUsBoard() {
-	const { isModalChangesOpen, activeTabId, setIsBlocked, setIsModalChangesOpen } = useTabsState(
-		(state) => ({
-			isModalChangesOpen: state.isModalChangesOpen,
-			activeTabId: state.activeTabId,
-			setIsBlocked: state.setIsBlocked,
-			setIsModalChangesOpen: state.setIsModalChangesOpen,
-		}),
-	);
+	const { activeTabId, isTabsClickBlocked, setIsTabsClickBlocked } = useTabsState((state) => ({
+		activeTabId: state.activeTabId,
+		isTabsClickBlocked: state.isTabsClickBlocked,
+		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
+	}));
 	const {
-		isSuccess,
+		isModalOnSuccessSaveOpen,
 		isLoading,
 		aboutUsData,
-		setIsSuccess,
+		setIsModalOnSuccessSaveClose,
 		getAboutUsDataById,
-		changeAboutUsDataBoard,
-		changeAboutUsFundDataBoard,
-	} = UseAboutUsState((state) => ({
-		isSuccess: state.isSuccess,
+		updateAboutUsDataBoard,
+		updateAboutUsFundDataBoard,
+	} = useAboutUsState((state) => ({
+		isModalOnSuccessSaveOpen: state.isModalOnSuccessSaveOpen,
 		isLoading: state.isLoading,
 		aboutUsData: state.aboutUsData,
-		setIsSuccess: state.setIsSuccess,
+		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 		getAboutUsDataById: state.getAboutUsDataById,
-		changeAboutUsDataBoard: state.changeAboutUsDataBoard,
-		changeAboutUsFundDataBoard: state.changeAboutUsFundDataBoard,
+		updateAboutUsDataBoard: state.updateAboutUsDataBoard,
+		updateAboutUsFundDataBoard: state.updateAboutUsFundDataBoard,
 	}));
 
 	useEffect(() => {
@@ -131,7 +128,7 @@ export function AboutUsBoard() {
 			};
 			console.log('body', body);
 
-			await changeAboutUsFundDataBoard(body);
+			await updateAboutUsFundDataBoard(body);
 		} else {
 			if (data.title && data.text && activeTabId) {
 				const body =
@@ -148,7 +145,7 @@ export function AboutUsBoard() {
 								title: data.title,
 								text: data.text,
 						  };
-				await changeAboutUsDataBoard(body, activeTabId);
+				await updateAboutUsDataBoard(body, activeTabId);
 			}
 		}
 	};
@@ -161,7 +158,7 @@ export function AboutUsBoard() {
 				value.title !== aboutUsData?.title ||
 				value.text !== aboutUsData?.text
 			) {
-				setIsBlocked(true);
+				setIsTabsClickBlocked(true);
 			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -217,34 +214,21 @@ export function AboutUsBoard() {
 						onReset={handleOnModalCancelYesClick}
 						onSave={handleSubmit(onSubmit)}
 						isDataValid={isValid}
+						isDisabled={!isTabsClickBlocked}
 					/>
 					{
-						isSuccess && (
+						isModalOnSuccessSaveOpen && (
 							<ModalPop
-								isOpen={isSuccess}
-								onClose={setIsSuccess}
+								isOpen={isModalOnSuccessSaveOpen}
+								onClose={setIsModalOnSuccessSaveClose}
 								title="Вітаємо!"
-								leftButton={() => <Button onClick={setIsSuccess}>Ок</Button>}
+								leftButton={() => (
+									<Button onClick={setIsModalOnSuccessSaveClose}>Ок</Button>
+								)}
 							>
 								Ваші дані успішно збережено
 							</ModalPop>
 						) //add modal on success saving data on server
-					}
-					{
-						isModalChangesOpen && (
-							<ModalPop
-								isOpen={isModalChangesOpen}
-								onClose={() => setIsModalChangesOpen(false)}
-								title="Увага!"
-								type="error"
-								leftButton={() => (
-									<Button onClick={() => setIsModalChangesOpen(false)}>Зрозуміло</Button>
-								)}
-							>
-								На сторінці є незбережені зміни. Для продовження необхідно зберегти або
-								скасувати зміни
-							</ModalPop>
-						) //add modal on clicking between tabs if are changes in form
 					}
 				</form>
 			)}

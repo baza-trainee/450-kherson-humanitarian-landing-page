@@ -16,7 +16,7 @@ export const getAboutUsFund = () =>
 		return { error: resp };
 	});
 
-export const changeAboutUsFund = (body: AboutUsFundRequest) =>
+export const updateAboutUsFund = (body: AboutUsFundRequest) =>
 	commonPut<AboutUsFundResponse, AboutUsFundRequest>('/fund/', body).then((resp) => {
 		if ('data' in resp) {
 			return { data: transformAboutUsFundDTO(resp.data) };
@@ -32,7 +32,7 @@ export const getAboutUs = (id: string) =>
 		return { error: resp };
 	});
 
-export const changeAboutUs = (body: AboutUsRequest, id: string) =>
+export const updateAboutUs = (body: AboutUsRequest, id: string) =>
 	commonPut<AboutUsResponse, AboutUsRequest>(`/${id}`, body).then((resp) => {
 		if ('data' in resp) {
 			return { data: transformAboutUsDTO(resp.data) };

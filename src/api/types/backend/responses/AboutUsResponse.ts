@@ -1,7 +1,7 @@
+import type { PictureResponse } from './PictureResponse ';
+
 export interface AboutUsResponse {
-	picture: {
-		image: string;
-	};
+	picture: PictureResponse;
 	title: string;
 	text: string;
 }
