@@ -35,11 +35,14 @@ export function HeroBoard() {
 	const [titleValue, setTitleValue] = useState<string>('');
 	const [subtitleValue, setSubtitleValue] = useState<string>('');
 
-	const { activeTabId, getTabsData, setIsTabsClickBlocked } = useTabsState((state) => ({
-		activeTabId: state.activeTabId,
-		getTabsData: state.getTabsData,
-		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
-	}));
+	const { activeTabId, isTabsClickBlocked, getTabsData, setIsTabsClickBlocked } = useTabsState(
+		(state) => ({
+			activeTabId: state.activeTabId,
+			isTabsClickBlocked: state.isTabsClickBlocked,
+			getTabsData: state.getTabsData,
+			setIsTabsClickBlocked: state.setIsTabsClickBlocked,
+		}),
+	);
 
 	const {
 		isModalOnSuccessSaveOpen,
@@ -306,6 +309,7 @@ export function HeroBoard() {
 						onReset={handleOnModalCancelYesClick}
 						onSave={handleSubmit(onSubmit)}
 						isDataValid={isValid}
+						isDisabled={!isTabsClickBlocked}
 					/>
 					{
 						isModalOnSuccessSaveOpen && (
