@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
@@ -6,13 +6,16 @@ import { useRouter } from 'next/router';
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { Loader } from '~components/Loader/Loader';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 import { getIndexByKey } from '~helpers/getIndexByKey';
 import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
 
+import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
+import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
 import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
 
@@ -32,26 +35,43 @@ export function Tabs() {
 	const router = useRouter();
 	const { query } = router;
 
+	const [tabsTitleName, setTabsTitleName] = useState<string>('');
+	const [isModalTabsClickBlockedOpen, setIsModalTabsClickBlockedOpen] = useState<boolean>(false);
+
 	const { setParams } = useParams();
 
 	const isListsDataLoading = useListsState((state) => state.isLoading);
-	const isDataLoading = isListsDataLoading;
+	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
+	const isDataLoading = isListsDataLoading || isHeroDataLoading;
 
-	const { isLoading, tabsData, activeTabId, setActiveTabId, getTabsData, setTabsData } =
-		useTabsState((state) => ({
-			isLoading: state.isLoading,
-			activeTabId: state.activeTabId,
-			tabsData: state.tabsData,
-			setActiveTabId: state.setActiveTabId,
-			getTabsData: state.getTabsData,
-			setTabsData: state.setTabsData,
-		}));
+	const {
+		isTabsClickBlocked,
+		isLoading,
+		tabsData,
+		activeTabId,
+		setActiveTabId,
+		getTabsData,
+		setTabsData,
+	} = useTabsState((state) => ({
+		isTabsClickBlocked: state.isTabsClickBlocked,
+		isLoading: state.isLoading,
+		activeTabId: state.activeTabId,
+		tabsData: state.tabsData,
+		setActiveTabId: state.setActiveTabId,
+		getTabsData: state.getTabsData,
+		setTabsData: state.setTabsData,
+	}));
 
 	//* 1. Get page route and fetch tabs data
 	//* Set fetching helpers function here ↓
+	// If isEditable set Title to your block setTabsTitleName('Your title name')
 	useEffect(() => {
 		const fetchData = getMatch(query?.slug?.toString(), {
 			lists: async () => await getTabsData(fetchListData),
+			hero: async () => {
+				await getTabsData(fetchHeroData);
+				setTabsTitleName('Банер');
+			},
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			_: () => setTabsData(null),
 		});
@@ -67,8 +87,13 @@ export function Tabs() {
 			(query?.id && tabsData && getIndexByKey(tabsData?.tabs, 'id', query?.id) < 0)
 		) {
 			if (tabsData?.tabs?.length && tabsData?.tabs[0].id) {
-				setParams({ id: tabsData?.tabs[0].id });
-				setActiveTabId(tabsData?.tabs[0].id);
+				if (activeTabId === 'new') {
+					setParams({ id: tabsData?.tabs[tabsData?.tabs?.length - 1].id });
+					setActiveTabId(tabsData?.tabs[tabsData?.tabs?.length - 1].id);
+				} else {
+					setParams({ id: tabsData?.tabs[0].id });
+					setActiveTabId(tabsData?.tabs[0].id);
+				}
 			} else if (tabsData?.isEditable) {
 				setParams({ id: 'empty' });
 				setActiveTabId('empty');
@@ -83,12 +108,32 @@ export function Tabs() {
 	const isActiveClass = (isActive: boolean) => (isActive ? s.active : '');
 
 	const handleTabOnClick = (id: string) => {
-		setActiveTabId(id);
-		setParams({ id: id });
+		if (isTabsClickBlocked) setIsModalTabsClickBlockedOpen(true);
+		else {
+			if (tabsData) {
+				if (tabsData.tabs.find((item) => item.id === 'new')) {
+					tabsData.tabs.pop();
+					tabsData.isEditable = true;
+				}
+			}
+			setActiveTabId(id);
+			setParams({ id: id });
+		}
 	};
 
 	const handleAddNewTabOnClick = () => {
-		console.log('handleAddNewTabOnClick');
+		if (isTabsClickBlocked) setIsModalTabsClickBlockedOpen(true);
+		else {
+			if (tabsData) {
+				tabsData.tabs.push({
+					title: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
+					id: 'new',
+				});
+				tabsData.isEditable = false;
+				setActiveTabId('new');
+				setParams({ id: 'new' });
+			}
+		}
 	};
 
 	return (
@@ -121,6 +166,24 @@ export function Tabs() {
 							/>
 						</Button>
 					)}
+					{
+						isModalTabsClickBlockedOpen && (
+							<ModalPop
+								isOpen={isModalTabsClickBlockedOpen}
+								onClose={() => setIsModalTabsClickBlockedOpen(false)}
+								title="Увага!"
+								type="error"
+								leftButton={() => (
+									<Button onClick={() => setIsModalTabsClickBlockedOpen(false)}>
+										Зрозуміло
+									</Button>
+								)}
+							>
+								На сторінці є незбережені зміни. Для продовження необхідно зберегти або
+								скасувати зміни
+							</ModalPop>
+						) //modal on clicking between tabs if are changes in form
+					}
 				</>
 			)}
 		</div>

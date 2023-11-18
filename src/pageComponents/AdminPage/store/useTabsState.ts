@@ -6,6 +6,7 @@ import { returnAppError } from '~helpers/returnAppError';
 import type { TabsData } from '../Dashboard/Tabs/Tabs';
 
 interface UseTabsState {
+	isTabsClickBlocked: boolean;
 	isLoading: boolean;
 	error: ErrorResponse | null;
 	tabsData: TabsData | null;
@@ -13,9 +14,11 @@ interface UseTabsState {
 	setActiveTabId: (activeTabId: string | null) => void;
 	getTabsData: (callback: () => Promise<TabsData>) => Promise<void>;
 	setTabsData: (tabsData: TabsData | null) => void;
+	setIsTabsClickBlocked: (isTabsClickBlocked: boolean) => void;
 }
 
 export const useTabsState = create<UseTabsState>((set) => ({
+	isTabsClickBlocked: false,
 	isLoading: false,
 	error: null,
 	tabsData: null,
@@ -23,6 +26,7 @@ export const useTabsState = create<UseTabsState>((set) => ({
 	setActiveTabId: (activeTabId) => {
 		set({ activeTabId });
 	},
+
 	getTabsData: async (callback) => {
 		set({ isLoading: true });
 		set({ error: null });
@@ -38,9 +42,13 @@ export const useTabsState = create<UseTabsState>((set) => ({
 			set({ error: returnAppError(error) });
 		} finally {
 			set({ isLoading: false });
+			set({ isTabsClickBlocked: false });
 		}
 	},
 	setTabsData: (tabsData) => {
 		set(() => ({ tabsData }));
+	},
+	setIsTabsClickBlocked: (isTabsClickBlocked) => {
+		set({ isTabsClickBlocked: isTabsClickBlocked });
 	},
 }));

@@ -5,19 +5,21 @@ import { ModalPop } from '~components/ModalPop/ModalPop';
 
 import s from './ActionButtons.module.scss';
 
-interface AdminBlockButtonsProps {
+interface ActionButtonsProps {
 	onSave: () => void;
 	onReset: () => void;
 	onRemove?: () => void;
 	isDataValid: boolean;
+	isDisabled?: boolean;
 }
 
-export default function AdminBoardBlockButtons({
+export default function ActionButtons({
 	onSave,
 	onReset,
 	onRemove,
 	isDataValid,
-}: AdminBlockButtonsProps) {
+	isDisabled,
+}: ActionButtonsProps) {
 	const [isModalRemoveOpen, setIsModalRemoveOpen] = useState(false);
 	const [isModalResetOpen, setIsModalResetOpen] = useState(false);
 	const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
@@ -104,7 +106,9 @@ export default function AdminBoardBlockButtons({
 					Невірно заповнені поля.
 				</ModalPop>
 			)}
-			<Button onClick={handleSaveOnClick}>Зберегти</Button>
+			<Button onClick={handleSaveOnClick} disabled={isDisabled}>
+				Зберегти
+			</Button>
 		</div>
 	);
 }
