@@ -1,0 +1,24 @@
+@use '~/styles/mixins' as *;
+
+.scroll {
+	--scroll-scrollbar--color: transparent;
+	--scroll-scrollbar-button--color: transparent;
+	--scroll-scrollbar-thumb--border-color: var(--color--shades-2);
+	--scroll-scrollbar-thumb--border-radius: 1000px;
+	--scroll-scrollbar-thumb--color: var(--color--primary-3);
+
+	&::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+		background-color: var(--scroll-scrollbar--color);
+	}
+	&::-webkit-scrollbar-button {
+		height: 2px;
+		background: var(--scroll-scrollbar-button--color);
+	}
+	&::-webkit-scrollbar-thumb {
+		border: 2px solid var(--scroll-scrollbar-thumb--border-color);
+		border-radius: var(--scroll-scrollbar-thumb--border-radius);
+		background: var(--scroll-scrollbar-thumb--color);
+	}
+}
