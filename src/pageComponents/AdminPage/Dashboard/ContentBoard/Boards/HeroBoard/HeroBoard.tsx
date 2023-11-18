@@ -3,6 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import imageCompression from 'browser-image-compression';
+import { useRouter } from 'next/router';
 
 import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
 import { useHeroesState } from '~/pageComponents/AdminPage/store/useHeroesState';
@@ -35,14 +36,14 @@ export function HeroBoard() {
 	const [titleValue, setTitleValue] = useState<string>('');
 	const [subtitleValue, setSubtitleValue] = useState<string>('');
 
-	const { activeTabId, isTabsClickBlocked, getTabsData, setIsTabsClickBlocked } = useTabsState(
-		(state) => ({
-			activeTabId: state.activeTabId,
-			isTabsClickBlocked: state.isTabsClickBlocked,
-			getTabsData: state.getTabsData,
-			setIsTabsClickBlocked: state.setIsTabsClickBlocked,
-		}),
-	);
+	const router = useRouter();
+	const { query } = router;
+
+	const { isTabsClickBlocked, getTabsData, setIsTabsClickBlocked } = useTabsState((state) => ({
+		isTabsClickBlocked: state.isTabsClickBlocked,
+		getTabsData: state.getTabsData,
+		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
+	}));
 
 	const {
 		isModalOnSuccessSaveOpen,
@@ -72,14 +73,14 @@ export function HeroBoard() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			if (activeTabId) await getHeroBoardById(activeTabId);
+			if (query?.id) await getHeroBoardById(query?.id.toString());
 		};
 		//*set data from server into state
-		if (activeTabId !== 'new' && activeTabId !== 'empty') fetchData();
+		if (query?.id !== 'new' && query?.id !== 'empty') fetchData();
 		//* if new form, set empty state
 		else addNewEmptyHeroBoard();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [activeTabId]);
+	}, [query?.id]);
 
 	useEffect(() => {
 		//*set message to show in Modal Error
@@ -119,7 +120,7 @@ export function HeroBoard() {
 			clearErrors();
 			setIsTabsClickBlocked(false); //*if new data from server, than not block tabs clicking
 		}
-		if (activeTabId === 'new') {
+		if (query?.id === 'new') {
 			//* set empty or default values
 			setValue('image', '');
 			setValue('imageGradient', 'lightGradient');
@@ -136,7 +137,7 @@ export function HeroBoard() {
 			setIsTabsClickBlocked(false); //*if new empty board, than not block tabs clicking
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [heroBoardData, activeTabId]);
+	}, [heroBoardData, query?.id]);
 
 	const registers = {
 		image: register('image', {
@@ -181,7 +182,7 @@ export function HeroBoard() {
 		}
 
 		const body = {
-			id: activeTabId && activeTabId !== 'new' ? activeTabId : '',
+			id: query?.id && query?.id !== 'new' ? query?.id.toString() : '',
 			view:
 				data.image === heroBoardData?.image
 					? { color: data.imageGradient }
@@ -201,7 +202,7 @@ export function HeroBoard() {
 				color: data.subtitleColor,
 			},
 		};
-		activeTabId === 'new' ? await addNewHeroBoard(body) : await updateHeroBoardById(body);
+		query?.id === 'new' ? await addNewHeroBoard(body) : await updateHeroBoardById(body);
 		// *after saving into server need to set IsBlocked to false in order to click between tabs
 		setIsTabsClickBlocked(false);
 		await getTabsData(fetchHeroData);
@@ -253,17 +254,17 @@ export function HeroBoard() {
 	};
 
 	const handleOnModalRemoveYesClick = async () => {
-		if (activeTabId) {
-			await deleteHeroBoardById(activeTabId);
+		if (query?.id) {
+			await deleteHeroBoardById(query?.id.toString());
 			await getTabsData(fetchHeroData);
 		}
 	};
 
 	return (
 		<>
-			{(isLoading || !heroBoardData) && activeTabId !== 'empty' && <Loader />}
-			{!isLoading && activeTabId && activeTabId === 'empty' && <EmptyBoard />}
-			{!isLoading && activeTabId !== 'empty' && heroBoardData && (
+			{(isLoading || !heroBoardData) && query?.id !== 'empty' && <Loader />}
+			{!isLoading && query?.id && query?.id === 'empty' && <EmptyBoard />}
+			{!isLoading && query?.id !== 'empty' && heroBoardData && (
 				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<ImgUploadTextOverlaid
 						gradientValue={gradient}
@@ -305,7 +306,7 @@ export function HeroBoard() {
 						watch={watch}
 					/>
 					<ActionButtons
-						onRemove={activeTabId !== 'new' ? handleOnModalRemoveYesClick : undefined}
+						onRemove={query?.id !== 'new' ? handleOnModalRemoveYesClick : undefined}
 						onReset={handleOnModalCancelYesClick}
 						onSave={handleSubmit(onSubmit)}
 						isDataValid={isValid}
