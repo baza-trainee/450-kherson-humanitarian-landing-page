@@ -109,11 +109,9 @@ export function Tabs() {
 	const handleTabOnClick = (id: string) => {
 		if (isTabsClickBlocked) setIsModalTabsClickBlockedOpen(true);
 		else {
-			if (tabsData) {
-				if (tabsData.tabs.find((item) => item.id === 'new')) {
-					tabsData.tabs.pop();
-					tabsData.isEditable = true;
-				}
+			if (tabsData && tabsData.tabs.find((item) => item.id === 'new')) {
+				tabsData.tabs.pop();
+				tabsData.isEditable = true;
 			}
 			setActiveTabId(id);
 			setParams({ id: id });
