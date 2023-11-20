@@ -3,12 +3,14 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import imageCompression from 'browser-image-compression';
+import { useRouter } from 'next/router';
 
 import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
 import { useAboutUsState } from '~/pageComponents/AdminPage/store/useAboutUsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { Button } from '~components/Buttons/Button';
 import { ImgUpload } from '~components/ImgUpload/ImgUpload';
+import { TextArea } from '~components/inputs/TextArea/TextArea';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
@@ -22,37 +24,48 @@ interface FormFields {
 }
 
 export function AboutUsBoard() {
-	const { activeTabId, isTabsClickBlocked, setIsTabsClickBlocked } = useTabsState((state) => ({
-		activeTabId: state.activeTabId,
+	const { isTabsClickBlocked, setIsTabsClickBlocked } = useTabsState((state) => ({
 		isTabsClickBlocked: state.isTabsClickBlocked,
 		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
 	}));
+
+	const router = useRouter();
+	const { query } = router;
+
 	const {
 		isModalOnSuccessSaveOpen,
 		isLoading,
 		aboutUsData,
+		aboutUsFundData,
 		setIsModalOnSuccessSaveClose,
 		getAboutUsDataById,
+		getAboutUsFundData,
 		updateAboutUsDataBoard,
 		updateAboutUsFundDataBoard,
 	} = useAboutUsState((state) => ({
 		isModalOnSuccessSaveOpen: state.isModalOnSuccessSaveOpen,
 		isLoading: state.isLoading,
 		aboutUsData: state.aboutUsData,
+		aboutUsFundData: state.aboutUsFundData,
 		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 		getAboutUsDataById: state.getAboutUsDataById,
+		getAboutUsFundData: state.getAboutUsFundData,
 		updateAboutUsDataBoard: state.updateAboutUsDataBoard,
 		updateAboutUsFundDataBoard: state.updateAboutUsFundDataBoard,
 	}));
 
 	useEffect(() => {
 		const fetchData = async () => {
-			if (activeTabId) await getAboutUsDataById(activeTabId);
+			if (query?.id) {
+				query?.id === 'fund'
+					? await getAboutUsFundData()
+					: await getAboutUsDataById(query?.id.toString());
+			}
 		};
 		fetchData();
 		//*set data from server into state
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [activeTabId]);
+	}, [query?.id]);
 
 	const {
 		register,
@@ -67,15 +80,15 @@ export function AboutUsBoard() {
 	});
 
 	const registers =
-		activeTabId === 'fund'
+		query?.id === 'fund'
 			? {
 					image: register('image', {
-						required: aboutUsData?.image ? false : true, //---need to have empty state
+						required: aboutUsFundData?.image ? false : true,
 					}),
 			  }
 			: {
 					image: register('image', {
-						required: aboutUsData?.image ? false : true, //---need to have empty state
+						required: aboutUsData?.image ? false : true,
 					}),
 					title: register('title', {
 						required: true,
@@ -86,18 +99,17 @@ export function AboutUsBoard() {
 			  };
 
 	useEffect(() => {
-		if (aboutUsData) {
-			if (activeTabId === 'fund') {
-				setValue('image', aboutUsData.image);
-			} else {
-				setValue('image', aboutUsData.image);
-				setValue('title', aboutUsData.title);
-				setValue('text', aboutUsData.text);
-			}
-			clearErrors();
+		if (aboutUsFundData) {
+			setValue('image', aboutUsFundData.image);
+		} else if (aboutUsData) {
+			setValue('image', aboutUsData.image);
+			setValue('title', aboutUsData.title);
+			setValue('text', aboutUsData.text);
 		}
+		clearErrors();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [aboutUsData, activeTabId]);
+	}, [aboutUsData, aboutUsFundData]);
 
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
 		let image = '',
@@ -115,22 +127,21 @@ export function AboutUsBoard() {
 					.getDataUrlFromFile(compressedFile)
 					.then((dataImage) => (image = dataImage.toString()));
 				type = data.image[0].type;
-			} else image = aboutUsData?.image || '';
+			} else image = aboutUsData?.image || aboutUsFundData?.image || '';
 		} catch (error) {
 			console.error('Error imageCompression:', error); //-----------------------------log
 		}
-		if (activeTabId == 'fund') {
+
+		if (query?.id == 'fund') {
 			const body = {
 				picture: {
 					mime_type: type,
 					image: image.split(',')[1],
 				},
 			};
-			console.log('body', body);
-
 			await updateAboutUsFundDataBoard(body);
 		} else {
-			if (data.title && data.text && activeTabId) {
+			if (data.title && data.text && query?.id) {
 				const body =
 					data.image === aboutUsData?.image
 						? {
@@ -145,48 +156,51 @@ export function AboutUsBoard() {
 								title: data.title,
 								text: data.text,
 						  };
-				await updateAboutUsDataBoard(body, activeTabId);
+				await updateAboutUsDataBoard(body, query?.id.toString());
 			}
 		}
 	};
 
+	//* need to check if some changes at form, then set isBlocked to true, in order to block clicking between tabs
 	useEffect(() => {
 		watch((value) => {
-			//* need to check if some changes at form, then set isBlocked to true, in order to block clicking between tabs
 			if (
-				value.image !== aboutUsData?.image ||
-				value.title !== aboutUsData?.title ||
-				value.text !== aboutUsData?.text
+				(aboutUsFundData && query?.id === 'fund' && value.image !== aboutUsFundData.image) ||
+				(aboutUsData &&
+					query?.id !== 'fund' &&
+					(value.image === aboutUsData.image ||
+						value.title === aboutUsData.title ||
+						value.text === aboutUsData.text))
 			) {
 				setIsTabsClickBlocked(true);
-			}
+			} else setIsTabsClickBlocked(false);
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [watch, aboutUsData]);
+	}, [watch, aboutUsFundData, aboutUsData]);
 
 	const handleOnModalCancelYesClick = async () => {
-		if (aboutUsData) {
-			if (activeTabId === 'fund') {
-				reset({
-					image: aboutUsData.image,
-				});
-			} else {
-				reset({
-					image: aboutUsData.image,
-					title: aboutUsData.title,
-					text: aboutUsData.text,
-				});
-			}
+		if (query?.id === 'fund' && aboutUsFundData) {
+			reset({
+				image: aboutUsFundData.image,
+			});
+		} else if (aboutUsData && query?.id !== 'fund') {
+			reset({
+				image: aboutUsData.image,
+				title: aboutUsData.title,
+				text: aboutUsData.text,
+			});
 		}
+		setIsTabsClickBlocked(false);
 	};
 
 	return (
 		<>
-			{(isLoading || !aboutUsData) && activeTabId !== 'empty' && <Loader />}
-			{!isLoading && activeTabId !== 'empty' && aboutUsData && (
+			{(isLoading || (!aboutUsData && !aboutUsFundData)) && <Loader />}
+			{!isLoading && (
 				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<ImgUpload register={registers.image} watch={watch} errors={errors} />
-					{activeTabId !== 'fund' && (
+
+					{query?.id !== 'fund' && aboutUsData && (
 						<>
 							<TextInputWithCounter
 								register={registers.title}
@@ -197,9 +211,8 @@ export function AboutUsBoard() {
 								errors={errors}
 								showInfo
 							/>
-							<TextInputWithCounter
-								// type=''
-								size={5}
+							<TextArea
+								rows={15}
 								register={registers.text}
 								required
 								label="Текст"
