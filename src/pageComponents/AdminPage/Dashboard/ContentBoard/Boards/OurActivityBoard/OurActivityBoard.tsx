@@ -6,7 +6,7 @@ import imageCompression from 'browser-image-compression';
 import { useRouter } from 'next/router';
 
 import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
-import { useOurActivityBoardsState } from '~/pageComponents/AdminPage/store/useOurActivityBoardsState';
+import { useOurActivityState } from '~/pageComponents/AdminPage/store/useOurActivityState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { Button } from '~components/Buttons/Button';
 import { ImgUpload } from '~components/ImgUpload/ImgUpload';
@@ -40,7 +40,7 @@ export function OurActivityBoard() {
 		addNewEmptyOurActivityBoard,
 		addNewOurActivityBoard,
 		setIsModalOnSuccessSaveClose,
-	} = useOurActivityBoardsState((state) => ({
+	} = useOurActivityState((state) => ({
 		isModalOnSuccessSaveOpen: state.isModalOnSuccessSaveOpen,
 		isLoading: state.isLoading,
 		ourActivityBoardData: state.ourActivityBoardData,

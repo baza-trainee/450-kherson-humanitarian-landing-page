@@ -13,7 +13,7 @@ import { useParams } from '~hooks/useParams';
 
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
-import { useOurActivityBoardsState } from '../../store/useOurActivityBoardsState';
+import { useOurActivityState } from '../../store/useOurActivityState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
@@ -41,7 +41,7 @@ export function Tabs() {
 
 	const isListsDataLoading = useListsState((state) => state.isLoading);
 	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
-	const isOurActivityDataLoading = useOurActivityBoardsState((state) => state.isLoading);
+	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
 	const isDataLoading = isListsDataLoading || isHeroDataLoading || isOurActivityDataLoading;
 
 	const {

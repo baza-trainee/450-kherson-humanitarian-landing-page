@@ -19,7 +19,7 @@ interface OurActivityState {
 	addNewOurActivityBoard: (body: OurActivityRequest) => Promise<void>;
 }
 
-export const useOurActivityBoardsState = create<OurActivityState>((set) => ({
+export const useOurActivityState = create<OurActivityState>((set) => ({
 	isModalOnSuccessSaveOpen: false,
 	isLoading: false,
 	error: null,
