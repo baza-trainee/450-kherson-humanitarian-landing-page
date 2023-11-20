@@ -1,93 +1,191 @@
-import { useEffect, useState } from 'react';
-import type { DeepPartial, FieldValues, SubmitHandler } from 'react-hook-form';
+import { useEffect } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
-import { useBoardsState } from '~/pageComponents/AdminPage/store/useBoardsState';
+import imageCompression from 'browser-image-compression';
+import { useRouter } from 'next/router';
+
+import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
+import { useOurActivityBoardsState } from '~/pageComponents/AdminPage/store/useOurActivityBoardsState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { Button } from '~components/Buttons/Button';
 import { ImgUpload } from '~components/ImgUpload/ImgUpload';
 import { Loader } from '~components/Loader/Loader';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 
-import s from './OurActivityBoard.module.scss';
+import { fetchOurActivityData } from '../../../Tabs/fetchHelpers/fetchOurActivityData';
+import { EmptyBoard } from '../EmptyBoard/EmptyBoard';
 
-type CustomFieldValues = DeepPartial<FieldValues> & {
-	imageUrl: string;
-	id: string;
-};
+interface OurActivityFormFieldValues {
+	image: FileList | string;
+}
 
 export function OurActivityBoard() {
-	const [image, setImage] = useState<string>('');
-	const [formDefaultValues, setFormDefaultValues] = useState({
-		imageUrl: '',
-		id: '',
-	});
+	const router = useRouter();
+	const { query } = router;
 
-	const { activeTabId } = useTabsState((state) => ({
-		activeTabId: state.activeTabId,
+	const { getTabsData, setIsTabsClickBlocked, isTabsClickBlocked } = useTabsState((state) => ({
+		getTabsData: state.getTabsData,
+		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
+		isTabsClickBlocked: state.isTabsClickBlocked,
 	}));
 
-	const { isLoading, ourActivityBoardData } = useBoardsState((state) => ({
+	const {
+		isModalOnSuccessSaveOpen,
+		isLoading,
+		ourActivityBoardData,
+		getOurActivityBoardById,
+		updateOurActivityBoard,
+		deleteOurActivityBoardById,
+		addNewEmptyOurActivityBoard,
+		addNewOurActivityBoard,
+		setIsModalOnSuccessSaveClose,
+	} = useOurActivityBoardsState((state) => ({
+		isModalOnSuccessSaveOpen: state.isModalOnSuccessSaveOpen,
 		isLoading: state.isLoading,
 		ourActivityBoardData: state.ourActivityBoardData,
+		getOurActivityBoardById: state.getOurActivityBoardById,
+		updateOurActivityBoard: state.updateOurActivityBoard,
+		deleteOurActivityBoardById: state.deleteOurActivityBoardById,
+		addNewEmptyOurActivityBoard: state.addNewEmptyOurActivityBoard,
+		addNewOurActivityBoard: state.addNewOurActivityBoard,
+		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 	}));
-
-	useEffect(() => {
-		if (ourActivityBoardData) {
-			setFormDefaultValues({
-				imageUrl: ourActivityBoardData.imageUrl,
-				id: ourActivityBoardData.id,
-			});
-		}
-	}, [ourActivityBoardData]);
 
 	const {
 		watch,
 		register,
-		formState: { errors },
+		formState: { errors, isValid },
 		handleSubmit,
 		setValue,
-	} = useForm({
+		reset,
+		clearErrors,
+	} = useForm<OurActivityFormFieldValues>({
 		mode: 'onSubmit',
-		defaultValues: formDefaultValues,
 	});
+
+	const registers = {
+		image: register('image', {
+			required: ourActivityBoardData?.imageUrl ? false : true,
+		}),
+	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			if (query?.id) await getOurActivityBoardById(query?.id.toString());
+		};
+		if (query?.id !== 'new' && query?.id !== 'empty') fetchData();
+		else addNewEmptyOurActivityBoard();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [query?.id]);
 
 	useEffect(() => {
 		if (ourActivityBoardData) {
-			setValue('imageUrl', ourActivityBoardData.imageUrl);
-			setValue('id', ourActivityBoardData.id);
+			setValue('image', ourActivityBoardData.imageUrl);
+			clearErrors();
+			setIsTabsClickBlocked(false);
 		}
-	}, [ourActivityBoardData, setValue]);
+		if (query?.id === 'new') {
+			setValue('image', '');
+			clearErrors();
+			setIsTabsClickBlocked(false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ourActivityBoardData, query?.id]);
 
-	const convertToBase64 = (file: Blob) => {
-		const reader = new FileReader();
-		reader.onloadend = () => {
-			if (reader.result) setImage(reader.result.toString());
+	useEffect(() => {
+		watch((value) => {
+			if (value.image !== ourActivityBoardData?.imageUrl) {
+				setIsTabsClickBlocked(true);
+			} else {
+				setIsTabsClickBlocked(false);
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [watch, ourActivityBoardData]);
+
+	const onSubmit: SubmitHandler<OurActivityFormFieldValues> = async (
+		data: OurActivityFormFieldValues,
+	) => {
+		let image = '',
+			type = '';
+		const options = {
+			maxSizeMB: 0.488,
+			maxWidthOrHeight: 1920,
 		};
-		reader.readAsDataURL(file);
+
+		try {
+			if (data.image && data.image.length > 0 && typeof data.image !== 'string') {
+				const compressedFile = await imageCompression(data.image[0], options);
+
+				await imageCompression
+					.getDataUrlFromFile(compressedFile)
+					.then((dataImage) => (image = dataImage.toString()));
+				type = data.image[0].type;
+			} else {
+				image = ourActivityBoardData?.imageUrl || '';
+			}
+		} catch (error) {
+			console.error('Error:', error);
+		}
+
+		const body = {
+			id: query?.id && query?.id !== 'new' ? query?.id.toString() : '',
+			picture: {
+				mime_type: type,
+				image: image.split(',')[1],
+			},
+		};
+
+		query?.id === 'new' ? await addNewOurActivityBoard(body) : await updateOurActivityBoard(body);
+		setIsTabsClickBlocked(false);
+		await getTabsData(fetchOurActivityData);
 	};
 
-	const onSubmit: SubmitHandler<CustomFieldValues> = (data: CustomFieldValues) => {
-		console.log(convertToBase64(data.imageUrl[0]));
-		// if (data.files.length > 0) {
+	const handleOnModalRemoveYesClick = async () => {
+		if (query?.id) {
+			await deleteOurActivityBoardById(query?.id.toString());
+			await getTabsData(fetchOurActivityData);
+		}
+	};
 
-		// 	convertToBase64(data.files[0]);
-		// }
+	const handleOnModalCancelYesClick = async () => {
+		if (ourActivityBoardData) {
+			reset({
+				image: ourActivityBoardData.imageUrl,
+			});
+			setIsTabsClickBlocked(false);
+		}
 	};
 
 	return (
 		<>
-			{(isLoading || !ourActivityBoardData) && <Loader />}
-			{!isLoading && activeTabId && ourActivityBoardData && (
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<ImgUpload register={register('imageUrl')} watch={watch} defaultImageUrl={image} />
-					{/* <ImgUpload /> */}
-					<div className={s.buttons}>
-						<Button type="secondary" className={s.delete}>
-							Видалити блок
-						</Button>
-						<Button type="secondary">Скасувати зміни</Button>
-						<Button submit>Зберегти</Button>
-					</div>
+			{(isLoading || !ourActivityBoardData) && query?.id !== 'empty' && <Loader />}
+			{!isLoading && query?.id && query?.id === 'empty' && <EmptyBoard />}
+			{!isLoading && query?.id !== 'empty' && ourActivityBoardData && (
+				<form>
+					<ImgUpload register={registers.image} watch={watch} errors={errors} />
+					<ActionButtons
+						onRemove={query?.id !== 'new' ? handleOnModalRemoveYesClick : undefined}
+						onReset={handleOnModalCancelYesClick}
+						onSave={handleSubmit(onSubmit)}
+						isDataValid={isValid}
+						isDisabled={!isTabsClickBlocked}
+					/>
+					{
+						isModalOnSuccessSaveOpen && (
+							<ModalPop
+								isOpen={isModalOnSuccessSaveOpen}
+								onClose={setIsModalOnSuccessSaveClose}
+								title="Вітаємо!"
+								leftButton={() => (
+									<Button onClick={setIsModalOnSuccessSaveClose}>Ок</Button>
+								)}
+							>
+								Ваші дані успішно збережено
+							</ModalPop>
+						) //add modal on success saving data on server
+					}
 				</form>
 			)}
 		</>

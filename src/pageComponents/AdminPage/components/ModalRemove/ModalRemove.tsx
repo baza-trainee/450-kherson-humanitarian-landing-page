@@ -25,6 +25,7 @@ export function ModalRemove({
 
 	return (
 		<ModalPop
+			type="error"
 			title={'Видалити?'}
 			isOpen={isModalOpen}
 			onClose={handleOnNoClick}
@@ -33,7 +34,7 @@ export function ModalRemove({
 					Так
 				</Button>
 			)}
-			rightButton={() => <Button onClick={handleOnNoClick}>Ніт</Button>}
+			rightButton={() => <Button onClick={handleOnNoClick}>Ні</Button>}
 		/>
 	);
 }

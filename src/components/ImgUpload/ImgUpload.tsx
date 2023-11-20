@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
+// import type { FieldErrors, FieldValues } from 'react-hook-form';
 import type { FieldErrors, FieldValues } from 'react-hook-form';
 
 import clsx from 'clsx';
@@ -14,15 +15,18 @@ export type ImgUploadElement = HTMLInputElement;
 interface ImgUploadProps {
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
+	// errors?: FieldErrors<FieldValues>;
 	errors?: FieldErrors<FieldValues>;
 }
 
 export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
+	// ({ register, watch, errors }, ref) => {
 	({ register, watch, errors }, ref) => {
 		const [image, setImage] = useState<string>('');
 		const [imageError, setImageError] = useState<string>('');
 
 		const file = watch ? watch(register ? register.name : null) : null;
+		// const error = errors ? errors[register?.name] : '';
 		const error = errors ? errors[register?.name] : '';
 
 		useEffect(() => {
@@ -39,6 +43,10 @@ export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
 			setImageError('');
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [file]);
+
+		// const error = errors
+		// 	? errors[register?.name] || errors[register?.name]?.message?.toString()
+		// 	: '';
 
 		let borderStyle = { border: '1px solid var(--color--secondary-2)' };
 		if (error) borderStyle = { border: '1px solid var(--color--error-1)' };

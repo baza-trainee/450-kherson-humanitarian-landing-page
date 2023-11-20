@@ -13,6 +13,7 @@ import { useParams } from '~hooks/useParams';
 
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
+import { useOurActivityBoardsState } from '../../store/useOurActivityBoardsState';
 import { useTabsState } from '../../store/useTabsState';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
@@ -20,12 +21,10 @@ import { fetchListData } from './fetchHelpers/fetchListData';
 import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
 
 import s from './Tabs.module.scss';
-
 export interface Tab {
 	title: string;
 	id: string;
 }
-
 export interface TabsData {
 	tabs: Tab[];
 	isEditable: boolean;
@@ -42,7 +41,8 @@ export function Tabs() {
 
 	const isListsDataLoading = useListsState((state) => state.isLoading);
 	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
-	const isDataLoading = isListsDataLoading || isHeroDataLoading;
+	const isOurActivityDataLoading = useOurActivityBoardsState((state) => state.isLoading);
+	const isDataLoading = isListsDataLoading || isHeroDataLoading || isOurActivityDataLoading;
 
 	const {
 		isTabsClickBlocked,
@@ -73,6 +73,10 @@ export function Tabs() {
 				setTabsTitleName('Банер');
 			},
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
+			'our-activity': async () => {
+				await getTabsData(fetchOurActivityData);
+				setTabsTitleName('Фото');
+			},
 			_: () => setTabsData(null),
 		});
 		fetchData();
