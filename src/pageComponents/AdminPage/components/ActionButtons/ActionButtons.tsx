@@ -10,7 +10,7 @@ interface ActionButtonsProps {
 	onReset: () => void;
 	onRemove?: () => void;
 	isDataValid: boolean;
-	isDisabled?: boolean;
+	isDisabled: boolean;
 }
 
 export default function ActionButtons({

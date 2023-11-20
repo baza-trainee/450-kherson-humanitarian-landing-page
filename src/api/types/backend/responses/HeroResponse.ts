@@ -1,4 +1,4 @@
-import type { PictureResponse } from './PictureResponse ';
+import type { PictureResponse } from './PictureResponse';
 
 export interface HeroResponse {
 	id: string;
