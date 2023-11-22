@@ -206,6 +206,10 @@ export function AboutUsBoard() {
 		setIsTabsClickBlocked(false);
 	};
 
+	let titleLabel;
+	if (query?.id === 'team') titleLabel = 'Блок 1';
+	if (query?.id === 'history') titleLabel = 'Блок 2';
+
 	return (
 		<>
 			{(isLoading || (!aboutUsData && !aboutUsFundData)) && <Loader />}
@@ -218,7 +222,7 @@ export function AboutUsBoard() {
 							<TextInputWithCounter
 								register={registers.title}
 								required
-								label="Блок"
+								label={titleLabel}
 								placeholder=""
 								maxLength={45}
 								errors={errors}
