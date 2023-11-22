@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -21,14 +21,19 @@ interface OurActivityFormFieldValues {
 }
 
 export function OurActivityBoard() {
+	const [isModalMinTabsLengthOpen, setIsModalMinTabsLengthOpen] = useState(false);
+
 	const router = useRouter();
 	const { query } = router;
 
-	const { getTabsData, setIsTabsClickBlocked, isTabsClickBlocked } = useTabsState((state) => ({
-		getTabsData: state.getTabsData,
-		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
-		isTabsClickBlocked: state.isTabsClickBlocked,
-	}));
+	const { tabsData, getTabsData, setIsTabsClickBlocked, isTabsClickBlocked } = useTabsState(
+		(state) => ({
+			tabsData: state.tabsData,
+			getTabsData: state.getTabsData,
+			setIsTabsClickBlocked: state.setIsTabsClickBlocked,
+			isTabsClickBlocked: state.isTabsClickBlocked,
+		}),
+	);
 
 	const {
 		isModalOnSuccessSaveOpen,
@@ -143,9 +148,11 @@ export function OurActivityBoard() {
 	};
 
 	const handleOnModalRemoveYesClick = async () => {
-		if (query?.id) {
-			await deleteOurActivityBoardById(query?.id.toString());
-			await getTabsData(fetchOurActivityData);
+		if (query?.id && tabsData?.tabs) {
+			if (tabsData?.tabs.length > 4) {
+				await deleteOurActivityBoardById(query?.id.toString());
+				await getTabsData(fetchOurActivityData);
+			} else setIsModalMinTabsLengthOpen(true);
 		}
 	};
 
@@ -157,6 +164,8 @@ export function OurActivityBoard() {
 			setIsTabsClickBlocked(false);
 		}
 	};
+
+	const handleOnModalIsLengthClose = () => setIsModalMinTabsLengthOpen(false);
 
 	return (
 		<>
@@ -186,6 +195,17 @@ export function OurActivityBoard() {
 							</ModalPop>
 						) //add modal on success saving data on server
 					}
+					{isModalMinTabsLengthOpen && (
+						<ModalPop
+							type="error"
+							isOpen={isModalMinTabsLengthOpen}
+							onClose={handleOnModalIsLengthClose}
+							title="Увага!"
+							leftButton={() => <Button onClick={handleOnModalIsLengthClose}>Ок</Button>}
+						>
+							Мінімальна кількість фото у блоці не повинна бути менше 4.
+						</ModalPop>
+					)}
 				</form>
 			)}
 		</>
