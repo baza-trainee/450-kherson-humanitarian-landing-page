@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -37,6 +37,7 @@ export function AboutUsBoard() {
 		isLoading,
 		aboutUsData,
 		aboutUsFundData,
+		stateError,
 		setIsModalOnSuccessSaveClose,
 		getAboutUsDataById,
 		getAboutUsFundData,
@@ -47,6 +48,7 @@ export function AboutUsBoard() {
 		isLoading: state.isLoading,
 		aboutUsData: state.aboutUsData,
 		aboutUsFundData: state.aboutUsFundData,
+		stateError: state.error,
 		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 		getAboutUsDataById: state.getAboutUsDataById,
 		getAboutUsFundData: state.getAboutUsFundData,
@@ -66,6 +68,17 @@ export function AboutUsBoard() {
 		//*set data from server into state
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.id]);
+
+	const [errorMessage, setErrorMessage] = useState('');
+
+	useEffect(() => {
+		//*set message to show in Modal Error
+		if (stateError) {
+			if (stateError.status === 406)
+				setErrorMessage('Не правильно введені дані. Можливо є зайві символи');
+			if (stateError.status === 500) setErrorMessage(stateError.message);
+		}
+	}, [stateError]);
 
 	const {
 		register,
@@ -243,6 +256,16 @@ export function AboutUsBoard() {
 							</ModalPop>
 						) //add modal on success saving data on server
 					}
+					{errorMessage && (
+						<ModalPop
+							type="error"
+							title="Помилка при збереженні!"
+							isOpen={!!errorMessage}
+							onClose={() => setErrorMessage('')}
+						>
+							{errorMessage}
+						</ModalPop>
+					)}
 				</form>
 			)}
 		</>
