@@ -14,6 +14,7 @@ import { useParams } from '~hooks/useParams';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useTabsState } from '../../store/useTabsState';
+import { newTabsTitleNames } from './data/newTabsTitleNames';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
@@ -63,13 +64,13 @@ export function Tabs() {
 
 	//* 1. Get page route and fetch tabs data
 	//* Set fetching helpers function here ↓
-	// If isEditable set Title to your block setTabsTitleName('Your title name')
+	// If isEditable set Title to your new block
 	useEffect(() => {
 		const fetchData = getMatch(query?.slug?.toString(), {
 			lists: async () => await getTabsData(fetchListData),
 			hero: async () => {
 				await getTabsData(fetchHeroData);
-				setTabsTitleName('Банер');
+				setTabsTitleName(newTabsTitleNames.hero);
 			},
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			_: () => setTabsData(null),
