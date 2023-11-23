@@ -14,19 +14,20 @@ import { useParams } from '~hooks/useParams';
 import { useAboutUsState } from '../../store/useAboutUsState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
+import { useOurActivityState } from '../../store/useOurActivityState';
 import { useTabsState } from '../../store/useTabsState';
+import { newTabsTitleNames } from './data/newTabsTitleNames';
 import { fetchAboutUsData } from './fetchHelpers/fetchAboutUsData';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
+import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
 
 import s from './Tabs.module.scss';
-
 export interface Tab {
 	title: string;
 	id: string;
 }
-
 export interface TabsData {
 	tabs: Tab[];
 	isEditable: boolean;
@@ -44,7 +45,9 @@ export function Tabs() {
 	const isListsDataLoading = useListsState((state) => state.isLoading);
 	const isAboutUsDataLoading = useAboutUsState((state) => state.isLoading);
 	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
-	const isDataLoading = isListsDataLoading || isHeroDataLoading || isAboutUsDataLoading;
+	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
+	const isDataLoading =
+		isListsDataLoading || isHeroDataLoading || isOurActivityDataLoading || isAboutUsDataLoading;
 	//* use your state loading ⭡
 
 	const {
@@ -67,16 +70,20 @@ export function Tabs() {
 
 	//* 1. Get page route and fetch tabs data
 	//* Set fetching helpers function here ↓
-	// If isEditable set Title to your block setTabsTitleName('Your title name')
+	// If isEditable set Title to your new block
 	useEffect(() => {
 		const fetchData = getMatch(query?.slug?.toString(), {
 			lists: async () => await getTabsData(fetchListData),
 			hero: async () => {
 				await getTabsData(fetchHeroData);
-				setTabsTitleName('Банер');
+				setTabsTitleName(newTabsTitleNames.hero);
 			},
 			'about-us': async () => await getTabsData(fetchAboutUsData),
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
+			'our-activity': async () => {
+				await getTabsData(fetchOurActivityData);
+				setTabsTitleName('Фото');
+			},
 			_: () => setTabsData(null),
 		});
 		fetchData();

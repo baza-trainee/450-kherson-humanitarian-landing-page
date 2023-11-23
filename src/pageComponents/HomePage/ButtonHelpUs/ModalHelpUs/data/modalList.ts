@@ -41,4 +41,13 @@ export const modalList: ModalList = [
 			{ id: 4, title: 'Призначення платежу:', text: 'Благодійний внесок' },
 		],
 	},
+	{
+		label: 'UAH',
+		fieldList: [
+			{ id: 1, title: 'Одержувач:', text: 'Громадська організація 4.5.0. Кривий Ріг' },
+			{ id: 2, title: 'IBAN:', text: ibanData['UAH'] },
+			{ id: 3, title: 'ЄДРПОУ:', text: '44867603' },
+			{ id: 4, title: 'Призначення платежу:', text: 'Благодійний внесок' },
+		],
+	},
 ];
