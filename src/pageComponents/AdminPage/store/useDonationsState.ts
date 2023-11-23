@@ -12,7 +12,6 @@ interface UseDonationsState {
 	error: ErrorResponse | null;
 	donationsBoardData: Donation | null;
 	getDonationsBoardById: (id: string) => Promise<void>;
-	addNewEmptyDonationsBoard: () => void;
 	updateDonationsBoardById: (body: DonationRequest) => Promise<void>;
 	addNewDonationsBoard: (body: DonationRequest) => Promise<void>;
 	deleteDonationsBoardById: (id: string) => Promise<void>;
@@ -44,18 +43,6 @@ export const useDonationsState = create<UseDonationsState>((set) => ({
 	},
 	setIsModalOnSuccessSaveClose: () => {
 		set({ isModalOnSuccessSaveOpen: false });
-	},
-	addNewEmptyDonationsBoard: () => {
-		set({ error: null });
-		set({
-			donationsBoardData: {
-				currency: '',
-				recipient: '',
-				IBAN: '',
-				IPN: '',
-				paymentPurpose: '',
-			},
-		});
 	},
 	updateDonationsBoardById: async (body: DonationRequest) => {
 		set({ isLoading: true });

@@ -79,7 +79,7 @@ export function Tabs() {
 			},
 			donations: async () => {
 				await getTabsData(fetchDonationsData);
-				setTabsTitleName('Нова валюта');
+				setTabsTitleName(newTabsTitleNames.donations);
 			},
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			'our-activity': async () => {
@@ -137,7 +137,10 @@ export function Tabs() {
 		else {
 			if (tabsData) {
 				tabsData.tabs.push({
-					title: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
+					title:
+						tabsTitleName === newTabsTitleNames.donations
+							? `${tabsTitleName}`
+							: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
 					id: 'new',
 				});
 				tabsData.isEditable = false;
