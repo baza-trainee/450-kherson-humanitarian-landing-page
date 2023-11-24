@@ -76,7 +76,7 @@ export function Tabs() {
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			'our-activity': async () => {
 				await getTabsData(fetchOurActivityData);
-				setTabsTitleName('Фото');
+				setTabsTitleName(newTabsTitleNames['our-activity']);
 			},
 			_: () => setTabsData(null),
 		});
