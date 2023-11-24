@@ -11,12 +11,14 @@ import { getIndexByKey } from '~helpers/getIndexByKey';
 import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
 
+import { useDonationsState } from '../../store/useDonationsState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useOurActivityState } from '../../store/useOurActivityState';
 import { useTabsState } from '../../store/useTabsState';
 import { newTabsTitleNames } from './data/newTabsTitleNames';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
+import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
 import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
@@ -42,8 +44,10 @@ export function Tabs() {
 
 	const isListsDataLoading = useListsState((state) => state.isLoading);
 	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
+	const isDonationsDataLoading = useDonationsState((state) => state.isLoading);
 	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
-	const isDataLoading = isListsDataLoading || isHeroDataLoading || isOurActivityDataLoading;
+	const isDataLoading =
+		isListsDataLoading || isHeroDataLoading || isOurActivityDataLoading || isDonationsDataLoading;
 
 	const {
 		isTabsClickBlocked,
@@ -72,6 +76,10 @@ export function Tabs() {
 			hero: async () => {
 				await getTabsData(fetchHeroData);
 				setTabsTitleName(newTabsTitleNames.hero);
+			},
+			donations: async () => {
+				await getTabsData(fetchDonationsData);
+				setTabsTitleName(newTabsTitleNames.donations);
 			},
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			'our-activity': async () => {
@@ -129,7 +137,10 @@ export function Tabs() {
 		else {
 			if (tabsData) {
 				tabsData.tabs.push({
-					title: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
+					title:
+						tabsTitleName === newTabsTitleNames.donations
+							? `${tabsTitleName}`
+							: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
 					id: 'new',
 				});
 				tabsData.isEditable = false;
