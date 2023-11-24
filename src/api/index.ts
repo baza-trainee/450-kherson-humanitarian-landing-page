@@ -1,4 +1,5 @@
 import * as aboutUs from '~api/rest/aboutUs/aboutUs';
+import * as donations from '~api/rest/donations/donations';
 import * as exportList from '~api/rest/exportList/exportList';
 import * as getHelp from '~api/rest/getHelp/getHelp';
 import * as hero from '~api/rest/hero/hero';
@@ -14,4 +15,5 @@ export const api = {
 	persons,
 	ourActivity,
 	hero,
+	donations,
 };
