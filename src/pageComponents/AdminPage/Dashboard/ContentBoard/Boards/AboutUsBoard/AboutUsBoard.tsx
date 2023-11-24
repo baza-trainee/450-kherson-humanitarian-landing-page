@@ -52,6 +52,8 @@ export function AboutUsBoard() {
 		updateAboutUsFundDataBoard: state.updateAboutUsFundDataBoard,
 	}));
 
+	const [errorMessage, setErrorMessage] = useState('');
+
 	useEffect(() => {
 		const fetchData = async () => {
 			if (query?.id) {
@@ -59,11 +61,10 @@ export function AboutUsBoard() {
 			}
 		};
 		fetchData();
+		setErrorMessage('');
 		//*set data from server into state
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.id]);
-
-	const [errorMessage, setErrorMessage] = useState('');
 
 	useEffect(() => {
 		//*set message to show in Modal Error
@@ -115,6 +116,7 @@ export function AboutUsBoard() {
 				setValue('text', aboutUsData.text);
 			}
 		}
+		setErrorMessage('');
 		clearErrors();
 		setIsTabsClickBlocked(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -155,7 +157,7 @@ export function AboutUsBoard() {
 					data.image === aboutUsData?.image
 						? {
 								title: data.title,
-								text: data.text,
+								text: data.text.split('\n').join('/n'),
 						  }
 						: {
 								picture: {
@@ -163,7 +165,7 @@ export function AboutUsBoard() {
 									image: image.split(',')[1],
 								},
 								title: data.title,
-								text: data.text,
+								text: data.text.split('\n').join('/n'),
 						  };
 				await updateAboutUsDataBoard(body, query?.id.toString());
 			}
@@ -199,6 +201,7 @@ export function AboutUsBoard() {
 				text: aboutUsData.text,
 			});
 		}
+		setErrorMessage('');
 		setIsTabsClickBlocked(false);
 	};
 
