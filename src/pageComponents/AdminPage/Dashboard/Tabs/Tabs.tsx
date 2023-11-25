@@ -19,6 +19,7 @@ import { useTabsState } from '../../store/useTabsState';
 import { newTabsTitleNames } from './data/newTabsTitleNames';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
+import { fetchFooterData } from './fetchHelpers/fetchFooterData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
 import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
@@ -73,6 +74,7 @@ export function Tabs() {
 	useEffect(() => {
 		const fetchData = getMatch(query?.slug?.toString(), {
 			lists: async () => await getTabsData(fetchListData),
+			footer: async () => await getTabsData(fetchFooterData),
 			hero: async () => {
 				await getTabsData(fetchHeroData);
 				setTabsTitleName(newTabsTitleNames.hero);
