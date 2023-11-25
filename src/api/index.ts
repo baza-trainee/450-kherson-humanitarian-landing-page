@@ -1,5 +1,6 @@
 import * as donations from '~api/rest/donations/donations';
 import * as exportList from '~api/rest/exportList/exportList';
+import * as footer from '~api/rest/footer/footer';
 import * as getHelp from '~api/rest/getHelp/getHelp';
 import * as hero from '~api/rest/hero/hero';
 import * as lists from '~api/rest/lists/lists';
@@ -14,4 +15,5 @@ export const api = {
 	ourActivity,
 	hero,
 	donations,
+	footer,
 };
