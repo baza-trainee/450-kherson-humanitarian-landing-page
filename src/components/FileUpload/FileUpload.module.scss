@@ -1,0 +1,34 @@
+@use '~/styles/mixins' as *;
+
+.fileUploadBlock {
+	gap: 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+}
+
+.fileUpload {
+	width: 100%;
+}
+
+.iconBlock {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+}
+
+.icon {
+	display: block;
+	@include useOnHover;
+}
+
+.hidden {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	line-height: 0;
+}
