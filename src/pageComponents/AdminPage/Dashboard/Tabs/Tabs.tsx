@@ -12,6 +12,7 @@ import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
 
 import { useDonationsState } from '../../store/useDonationsState';
+import { useFooterState } from '../../store/useFooterState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useOurActivityState } from '../../store/useOurActivityState';
@@ -47,8 +48,13 @@ export function Tabs() {
 	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
 	const isDonationsDataLoading = useDonationsState((state) => state.isLoading);
 	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
+	const isFooterDataLoading = useFooterState((state) => state.isLoading);
 	const isDataLoading =
-		isListsDataLoading || isHeroDataLoading || isOurActivityDataLoading || isDonationsDataLoading;
+		isListsDataLoading ||
+		isHeroDataLoading ||
+		isOurActivityDataLoading ||
+		isDonationsDataLoading ||
+		isFooterDataLoading;
 
 	const {
 		isTabsClickBlocked,
