@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import { ChangePasswordBoard } from './Boards/ChangePasswordBoard/ChangePasswordBoard';
 import { DonationsBoard } from './Boards/DonationsBoard/DonationsBoard';
+import { FooterBoard } from './Boards/FooterBoard/FooterBoard';
 import { HeroBoard } from './Boards/HeroBoard/HeroBoard';
 import { ListsBoard } from './Boards/ListsBoard/ListsBoard';
 import { OurActivityBoard } from './Boards/OurActivityBoard/OurActivityBoard';
@@ -18,6 +19,7 @@ export function ContentBoard() {
 			{query?.slug === 'donations' && <DonationsBoard />}
 			{query?.slug === 'change-password' && <ChangePasswordBoard />}
 			{query?.slug === 'our-activity' && <OurActivityBoard />}
+			{query?.slug === 'footer' && <FooterBoard />}
 		</div>
 	);
 }

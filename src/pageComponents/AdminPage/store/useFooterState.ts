@@ -12,8 +12,10 @@ interface UseFooterState {
 	isModalOnSuccessSaveOpen: boolean;
 	isLoading: boolean;
 	error: ErrorResponse | null;
-	footerBoardData: Contacts | Documents | null;
-	getFooterBoardById: (id: string) => Promise<void>;
+	contactsData: Contacts | null;
+	documentsData: Documents | null;
+	getContactsData: () => Promise<void>;
+	getDocumentsData: () => Promise<void>;
 	updateContactsData: (body: ContactsRequest) => Promise<void>;
 	updateDocumentData: (body: DocumentRequest) => Promise<void>;
 	setIsModalOnSuccessSaveClose: () => void;
@@ -23,15 +25,33 @@ export const useFooterState = create<UseFooterState>((set) => ({
 	isModalOnSuccessSaveOpen: false,
 	isLoading: false,
 	error: null,
-	footerBoardData: null,
-	getFooterBoardById: async (id) => {
+	contactsData: null,
+	documentsData: null,
+	getContactsData: async () => {
 		set({ isLoading: true });
 		set({ error: null });
 		try {
-			const resp =
-				id === 'contacts' ? await api.footer.getContacts() : await api.footer.getDocuments();
+			const resp = await api.footer.getContacts();
 			if ('data' in resp) {
-				set({ footerBoardData: resp.data });
+				set({ contactsData: resp.data });
+				set({ documentsData: null });
+			} else {
+				set({ error: resp.error });
+			}
+		} catch (error) {
+			set({ error: returnAppError(error) });
+		} finally {
+			set({ isLoading: false });
+		}
+	},
+	getDocumentsData: async () => {
+		set({ isLoading: true });
+		set({ error: null });
+		try {
+			const resp = await api.footer.getDocuments();
+			if ('data' in resp) {
+				set({ documentsData: resp.data });
+				set({ contactsData: null });
 			} else {
 				set({ error: resp.error });
 			}
@@ -50,7 +70,7 @@ export const useFooterState = create<UseFooterState>((set) => ({
 		try {
 			const resp = await api.footer.updateContacts(body);
 			if ('data' in resp) {
-				set({ footerBoardData: resp.data });
+				set({ contactsData: resp.data });
 				set({ isModalOnSuccessSaveOpen: true });
 			} else {
 				set({ error: resp.error });
@@ -67,7 +87,6 @@ export const useFooterState = create<UseFooterState>((set) => ({
 		try {
 			const resp = await api.footer.updateDocument(body);
 			if ('data' in resp) {
-				set({ footerBoardData: resp.data });
 				set({ isModalOnSuccessSaveOpen: true });
 			} else {
 				set({ error: resp.error });
