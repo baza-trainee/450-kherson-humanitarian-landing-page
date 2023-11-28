@@ -1,10 +1,14 @@
 @use '~/styles/mixins' as *;
 
+.borderWrapper {
+	border-bottom: 1px solid var(--color--secondary-2);
+}
+
 .fileUploadBlock {
-	gap: 20px;
+	// gap: 20px;
 	display: flex;
 	flex-direction: row;
-	align-items: flex-end;
+	justify-content: space-between;
 }
 
 .fileUpload {
@@ -12,10 +16,10 @@
 }
 
 .iconBlock {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	display: inline-flex;
+	flex-direction: row;
 	height: 100%;
+	column-gap: 30px;
 }
 
 .icon {
@@ -31,4 +35,11 @@
 	padding: 0;
 	overflow: hidden;
 	line-height: 0;
+}
+.underline::after {
+	display: block;
+	top: 25px;
+	@include useScreen('tablet-md') {
+		top: 30px;
+	}
 }
