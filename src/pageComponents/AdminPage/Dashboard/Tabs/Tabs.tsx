@@ -6,24 +6,31 @@ import { useRouter } from 'next/router';
 import { Button } from '~components/Buttons/Button';
 import { Icon } from '~components/Icon/Icon';
 import { Loader } from '~components/Loader/Loader';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 import { getIndexByKey } from '~helpers/getIndexByKey';
 import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
 
+import { useAboutUsState } from '../../store/useAboutUsState';
+import { useDonationsState } from '../../store/useDonationsState';
+import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
+import { useOurActivityState } from '../../store/useOurActivityState';
 import { useTabsState } from '../../store/useTabsState';
+import { newTabsTitleNames } from './data/newTabsTitleNames';
+import { fetchAboutUsData } from './fetchHelpers/fetchAboutUsData';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
+import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
+import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
 import { getOurAchievementsData } from './fetchHelpers/getOurAchievementsData';
 
 import s from './Tabs.module.scss';
-
 export interface Tab {
 	title: string;
 	id: string;
 }
-
 export interface TabsData {
 	tabs: Tab[];
 	isEditable: boolean;
@@ -32,43 +39,63 @@ export interface TabsData {
 export function Tabs() {
 	const router = useRouter();
 	const { query } = router;
+
 	const [tabsTitleName, setTabsTitleName] = useState<string>('');
+	const [isModalTabsClickBlockedOpen, setIsModalTabsClickBlockedOpen] = useState<boolean>(false);
+
 	const { setParams } = useParams();
 
 	const isListsDataLoading = useListsState((state) => state.isLoading);
-	const isDataLoading = isListsDataLoading;
+	const isAboutUsDataLoading = useAboutUsState((state) => state.isLoading);
+	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
+	const isDonationsDataLoading = useDonationsState((state) => state.isLoading);
+	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
+	const isDataLoading =
+		isListsDataLoading ||
+		isHeroDataLoading ||
+		isOurActivityDataLoading ||
+		isAboutUsDataLoading ||
+		isDonationsDataLoading;
+	//* use your state loading ⭡
 
 	const {
-		isBlocked,
+		isTabsClickBlocked,
 		isLoading,
 		tabsData,
 		activeTabId,
 		setActiveTabId,
 		getTabsData,
 		setTabsData,
-		setIsModalChangesOpen,
 	} = useTabsState((state) => ({
-		isBlocked: state.isBlocked,
+		isTabsClickBlocked: state.isTabsClickBlocked,
 		isLoading: state.isLoading,
 		activeTabId: state.activeTabId,
 		tabsData: state.tabsData,
 		setActiveTabId: state.setActiveTabId,
 		getTabsData: state.getTabsData,
 		setTabsData: state.setTabsData,
-		setIsModalChangesOpen: state.setIsModalChangesOpen,
 	}));
 
 	//* 1. Get page route and fetch tabs data
 	//* Set fetching helpers function here ↓
-	// If isEditable set Title to your block setTabsTitleName('Your title name')
+	// If isEditable set Title to your new block
 	useEffect(() => {
 		const fetchData = getMatch(query?.slug?.toString(), {
 			lists: async () => await getTabsData(fetchListData),
 			hero: async () => {
 				await getTabsData(fetchHeroData);
-				setTabsTitleName('Банер');
+				setTabsTitleName(newTabsTitleNames.hero);
 			},
+			donations: async () => {
+				await getTabsData(fetchDonationsData);
+				setTabsTitleName(newTabsTitleNames.donations);
+			},
+			'about-us': async () => await getTabsData(fetchAboutUsData),
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
+			'our-activity': async () => {
+				await getTabsData(fetchOurActivityData);
+				setTabsTitleName(newTabsTitleNames['our-activity']);
+			},
 			'our-achievements': async () => await getTabsData(getOurAchievementsData),
 			_: () => setTabsData(null),
 		});
@@ -76,7 +103,7 @@ export function Tabs() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.slug]);
 
-	
+
 
 	useEffect(() => {
 		if (
@@ -105,12 +132,11 @@ export function Tabs() {
 	const isActiveClass = (isActive: boolean) => (isActive ? s.active : '');
 
 	const handleTabOnClick = (id: string) => {
-		if (isBlocked) setIsModalChangesOpen(true);
+		if (isTabsClickBlocked) setIsModalTabsClickBlockedOpen(true);
 		else {
-			if (tabsData) {
-				if (tabsData.tabs.find((item) => item.id === 'new')) {
-					tabsData.tabs.pop();
-				}
+			if (tabsData && tabsData.tabs.find((item) => item.id === 'new')) {
+				tabsData.tabs.pop();
+				tabsData.isEditable = true;
 			}
 			setActiveTabId(id);
 			setParams({ id: id });
@@ -118,20 +144,19 @@ export function Tabs() {
 	};
 
 	const handleAddNewTabOnClick = () => {
-		if (isBlocked) setIsModalChangesOpen(true);
+		if (isTabsClickBlocked) setIsModalTabsClickBlockedOpen(true);
 		else {
 			if (tabsData) {
-				if (tabsData.tabs.find((item) => item.id === 'new')) {
-					setActiveTabId('new');
-					setParams({ id: 'new' });
-				} else {
-					tabsData.tabs.push({
-						title: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
-						id: 'new',
-					});
-					setActiveTabId('new');
-					setParams({ id: 'new' });
-				}
+				tabsData.tabs.push({
+					title:
+						tabsTitleName === newTabsTitleNames.donations
+							? `${tabsTitleName}`
+							: `${tabsTitleName} ${tabsData.tabs.length + 1}`,
+					id: 'new',
+				});
+				tabsData.isEditable = false;
+				setActiveTabId('new');
+				setParams({ id: 'new' });
 			}
 		}
 	};
@@ -166,6 +191,24 @@ export function Tabs() {
 							/>
 						</Button>
 					)}
+					{
+						isModalTabsClickBlockedOpen && (
+							<ModalPop
+								isOpen={isModalTabsClickBlockedOpen}
+								onClose={() => setIsModalTabsClickBlockedOpen(false)}
+								title="Увага!"
+								type="error"
+								leftButton={() => (
+									<Button onClick={() => setIsModalTabsClickBlockedOpen(false)}>
+										Зрозуміло
+									</Button>
+								)}
+							>
+								На сторінці є незбережені зміни. Для продовження необхідно зберегти або
+								скасувати зміни
+							</ModalPop>
+						) //modal on clicking between tabs if are changes in form
+					}
 				</>
 			)}
 		</div>

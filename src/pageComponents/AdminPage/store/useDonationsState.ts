@@ -1,37 +1,36 @@
 import { create } from 'zustand';
 
 import { api } from '~api/index';
-import type { HeroRequest } from '~api/types/backend/requests/HeroRequest';
+import type { DonationRequest } from '~api/types/backend/requests/DonationRequest';
 import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
-import type { Hero } from '~api/types/hero/Hero';
+import type { Donation } from '~api/types/donations/donation';
 import { returnAppError } from '~helpers/returnAppError';
 
-interface UseHeroesState {
+interface UseDonationsState {
 	isModalOnSuccessSaveOpen: boolean;
 	isLoading: boolean;
 	error: ErrorResponse | null;
-	heroBoardData: Hero | null;
-	getHeroBoardById: (id: string) => Promise<void>;
-	addNewEmptyHeroBoard: () => void;
-	updateHeroBoardById: (body: HeroRequest) => Promise<void>;
-	addNewHeroBoard: (body: HeroRequest) => Promise<void>;
-	deleteHeroBoardById: (id: string) => Promise<void>;
+	donationsBoardData: Donation | null;
+	getDonationsBoardById: (id: string) => Promise<void>;
+	updateDonationsBoardById: (body: DonationRequest) => Promise<void>;
+	addNewDonationsBoard: (body: DonationRequest) => Promise<void>;
+	deleteDonationsBoardById: (id: string) => Promise<void>;
 	setIsModalOnSuccessSaveClose: () => void;
 }
 
-export const useHeroesState = create<UseHeroesState>((set) => ({
+export const useDonationsState = create<UseDonationsState>((set) => ({
 	isModalOnSuccessSaveOpen: false,
 	isLoading: false,
 	error: null,
-	heroBoardData: null,
-	getHeroBoardById: async (id) => {
+	donationsBoardData: null,
+	getDonationsBoardById: async (id) => {
 		set({ isLoading: true });
 		set({ error: null });
 		try {
 			if (id !== 'new') {
-				const resp = await api.hero.getHeroBoardById(id);
+				const resp = await api.donations.getDonationsBoardById(id);
 				if ('data' in resp) {
-					set({ heroBoardData: resp.data });
+					set({ donationsBoardData: resp.data });
 				} else {
 					set({ error: resp.error });
 				}
@@ -45,26 +44,13 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 	setIsModalOnSuccessSaveClose: () => {
 		set({ isModalOnSuccessSaveOpen: false });
 	},
-	addNewEmptyHeroBoard: () => {
-		set({ error: null });
-		set({
-			heroBoardData: {
-				image: '',
-				imageGradient: 'lightGradient',
-				title: '',
-				titleColor: 'blue',
-				subtitle: '',
-				subtitleColor: 'blue',
-			},
-		});
-	},
-	updateHeroBoardById: async (body: HeroRequest) => {
+	updateDonationsBoardById: async (body: DonationRequest) => {
 		set({ isLoading: true });
 		set({ error: null });
 		try {
-			const resp = await api.hero.updateHeroBoard(body);
+			const resp = await api.donations.updateDonationsBoard(body);
 			if ('data' in resp) {
-				set({ heroBoardData: resp.data });
+				set({ donationsBoardData: resp.data });
 				set({ isModalOnSuccessSaveOpen: true });
 			} else {
 				set({ error: resp.error });
@@ -75,22 +61,22 @@ export const useHeroesState = create<UseHeroesState>((set) => ({
 			set({ isLoading: false });
 		}
 	},
-	addNewHeroBoard: async (body: HeroRequest) => {
+	addNewDonationsBoard: async (body: DonationRequest) => {
 		set({ isLoading: true });
 		set({ error: null });
 		try {
-			const resp = await api.hero.addNewHeroBoard(body);
+			const resp = await api.donations.addNewDonationsBoard(body);
 			if ('data' in resp) set({ isModalOnSuccessSaveOpen: true });
 		} catch (error) {
 			set({ error: returnAppError(error) });
 		}
 	},
-	deleteHeroBoardById: async (id) => {
+	deleteDonationsBoardById: async (id) => {
 		set({ isLoading: true });
 		set({ error: null });
-		set({ heroBoardData: null });
+		set({ donationsBoardData: null });
 		try {
-			await api.hero.removeHero(id);
+			await api.donations.removeDonations(id);
 		} catch (error) {
 			set({ error: returnAppError(error) });
 		} finally {

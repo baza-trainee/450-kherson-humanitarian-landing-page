@@ -10,6 +10,7 @@ interface ActionButtonsProps {
 	onReset: () => void;
 	onRemove?: () => void;
 	isDataValid: boolean;
+	isDisabled: boolean;
 }
 
 export default function ActionButtons({
@@ -17,6 +18,7 @@ export default function ActionButtons({
 	onReset,
 	onRemove,
 	isDataValid,
+	isDisabled,
 }: ActionButtonsProps) {
 	const [isModalRemoveOpen, setIsModalRemoveOpen] = useState(false);
 	const [isModalResetOpen, setIsModalResetOpen] = useState(false);
@@ -104,7 +106,9 @@ export default function ActionButtons({
 					Невірно заповнені поля.
 				</ModalPop>
 			)}
-			<Button onClick={handleSaveOnClick}>Зберегти</Button>
+			<Button onClick={handleSaveOnClick} disabled={isDisabled}>
+				Зберегти
+			</Button>
 		</div>
 	);
 }

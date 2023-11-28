@@ -23,6 +23,7 @@ export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
 		const [imageError, setImageError] = useState<string>('');
 
 		const file = watch ? watch(register ? register.name : null) : null;
+
 		const error = errors ? errors[register?.name] : '';
 
 		useEffect(() => {

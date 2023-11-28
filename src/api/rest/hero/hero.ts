@@ -3,13 +3,13 @@ import { commonGet } from '~api/common/commonGet';
 import { commonPost } from '~api/common/commonPost';
 import { commonPut } from '~api/common/commonPut';
 import type { HeroRequest } from '~api/types/backend/requests/HeroRequest';
-import type { HeroIdsResponse } from '~api/types/backend/responses/HeroIdsResponse';
 import type { HeroResponse } from '~api/types/backend/responses/HeroResponse';
+import type { TabsIdsResponse } from '~api/types/backend/responses/TabsIdsResponse';
 
 import { transformHeroBoardDTO } from './dto/transformHeroBoardDTO';
 
 export const getHeroIds = () =>
-	commonGet<HeroIdsResponse>('/heroes/ids').then((resp) => {
+	commonGet<TabsIdsResponse>('/heroes/ids').then((resp) => {
 		if ('data' in resp) {
 			return { data: resp.data };
 		}
@@ -25,10 +25,10 @@ export const getHeroBoardById = (heroId: string) =>
 export const addNewHeroBoard = (body: HeroRequest) =>
 	commonPost<HeroResponse, HeroRequest>('/hero', body);
 
-export const changeHeroBoard = (body: HeroRequest) =>
+export const updateHeroBoard = (body: HeroRequest) =>
 	commonPut<HeroResponse, HeroRequest>('/hero/', body).then((resp) => {
 		if ('data' in resp) {
-			return { data: resp.data };
+			return { data: transformHeroBoardDTO(resp.data) };
 		}
 		return { error: resp };
 	});

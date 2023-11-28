@@ -3,6 +3,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
 import imageCompression from 'browser-image-compression';
+import { useRouter } from 'next/router';
 
 import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/ActionButtons';
 import { useHeroesState } from '~/pageComponents/AdminPage/store/useHeroesState';
@@ -35,47 +36,60 @@ export function HeroBoard() {
 	const [titleValue, setTitleValue] = useState<string>('');
 	const [subtitleValue, setSubtitleValue] = useState<string>('');
 
-	const { isModalChangesOpen, activeTabId, getTabsData, setIsBlocked, setIsModalChangesOpen } =
-		useTabsState((state) => ({
-			isModalChangesOpen: state.isModalChangesOpen,
-			activeTabId: state.activeTabId,
-			getTabsData: state.getTabsData,
-			setIsBlocked: state.setIsBlocked,
-			setIsModalChangesOpen: state.setIsModalChangesOpen,
-		}));
+	const router = useRouter();
+	const { query } = router;
+
+	const { isTabsClickBlocked, getTabsData, setIsTabsClickBlocked } = useTabsState((state) => ({
+		isTabsClickBlocked: state.isTabsClickBlocked,
+		getTabsData: state.getTabsData,
+		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
+	}));
 
 	const {
-		isSuccess,
+		isModalOnSuccessSaveOpen,
 		isLoading,
 		heroBoardData,
+		stateError,
 		getHeroBoardById,
-		changeHeroBoard,
+		updateHeroBoardById,
 		addNewHeroBoard,
-		deleteHeroBoard,
+		deleteHeroBoardById,
 		addNewEmptyHeroBoard,
-		setIsSuccess,
+		setIsModalOnSuccessSaveClose,
 	} = useHeroesState((state) => ({
-		isSuccess: state.isSuccess,
+		isModalOnSuccessSaveOpen: state.isModalOnSuccessSaveOpen,
 		isLoading: state.isLoading,
 		heroBoardData: state.heroBoardData,
+		stateError: state.error,
 		getHeroBoardById: state.getHeroBoardById,
-		changeHeroBoard: state.changeHeroBoard,
+		updateHeroBoardById: state.updateHeroBoardById,
 		addNewHeroBoard: state.addNewHeroBoard,
-		deleteHeroBoard: state.deleteHeroBoard,
+		deleteHeroBoardById: state.deleteHeroBoardById,
 		addNewEmptyHeroBoard: state.addNewEmptyHeroBoard,
-		setIsSuccess: state.setIsSuccess,
+		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 	}));
+
+	const [errorMessage, setErrorMessage] = useState('');
 
 	useEffect(() => {
 		const fetchData = async () => {
-			if (activeTabId) await getHeroBoardById(activeTabId);
+			if (query?.id) await getHeroBoardById(query?.id.toString());
 		};
 		//*set data from server into state
-		if (activeTabId !== 'new' && activeTabId !== 'empty') fetchData();
+		if (query?.id !== 'new' && query?.id !== 'empty') fetchData();
 		//* if new form, set empty state
 		else addNewEmptyHeroBoard();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [activeTabId]);
+	}, [query?.id]);
+
+	useEffect(() => {
+		//*set message to show in Modal Error
+		if (stateError) {
+			if (stateError.status === 406)
+				setErrorMessage('Не правильно введені дані. Можливо є зайві символи');
+			if (stateError.status === 500) setErrorMessage(stateError.message);
+		}
+	}, [stateError]);
 
 	const {
 		register,
@@ -104,9 +118,9 @@ export function HeroBoard() {
 			setSubtitleColor(heroBoardData.subtitleColor);
 			setTitleColor(heroBoardData.titleColor);
 			clearErrors();
-			setIsBlocked(false);
+			setIsTabsClickBlocked(false); //*if new data from server, than not block tabs clicking
 		}
-		if (activeTabId === 'new') {
+		if (query?.id === 'new') {
 			//* set empty or default values
 			setValue('image', '');
 			setValue('imageGradient', 'lightGradient');
@@ -120,10 +134,10 @@ export function HeroBoard() {
 			setSubtitleColor('blue');
 			setTitleColor('blue');
 			clearErrors();
-			setIsBlocked(false);
+			setIsTabsClickBlocked(false); //*if new empty board, than not block tabs clicking
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [heroBoardData, activeTabId]);
+	}, [heroBoardData, query?.id]);
 
 	const registers = {
 		image: register('image', {
@@ -168,7 +182,7 @@ export function HeroBoard() {
 		}
 
 		const body = {
-			id: activeTabId && activeTabId !== 'new' ? activeTabId : '',
+			id: query?.id && query?.id !== 'new' ? query?.id.toString() : '',
 			view:
 				data.image === heroBoardData?.image
 					? { color: data.imageGradient }
@@ -188,9 +202,9 @@ export function HeroBoard() {
 				color: data.subtitleColor,
 			},
 		};
-		activeTabId === 'new' ? await addNewHeroBoard(body) : await changeHeroBoard(body);
+		query?.id === 'new' ? await addNewHeroBoard(body) : await updateHeroBoardById(body);
 		// *after saving into server need to set IsBlocked to false in order to click between tabs
-		setIsBlocked(false);
+		setIsTabsClickBlocked(false);
 		await getTabsData(fetchHeroData);
 	};
 
@@ -212,7 +226,9 @@ export function HeroBoard() {
 				value.title !== heroBoardData?.title ||
 				value.titleColor !== heroBoardData?.titleColor
 			) {
-				setIsBlocked(true);
+				setIsTabsClickBlocked(true); //*if are changes, set block
+			} else {
+				setIsTabsClickBlocked(false);
 			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -233,23 +249,22 @@ export function HeroBoard() {
 				subtitle: heroBoardData.subtitle,
 				subtitleColor: heroBoardData.subtitleColor,
 			});
-			setIsBlocked(false);
-			if (activeTabId === 'new') await getTabsData(fetchHeroData);
+			setIsTabsClickBlocked(false);
 		}
 	};
 
 	const handleOnModalRemoveYesClick = async () => {
-		if (activeTabId) {
-			await deleteHeroBoard(activeTabId);
+		if (query?.id) {
+			await deleteHeroBoardById(query?.id.toString());
 			await getTabsData(fetchHeroData);
 		}
 	};
 
 	return (
 		<>
-			{(isLoading || !heroBoardData) && activeTabId !== 'empty' && <Loader />}
-			{!isLoading && activeTabId && activeTabId === 'empty' && <EmptyBoard />}
-			{!isLoading && activeTabId !== 'empty' && heroBoardData && (
+			{(isLoading || !heroBoardData) && query?.id !== 'empty' && <Loader />}
+			{!isLoading && query?.id && query?.id === 'empty' && <EmptyBoard />}
+			{!isLoading && query?.id !== 'empty' && heroBoardData && (
 				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					<ImgUploadTextOverlaid
 						gradientValue={gradient}
@@ -291,39 +306,36 @@ export function HeroBoard() {
 						watch={watch}
 					/>
 					<ActionButtons
-						onRemove={activeTabId !== 'new' ? handleOnModalRemoveYesClick : undefined}
+						onRemove={query?.id !== 'new' ? handleOnModalRemoveYesClick : undefined}
 						onReset={handleOnModalCancelYesClick}
 						onSave={handleSubmit(onSubmit)}
 						isDataValid={isValid}
+						isDisabled={!isTabsClickBlocked}
 					/>
 					{
-						isSuccess && (
+						isModalOnSuccessSaveOpen && (
 							<ModalPop
-								isOpen={isSuccess}
-								onClose={setIsSuccess}
+								isOpen={isModalOnSuccessSaveOpen}
+								onClose={setIsModalOnSuccessSaveClose}
 								title="Вітаємо!"
-								leftButton={() => <Button onClick={setIsSuccess}>Ок</Button>}
+								leftButton={() => (
+									<Button onClick={setIsModalOnSuccessSaveClose}>Ок</Button>
+								)}
 							>
 								Ваші дані успішно збережено
 							</ModalPop>
 						) //add modal on success saving data on server
 					}
-					{
-						isModalChangesOpen && (
-							<ModalPop
-								isOpen={isModalChangesOpen}
-								onClose={() => setIsModalChangesOpen(false)}
-								title="Увага!"
-								type="error"
-								leftButton={() => (
-									<Button onClick={() => setIsModalChangesOpen(false)}>Зрозуміло</Button>
-								)}
-							>
-								На сторінці є незбережені зміни. Для продовження необхідно зберегти або
-								скасувати зміни
-							</ModalPop>
-						) //add modal on clicking between tabs if are changes in form
-					}
+					{errorMessage && (
+						<ModalPop
+							type="error"
+							title="Помилка при збереженні!"
+							isOpen={!!errorMessage}
+							onClose={() => setErrorMessage('')}
+						>
+							{errorMessage}
+						</ModalPop>
+					)}
 				</form>
 			)}
 		</>

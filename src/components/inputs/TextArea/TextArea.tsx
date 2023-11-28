@@ -6,14 +6,11 @@ import clsx from 'clsx';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 
 import cs from '../commonStyle.module.scss';
+import s from './TextArea.module.scss';
 
-export type TextInputElement = HTMLInputElement;
+export type TextAreaElement = HTMLTextAreaElement;
 
-export interface TextInputProps
-	extends ReactHTMLElementAttributes<
-		TextInputElement,
-		React.InputHTMLAttributes<TextInputElement>
-	> {
+export interface TextAreaProps extends React.HTMLProps<TextAreaElement> {
 	label?: string;
 	register?: FieldValues;
 	errors?: FieldErrors<FieldValues>;
@@ -24,10 +21,9 @@ export interface TextInputProps
 	showInfo?: boolean;
 }
 
-export const TextInput = forwardRef<TextInputElement, TextInputProps>(
+export const TextArea = forwardRef<TextAreaElement, TextAreaProps>(
 	(
 		{
-			type = 'text',
 			label,
 			required,
 			disabled,
@@ -63,9 +59,8 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 					showInfo={showInfo}
 				>
 					<div className={cs.inputContainer}>
-						<input
-							type={type}
-							className={cs.input}
+						<textarea
+							className={clsx(cs.input, s.textArea, 'scroll')}
 							placeholder={placeholder}
 							ref={ref}
 							{...register}
@@ -79,4 +74,4 @@ export const TextInput = forwardRef<TextInputElement, TextInputProps>(
 	},
 );
 
-TextInput.displayName = 'TextInput';
+TextArea.displayName = 'TextArea';
