@@ -1,3 +1,4 @@
+import type { MouseEventHandler } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import type { FieldErrors, FieldValues } from 'react-hook-form';
 
@@ -81,7 +82,7 @@ export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
 						/>
 					</label>
 					{handleImageDelete && (
-						<Icon icon="icon--trash" className={s.icon} onClick={() => handleImageDelete()} />
+						<Icon icon="icon--trash" className={s.icon} onClick={handleImageDelete} />
 					)}
 				</div>
 			</div>
