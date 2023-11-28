@@ -1,4 +1,3 @@
-import type { MouseEventHandler } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import type { FieldErrors, FieldValues } from 'react-hook-form';
 
