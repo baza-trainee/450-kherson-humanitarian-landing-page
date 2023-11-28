@@ -1,3 +1,4 @@
+import type { MouseEventHandler } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import type { FieldErrors, FieldValues } from 'react-hook-form';
 
@@ -15,10 +16,11 @@ interface ImgUploadProps {
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
 	errors?: FieldErrors<FieldValues>;
+	handleImageDelete?: (event: MouseEventHandler<HTMLDivElement>) => void;
 }
 
 export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
-	({ register, watch, errors }, ref) => {
+	({ register, watch, errors, handleImageDelete }, ref) => {
 		const [image, setImage] = useState<string>('');
 		const [imageError, setImageError] = useState<string>('');
 
@@ -68,18 +70,19 @@ export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
 					/>
 					{imageError && <div className={s.imgErrorMsg}>{imageError}</div>}
 				</div>
-				<label>
-					<div className={s.iconBlock}>
+				<div className={s.iconBlock}>
+					<label>
 						<Icon icon="icon--upload" className={s.icon} />
-					</div>
-					<input
-						type="file"
-						className={s.hidden}
-						ref={ref}
-						accept="image/*, .png, .jpeg, .web"
-						{...register}
-					/>
-				</label>
+						<input
+							type="file"
+							className={s.hidden}
+							ref={ref}
+							accept="image/*, .png, .jpeg, .web"
+							{...register}
+						/>
+					</label>
+					{handleImageDelete && <Icon icon="icon--trash" className={s.icon} />}
+				</div>
 			</div>
 		);
 	},
