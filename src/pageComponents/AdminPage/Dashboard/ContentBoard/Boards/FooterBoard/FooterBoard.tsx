@@ -8,12 +8,13 @@ import ActionButtons from '~/pageComponents/AdminPage/components/ActionButtons/A
 import { useFooterState } from '~/pageComponents/AdminPage/store/useFooterState';
 import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { Button } from '~components/Buttons/Button';
+import { FileUpload } from '~components/FileUpload/FileUpload';
 import { TextArea } from '~components/inputs/TextArea/TextArea';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
 
-// import s from './FooterBoard.module.scss';
+import s from './FooterBoard.module.scss';
 
 interface FormFields {
 	email?: string;
@@ -120,11 +121,11 @@ export function FooterBoard() {
 			setValue('email', contactsData.email);
 			setValue('address', contactsData.address);
 		} else if (query.id === 'documents' && documentsData) {
-			setValue('rules', documentsData.rules);
-			setValue('contract', documentsData.contract);
-			setValue('privacy', documentsData.privacy);
-			setValue('statut', documentsData.statut);
-			setValue('reporting', documentsData.reporting);
+			setValue('rules', documentsData.rules || '0');
+			setValue('contract', documentsData.contract || '0');
+			setValue('privacy', documentsData.privacy || '0');
+			setValue('statut', documentsData.statut || '0');
+			setValue('reporting', documentsData.reporting || '0');
 		}
 
 		setErrorMessage('');
@@ -142,6 +143,7 @@ export function FooterBoard() {
 			updateContactsData(body);
 		} else if (query?.id === 'documents') {
 			console.log('form data', data); //-----------------------------log
+			// getDocumentsData();
 		}
 		setIsTabsClickBlocked(false);
 	};
@@ -184,11 +186,15 @@ export function FooterBoard() {
 		setIsTabsClickBlocked(false);
 	};
 
+	const deleteFile = (name: string) => {
+		console.log('delete', name);
+	};
+
 	return (
 		<>
 			{(isLoading || (!contactsData && !documentsData)) && <Loader />}
 			{!isLoading && (
-				<form onSubmit={handleSubmit(onSubmit)}>
+				<form onSubmit={handleSubmit(onSubmit)} className={s.form}>
 					{query?.id === 'contacts' && contactsData && (
 						<>
 							<TextArea
@@ -214,15 +220,38 @@ export function FooterBoard() {
 					)}
 
 					{query?.id === 'documents' && (
-						<TextInputWithCounter
-							register={registers.contract}
-							required
-							label="Договір публічної оферти"
-							placeholder=""
-							maxLength={45}
-							errors={errors}
-							showInfo
-						/>
+						<>
+							<FileUpload
+								register={registers.rules}
+								watch={watch}
+								label="Правила та умови"
+								deleteFile={deleteFile}
+							/>
+							<FileUpload
+								register={registers.contract}
+								watch={watch}
+								label="Договір публічної оферти"
+								deleteFile={deleteFile}
+							/>
+							<FileUpload
+								register={registers.privacy}
+								watch={watch}
+								label="Конфіденційність"
+								deleteFile={deleteFile}
+							/>
+							<FileUpload
+								register={registers.statut}
+								watch={watch}
+								label="Статут ГО"
+								deleteFile={deleteFile}
+							/>
+							<FileUpload
+								register={registers.reporting}
+								watch={watch}
+								label="Звітність ГО"
+								deleteFile={deleteFile}
+							/>
+						</>
 					)}
 					<ActionButtons
 						onReset={handleOnModalCancelYesClick}
