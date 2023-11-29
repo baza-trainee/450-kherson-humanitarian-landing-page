@@ -3,5 +3,4 @@ export interface DocumentsResponse {
 	contract: string;
 	privacy: string;
 	statut: string;
-	reporting: string;
 }

@@ -23,7 +23,6 @@ interface FormFields {
 	contract?: string;
 	privacy?: string;
 	statut?: string;
-	reporting?: string;
 }
 
 export function FooterBoard() {
@@ -113,7 +112,6 @@ export function FooterBoard() {
 					contract: register('contract'),
 					privacy: register('privacy'),
 					statut: register('statut'),
-					reporting: register('reporting'),
 			  };
 
 	useEffect(() => {
@@ -125,7 +123,6 @@ export function FooterBoard() {
 			setValue('contract', documentsData.contract || '0');
 			setValue('privacy', documentsData.privacy || '0');
 			setValue('statut', documentsData.statut || '0');
-			setValue('reporting', documentsData.reporting || '0');
 		}
 
 		setErrorMessage('');
@@ -158,7 +155,6 @@ export function FooterBoard() {
 					(value.rules !== documentsData?.rules ||
 						value.contract !== documentsData?.contract ||
 						value.statut !== documentsData?.statut ||
-						value.reporting !== documentsData?.reporting ||
 						value.privacy !== documentsData?.privacy))
 			) {
 				setIsTabsClickBlocked(true);
@@ -179,7 +175,6 @@ export function FooterBoard() {
 				contract: documentsData.contract,
 				privacy: documentsData.privacy,
 				statut: documentsData.statut,
-				reporting: documentsData.reporting,
 			});
 		}
 		setErrorMessage('');
@@ -243,12 +238,6 @@ export function FooterBoard() {
 								register={registers.statut}
 								watch={watch}
 								label="Статут ГО"
-								deleteFile={deleteFile}
-							/>
-							<FileUpload
-								register={registers.reporting}
-								watch={watch}
-								label="Звітність ГО"
 								deleteFile={deleteFile}
 							/>
 						</>
