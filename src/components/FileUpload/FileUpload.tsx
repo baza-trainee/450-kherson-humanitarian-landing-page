@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { type FieldErrors, type FieldValues } from 'react-hook-form';
+import { type FieldValues } from 'react-hook-form';
 
 import { Icon } from '~components/Icon/Icon';
 import { InputWrapper } from '~components/inputs/InputWrapper/InputWrapper';
@@ -13,19 +13,18 @@ export type FileUploadElement = HTMLInputElement;
 interface FileUploadProps {
 	register?: FieldValues;
 	watch?: (name: string) => FieldValues;
-	errors?: FieldErrors<FieldValues>;
-	deleteFile: () => void;
+	deleteFile: (name: string) => void;
 	label: string;
 }
 
 export const FileUpload = forwardRef<FileUploadElement, FileUploadProps>(
-	({ register, watch, errors, deleteFile, label }, ref) => {
+	({ register, watch, deleteFile, label }, ref) => {
 		const file = watch ? watch(register ? register.name : null) : null;
 		const [fileName, setFileName] = useState<string>('');
 
 		useEffect(() => {
 			if (typeof file === 'string') {
-				const path = process.env.NODE_ENV === 'development' ? `${BASE_URL}${file}` : file;
+				const path = file as string;
 				setFileName(path.slice(path.lastIndexOf('/') + 1, path.length));
 			} else if (file && file.length > 0) {
 				setFileName(file[0].name);
@@ -58,8 +57,18 @@ export const FileUpload = forwardRef<FileUploadElement, FileUploadProps>(
 								{...register}
 							/>
 						</label>
-						<Icon icon="icon--eye" className={s.icon} onClick={handleShowFile} />
-						<Icon icon="icon--trash" className={s.icon} onClick={deleteFile} />
+						<Icon
+							icon="icon--eye"
+							className={s.icon}
+							onClick={handleShowFile}
+							disabled={fileName === '0'}
+						/>
+						<Icon
+							icon="icon--trash"
+							className={s.icon}
+							onClick={() => deleteFile(register?.name)}
+							disabled={fileName === '0'}
+						/>
 					</div>
 				</div>
 			</InputWrapper>
