@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 
+import { AboutUsBoard } from './Boards/AboutUsBoard/AboutUsBoard';
 import { ChangePasswordBoard } from './Boards/ChangePasswordBoard/ChangePasswordBoard';
 import { DonationsBoard } from './Boards/DonationsBoard/DonationsBoard';
 import { FooterBoard } from './Boards/FooterBoard/FooterBoard';
@@ -17,6 +18,7 @@ export function ContentBoard() {
 			{query?.slug === 'lists' && <ListsBoard />}
 			{query?.slug === 'hero' && <HeroBoard />}
 			{query?.slug === 'donations' && <DonationsBoard />}
+			{query?.slug === 'about-us' && <AboutUsBoard />}
 			{query?.slug === 'change-password' && <ChangePasswordBoard />}
 			{query?.slug === 'our-activity' && <OurActivityBoard />}
 			{query?.slug === 'footer' && <FooterBoard />}
