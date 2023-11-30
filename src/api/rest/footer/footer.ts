@@ -1,3 +1,4 @@
+import { commonDelete } from '~api/common/commonDelete';
 import { commonGet } from '~api/common/commonGet';
 import { commonPut } from '~api/common/commonPut';
 import type { ContactsRequest } from '~api/types/backend/requests/ContactsRequest';
@@ -36,3 +37,4 @@ export const updateDocument = (body: DocumentRequest) =>
 		}
 		return { error: resp };
 	});
+	export const deleteDocument = (name: string) => commonDelete<DocumentsResponse>(`/document/${name}`);

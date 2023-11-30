@@ -45,6 +45,7 @@ export function FooterBoard() {
 		getDocumentsData,
 		updateContactsData,
 		updateDocumentData,
+		deleteDocumentByName,
 	} = useFooterState((state) => ({
 		isModalOnSuccessSaveOpen: state.isModalOnSuccessSaveOpen,
 		isLoading: state.isLoading,
@@ -56,6 +57,7 @@ export function FooterBoard() {
 		getDocumentsData: state.getDocumentsData,
 		updateContactsData: state.updateContactsData,
 		updateDocumentData: state.updateDocumentData,
+		deleteDocumentByName: state.deleteDocumentByName,
 	}));
 
 	const [errorMessage, setErrorMessage] = useState('');
@@ -64,7 +66,7 @@ export function FooterBoard() {
 		const fetchData = async () => {
 			if (query.id === 'contacts') {
 				await getContactsData();
-			} else getDocumentsData();
+			} else await getDocumentsData();
 		};
 		fetchData();
 		setErrorMessage('');
@@ -139,7 +141,9 @@ export function FooterBoard() {
 			};
 			updateContactsData(body);
 		} else if (query?.id === 'documents') {
+			//TODO base64
 			console.log('form data', data); //-----------------------------log
+
 			// getDocumentsData();
 		}
 		setIsTabsClickBlocked(false);
@@ -181,8 +185,10 @@ export function FooterBoard() {
 		setIsTabsClickBlocked(false);
 	};
 
-	const deleteFile = (name: string) => {
-		console.log('delete', name);
+	const deleteFile = async (name: string) => {
+		await deleteDocumentByName(name);
+		await getDocumentsData();
+		console.log('delete', name); //TODO modal confirm delete
 	};
 
 	return (

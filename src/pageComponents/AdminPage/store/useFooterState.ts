@@ -18,6 +18,7 @@ interface UseFooterState {
 	getDocumentsData: () => Promise<void>;
 	updateContactsData: (body: ContactsRequest) => Promise<void>;
 	updateDocumentData: (body: DocumentRequest) => Promise<void>;
+	deleteDocumentByName: (name: string) => Promise<void>;
 	setIsModalOnSuccessSaveClose: () => void;
 }
 
@@ -91,6 +92,18 @@ export const useFooterState = create<UseFooterState>((set) => ({
 			} else {
 				set({ error: resp.error });
 			}
+		} catch (error) {
+			set({ error: returnAppError(error) });
+		} finally {
+			set({ isLoading: false });
+		}
+	},
+	deleteDocumentByName: async (name) => {
+		set({ isLoading: true });
+		set({ error: null });
+		// set({ heroBoardData: null });
+		try {
+			await api.footer.deleteDocument(name);
 		} catch (error) {
 			set({ error: returnAppError(error) });
 		} finally {
