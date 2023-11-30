@@ -11,6 +11,7 @@ import { getIndexByKey } from '~helpers/getIndexByKey';
 import { getMatch } from '~helpers/getMatch';
 import { useParams } from '~hooks/useParams';
 
+import { useAboutUsState } from '../../store/useAboutUsState';
 import { useDonationsState } from '../../store/useDonationsState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
@@ -18,6 +19,7 @@ import { useOurActivityState } from '../../store/useOurActivityState';
 import { usePartnersState } from '../../store/usePartnersState';
 import { useTabsState } from '../../store/useTabsState';
 import { newTabsTitleNames } from './data/newTabsTitleNames';
+import { fetchAboutUsData } from './fetchHelpers/fetchAboutUsData';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
@@ -45,16 +47,20 @@ export function Tabs() {
 	const { setParams } = useParams();
 
 	const isListsDataLoading = useListsState((state) => state.isLoading);
+	const isAboutUsDataLoading = useAboutUsState((state) => state.isLoading);
 	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
 	const isDonationsDataLoading = useDonationsState((state) => state.isLoading);
 	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
 	const isPartnersDataLoading = usePartnersState((state) => state.isLoading);
+  
 	const isDataLoading =
 		isListsDataLoading ||
 		isHeroDataLoading ||
 		isOurActivityDataLoading ||
-		isDonationsDataLoading ||
-		isPartnersDataLoading;
+		isPartnersDataLoading ||
+		isAboutUsDataLoading ||
+		isDonationsDataLoading;
+	//* use your state loading ⭡
 
 	const {
 		isTabsClickBlocked,
@@ -88,6 +94,7 @@ export function Tabs() {
 				await getTabsData(fetchDonationsData);
 				setTabsTitleName(newTabsTitleNames.donations);
 			},
+			'about-us': async () => await getTabsData(fetchAboutUsData),
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			'our-activity': async () => {
 				await getTabsData(fetchOurActivityData);
