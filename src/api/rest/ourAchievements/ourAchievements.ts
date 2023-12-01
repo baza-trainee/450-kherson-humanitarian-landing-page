@@ -12,4 +12,7 @@ export const getOurAchievements = () =>
 	});
 
 export const putOurAchievements = (body: OurAchievementsRequest) =>
-	commonPut<OurAchievementsResponse, OurAchievementsRequest>('/achievements', body);
+	commonPut<OurAchievementsResponse, OurAchievementsRequest>('/achievements', body).then((resp) => {
+		if ('data' in resp) return { data: transformOurAchievementsDTO(resp.data) };
+		return { error: resp };
+	});
