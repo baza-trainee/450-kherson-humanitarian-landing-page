@@ -103,8 +103,8 @@ export function Tabs() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.slug]);
 
-
-
+//* 2. Check is id in address or is id correct
+	//* and if its needed set id to url params
 	useEffect(() => {
 		if (
 			!query?.id ||
