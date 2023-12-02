@@ -6,6 +6,8 @@ import type { DocumentRequest } from '~api/types/backend/requests/DocumentReques
 import type { ContactsResponse } from '~api/types/backend/responses/ContactsResponse';
 import type { DocumentsResponse } from '~api/types/backend/responses/DocumentsResponse';
 
+import { transformDocumentsDTO } from './dto/transformDocumentsDTO';
+
 export const getContacts = () =>
 	commonGet<ContactsResponse>('/contacts').then((resp) => {
 		if ('data' in resp) {
@@ -17,7 +19,7 @@ export const getContacts = () =>
 export const getDocuments = () =>
 	commonGet<DocumentsResponse>('/documents').then((resp) => {
 		if ('data' in resp) {
-			return { data: resp.data };
+			return { data: transformDocumentsDTO(resp.data) };
 		}
 		return { error: resp };
 	});
@@ -37,4 +39,5 @@ export const updateDocument = (body: DocumentRequest) =>
 		}
 		return { error: resp };
 	});
-	export const deleteDocument = (name: string) => commonDelete<DocumentsResponse>(`/document/${name}`);
+export const deleteDocument = (name: string) =>
+	commonDelete<DocumentsResponse>(`/document/${name}`);

@@ -76,13 +76,13 @@ export const FileUpload = forwardRef<FileUploadElement, FileUploadProps>(
 							icon="icon--eye"
 							className={s.icon}
 							onClick={handleShowFile}
-							disabled={fileName === '0'}
+							disabled={fileName === '0' || !fileName}
 						/>
 						<Icon
 							icon="icon--trash"
 							className={s.icon}
 							onClick={() => deleteFile(register?.name)}
-							disabled={fileName === '0'}
+							disabled={fileName === '0' || !fileName}
 						/>
 					</div>
 				</div>

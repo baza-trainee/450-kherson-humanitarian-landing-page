@@ -129,10 +129,10 @@ export function FooterBoard() {
 			setValue('email', contactsData.email);
 			setValue('address', contactsData.address);
 		} else if (query.id === 'documents' && documentsData) {
-			setValue('rules', documentsData.rules || '0');
-			setValue('contract', documentsData.contract || '0');
-			setValue('privacy', documentsData.privacy || '0');
-			setValue('statut', documentsData.statut || '0');
+			setValue('rules', documentsData.rules);
+			setValue('contract', documentsData.contract);
+			setValue('privacy', documentsData.privacy);
+			setValue('statut', documentsData.statut);
 		}
 		setErrorMessage('');
 		clearErrors();
@@ -179,9 +179,10 @@ export function FooterBoard() {
 						},
 					};
 					await updateDocumentData(body);
-					await getDocumentsData();
 				}
 			}
+			await getDocumentsData();
+			if (!isModalOnSuccessSaveOpen && !stateError) setErrorMessage('Дані не збережено');
 		}
 		setIsTabsClickBlocked(false);
 	};
