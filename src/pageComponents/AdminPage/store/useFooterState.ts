@@ -101,7 +101,6 @@ export const useFooterState = create<UseFooterState>((set) => ({
 	deleteDocumentByName: async (name) => {
 		set({ isLoading: true });
 		set({ error: null });
-		// set({ heroBoardData: null });
 		try {
 			await api.footer.deleteDocument(name);
 		} catch (error) {

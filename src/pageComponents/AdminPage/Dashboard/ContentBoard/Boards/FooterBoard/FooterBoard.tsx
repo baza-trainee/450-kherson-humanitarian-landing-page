@@ -13,16 +13,22 @@ import { TextArea } from '~components/inputs/TextArea/TextArea';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 
 import s from './FooterBoard.module.scss';
 
-interface FormFields {
-	email?: string;
-	address?: string;
-	rules?: string;
-	contract?: string;
-	privacy?: string;
-	statut?: string;
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
+interface FormFieldsKeys {
+	[key: string]: string | FileList;
+}
+
+interface FormFields extends FormFieldsKeys {
+	email: string;
+	address: string;
+	rules: string | FileList;
+	contract: string | FileList;
+	privacy: string | FileList;
+	statut: string | FileList;
 }
 
 export function FooterBoard() {
@@ -77,9 +83,10 @@ export function FooterBoard() {
 	useEffect(() => {
 		//*set message to show in Modal Error
 		if (stateError) {
-			if (stateError.status === 406)
-				setErrorMessage('Не правильно введені дані. Можливо є зайві символи');
-			if (stateError.status === 500) setErrorMessage(stateError.message);
+			const message = getErrorMessageFromCode(stateError.status, {
+				406: 'Не правильно введені дані. Можливо є зайві символи',
+			});
+			setErrorMessage(message);
 		}
 	}, [stateError]);
 
@@ -126,12 +133,26 @@ export function FooterBoard() {
 			setValue('privacy', documentsData.privacy || '0');
 			setValue('statut', documentsData.statut || '0');
 		}
-
 		setErrorMessage('');
 		clearErrors();
 		setIsTabsClickBlocked(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [contactsData, documentsData]);
+
+	const convertToBase64 = async (file: File): Promise<string> => {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+
+			reader.onloadend = () => {
+				if (reader.result) {
+					resolve(reader.result.toString());
+				} else {
+					reject(new Error('Failed to read file'));
+				}
+			};
+			reader.readAsDataURL(file);
+		});
+	};
 
 	const onSubmit: SubmitHandler<FormFields> = async (data: FormFields) => {
 		if (query?.id === 'contacts') {
@@ -139,12 +160,27 @@ export function FooterBoard() {
 				email: data.email || '',
 				address: data.address?.split('\n').join('/n') || '',
 			};
-			updateContactsData(body);
+			await updateContactsData(body);
 		} else if (query?.id === 'documents') {
-			//TODO base64
-			console.log('form data', data); //-----------------------------log
-
-			// getDocumentsData();
+			for (const key in data) {
+				if (
+					data[key] &&
+					data[key].length > 0 &&
+					typeof data[key] !== 'string' &&
+					(data[key][0] as File).size < 10000000
+				) {
+					const convertFile = await convertToBase64(data[key][0] as File);
+					const body = {
+						type: key,
+						file: {
+							mime: (data[key][0] as File).type,
+							data: convertFile.split(',')[1],
+						},
+					};
+					await updateDocumentData(body);
+					await getDocumentsData();
+				}
+			}
 		}
 		setIsTabsClickBlocked(false);
 	};

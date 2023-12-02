@@ -3,6 +3,7 @@ import { type FieldValues } from 'react-hook-form';
 
 import { Icon } from '~components/Icon/Icon';
 import { InputWrapper } from '~components/inputs/InputWrapper/InputWrapper';
+import { ModalPop } from '~components/ModalPop/ModalPop';
 import { Text } from '~components/Text/Text';
 import { BASE_URL } from '~constants/BASE_URL';
 
@@ -20,14 +21,25 @@ interface FileUploadProps {
 export const FileUpload = forwardRef<FileUploadElement, FileUploadProps>(
 	({ register, watch, deleteFile, label }, ref) => {
 		const file = watch ? watch(register ? register.name : null) : null;
+
 		const [fileName, setFileName] = useState<string>('');
+		const [error, setError] = useState<string>('');
 
 		useEffect(() => {
 			if (typeof file === 'string') {
 				const path = file as string;
 				setFileName(path.slice(path.lastIndexOf('/') + 1, path.length));
+				setError('');
 			} else if (file && file.length > 0) {
-				setFileName(file[0].name);
+				if (file[0].size < 10000000) {
+					setFileName(file[0].name);
+					setError('');
+				} else {
+					setFileName('');
+					setError(
+						'Файл занадто великий. Скористайтесь редактором для стиснення або оберіть інший файл',
+					);
+				}
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [file]);
@@ -41,7 +53,10 @@ export const FileUpload = forwardRef<FileUploadElement, FileUploadProps>(
 		};
 
 		return (
-			<InputWrapper label={label} className={s.borderWrapper}>
+			<InputWrapper
+				label={label}
+				className={error || !fileName ? s.errorBorder : s.borderWrapper}
+			>
 				<div className={s.fileUploadBlock}>
 					<Text variant="footer" className={s.underline}>
 						{fileName}
@@ -71,6 +86,16 @@ export const FileUpload = forwardRef<FileUploadElement, FileUploadProps>(
 						/>
 					</div>
 				</div>
+				{error && (
+					<ModalPop
+						type="error"
+						title="Помилка!"
+						isOpen={!!error}
+						onClose={() => setError('')}
+					>
+						{error}
+					</ModalPop>
+				)}
 			</InputWrapper>
 		);
 	},
