@@ -67,6 +67,7 @@ export function FooterBoard() {
 	}));
 
 	const [errorMessage, setErrorMessage] = useState('');
+	const [isDocumentRemoveName, setIsDocumentRemoveName] = useState('');
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -84,7 +85,7 @@ export function FooterBoard() {
 		//*set message to show in Modal Error
 		if (stateError) {
 			const message = getErrorMessageFromCode(stateError.status, {
-				406: 'Не правильно введені дані. Можливо є зайві символи',
+				406: 'Помилка при збереженні. Не правильно введені дані. Можливо є зайві символи',
 			});
 			setErrorMessage(message);
 		}
@@ -221,10 +222,14 @@ export function FooterBoard() {
 		setIsTabsClickBlocked(false);
 	};
 
-	const deleteFile = async (name: string) => {
-		await deleteDocumentByName(name);
+	const handleRemoveOnClick = (name: string) => {
+		setIsDocumentRemoveName(name);
+	};
+
+	const handleConfirmRemoveOnClick = async () => {
+		await deleteDocumentByName(isDocumentRemoveName);
+		setIsDocumentRemoveName('');
 		await getDocumentsData();
-		console.log('delete', name); //TODO modal confirm delete
 	};
 
 	return (
@@ -262,25 +267,25 @@ export function FooterBoard() {
 								register={registers.rules}
 								watch={watch}
 								label="Правила та умови"
-								deleteFile={deleteFile}
+								deleteFile={handleRemoveOnClick}
 							/>
 							<FileUpload
 								register={registers.contract}
 								watch={watch}
 								label="Договір публічної оферти"
-								deleteFile={deleteFile}
+								deleteFile={handleRemoveOnClick}
 							/>
 							<FileUpload
 								register={registers.privacy}
 								watch={watch}
 								label="Конфіденційність"
-								deleteFile={deleteFile}
+								deleteFile={handleRemoveOnClick}
 							/>
 							<FileUpload
 								register={registers.statut}
 								watch={watch}
 								label="Статут ГО"
-								deleteFile={deleteFile}
+								deleteFile={handleRemoveOnClick}
 							/>
 						</>
 					)}
@@ -307,11 +312,29 @@ export function FooterBoard() {
 					{errorMessage && (
 						<ModalPop
 							type="error"
-							title="Помилка при збереженні!"
+							title="Виникла помилка!"
 							isOpen={!!errorMessage}
 							onClose={() => setErrorMessage('')}
 						>
 							{errorMessage}
+						</ModalPop>
+					)}
+					{isDocumentRemoveName && (
+						<ModalPop
+							type="error"
+							title={'Видалити?'}
+							isOpen={!!isDocumentRemoveName}
+							onClose={() => setIsDocumentRemoveName('')}
+							leftButton={() => (
+								<Button type="secondary" onClick={() => handleConfirmRemoveOnClick()}>
+									Так
+								</Button>
+							)}
+							rightButton={() => (
+								<Button onClick={() => setIsDocumentRemoveName('')}>Ні</Button>
+							)}
+						>
+							Ви дійсно бажаєте видалити документ?
 						</ModalPop>
 					)}
 				</form>
