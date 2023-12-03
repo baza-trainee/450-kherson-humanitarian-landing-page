@@ -9,6 +9,7 @@ import { Button } from '~components/Buttons/Button';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 
 import s from './ourAchievements.module.scss';
 
@@ -23,6 +24,7 @@ export function OurAchievements() {
 		isTabsClickBlocked: state.isTabsClickBlocked,
 		setIsTabsClickBlocked: state.setIsTabsClickBlocked,
 	}));
+
 	const {
 		ourAchievementsBoardData,
 		getBoardData,
@@ -56,7 +58,9 @@ export function OurAchievements() {
 	} = useForm<FormFields>({
 		mode: 'onSubmit',
 	});
+
 	const [errorMessage, setErrorMessage] = useState('');
+
 	const currentFormattedDate = () => {
 		return ourAchievementsBoardData
 			? ourAchievementsBoardData.issueDate
@@ -69,12 +73,10 @@ export function OurAchievements() {
 
 	useEffect(() => {
 		if (ourAchievementsBoardData) {
-			const isoDate = currentFormattedDate();
-
 			setValue('issuedSets', ourAchievementsBoardData.issuedSets);
 			setValue('receivedHelp', ourAchievementsBoardData.receivedHelp);
 			setValue('donations', ourAchievementsBoardData.donations);
-			setValue('issueDate', isoDate);
+			setValue('issueDate', currentFormattedDate());
 		}
 		setErrorMessage('');
 		clearErrors();
@@ -110,34 +112,35 @@ export function OurAchievements() {
 	};
 
 	const handleUndoChanges = () => {
-		const isoDate = currentFormattedDate();
 		reset({
 			issuedSets: ourAchievementsBoardData?.issuedSets,
 			receivedHelp: ourAchievementsBoardData?.receivedHelp,
 			donations: ourAchievementsBoardData?.donations,
-			issueDate: isoDate,
+			issueDate: currentFormattedDate(),
 		});
 	};
+
 	useEffect(() => {
-		const isoDate = currentFormattedDate();
 		watch((value) => {
 			if (
 				value.issuedSets !== ourAchievementsBoardData?.issuedSets ||
 				value.receivedHelp !== ourAchievementsBoardData?.receivedHelp ||
 				value.donations !== ourAchievementsBoardData?.donations ||
-				value.issueDate !== isoDate
+				value.issueDate !== currentFormattedDate()
 			) {
 				setIsTabsClickBlocked(true);
 			} else setIsTabsClickBlocked(false);
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [watch, ourAchievementsBoardData]);
+
 	useEffect(() => {
 		//*set message to show in Modal Error
 		if (stateError) {
-			if (stateError.status === 406)
-				setErrorMessage('Не правильно введені дані. Можливо є зайві символи');
-			if (stateError.status === 500) setErrorMessage(stateError.message);
+			const message = getErrorMessageFromCode(stateError.status, {
+				406: 'Помилка при збереженні. Не правильно введені дані. Можливо є зайві символи',
+			});
+			setErrorMessage(message);
 		}
 	}, [stateError]);
 
@@ -150,12 +153,12 @@ export function OurAchievements() {
 			currentDate.getSeconds(),
 			currentDate.getMilliseconds(),
 		);
+
 		const formattedDate = date.toISOString();
 		const body = {
 			issuedHumanitarianKits: Number(data.issuedSets),
 			receivedHumanitarianAid: Number(data.receivedHelp),
 			sumDonats: Number(data.donations),
-
 			infoAtDate: formattedDate,
 		};
 
@@ -232,7 +235,7 @@ export function OurAchievements() {
 					{errorMessage && (
 						<ModalPop
 							type="error"
-							title="Помилка при збереженні!"
+							title="Виникла помилка!"
 							isOpen={!!errorMessage}
 							onClose={() => setErrorMessage('')}
 						>
