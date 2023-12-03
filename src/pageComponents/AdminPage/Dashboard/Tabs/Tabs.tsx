@@ -15,6 +15,7 @@ import { useAboutUsState } from '../../store/useAboutUsState';
 import { useDonationsState } from '../../store/useDonationsState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
+import { useOurAchievementsBoardState } from '../../store/useOurAchievementsBoardState';
 import { useOurActivityState } from '../../store/useOurActivityState';
 import { usePartnersState } from '../../store/usePartnersState';
 import { useTabsState } from '../../store/useTabsState';
@@ -24,6 +25,7 @@ import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData'
 import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
+import { fetchOurAchievementsData } from './fetchHelpers/fetchOurAchievementsData';
 import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
 import { fetchPartnersData } from './fetchHelpers/fetchPartnersData';
 
@@ -51,15 +53,17 @@ export function Tabs() {
 	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
 	const isDonationsDataLoading = useDonationsState((state) => state.isLoading);
 	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
+	const isOurAchievementsDataLoading = useOurAchievementsBoardState((state) => state.isLoading);
 	const isPartnersDataLoading = usePartnersState((state) => state.isLoading);
-  
+
 	const isDataLoading =
 		isListsDataLoading ||
 		isHeroDataLoading ||
 		isOurActivityDataLoading ||
 		isPartnersDataLoading ||
 		isAboutUsDataLoading ||
-		isDonationsDataLoading;
+		isDonationsDataLoading ||
+		isOurAchievementsDataLoading;
 	//* use your state loading ⭡
 
 	const {
@@ -100,6 +104,7 @@ export function Tabs() {
 				await getTabsData(fetchOurActivityData);
 				setTabsTitleName(newTabsTitleNames['our-activity']);
 			},
+			'our-achievements': async () => await getTabsData(fetchOurAchievementsData),
 			'our-partners': async () => {
 				await getTabsData(fetchPartnersData);
 				setTabsTitleName(newTabsTitleNames['our-partners']);
