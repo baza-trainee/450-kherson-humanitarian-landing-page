@@ -182,7 +182,6 @@ export function FooterBoard() {
 				}
 			}
 			await getDocumentsData();
-			if (!isModalOnSuccessSaveOpen && !stateError) setErrorMessage('Дані не збережено');
 		}
 		setIsTabsClickBlocked(false);
 	};
