@@ -23,6 +23,7 @@ import { newTabsTitleNames } from './data/newTabsTitleNames';
 import { fetchAboutUsData } from './fetchHelpers/fetchAboutUsData';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
+import { fetchGetHelpData } from './fetchHelpers/fetchGetHelpData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
 import { fetchOurAchievementsData } from './fetchHelpers/fetchOurAchievementsData';
@@ -109,6 +110,7 @@ export function Tabs() {
 				await getTabsData(fetchPartnersData);
 				setTabsTitleName(newTabsTitleNames['our-partners']);
 			},
+			'get-help': async () => await getTabsData(fetchGetHelpData),
 			_: () => setTabsData(null),
 		});
 		fetchData();
