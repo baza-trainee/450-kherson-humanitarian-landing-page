@@ -6,6 +6,7 @@ import * as hero from '~api/rest/hero/hero';
 import * as lists from '~api/rest/lists/lists';
 import * as ourActivity from '~api/rest/ourActivity/ourActivity';
 import * as persons from '~api/rest/persons/persons';
+import * as projects from '~api/rest/projects/projects';
 
 export const api = {
 	aboutUs,
@@ -16,4 +17,5 @@ export const api = {
 	ourActivity,
 	hero,
 	donations,
+	projects,
 };

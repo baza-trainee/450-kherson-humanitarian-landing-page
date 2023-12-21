@@ -6,6 +6,7 @@ import { DonationsBoard } from './Boards/DonationsBoard/DonationsBoard';
 import { HeroBoard } from './Boards/HeroBoard/HeroBoard';
 import { ListsBoard } from './Boards/ListsBoard/ListsBoard';
 import { OurActivityBoard } from './Boards/OurActivityBoard/OurActivityBoard';
+import ProjectsBoard from './Boards/ProjectsBoard/ProjectsBoard';
 
 import s from './ContentBoard.module.scss';
 
@@ -20,6 +21,7 @@ export function ContentBoard() {
 			{query?.slug === 'about-us' && <AboutUsBoard />}
 			{query?.slug === 'change-password' && <ChangePasswordBoard />}
 			{query?.slug === 'our-activity' && <OurActivityBoard />}
+			{query?.slug === 'projects' && <ProjectsBoard />}
 		</div>
 	);
 }
