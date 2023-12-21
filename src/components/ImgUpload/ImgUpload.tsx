@@ -25,7 +25,10 @@ export const ImgUpload = forwardRef<ImgUploadElement, ImgUploadProps>(
 
 		const file = watch ? watch(register ? register.name : null) : null;
 
-		const error = errors ? errors[register?.name] : '';
+		const nameArr = register?.name.split('.');
+		let error;
+		if ((errors as FieldValues)?.[nameArr[0]]?.[nameArr[1]]?.[nameArr[2]]) error = true;
+		if (errors?.[register?.name]) error = true;
 
 		useEffect(() => {
 			if (watch && file) {
