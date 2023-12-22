@@ -4,6 +4,10 @@
 	border-bottom: 1px solid var(--color--secondary-2);
 }
 
+.errorBorder {
+	border-bottom: 1px solid var(--color--error-1);
+}
+
 .fileUploadBlock {
 	// gap: 20px;
 	display: flex;

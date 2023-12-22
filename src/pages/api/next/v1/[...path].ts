@@ -50,3 +50,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		return res.status(errorData.response.status).json(errorData.response.data);
 	}
 }
+export const config = {
+	api: {
+		bodyParser: {
+			sizeLimit: '10mb',
+		},
+	},
+};
