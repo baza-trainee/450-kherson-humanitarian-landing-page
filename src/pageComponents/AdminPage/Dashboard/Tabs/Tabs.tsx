@@ -15,7 +15,9 @@ import { useAboutUsState } from '../../store/useAboutUsState';
 import { useDonationsState } from '../../store/useDonationsState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
+import { useOurAchievementsBoardState } from '../../store/useOurAchievementsBoardState';
 import { useOurActivityState } from '../../store/useOurActivityState';
+import { usePartnersState } from '../../store/usePartnersState';
 import { useProjectsState } from '../../store/useProjectsState';
 import { useTabsState } from '../../store/useTabsState';
 import { newTabsTitleNames } from './data/newTabsTitleNames';
@@ -24,7 +26,9 @@ import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData'
 import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
+import { fetchOurAchievementsData } from './fetchHelpers/fetchOurAchievementsData';
 import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
+import { fetchPartnersData } from './fetchHelpers/fetchPartnersData';
 import { fetchProjectsData } from './fetchHelpers/fetchProjectsData';
 
 import s from './Tabs.module.scss';
@@ -51,13 +55,17 @@ export function Tabs() {
 	const isHeroDataLoading = useHeroesState((state) => state.isLoading);
 	const isDonationsDataLoading = useDonationsState((state) => state.isLoading);
 	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
+	const isOurAchievementsDataLoading = useOurAchievementsBoardState((state) => state.isLoading);
+	const isPartnersDataLoading = usePartnersState((state) => state.isLoading);
 	const isProjectsDataLoading = useProjectsState((state) => state.isLoading);
 	const isDataLoading =
 		isListsDataLoading ||
 		isHeroDataLoading ||
 		isOurActivityDataLoading ||
+		isPartnersDataLoading ||
 		isAboutUsDataLoading ||
 		isDonationsDataLoading ||
+		isOurAchievementsDataLoading ||
 		isProjectsDataLoading;
 
 	const {
@@ -101,6 +109,11 @@ export function Tabs() {
 			'our-activity': async () => {
 				await getTabsData(fetchOurActivityData);
 				setTabsTitleName(newTabsTitleNames['our-activity']);
+			},
+			'our-achievements': async () => await getTabsData(fetchOurAchievementsData),
+			'our-partners': async () => {
+				await getTabsData(fetchPartnersData);
+				setTabsTitleName(newTabsTitleNames['our-partners']);
 			},
 			_: () => setTabsData(null),
 		});

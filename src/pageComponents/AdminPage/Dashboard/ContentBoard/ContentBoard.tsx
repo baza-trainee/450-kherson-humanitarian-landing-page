@@ -5,7 +5,9 @@ import { ChangePasswordBoard } from './Boards/ChangePasswordBoard/ChangePassword
 import { DonationsBoard } from './Boards/DonationsBoard/DonationsBoard';
 import { HeroBoard } from './Boards/HeroBoard/HeroBoard';
 import { ListsBoard } from './Boards/ListsBoard/ListsBoard';
+import { OurAchievements } from './Boards/OurAchievements/OurAchievements';
 import { OurActivityBoard } from './Boards/OurActivityBoard/OurActivityBoard';
+import { PartnersBoard } from './Boards/PartnersBoard/PartnersBoard';
 import ProjectsBoard from './Boards/ProjectsBoard/ProjectsBoard';
 
 import s from './ContentBoard.module.scss';
@@ -17,10 +19,13 @@ export function ContentBoard() {
 		<div className={s.ContentBoard}>
 			{query?.slug === 'lists' && <ListsBoard />}
 			{query?.slug === 'hero' && <HeroBoard />}
+
+			{query?.slug === 'our-achievements' && <OurAchievements />}
 			{query?.slug === 'donations' && <DonationsBoard />}
 			{query?.slug === 'about-us' && <AboutUsBoard />}
 			{query?.slug === 'change-password' && <ChangePasswordBoard />}
 			{query?.slug === 'our-activity' && <OurActivityBoard />}
+			{query?.slug === 'our-partners' && <PartnersBoard />}
 			{query?.slug === 'projects' && <ProjectsBoard />}
 		</div>
 	);
