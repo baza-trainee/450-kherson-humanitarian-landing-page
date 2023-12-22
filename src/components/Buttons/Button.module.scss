@@ -1,0 +1,69 @@
+@use '~/styles/mixins' as *;
+
+.Button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 48px;
+	padding: 16px;
+	border-radius: 5px;
+	text-decoration: none;
+	cursor: pointer;
+	user-select: none;
+}
+
+.label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: 8px;
+	color: inherit;
+}
+
+.primary {
+	border-style: none;
+	color: var(--color--shades-1);
+	background: var(--color--primary-2);
+	@include useOnHover {
+		color: var(--color--secondary-4);
+		background: var(--color--gradient-1);
+	}
+	@include useOnClick {
+		color: var(--color--shades-1);
+		background: var(--color--primary-4);
+	}
+
+	&.disabled {
+		color: var(--color--secondary-2);
+		user-select: none;
+		pointer-events: none;
+		background: var(--color--secondary-1);
+	}
+}
+
+.secondary {
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--color--primary-3);
+	color: var(--color--primary-3);
+	background: var(--color--shades-1);
+
+	@include useOnHover {
+		border-color: transparent;
+		color: var(--color--secondary-4);
+		background: linear-gradient(var(--color--shades-1), var(--color--shades-1)) padding-box,
+			var(--color--gradient-1) border-box;
+	}
+	@include useOnClick {
+		padding: 18px;
+		border-style: none;
+		color: var(--color--shades-1);
+		background: var(--color--primary-4);
+	}
+	&.disabled {
+		border: 2px solid var(--color--secondary-1);
+		color: var(--color--secondary-2);
+		user-select: none;
+		pointer-events: none;
+	}
+}

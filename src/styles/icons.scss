@@ -1,0 +1,31 @@
+@use "~/styles/mixins" as *;
+
+$iconsSet: (
+	arrow-left,
+	arrow-right,
+	arrow-up-right,
+	arrow-up,
+	attention,
+	burger,
+	chevron-down,
+	close,
+	copy,
+	download,
+	dropdown-form,
+	dropdown-modal,
+	edit,
+	email,
+	eye,
+	eye-off,
+	facebook,
+	instagram,
+	location,
+	log-out,
+	phone,
+	plus,
+	trash,
+	upload,
+	checked
+);
+
+@include useSvgIcon($icons: $iconsSet);

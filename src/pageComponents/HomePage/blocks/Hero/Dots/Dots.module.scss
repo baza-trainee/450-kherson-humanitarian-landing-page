@@ -1,0 +1,39 @@
+.dots {
+	display: flex;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 20px 4px;
+}
+
+.dot {
+	width: 5px;
+	height: 5px;
+	margin: 0 6px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	background: var(--color--shades-2);
+	&:focus {
+		outline: none;
+	}
+	&.active {
+		padding: 3.5px;
+		background: var(--color--primary-3);
+	}
+}
+
+.dotActive {
+	width: 7px;
+	height: 7px;
+	margin: 0 5px;
+	padding: 5px;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	background: var(--color--primary-3);
+}

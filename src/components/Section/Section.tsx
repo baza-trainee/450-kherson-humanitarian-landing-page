@@ -6,11 +6,6 @@ import s from './Section.module.scss';
 
 export type SectionElement = HTMLElement;
 
-type ReactHTMLElementAttributes<
-	E,
-	A extends React.HTMLAttributes<E> = React.HTMLAttributes<E>
-> = React.DetailedHTMLProps<A, E>;
-
 export type SectionProps = ReactHTMLElementAttributes<SectionElement>;
 
 export const Section = forwardRef<SectionElement, SectionProps>(({ children, className, ...rest }, ref) => {

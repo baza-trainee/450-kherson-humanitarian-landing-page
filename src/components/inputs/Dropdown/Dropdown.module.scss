@@ -1,0 +1,26 @@
+.inputContainer {
+	position: relative;
+}
+
+.input {
+	color: var(--color--secondary-2);
+	cursor: pointer;
+	-moz-appearance: none !important;
+	-webkit-appearance: none !important;
+	appearance: none !important;
+}
+
+.icon {
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	right: 12px;
+	bottom: 0;
+	margin: auto 0;
+	pointer-events: none;
+	background-color: var(--color--primary-3);
+
+	.disabled & {
+		background-color: var(--color--secondary-1);
+	}
+}

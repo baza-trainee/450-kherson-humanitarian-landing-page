@@ -1,0 +1,13 @@
+@use '~/styles/mixins' as *;
+
+.HeaderLite {
+	padding: 10px 16px;
+	background: var(--color--opacity-1);
+	box-shadow: 0px 1px 4px 0px rgba(45, 35, 66, 0.2);
+	@include useScreen('tablet-sm') {
+		padding: 10px 32px;
+	}
+	@include useScreen('desktop-md') {
+		padding: 9px 80px;
+	}
+}

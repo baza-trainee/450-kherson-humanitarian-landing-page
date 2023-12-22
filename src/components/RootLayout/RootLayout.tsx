@@ -15,7 +15,7 @@ interface RootLayoutProps {
 
 export function RootLayout({ className, children }: RootLayoutProps) {
 	return (
-		<div className={clsx([s.RootLayout, className])}>
+		<div className={clsx(s.RootLayout, className)}>
 			<HeaderLayout />
 			<MainLayout>{children}</MainLayout>
 			<FooterLayout />

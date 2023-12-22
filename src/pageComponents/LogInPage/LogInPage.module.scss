@@ -1,0 +1,29 @@
+.LogInPage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	background-color: var(--color--secondary-1);
+}
+
+.formFields {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 620px;
+	margin: 0 auto;
+	padding: 48px;
+	border-radius: 5px;
+	background-color: var(--color--shades-1);
+	justify-self: center;
+	row-gap: 24px;
+}
+
+.input {
+	width: 100%;
+}
+
+.link {
+	align-self: end;
+}

@@ -1,0 +1,48 @@
+@use "~/styles/mixins" as *;
+
+.Backdrop {
+	--backdrop-opacity: 60%;
+}
+
+.Backdrop {
+	opacity: 60%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+
+	background-color: var(--color--shades-1);
+	animation-name: hide-blackout;
+
+	animation-duration: 0.3s;
+	animation-fill-mode: forwards;
+
+	&.clickable {
+		cursor: pointer;
+	}
+}
+
+.Backdrop.show {
+	animation-name: show-blackout;
+	animation-duration: 0.3s;
+	animation-fill-mode: forwards;
+	@include useDisabled;
+}
+
+@keyframes show-blackout {
+	from {
+		opacity: 0%;
+	}
+	to {
+		opacity: var(--backdrop-opacity);
+	}
+}
+@keyframes hide-blackout {
+	from {
+		opacity: var(--backdrop-opacity);
+	}
+	to {
+		opacity: 0%;
+	}
+}

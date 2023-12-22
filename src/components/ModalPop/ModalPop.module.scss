@@ -1,0 +1,29 @@
+@use "~/styles/mixins" as *;
+
+.container {
+	display: flex;
+	flex-direction: column;
+	max-width: calc(100vw - 8px);
+	padding: 16px 24px 24px;
+	overflow-x: hidden;
+	row-gap: 24px;
+
+	@include useScreen("tablet-sm") {
+		max-width: calc(100vw - 48px);
+		padding: 16px 48px 48px;
+	}
+}
+
+.buttons {
+	display: inline-flex;
+	justify-content: center;
+	column-gap: 24px;
+}
+
+.error {
+	color: var(--color--error-1);
+}
+
+.info {
+	color: var(--color--primary-3);
+}

@@ -1,0 +1,29 @@
+.TableHeader {
+	z-index: 1;
+	position: sticky;
+	top: 0;
+}
+
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	border-bottom: 1px solid var(--color--secondary-2);
+	border-radius: 5px 5px 0 0;
+	background-color: var(--color--shades-2);
+}
+
+.cell {
+	display: flex;
+	padding: 12px;
+	overflow: hidden;
+	& > * {
+		inline-size: 100%;
+		overflow-wrap: break-word;
+	}
+}
+
+.title {
+	color: var(--color--primary-2);
+	text-transform: uppercase;
+}

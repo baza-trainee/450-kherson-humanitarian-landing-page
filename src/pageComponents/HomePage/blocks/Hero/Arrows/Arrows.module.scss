@@ -1,0 +1,20 @@
+@use '~/styles/mixins' as *;
+
+.arrowsContainer {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	padding: 0 16px 52px 16px;
+	@include useScreen('tablet-sm') {
+		padding: 0 32px 104px 32px;
+	}
+	@include useScreen('desktop-sm') {
+		padding: 0 80px 88px 80px;
+	}
+}
+
+.arrows {
+	display: flex;
+	padding: 8px 0;
+	gap: 35px;
+}

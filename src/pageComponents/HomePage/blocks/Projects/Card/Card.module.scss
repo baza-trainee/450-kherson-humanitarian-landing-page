@@ -1,0 +1,70 @@
+@use '~/styles/mixins' as *;
+
+.container {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	max-width: 100%;
+	min-height: 422px;
+	@include useScreen('mobile-xl') {
+		min-height: 437px;
+	}
+}
+
+.card {
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	cursor: pointer;
+	background-color: var(--color--shades-1);
+}
+
+.text {
+	padding: 16px;
+	font-size: var(--font-size--h5);
+	line-height: 150%;
+	@include useScreen('tablet-xl') {
+		padding: 24px;
+	}
+}
+
+.img {
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	min-height: 286px;
+	max-height: 286px;
+	@include useScreen('mobile-xl') {
+		min-height: 296px;
+		max-height: 296px;
+	}
+}
+
+.label {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	border-radius: 5px;
+	@include useScreen('mobile-xl') {
+		top: 16px;
+		right: 12px;
+	}
+}
+
+.status {
+	padding: 4px 8px;
+	color: var(--color--secondary-4);
+	text-transform: uppercase;
+}
+
+.wait {
+	background-color: var(--color--secondary-1);
+}
+
+.inprogress {
+	background-color: var(--color--warning-1);
+}
+
+.finished {
+	background-color: var(--color--success-1);
+}

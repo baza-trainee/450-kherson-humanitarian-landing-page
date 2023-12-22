@@ -1,0 +1,25 @@
+.ListPage {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	padding: 40px 30px;
+	row-gap: 24px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.heading,
+.info {
+	display: flex;
+	align-items: center;
+	column-gap: 24px;
+}
+
+.main {
+	display: flex;
+	height: calc(100vh - 100px - 40px);
+}

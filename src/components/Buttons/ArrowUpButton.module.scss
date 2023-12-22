@@ -1,0 +1,44 @@
+@use '~/styles/mixins' as *;
+
+.Button {
+	display: flex;
+	z-index: 10;
+	position: fixed;
+	right: 16px;
+	@include useScreen('tablet-sm') {
+		right: 32px;
+	}
+	@include useScreen('desktop-md') {
+		right: 80px;
+	}
+
+	bottom: 24px;
+	justify-content: center;
+	align-items: center;
+	width: 64px;
+	height: 64px;
+	padding: 8px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: var(--color--primary-3);
+	border-radius: 5px;
+	cursor: pointer;
+	user-select: none;
+	background: var(--color--shades-1);
+
+	@include useOnHover {
+		border-color: transparent;
+		background: linear-gradient(var(--color--shades-1), var(--color--shades-1)) padding-box,
+			var(--color--gradient-1) border-box;
+	}
+	@include useOnClick {
+		border-style: none;
+		background: var(--color--primary-3);
+		span {
+			background: var(--color--shades-1);
+		}
+	}
+	&.hidden {
+		display: none;
+	}
+}

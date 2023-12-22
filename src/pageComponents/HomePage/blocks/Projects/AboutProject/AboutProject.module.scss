@@ -1,0 +1,55 @@
+@use '~/styles/mixins' as *;
+
+.blockContent {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	column-gap: 32px;
+	row-gap: 24px;
+}
+
+.infoContent {
+	width: 100%;
+	@include useScreen('tablet-sm') {
+		width: 600px;
+	}
+}
+
+.infoContent {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.about,
+.reportData {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.report {
+	display: flex;
+	flex-direction: column;
+	padding: 24px 24px 64px 24px;
+	background-color: var(--color--primary-1);
+	gap: 32px;
+}
+
+.square,
+.duration {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.staticText {
+	flex: 0 1 100%;
+	@include useScreen('mobile-xl') {
+		flex: 0 1 50%;
+	}
+}
+
+.dynamicText,
+.staticText {
+	font-weight: 600;
+}

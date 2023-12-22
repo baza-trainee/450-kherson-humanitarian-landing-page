@@ -1,0 +1,19 @@
+@use '~/styles/mixins' as *;
+
+.carousel {
+	overflow-x: clip;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	flex: 1 0 0%;
+}
+
+.row {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	margin: 0px;
+	left: 0px;
+	right: auto;
+	top: auto;
+}

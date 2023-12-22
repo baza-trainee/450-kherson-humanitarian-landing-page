@@ -1,0 +1,14 @@
+.Table {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+.body {
+	display: flex;
+	flex-direction: column;
+}

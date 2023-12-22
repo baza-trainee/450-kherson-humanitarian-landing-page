@@ -1,0 +1,49 @@
+@use '~/styles/mixins' as *;
+
+.borderWrapper {
+	border-bottom: 1px solid var(--color--secondary-2);
+}
+
+.errorBorder {
+	border-bottom: 1px solid var(--color--error-1);
+}
+
+.fileUploadBlock {
+	// gap: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.fileUpload {
+	width: 100%;
+}
+
+.iconBlock {
+	display: inline-flex;
+	flex-direction: row;
+	height: 100%;
+	column-gap: 30px;
+}
+
+.icon {
+	display: block;
+	@include useOnHover;
+}
+
+.hidden {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	line-height: 0;
+}
+.underline::after {
+	display: block;
+	top: 25px;
+	@include useScreen('tablet-md') {
+		top: 30px;
+	}
+}

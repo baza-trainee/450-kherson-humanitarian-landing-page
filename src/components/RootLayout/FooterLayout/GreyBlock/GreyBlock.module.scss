@@ -1,0 +1,61 @@
+@use '~/styles/mixins' as *;
+
+.mainInfo {
+	@include useScreen('tablet-sm') {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		width: 205px;
+		gap: 87px;
+	}
+	@include useScreen('tablet-xl') {
+		width: max-content;
+		gap: 0px;
+	}
+}
+
+.logoAndCallToAction {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.fontSizeCallToAction {
+	font-size: 16px;
+}
+
+.fontSizeBaza {
+	font-size: 11px;
+}
+
+.widthCallToAction {
+	width: 171px;
+	@include useScreen('tablet-xl') {
+		width: 256px;
+	}
+}
+
+.widthBaza {
+	width: 205px;
+	@include useScreen('tablet-xl') {
+		width: 282px;
+	}
+}
+
+.rulesProtected {
+	width: 200px;
+	text-align: center;
+	@include useScreen('mobile-md') {
+		width: 100%;
+	}
+}
+
+.greyBlockText {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	padding: 12px 0;
+	row-gap: 48px;
+}

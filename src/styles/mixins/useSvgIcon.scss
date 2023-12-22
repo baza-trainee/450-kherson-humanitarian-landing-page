@@ -1,0 +1,11 @@
+@mixin useSvgIcon($icons, $path: "/svg/icons/", $prefix: "icon--") {
+	@each $icon in $icons {
+		.#{$prefix + $icon} {
+			mask-size: contain;
+			mask-position: center;
+			mask-repeat: no-repeat;
+			mask-image: url($path + $icon + ".svg");
+			@content;
+		}
+	}
+}

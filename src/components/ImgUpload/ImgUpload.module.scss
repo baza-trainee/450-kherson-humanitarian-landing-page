@@ -1,0 +1,59 @@
+@use '~/styles/mixins' as *;
+
+.ImgUpload {
+	display: flex;
+	width: 752px;
+	height: 300px;
+}
+
+.imgBlock {
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 712px;
+	height: 300px;
+	text-align: center;
+	gap: 20px;
+}
+
+.imgDefault {
+	margin: 0 auto;
+}
+
+.imgError {
+	color: var(--color--error-1);
+}
+
+.imgErrorMsg {
+	// margin-top: 20px;
+	color: var(--color--error-1);
+}
+
+.img {
+	object-fit: cover;
+}
+
+.iconBlock {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+}
+
+.icon {
+	display: block;
+	margin: 8px;
+	@include useOnHover;
+}
+
+.hidden {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	line-height: 0;
+}

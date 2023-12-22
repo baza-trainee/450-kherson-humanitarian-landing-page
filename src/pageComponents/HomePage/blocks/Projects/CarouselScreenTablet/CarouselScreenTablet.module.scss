@@ -1,0 +1,14 @@
+@use '~/styles/mixins' as *;
+
+.container {
+	display: flex;
+	align-items: center;
+	min-height: 94px;
+	gap: 8px;
+}
+
+.imageContent {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
