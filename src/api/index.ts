@@ -9,6 +9,7 @@ import * as ourAchievements from '~api/rest/ourAchievements/ourAchievements';
 import * as ourActivity from '~api/rest/ourActivity/ourActivity';
 import * as partners from '~api/rest/partners/partners';
 import * as persons from '~api/rest/persons/persons';
+import * as projects from '~api/rest/projects/projects';
 
 export const api = {
 	aboutUs,
@@ -21,5 +22,6 @@ export const api = {
 	hero,
 	donations,
 	partners,
+	projects,
 	footer,
 };
