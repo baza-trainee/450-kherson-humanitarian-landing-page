@@ -65,8 +65,6 @@ export const useProjectsState = create<UseProjectsState>((set) => ({
 	updateProjectBoardById: async (body: ProjectsRequest) => {
 		set({ isLoading: true });
 		set({ error: null });
-
-		console.log('body', body);
 		try {
 			const resp = await api.projects.updateProjectBoard({
 				areaCompletedWorks: body.areaCompletedWorks,
