@@ -139,7 +139,7 @@ export default function ProjectsBoard() {
 
 		if (query?.id === 'new') {
 			setValue('mainPicture', '');
-			setValue('projectStatus', '');
+			setValue('projectStatus', 'ready');
 			setValue('subTitle', '');
 			setValue('pictures', []);
 			setValue('videoLink', '');
@@ -154,6 +154,10 @@ export default function ProjectsBoard() {
 	}, [projectBoardData, query?.id]);
 
 	useEffect(() => {
+		fields.length !== projectBoardData?.pictures.length
+			? setIsTabsClickBlocked(true)
+			: setIsTabsClickBlocked(false);
+
 		watch((value) => {
 			if (
 				value.subTitle !== projectBoardData?.subTitle ||
@@ -178,7 +182,7 @@ export default function ProjectsBoard() {
 			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [watch, projectBoardData]);
+	}, [watch, projectBoardData, fields]);
 
 	const registers = {
 		mainPicture: register('mainPicture', {
@@ -263,8 +267,9 @@ export default function ProjectsBoard() {
 				  };
 
 		if (query?.id === 'new') await addNewProjectBoard(newProjectBoardData);
-		if (query?.id !== 'new') await updateProjectBoardById(newProjectBoardData);
-
+		if (query?.id !== 'new' && newPictures.length >= MIN_CAROUSEL_ITEMS) {
+			await updateProjectBoardById(newProjectBoardData);
+		} else setIsModalMinTabsLengthOpen(true);
 		// *after saving into server need to set IsBlocked to false in order to click between tabs
 		setIsTabsClickBlocked(false);
 		await getTabsData(fetchProjectsData);
@@ -289,7 +294,7 @@ export default function ProjectsBoard() {
 
 	const handleOnModalRemoveYesClick = async () => {
 		if (query?.id && tabsData?.tabs) {
-			if (tabsData.tabs.length > MIN_CAROUSEL_ITEMS) {
+			if (tabsData.tabs.length >= MIN_CAROUSEL_ITEMS) {
 				await deleteProjectBoardById(query?.id.toString());
 				await getTabsData(fetchProjectsData);
 			} else setIsModalMinTabsLengthOpen(true);
@@ -302,7 +307,10 @@ export default function ProjectsBoard() {
 		});
 	};
 
-	const handleOnModalIsLengthClose = () => setIsModalMinTabsLengthOpen(false);
+	const handleOnModalIsLengthClose = async () => {
+		if (query?.id) await getProjectsBoardById(query?.id.toString());
+		setIsModalMinTabsLengthOpen(false);
+	};
 
 	return (
 		<>
@@ -373,7 +381,7 @@ export default function ProjectsBoard() {
 					<TextInputWithCounter
 						register={registers.areaCompletedWorks}
 						required
-						label="Об’єм виконаних робіт"
+						label="Об'єм виконаних робіт"
 						placeholder=""
 						maxLength={100}
 						errors={errors}
@@ -382,7 +390,7 @@ export default function ProjectsBoard() {
 					<TextInputWithCounter
 						register={registers.projectDuration}
 						required
-						label="Тривалість проекту:"
+						label="Тривалість проєкту:"
 						placeholder=""
 						maxLength={29}
 						errors={errors}
@@ -437,7 +445,8 @@ export default function ProjectsBoard() {
 							title="Увага!"
 							leftButton={() => <Button onClick={handleOnModalIsLengthClose}>Ок</Button>}
 						>
-							Мінімальна кількість проєктів не повинна бути менше {MIN_CAROUSEL_ITEMS}.
+							Мінімальна кількість проєктів або фото у проєкті не повинна бути менше{' '}
+							{MIN_CAROUSEL_ITEMS}.
 						</ModalPop>
 					)}
 				</form>
