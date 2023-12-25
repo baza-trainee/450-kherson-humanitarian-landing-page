@@ -14,6 +14,7 @@ import { useParams } from '~hooks/useParams';
 import { useAboutUsState } from '../../store/useAboutUsState';
 import { useDonationsState } from '../../store/useDonationsState';
 import { useFooterState } from '../../store/useFooterState';
+import { useGetHelpState } from '../../store/useGetHelpState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useOurAchievementsBoardState } from '../../store/useOurAchievementsBoardState';
@@ -58,7 +59,7 @@ export function Tabs() {
 	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
 	const isOurAchievementsDataLoading = useOurAchievementsBoardState((state) => state.isLoading);
 	const isPartnersDataLoading = usePartnersState((state) => state.isLoading);
-
+	const isGetHelpDataLoading = useGetHelpState((state) => state.isLoading);
 	const isFooterDataLoading = useFooterState((state) => state.isLoading);
 	const isDataLoading =
 		isListsDataLoading ||
@@ -68,6 +69,7 @@ export function Tabs() {
 		isAboutUsDataLoading ||
 		isDonationsDataLoading ||
 		isOurAchievementsDataLoading ||
+		isGetHelpDataLoading ||
 		isFooterDataLoading;
 	//* use your state loading ⭡
 
