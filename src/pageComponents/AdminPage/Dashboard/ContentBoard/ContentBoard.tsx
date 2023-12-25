@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { AboutUsBoard } from './Boards/AboutUsBoard/AboutUsBoard';
 import { ChangePasswordBoard } from './Boards/ChangePasswordBoard/ChangePasswordBoard';
 import { DonationsBoard } from './Boards/DonationsBoard/DonationsBoard';
+import { FooterBoard } from './Boards/FooterBoard/FooterBoard';
 import { GetHelp } from './Boards/GetHelp/GetHelp';
 import { HeroBoard } from './Boards/HeroBoard/HeroBoard';
 import { ListsBoard } from './Boards/ListsBoard/ListsBoard';
@@ -26,6 +27,7 @@ export function ContentBoard() {
 			{query?.slug === 'change-password' && <ChangePasswordBoard />}
 			{query?.slug === 'our-activity' && <OurActivityBoard />}
 			{query?.slug === 'our-partners' && <PartnersBoard />}
+			{query?.slug === 'footer' && <FooterBoard />}
 			{query?.slug === 'get-help' && <GetHelp />}
 		</div>
 	);

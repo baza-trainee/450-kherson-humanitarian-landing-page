@@ -13,6 +13,7 @@ import { useParams } from '~hooks/useParams';
 
 import { useAboutUsState } from '../../store/useAboutUsState';
 import { useDonationsState } from '../../store/useDonationsState';
+import { useFooterState } from '../../store/useFooterState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useOurAchievementsBoardState } from '../../store/useOurAchievementsBoardState';
@@ -23,6 +24,7 @@ import { newTabsTitleNames } from './data/newTabsTitleNames';
 import { fetchAboutUsData } from './fetchHelpers/fetchAboutUsData';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
+import { fetchFooterData } from './fetchHelpers/fetchFooterData';
 import { fetchGetHelpData } from './fetchHelpers/fetchGetHelpData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
@@ -57,6 +59,7 @@ export function Tabs() {
 	const isOurAchievementsDataLoading = useOurAchievementsBoardState((state) => state.isLoading);
 	const isPartnersDataLoading = usePartnersState((state) => state.isLoading);
 
+	const isFooterDataLoading = useFooterState((state) => state.isLoading);
 	const isDataLoading =
 		isListsDataLoading ||
 		isHeroDataLoading ||
@@ -64,7 +67,8 @@ export function Tabs() {
 		isPartnersDataLoading ||
 		isAboutUsDataLoading ||
 		isDonationsDataLoading ||
-		isOurAchievementsDataLoading;
+		isOurAchievementsDataLoading ||
+		isFooterDataLoading;
 	//* use your state loading ⭡
 
 	const {
@@ -91,6 +95,7 @@ export function Tabs() {
 	useEffect(() => {
 		const fetchData = getMatch(query?.slug?.toString(), {
 			lists: async () => await getTabsData(fetchListData),
+			footer: async () => await getTabsData(fetchFooterData),
 			hero: async () => {
 				await getTabsData(fetchHeroData);
 				setTabsTitleName(newTabsTitleNames.hero);
