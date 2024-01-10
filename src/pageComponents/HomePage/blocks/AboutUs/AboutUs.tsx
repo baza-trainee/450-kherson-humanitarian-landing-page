@@ -2,9 +2,11 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import { aboutUsContent } from '~/data/aboutUsContent';
+import type { AboutUs } from '~api/types/aboutUs/aboutUs';
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
+import { BASE_URL } from '~constants/BASE_URL';
 
 import aboutPhoto from '~assets/images/aboutUs/photo-1.jpg';
 import ourTeamPhoto from '~assets/images/aboutUs/photo-2.jpg';
@@ -12,8 +14,16 @@ import historyPhoto from '~assets/images/aboutUs/photo-3.jpg';
 
 import s from './AboutUs.module.scss';
 
-export function AboutUs() {
-	const { about, command, history } = aboutUsContent;
+interface AboutUsProps {
+	fund?: AboutUs;
+	team?: AboutUs;
+	history?: AboutUs;
+}
+
+export function AboutUs({ fund, team, history }: AboutUsProps) {
+	const addURL = process.env.NODE_ENV === 'development' ? `${BASE_URL}` : '';
+
+	const { about } = aboutUsContent;
 	return (
 		<Section className={s.AboutUs} id="about-us">
 			<Container className={s.wrapper}>
@@ -45,47 +55,58 @@ export function AboutUs() {
 							</ul>
 						</div>
 						<Image
-							src={aboutPhoto}
+							src={`${addURL}${fund?.image}` || aboutPhoto}
 							className={s.image}
 							alt="about organization photo"
 							style={{ objectFit: 'cover' }}
+							width={600}
+							height={450}
 							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 50vw"
 						/>
 					</div>
 					<div className={s.block}>
 						<div className={clsx(s.text, s.order)}>
-							<Text variant="h3">{command.title}</Text>
+							<Text variant="h3">{team?.title}</Text>
 							<div className={s.employee}>
-								{command.staff.map((employee) => {
+								{team?.text?.split('\n').map((employee, i) => {
 									return (
-										<Text variant="p" key={employee.id}>
-											{employee.post}
+										<Text variant="p" key={i}>
+											{employee}
 										</Text>
 									);
 								})}
 							</div>
 						</div>
 						<Image
-							src={historyPhoto}
+							src={`${addURL}${team?.image}` || ourTeamPhoto}
 							className={s.image}
-							alt="history of foundation photo"
+							alt="team photo"
 							style={{ objectFit: 'cover' }}
+							width={600}
+							height={450}
 							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 50vw"
 						/>
 					</div>
 					<div className={s.block}>
 						<div className={s.text}>
-							<Text variant="h3">{history.title}</Text>
+							<Text variant="h3">{history?.title}</Text>
 							<div className={s.history}>
-								<Text variant="p">{history.text1}</Text>
-								<Text variant="p">{history.text2}</Text>
+								{history?.text?.split('\n').map((text, i) => {
+									return (
+										<Text variant="p" key={i}>
+											{text}
+										</Text>
+									);
+								})}
 							</div>
 						</div>
 						<Image
-							src={ourTeamPhoto}
+							src={`${addURL}${history?.image}` || historyPhoto}
 							className={s.image}
-							alt="team photo"
+							alt="history of foundation photo"
 							style={{ objectFit: 'cover' }}
+							width={600}
+							height={450}
 							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 50vw"
 						/>
 					</div>
