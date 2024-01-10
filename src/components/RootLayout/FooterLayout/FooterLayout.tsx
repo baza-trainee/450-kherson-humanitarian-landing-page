@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import type { FooterData } from '~api/types/footer/FooterData';
 import { Icon } from '~components/Icon/Icon';
 import { Text } from '~components/Text/Text';
 import { useScreenQuery } from '~hooks/useScreenQuery';
@@ -12,14 +13,22 @@ import { GreyBlockMobile } from './GreyBlock/GreyBlockMobile';
 import { GreyBlockTablet } from './GreyBlock/GreyBlockTablet';
 
 import s from './FooterLayout.module.scss';
-
-export function FooterLayout() {
+interface FooterDataProps {
+	footerData?: FooterData;
+}
+export function FooterLayout(footerData: FooterDataProps) {
 	const { isScreenTabletSm, isScreenTabletXl } = useScreenQuery();
 
 	return (
 		<footer className={s.FooterLayout} id="footer">
 			<div className={s.grey}>
-				{isScreenTabletXl ? <GreyBlockDesktop /> : isScreenTabletSm ? <GreyBlockTablet /> : <GreyBlockMobile />}
+				{isScreenTabletXl ? (
+					<GreyBlockDesktop />
+				) : isScreenTabletSm ? (
+					<GreyBlockTablet />
+				) : (
+					<GreyBlockMobile />
+				)}
 			</div>
 			<div className={s.blue}>
 				<div className={s.contacts}>
@@ -43,7 +52,10 @@ export function FooterLayout() {
 							<Link target="_blank" href={social.href} key={social.id}>
 								<Icon
 									icon={`icon--${social.name}`}
-									colors={{ default: 'var(--color--shades-1)', hover: 'var(--color--warning-1)' }}
+									colors={{
+										default: 'var(--color--shades-1)',
+										hover: 'var(--color--warning-1)',
+									}}
 									clickable
 								/>
 							</Link>
