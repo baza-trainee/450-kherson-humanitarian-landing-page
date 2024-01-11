@@ -11,6 +11,7 @@ import { Button } from '~components/Buttons/Button';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 
 import { fetchDonationsData } from '../../../Tabs/fetchHelpers/fetchDonationsData';
 import { EmptyBoard } from '../EmptyBoard/EmptyBoard';
@@ -75,9 +76,10 @@ export function DonationsBoard() {
 	useEffect(() => {
 		//*set message to show in Modal Error
 		if (stateError) {
-			if (stateError.status === 406)
-				setErrorMessage('Не правильно введені дані. Можливо є зайві символи');
-			if (stateError.status === 500) setErrorMessage(stateError.message);
+			const message = getErrorMessageFromCode(stateError.status, {
+				406: 'Помилка при збереженні. Не правильно введені дані. Можливо є зайві символи',
+			});
+			setErrorMessage(message);
 		}
 	}, [stateError]);
 
