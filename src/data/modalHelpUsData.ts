@@ -1,4 +1,4 @@
-interface ModalField {
+interface ModalHelpUsData {
 	currency: string;
 	recipient: string;
 	IBAN: string;
@@ -6,9 +6,9 @@ interface ModalField {
 	paymentPurpose: string;
 }
 
-type ModalList = ModalField[];
+type ModalHelpUsDataList = ModalHelpUsData[];
 
-export const modalList: ModalList = [
+export const modalHelpUsDataList: ModalHelpUsDataList = [
 	{
 		currency: 'USD',
 		recipient: 'Громадська організація 4.5.0. Кривий Ріг',
