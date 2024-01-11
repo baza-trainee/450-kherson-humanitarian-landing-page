@@ -43,6 +43,7 @@ export function DonationsBoard() {
 		getDonationsBoardById,
 		updateDonationsBoardById,
 		addNewDonationsBoard,
+		addNewEmptyDonationsBoard,
 		deleteDonationsBoardById,
 		setIsModalOnSuccessSaveClose,
 	} = useDonationsState((state) => ({
@@ -53,6 +54,7 @@ export function DonationsBoard() {
 		getDonationsBoardById: state.getDonationsBoardById,
 		updateDonationsBoardById: state.updateDonationsBoardById,
 		addNewDonationsBoard: state.addNewDonationsBoard,
+		addNewEmptyDonationsBoard: state.addNewEmptyDonationsBoard,
 		deleteDonationsBoardById: state.deleteDonationsBoardById,
 		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 	}));
@@ -66,7 +68,7 @@ export function DonationsBoard() {
 		//*set data from server into state
 		if (query?.id !== 'new' && query?.id !== 'empty') fetchData();
 		//* if new form, set empty state
-		// else addNewEmptyDonationsBoard();
+		else addNewEmptyDonationsBoard();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.id]);
 
