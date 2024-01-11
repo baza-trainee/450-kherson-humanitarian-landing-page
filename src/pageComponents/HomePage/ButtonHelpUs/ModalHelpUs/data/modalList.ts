@@ -1,53 +1,40 @@
-import { ibanData } from './ibanData';
-
 interface ModalField {
-	title: string;
-	text: string;
-	id: number;
+	currency: string;
+	recipient: string;
+	IBAN: string;
+	IPN: string;
+	paymentPurpose: string;
 }
 
-interface ModalCollection {
-	label: string;
-	fieldList: ModalField[];
-}
-
-type ModalList = ModalCollection[];
+type ModalList = ModalField[];
 
 export const modalList: ModalList = [
 	{
-		label: 'USD',
-		fieldList: [
-			{ id: 1, title: 'Одержувач:', text: 'Громадська організація 4.5.0. Кривий Ріг' },
-			{ id: 2, title: 'IBAN:', text: ibanData['USD'] },
-			{ id: 3, title: 'ЄДРПОУ:', text: '44867603' },
-			{ id: 4, title: 'Призначення платежу:', text: 'Благодійний внесок' },
-		],
+		currency: 'USD',
+		recipient: 'Громадська організація 4.5.0. Кривий Ріг',
+		IBAN: 'UA693052990000026002020407112',
+		IPN: '44867603',
+		paymentPurpose: 'Благодійний внесок',
 	},
 	{
-		label: 'EUR',
-		fieldList: [
-			{ id: 1, title: 'Одержувач:', text: 'Громадська організація 4.5.0. Кривий Ріг' },
-			{ id: 2, title: 'IBAN:', text: ibanData['EUR'] },
-			{ id: 3, title: 'ЄДРПОУ:', text: '44867603' },
-			{ id: 4, title: 'Призначення платежу:', text: 'Благодійний внесок' },
-		],
+		currency: 'EUR',
+		recipient: 'Громадська організація 4.5.0. Кривий Ріг',
+		IBAN: 'UA643052990000026002010405629',
+		IPN: '44867603',
+		paymentPurpose: 'Благодійний внесок',
 	},
 	{
-		label: 'PLN',
-		fieldList: [
-			{ id: 1, title: 'Одержувач:', text: 'Громадська організація 4.5.0. Кривий Ріг' },
-			{ id: 2, title: 'IBAN:', text: ibanData['PLN'] },
-			{ id: 3, title: 'ЄДРПОУ:', text: '44867603' },
-			{ id: 4, title: 'Призначення платежу:', text: 'Благодійний внесок' },
-		],
+		currency: 'PLN',
+		recipient: 'Громадська організація 4.5.0. Кривий Ріг',
+		IBAN: 'UA373052990000026006000405958',
+		IPN: '44867603',
+		paymentPurpose: 'Благодійний внесок',
 	},
 	{
-		label: 'UAH',
-		fieldList: [
-			{ id: 1, title: 'Одержувач:', text: 'Громадська організація 4.5.0. Кривий Ріг' },
-			{ id: 2, title: 'IBAN:', text: ibanData['UAH'] },
-			{ id: 3, title: 'ЄДРПОУ:', text: '44867603' },
-			{ id: 4, title: 'Призначення платежу:', text: 'Благодійний внесок' },
-		],
+		currency: 'UAH',
+		recipient: 'Громадська організація 4.5.0. Кривий Ріг',
+		IBAN: 'UA173052990000026007020405744',
+		IPN: '44867603',
+		paymentPurpose: 'Благодійний внесок',
 	},
 ];

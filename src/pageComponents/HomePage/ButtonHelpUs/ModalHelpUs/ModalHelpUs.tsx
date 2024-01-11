@@ -9,6 +9,8 @@ import { Tabs } from '~components/inputs/Tabs/Tabs';
 import { Modal } from '~components/Modal/Modal';
 import { Text } from '~components/Text/Text';
 
+import { modalList } from './data/modalList';
+
 import s from './ModalHelpUs.module.scss';
 
 interface ModalHelpUsProps {
@@ -22,11 +24,13 @@ export function ModalHelpUs({ onClose, donations }: ModalHelpUsProps) {
 
 	const tabModalVariantOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
-		const valueIndex = donations ? donations.findIndex((item) => item.currency === value) : 0;
+		const valueIndex = donations
+			? donations.findIndex((item) => item.currency === value)
+			: modalList.findIndex((item) => item.currency === value);
 		setTabIndex(valueIndex);
 	};
 
-	const textToCopy = donations ? donations[tabIndex].IBAN : '';
+	const textToCopy = donations ? donations[tabIndex].IBAN : modalList[tabIndex].IBAN;
 
 	const onCopy = () => {
 		navigator.clipboard
@@ -56,25 +60,37 @@ export function ModalHelpUs({ onClose, donations }: ModalHelpUsProps) {
 								className={s.fontSize}
 								onChange={tabModalVariantOnChange}
 								name="modalVariant"
-								defaultValue={donations[tabIndex].currency}
-								labels={donations.map((item) => item.currency)}
+								defaultValue={donations[tabIndex].currency || modalList[tabIndex].currency}
+								labels={
+									donations.map((item) => item.currency) ||
+									modalList.map((item) => item.currency)
+								}
 							/>
 							<ul className={s.items}>
 								<li className={s.item}>
 									<Text variant="h5">Одержувач:</Text>
-									<Text variant="h3">{donations[tabIndex].recipient}</Text>
+									<Text variant="h3">
+										{donations[tabIndex].recipient || modalList[tabIndex].recipient}
+									</Text>
 								</li>
 								<li className={s.item}>
 									<Text variant="h5">IBAN:</Text>
-									<Text variant="h3">{donations[tabIndex].IBAN}</Text>
+									<Text variant="h3">
+										{donations[tabIndex].IBAN || modalList[tabIndex].IBAN}
+									</Text>
 								</li>
 								<li className={s.item}>
 									<Text variant="h5">ЄДРПОУ:</Text>
-									<Text variant="h3">{donations[tabIndex].IPN}</Text>
+									<Text variant="h3">
+										{donations[tabIndex].IPN || modalList[tabIndex].IPN}
+									</Text>
 								</li>
 								<li className={s.item}>
 									<Text variant="h5">Призначення платежу:</Text>
-									<Text variant="h3">{donations[tabIndex].paymentPurpose}</Text>
+									<Text variant="h3">
+										{donations[tabIndex].paymentPurpose ||
+											modalList[tabIndex].paymentPurpose}
+									</Text>
 								</li>
 							</ul>
 							<Button className={s.button} type="secondary" onClick={onCopy}>
