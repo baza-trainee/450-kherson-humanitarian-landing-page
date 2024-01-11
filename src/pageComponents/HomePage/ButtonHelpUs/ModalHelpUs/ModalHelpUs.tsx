@@ -9,7 +9,7 @@ import { Tabs } from '~components/inputs/Tabs/Tabs';
 import { Modal } from '~components/Modal/Modal';
 import { Text } from '~components/Text/Text';
 
-import { modalHelpUsDataList } from '../../../../data/modalHelpUsData';
+import { modalHelpUsDataList } from '../../defaultData/modalHelpUsData';
 
 import s from './ModalHelpUs.module.scss';
 
