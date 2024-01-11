@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import { aboutUsContent } from '~/data/aboutUsContent';
+import { aboutUsContent } from '~/pageComponents/HomePage/defaultData/aboutUsContent';
 import type { AboutUs } from '~api/types/aboutUs/aboutUs';
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
@@ -23,7 +23,6 @@ interface AboutUsProps {
 export function AboutUs({ fund, team, history }: AboutUsProps) {
 	const addURL = process.env.NODE_ENV === 'development' ? `${BASE_URL}` : '';
 
-	const { about } = aboutUsContent;
 	return (
 		<Section className={s.AboutUs} id="about-us">
 			<Container className={s.wrapper}>
@@ -33,12 +32,12 @@ export function AboutUs({ fund, team, history }: AboutUsProps) {
 						<div className={s.text}>
 							<div className={s.header}>
 								<Text variant="h3" className={s.aboutTitle}>
-									{about.title}
+									{aboutUsContent.about.title}
 								</Text>
-								<Text variant="p">{about.subtitle}</Text>
+								<Text variant="p">{aboutUsContent.about.subtitle}</Text>
 							</div>
 							<ul className={s.list}>
-								{about.list.map((obj) => {
+								{aboutUsContent.about.list.map((obj) => {
 									return (
 										<li className={s.item} key={obj.id}>
 											<Image
@@ -66,7 +65,7 @@ export function AboutUs({ fund, team, history }: AboutUsProps) {
 					</div>
 					<div className={s.block}>
 						<div className={clsx(s.text, s.order)}>
-							<Text variant="h3">{team?.title}</Text>
+							<Text variant="h3">{team?.title || aboutUsContent.team.title}</Text>
 							<div className={s.employee}>
 								{team?.text?.split('\n').map((employee, i) => {
 									return (
@@ -74,7 +73,14 @@ export function AboutUs({ fund, team, history }: AboutUsProps) {
 											{employee}
 										</Text>
 									);
-								})}
+								}) ||
+									aboutUsContent.team.text.split('\n').map((employee, i) => {
+										return (
+											<Text variant="p" key={i}>
+												{employee}
+											</Text>
+										);
+									})}
 							</div>
 						</div>
 						<Image
@@ -89,7 +95,7 @@ export function AboutUs({ fund, team, history }: AboutUsProps) {
 					</div>
 					<div className={s.block}>
 						<div className={s.text}>
-							<Text variant="h3">{history?.title}</Text>
+							<Text variant="h3">{history?.title || aboutUsContent.history.title}</Text>
 							<div className={s.history}>
 								{history?.text?.split('\n').map((text, i) => {
 									return (
@@ -97,7 +103,14 @@ export function AboutUs({ fund, team, history }: AboutUsProps) {
 											{text}
 										</Text>
 									);
-								})}
+								}) ||
+									aboutUsContent.history.text.split('\n').map((text, i) => {
+										return (
+											<Text variant="p" key={i}>
+												{text}
+											</Text>
+										);
+									})}
 							</div>
 						</div>
 						<Image
