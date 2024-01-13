@@ -20,7 +20,7 @@ export function HomePage({ data }: HomePageProps) {
 			<AboutUs />
 			<OurAchievements />
 			<GetHelp lists={data.getHelpLists} info={data.getHelpInfo} />
-			<OurActivity />
+			<OurActivity ourActivityData={data.ourActivityData} />
 			<Projects />
 			<OurPartners />
 			<ArrowUpButton />
