@@ -11,6 +11,7 @@ import { useTabsState } from '~/pageComponents/AdminPage/store/useTabsState';
 import { Button } from '~components/Buttons/Button';
 import { ColorRadioBlock } from '~components/ColorRadio/ColorRadioBlock';
 import { ImgUploadTextOverlaid } from '~components/ImgUploadTextOverlaid/ImgUploadTextOverlaid';
+import { TextArea } from '~components/inputs/TextArea/TextArea';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
@@ -194,7 +195,7 @@ export function HeroBoard() {
 							color: data.imageGradient,
 					  },
 			title: {
-				text: data.title,
+				text: data.title.replaceAll('\n', '/n'),
 				color: data.titleColor,
 			},
 			subtitle: {
@@ -281,7 +282,8 @@ export function HeroBoard() {
 						register={registers.imageGradient}
 						watch={watch}
 					/>
-					<TextInputWithCounter
+					<TextArea
+						rows={2}
 						register={registers.title}
 						required
 						label="Заголовок"
