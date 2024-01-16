@@ -107,7 +107,7 @@ export function Hero({ heroData }: HeroProps) {
 					<Container className={s.content}>
 						<div className={s.text}>
 							<Text variant="h1" className={clsx(s.heading, s[item.titleColor])} lineBreak>
-								{item.title.replaceAll('/n', '\n')}
+								{item.title}
 							</Text>
 							<Text variant="various3" className={s[item.subtitleColor]}>
 								{item.subtitle}
