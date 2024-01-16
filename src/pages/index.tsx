@@ -2,6 +2,7 @@ import { HomePage } from '~/pageComponents/HomePage/HomePage';
 import { api } from '~api/index';
 import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
 import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
+import type { Heroes } from '~api/types/hero/Heroes';
 import { Meta } from '~components/Meta/Meta';
 import { RootLayout } from '~components/RootLayout/RootLayout';
 import { APP } from '~constants/APP';
@@ -9,6 +10,7 @@ import { APP } from '~constants/APP';
 export interface HomeProps {
 	getHelpLists?: GetHelpLists;
 	getHelpInfo?: GetHelpInfo;
+	getHeroes?: Heroes;
 }
 
 export default function Home(data: HomeProps) {
@@ -29,6 +31,9 @@ export async function getServerSideProps() {
 
 	const getHelpResp = await api.getHelp.getInfo();
 	if ('data' in getHelpResp) props.getHelpInfo = getHelpResp.data;
+
+	const getHeroesResp = await api.hero.getHeroes();
+	if ('data' in getHeroesResp) props.getHeroes = getHeroesResp.data;
 
 	return { props };
 }
