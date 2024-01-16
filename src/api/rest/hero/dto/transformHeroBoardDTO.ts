@@ -1,3 +1,4 @@
+import type { HeroesResponse } from '~api/types/backend/responses/HeroesResponse';
 import type { HeroResponse } from '~api/types/backend/responses/HeroResponse';
 
 export function transformHeroBoardDTO(heroBoard: HeroResponse) {
@@ -9,4 +10,8 @@ export function transformHeroBoardDTO(heroBoard: HeroResponse) {
 		subtitle: heroBoard.subtitle.text || '',
 		subtitleColor: heroBoard.subtitle.color || '',
 	};
+}
+
+export function transformHeroesBoardDTO(heroes: HeroesResponse) {
+	return heroes.map((hero) => transformHeroBoardDTO(hero));
 }

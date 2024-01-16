@@ -16,13 +16,13 @@ interface HomePageProps {
 export function HomePage({ data }: HomePageProps) {
 	return (
 		<>
-			<Hero />
+			<Hero heroData={data.getHeroes} />
 			<AboutUs />
-			<OurAchievements />
+			<OurAchievements donations={data.donations} />
 			<GetHelp lists={data.getHelpLists} info={data.getHelpInfo} />
 			<OurActivity ourActivityData={data.ourActivityData} />
 			<Projects />
-			<OurPartners />
+			<OurPartners partnersData={data.partners} />
 			<ArrowUpButton />
 		</>
 	);
