@@ -22,7 +22,7 @@ export function HomePage({ data }: HomePageProps) {
 			<GetHelp lists={data.getHelpLists} info={data.getHelpInfo} />
 			<OurActivity />
 			<Projects />
-			<OurPartners />
+			<OurPartners partnersData={data.partners} />
 			<ArrowUpButton />
 		</>
 	);
