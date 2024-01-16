@@ -11,6 +11,7 @@ import { Button } from '~components/Buttons/Button';
 import { TextInputWithCounter } from '~components/inputs/TextInput/TextInputWithCounter';
 import { Loader } from '~components/Loader/Loader';
 import { ModalPop } from '~components/ModalPop/ModalPop';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 
 import { fetchDonationsData } from '../../../Tabs/fetchHelpers/fetchDonationsData';
 import { EmptyBoard } from '../EmptyBoard/EmptyBoard';
@@ -43,6 +44,7 @@ export function DonationsBoard() {
 		getDonationsBoardById,
 		updateDonationsBoardById,
 		addNewDonationsBoard,
+		addNewEmptyDonationsBoard,
 		deleteDonationsBoardById,
 		setIsModalOnSuccessSaveClose,
 	} = useDonationsState((state) => ({
@@ -53,6 +55,7 @@ export function DonationsBoard() {
 		getDonationsBoardById: state.getDonationsBoardById,
 		updateDonationsBoardById: state.updateDonationsBoardById,
 		addNewDonationsBoard: state.addNewDonationsBoard,
+		addNewEmptyDonationsBoard: state.addNewEmptyDonationsBoard,
 		deleteDonationsBoardById: state.deleteDonationsBoardById,
 		setIsModalOnSuccessSaveClose: state.setIsModalOnSuccessSaveClose,
 	}));
@@ -66,16 +69,17 @@ export function DonationsBoard() {
 		//*set data from server into state
 		if (query?.id !== 'new' && query?.id !== 'empty') fetchData();
 		//* if new form, set empty state
-		// else addNewEmptyDonationsBoard();
+		else addNewEmptyDonationsBoard();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query?.id]);
 
 	useEffect(() => {
 		//*set message to show in Modal Error
 		if (stateError) {
-			if (stateError.status === 406)
-				setErrorMessage('Не правильно введені дані. Можливо є зайві символи');
-			if (stateError.status === 500) setErrorMessage(stateError.message);
+			const message = getErrorMessageFromCode(stateError.status, {
+				406: 'Помилка при збереженні. Не правильно введені дані. Можливо є зайві символи',
+			});
+			setErrorMessage(message);
 		}
 	}, [stateError]);
 
