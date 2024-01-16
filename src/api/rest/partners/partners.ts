@@ -16,7 +16,7 @@ export const getPartnersIds = () =>
 	});
 
 export const getPartners = () =>
-	commonGet<PartnersResponse>('/logo/').then((resp) => {
+	commonGet<PartnersResponse>('/logos/').then((resp) => {
 		if ('data' in resp) return { data: transformPartnersDTO(resp.data) };
 		return { error: resp };
 	});
