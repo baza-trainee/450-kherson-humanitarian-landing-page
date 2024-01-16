@@ -16,7 +16,7 @@ interface HomePageProps {
 export function HomePage({ data }: HomePageProps) {
 	return (
 		<>
-			<Hero />
+			<Hero heroData={data.getHeroes} />
 			<AboutUs />
 			<OurAchievements donations={data.donations} />
 			<GetHelp lists={data.getHelpLists} info={data.getHelpInfo} />
