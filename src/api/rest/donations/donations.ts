@@ -7,6 +7,8 @@ import type { DonationResponse } from '~api/types/backend/responses/DonationResp
 import type { DonationsResponse } from '~api/types/backend/responses/DonationsResponse';
 import type { TabsIdsResponse } from '~api/types/backend/responses/TabsIdsResponse';
 
+import { transformDonationDTO, transformDonationsDTO } from './dto/transformDonationsDTO';
+
 export const getDonationsIds = () =>
 	commonGet<TabsIdsResponse>('/donats/ids').then((resp) => {
 		if ('data' in resp) {
@@ -18,14 +20,14 @@ export const getDonationsIds = () =>
 export const getDonations = () =>
 	commonGet<DonationsResponse>('/donats/').then((resp) => {
 		if ('data' in resp) {
-			return { data: resp.data };
+			return { data: transformDonationsDTO(resp.data) };
 		}
 		return { error: resp };
 	});
 
 export const getDonationsBoardById = (heroId: string) =>
 	commonGet<DonationResponse>(`/donat/${heroId}`).then((resp) => {
-		if ('data' in resp) return { data: resp.data };
+		if ('data' in resp) return { data: transformDonationDTO(resp.data) };
 		return { error: resp };
 	});
 

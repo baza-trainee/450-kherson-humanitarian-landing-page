@@ -1,4 +1,3 @@
-export interface Partners {
-	image: string;
-	id?: string;
-}
+import type { Partner } from './Partner';
+
+export type Partners = Partner[];

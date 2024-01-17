@@ -3,14 +3,14 @@ import { create } from 'zustand';
 import { api } from '~api/index';
 import type { PartnersRequest } from '~api/types/backend/requests/PartnersRequest';
 import type { ErrorResponse } from '~api/types/backend/responses/ErrorResponse';
-import type { Partners } from '~api/types/partners/Partners';
+import type { Partner } from '~api/types/partners/Partner';
 import { returnAppError } from '~helpers/returnAppError';
 
 interface PartnersState {
 	isModalOnSuccessSaveOpen: boolean;
 	isLoading: boolean;
 	error: ErrorResponse | null;
-	partnersBoardData: Partners | null;
+	partnersBoardData: Partner | null;
 	getPartnersBoardById: (id: string) => Promise<void>;
 	addNewEmptyPartnersBoard: () => Promise<void>;
 	deletePartnersBoardById: (id: string) => Promise<void>;
