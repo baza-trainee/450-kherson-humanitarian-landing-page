@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { contacts } from '~/pageComponents/HomePage/defaultData/footerContacts';
+import { socials } from '~/pageComponents/HomePage/defaultData/footerSocials';
 import type { FooterData } from '~api/types/footer/FooterData';
 import { Icon } from '~components/Icon/Icon';
 import { Text } from '~components/Text/Text';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
-import { contacts } from './data/contacts';
-import { socials } from './data/socials';
 import { GreyBlockDesktop } from './GreyBlock/GreyBlockDesktop';
 import { GreyBlockMobile } from './GreyBlock/GreyBlockMobile';
 import { GreyBlockTablet } from './GreyBlock/GreyBlockTablet';

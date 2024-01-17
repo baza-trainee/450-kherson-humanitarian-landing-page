@@ -1,8 +1,7 @@
+import { documents } from '~/pageComponents/HomePage/defaultData/footerDocuments';
 import type { DocumentsOfMainSite } from '~api/types/footer/DocumentsOfMainSite';
 import { NavigationList } from '~components/NavigationList/NavigationList';
 import { navigation } from '~components/RootLayout/HeaderLayout/navigation';
-
-import { documents } from '../../data/documents';
 
 import s from './NavigationAndDocuments.module.scss';
 
