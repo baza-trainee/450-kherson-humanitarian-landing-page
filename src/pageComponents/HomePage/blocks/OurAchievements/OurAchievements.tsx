@@ -1,3 +1,4 @@
+import type { DonationsResponse } from '~api/types/backend/responses/DonationsResponse';
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
@@ -7,7 +8,11 @@ import { blocks, date } from './blocks';
 
 import s from './OurAchievements.module.scss';
 
-export function OurAchievements() {
+interface OurAchievementsProps {
+	donations?: DonationsResponse;
+}
+
+export function OurAchievements({ donations }: OurAchievementsProps) {
 	return (
 		<Section className={s.OurAchievements}>
 			<Container className={s.flexContainer}>
@@ -32,7 +37,7 @@ export function OurAchievements() {
 				</div>
 				<Text variant="p">*Інформація подана станом на {date}</Text>
 				<div className={s.button}>
-					<ButtonHelpUs />
+					<ButtonHelpUs donations={donations} />
 				</div>
 			</Container>
 		</Section>

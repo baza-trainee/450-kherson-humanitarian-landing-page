@@ -1,6 +1,3 @@
-import type { PictureResponse } from './PictureResponse';
+import type { PartnerResponse } from './PartnerResponse';
 
-export interface PartnersResponse {
-	picture: PictureResponse;
-	id?: string;
-}
+export type PartnersResponse = PartnerResponse[];

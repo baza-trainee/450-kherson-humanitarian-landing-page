@@ -4,22 +4,29 @@ import clsx from 'clsx';
 import { useKeenSlider } from 'keen-slider/react';
 import Image from 'next/image';
 
+import type { Heroes } from '~api/types/hero/Heroes';
 import { Container } from '~components/Container/Container';
 import { Text } from '~components/Text/Text';
+import { BASE_URL } from '~constants/BASE_URL';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
+import { content } from '../../defaultData/heroData';
 import { Arrows } from './Arrows/Arrows';
 import { Buttons } from './Buttons/Buttons';
-import { content } from './data/content';
 import { Dots } from './Dots/Dots';
 
 import 'keen-slider/keen-slider.min.css';
 
 import s from './Hero.module.scss';
 
-export function Hero() {
+interface HeroProps {
+	heroData?: Heroes;
+}
+
+export function Hero({ heroData }: HeroProps) {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [loaded, setLoaded] = useState(false);
+
 	const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
 		{
 			initial: 0,
@@ -65,6 +72,8 @@ export function Hero() {
 
 	const { isScreenTabletSm } = useScreenQuery();
 
+	const addUrl = process.env.NODE_ENV === 'development' ? `${BASE_URL}` : '';
+
 	const handleDotClick = (idx: number) => {
 		if (instanceRef.current) {
 			instanceRef.current.moveToIdx(idx);
@@ -85,23 +94,23 @@ export function Hero() {
 
 	return (
 		<div ref={sliderRef} className={clsx('keen-slider', s.container)} id="hero">
-			{content.map((item, i) => (
+			{(heroData || content).map((item, i) => (
 				<div key={item.id} className={clsx(s.itemContainer, 'keen-slider__slide')}>
 					<Image
 						alt="hero-img"
-						src={item.banner.src}
+						src={`${addUrl}${item.image}`}
 						fill
 						className={s.img}
 						priority={i === 0}
 					/>
-					<div className={clsx(s.gradient, s[item.banner.gradientColor])} />
+					<div className={clsx(s.gradient, s[item.imageGradient])} />
 					<Container className={s.content}>
 						<div className={s.text}>
-							<Text variant="h1" className={clsx(s.heading, s[item.title.color])} lineBreak>
-								{item.title.value}
+							<Text variant="h1" className={clsx(s.heading, s[item.titleColor])} lineBreak>
+								{item.title}
 							</Text>
-							<Text variant="various3" className={s[item.subtitle.color]}>
-								{item.subtitle.value}
+							<Text variant="various3" className={s[item.subtitleColor]}>
+								{item.subtitle}
 							</Text>
 						</div>
 						<Buttons />
