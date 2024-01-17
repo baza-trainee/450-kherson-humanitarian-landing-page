@@ -47,11 +47,12 @@ export async function getServerSideProps() {
 	const partnersResp = await api.partners.getPartners();
 	if ('data' in partnersResp) props.partners = partnersResp.data;
 
-	const getContacts = await api.footer.getContacts();
-	const getDocuments = await api.footer.getDocuments();
-	if ('data' in getContacts && 'data' in getDocuments) {
-		const contactsData = getContacts.data;
-		const documentsData = getDocuments.data;
+	const contactsResp = await api.footer.getContacts();
+
+	const documentsResp = await api.footer.getDocuments();
+	if ('data' in contactsResp && 'data' in documentsResp) {
+		const contactsData = contactsResp.data;
+		const documentsData = documentsResp.data;
 		if (contactsData && documentsData) props.footerData = { contactsData, documentsData };
 	}
 

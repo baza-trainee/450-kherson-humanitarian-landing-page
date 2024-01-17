@@ -11,12 +11,16 @@ import { socials } from './data/socials';
 import { GreyBlockDesktop } from './GreyBlock/GreyBlockDesktop';
 import { GreyBlockMobile } from './GreyBlock/GreyBlockMobile';
 import { GreyBlockTablet } from './GreyBlock/GreyBlockTablet';
+import email from '/public/svg/icons/email.svg';
+import location from '/public/svg/icons/location.svg';
 
 import s from './FooterLayout.module.scss';
+
 interface FooterDataProps {
 	footerData?: FooterData;
 }
-export function FooterLayout(footerData: FooterDataProps) {
+
+export function FooterLayout({ footerData }: FooterDataProps) {
 	const { isScreenTabletSm, isScreenTabletXl } = useScreenQuery();
 
 	return (
@@ -32,16 +36,18 @@ export function FooterLayout(footerData: FooterDataProps) {
 			</div>
 			<div className={s.blue}>
 				<div className={s.contacts}>
-					{contacts
-						.filter((contact) => contact.value !== '')
-						.map((contact) => (
-							<div className={s.iconAndText} key={contact.id}>
-								<Image src={contact.src} alt={contact.name} width={24} height={24} />
-								<Text className={s.textInBlueBlock} variant="footer" lineBreak>
-									{contact.value}
-								</Text>
-							</div>
-						))}
+					<div className={s.iconAndText}>
+						<Image src={location} alt="location" width={24} height={24} />
+						<Text className={s.textInBlueBlock} variant="footer" lineBreak>
+							{footerData?.contactsData?.address || contacts.address}
+						</Text>
+					</div>
+					<div className={s.iconAndText}>
+						<Image src={email} alt="email" width={24} height={24} />
+						<Text className={s.textInBlueBlock} variant="footer" lineBreak>
+							{footerData?.contactsData?.email || contacts.email}
+						</Text>
+					</div>
 				</div>
 				<div className={s.socialNetworks}>
 					<Text className={s.textInBlueBlock} variant="footer">
