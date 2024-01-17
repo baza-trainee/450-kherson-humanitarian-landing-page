@@ -14,10 +14,10 @@ export function transformProjectsFormData(data: FormFields) {
 	return {
 		stage: status,
 		subTitle: data.subTitle,
-		videoLink: data.videoLink,
-		text: data.text,
+		videoLink: data.videoLink || ' ',
+		text: data.text.replaceAll('\n', '/n'),
 		projectDuration: data.projectDuration,
 		areaCompletedWorks: data.areaCompletedWorks,
-		projectText: data.projectText,
+		projectText: data.projectText.replaceAll('\n', '/n'),
 	};
 }

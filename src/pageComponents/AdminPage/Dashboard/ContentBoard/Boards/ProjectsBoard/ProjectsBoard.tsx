@@ -21,6 +21,7 @@ import { ModalPop } from '~components/ModalPop/ModalPop';
 import { MIN_CAROUSEL_ITEMS } from '~constants/MIN_CAROUSEL_ITEMS';
 import type { CompressImage } from '~helpers/compressImage';
 import { compressImage } from '~helpers/compressImage';
+import { getErrorMessageFromCode } from '~helpers/getErrorMessageFromCode';
 
 import { fetchProjectsData } from '../../../Tabs/fetchHelpers/fetchProjectsData';
 import { EmptyBoard } from '../EmptyBoard/EmptyBoard';
@@ -116,9 +117,10 @@ export default function ProjectsBoard() {
 	useEffect(() => {
 		//*set message to show in Modal Error
 		if (stateError) {
-			if (stateError.status === 406)
-				setErrorMessage('Не правильно введені дані. Можливо є зайві символи');
-			if (stateError.status === 500) setErrorMessage(stateError.message);
+			const message = getErrorMessageFromCode(stateError.status, {
+				406: 'Помилка при збереженні. Не правильно введені дані. Можливо є зайві символи',
+			});
+			setErrorMessage(message);
 		}
 	}, [stateError]);
 

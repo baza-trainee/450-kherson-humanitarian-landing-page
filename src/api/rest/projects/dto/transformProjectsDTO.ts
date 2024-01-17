@@ -25,10 +25,10 @@ export function transformProjectsDTO(list: ProjectsResponse) {
 		projectStatus: status,
 		videoLink: list.videoLink,
 		subTitle: list.subTitle,
-		text: list.text,
+		text: list.text.replaceAll('/n', '\n'),
 		areaCompletedWorks: list.areaCompletedWorks,
 		projectDuration: list.projectDuration,
-		projectText: list.projectText,
+		projectText: list.projectText.replaceAll('/n', '\n'),
 		pictures: picturesDTO,
 		mainPicture: mainPictureTransform,
 	};
