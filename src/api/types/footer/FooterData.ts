@@ -1,7 +1,8 @@
 import type { Contacts } from '~api/types/footer/Contacts';
-import type { Documents } from '~api/types/footer/Documents';
+
+import type { DocumentsOfMainSite } from './DocumentsOfMainSite';
 
 export interface FooterData {
 	contactsData: Contacts;
-	documentsData: Documents;
+	documentsData: DocumentsOfMainSite;
 }
