@@ -27,11 +27,11 @@ export function FooterLayout({ footerData }: FooterDataProps) {
 		<footer className={s.FooterLayout} id="footer">
 			<div className={s.grey}>
 				{isScreenTabletXl ? (
-					<GreyBlockDesktop />
+					<GreyBlockDesktop documentsData={footerData?.documentsData} />
 				) : isScreenTabletSm ? (
-					<GreyBlockTablet />
+					<GreyBlockTablet documentsData={footerData?.documentsData} />
 				) : (
-					<GreyBlockMobile />
+					<GreyBlockMobile documentsData={footerData?.documentsData} />
 				)}
 			</div>
 			<div className={s.blue}>

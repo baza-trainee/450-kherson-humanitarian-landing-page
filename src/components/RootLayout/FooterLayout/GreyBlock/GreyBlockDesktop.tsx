@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import type { DocumentsOfMainSite } from '~api/types/footer/DocumentsOfMainSite';
 import { Text } from '~components/Text/Text';
 
 import { NavigationAndDocuments } from './NavigationAndDocuments/NavigationAndDocuments';
@@ -8,7 +9,11 @@ import logo from '/public/svg/logo.svg';
 
 import s from './GreyBlock.module.scss';
 
-export function GreyBlockDesktop() {
+interface GreyBlockDesktopProps {
+	documentsData?: DocumentsOfMainSite;
+}
+
+export function GreyBlockDesktop({ documentsData }: GreyBlockDesktopProps) {
 	return (
 		<>
 			<div className={s.mainInfo}>
@@ -28,7 +33,7 @@ export function GreyBlockDesktop() {
 					</Text>
 				</div>
 			</div>
-			<NavigationAndDocuments />
+			<NavigationAndDocuments documentsData={documentsData} />
 		</>
 	);
 }

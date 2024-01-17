@@ -1,5 +1,6 @@
 import { HomePage } from '~/pageComponents/HomePage/HomePage';
 import { api } from '~api/index';
+import { transformDocumentsOfMainSiteDTO } from '~api/rest/footer/dto/transformDocumentsDTO';
 import type { DonationsResponse } from '~api/types/backend/responses/DonationsResponse';
 import type { FooterData } from '~api/types/footer/FooterData';
 import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
@@ -50,9 +51,10 @@ export async function getServerSideProps() {
 	const contactsResp = await api.footer.getContacts();
 
 	const documentsResp = await api.footer.getDocuments();
-	if ('data' in contactsResp && 'data' in documentsResp) {
+
+	if ('data' in contactsResp && 'data' in documentsResp && documentsResp.data) {
 		const contactsData = contactsResp.data;
-		const documentsData = documentsResp.data;
+		const documentsData = transformDocumentsOfMainSiteDTO(documentsResp.data);
 		if (contactsData && documentsData) props.footerData = { contactsData, documentsData };
 	}
 
