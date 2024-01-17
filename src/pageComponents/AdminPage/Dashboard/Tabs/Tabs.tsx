@@ -14,6 +14,7 @@ import { useParams } from '~hooks/useParams';
 import { useAboutUsState } from '../../store/useAboutUsState';
 import { useDonationsState } from '../../store/useDonationsState';
 import { useFooterState } from '../../store/useFooterState';
+import { useGetHelpState } from '../../store/useGetHelpState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useOurAchievementsBoardState } from '../../store/useOurAchievementsBoardState';
@@ -25,6 +26,7 @@ import { fetchAboutUsData } from './fetchHelpers/fetchAboutUsData';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
 import { fetchFooterData } from './fetchHelpers/fetchFooterData';
+import { fetchGetHelpData } from './fetchHelpers/fetchGetHelpData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
 import { fetchOurAchievementsData } from './fetchHelpers/fetchOurAchievementsData';
@@ -57,7 +59,7 @@ export function Tabs() {
 	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
 	const isOurAchievementsDataLoading = useOurAchievementsBoardState((state) => state.isLoading);
 	const isPartnersDataLoading = usePartnersState((state) => state.isLoading);
-
+	const isGetHelpDataLoading = useGetHelpState((state) => state.isLoading);
 	const isFooterDataLoading = useFooterState((state) => state.isLoading);
 	const isDataLoading =
 		isListsDataLoading ||
@@ -67,6 +69,7 @@ export function Tabs() {
 		isAboutUsDataLoading ||
 		isDonationsDataLoading ||
 		isOurAchievementsDataLoading ||
+		isGetHelpDataLoading ||
 		isFooterDataLoading;
 	//* use your state loading ⭡
 
@@ -114,6 +117,7 @@ export function Tabs() {
 				await getTabsData(fetchPartnersData);
 				setTabsTitleName(newTabsTitleNames['our-partners']);
 			},
+			'get-help': async () => await getTabsData(fetchGetHelpData),
 			_: () => setTabsData(null),
 		});
 		fetchData();
