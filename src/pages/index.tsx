@@ -6,6 +6,7 @@ import type { FooterData } from '~api/types/footer/FooterData';
 import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
 import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
 import type { Heroes } from '~api/types/hero/Heroes';
+import type { OurAchievements } from '~api/types/ourAchievements/OurAchievements';
 import type { Partners } from '~api/types/partners/Partners';
 import { Meta } from '~components/Meta/Meta';
 import { RootLayout } from '~components/RootLayout/RootLayout';
@@ -18,6 +19,7 @@ export interface HomeProps {
 	donations?: DonationsResponse;
 	partners?: Partners;
 	footerData?: FooterData;
+	getOurAchievements?: OurAchievements;
 }
 
 export default function Home(data: HomeProps) {
@@ -57,6 +59,9 @@ export async function getServerSideProps() {
 		const documentsData = transformDocumentsOfMainSiteDTO(documentsResp.data);
 		if (contactsData && documentsData) props.footerData = { contactsData, documentsData };
 	}
+
+	const ourAchievementsResp = await api.ourAchievements.getOurAchievements();
+	if ('data' in ourAchievementsResp) props.getOurAchievements = ourAchievementsResp.data;
 
 	return { props };
 }
