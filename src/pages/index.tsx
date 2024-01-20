@@ -4,6 +4,7 @@ import type { DonationsResponse } from '~api/types/backend/responses/DonationsRe
 import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
 import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
 import type { Heroes } from '~api/types/hero/Heroes';
+import type { OurAchievements } from '~api/types/ourAchievements/OurAchievements';
 import type { Partners } from '~api/types/partners/Partners';
 import { Meta } from '~components/Meta/Meta';
 import { RootLayout } from '~components/RootLayout/RootLayout';
@@ -15,6 +16,7 @@ export interface HomeProps {
 	getHeroes?: Heroes;
 	donations?: DonationsResponse;
 	partners?: Partners;
+	getOurAchievements?: OurAchievements;
 }
 
 export default function Home(data: HomeProps) {
@@ -44,6 +46,9 @@ export async function getServerSideProps() {
 
 	const partnersResp = await api.partners.getPartners();
 	if ('data' in partnersResp) props.partners = partnersResp.data;
+
+	const ourAchievementsResp = await api.ourAchievements.getOurAchievements();
+	if ('data' in ourAchievementsResp) props.getOurAchievements = ourAchievementsResp.data;
 
 	return { props };
 }
