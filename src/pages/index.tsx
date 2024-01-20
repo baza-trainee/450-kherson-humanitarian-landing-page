@@ -5,6 +5,7 @@ import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
 import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
 import type { Heroes } from '~api/types/hero/Heroes';
 import type { Partners } from '~api/types/partners/Partners';
+import type { Projects } from '~api/types/projects/Projects';
 import { Meta } from '~components/Meta/Meta';
 import { RootLayout } from '~components/RootLayout/RootLayout';
 import { APP } from '~constants/APP';
@@ -15,6 +16,7 @@ export interface HomeProps {
 	getHeroes?: Heroes;
 	donations?: DonationsResponse;
 	partners?: Partners;
+	projects?: Projects;
 }
 
 export default function Home(data: HomeProps) {
@@ -44,6 +46,9 @@ export async function getServerSideProps() {
 
 	const partnersResp = await api.partners.getPartners();
 	if ('data' in partnersResp) props.partners = partnersResp.data;
+
+	const projectsResp = await api.projects.getProjects();
+	if ('data' in projectsResp) props.projects = projectsResp.data;
 
 	return { props };
 }

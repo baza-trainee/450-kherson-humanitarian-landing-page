@@ -1,4 +1,5 @@
-import { cardsData } from '~/data/projectsContent';
+import { cardsData } from '~/pageComponents/HomePage/defaultData/projectsContent';
+import type { Projects } from '~api/types/projects/Projects';
 import { Text } from '~components/Text/Text';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
@@ -9,25 +10,28 @@ import s from './AboutProject.module.scss';
 
 interface AboutProjectProps {
 	productId: string | null;
+	projects?: Projects;
 }
 
-export default function AboutProject({ productId }: AboutProjectProps) {
+export default function AboutProject({ productId, projects }: AboutProjectProps) {
 	const { isScreenTabletSm } = useScreenQuery();
 
-	const arrayIndex = cardsData.findIndex((card) => card.id === productId);
-	const { description } = cardsData[arrayIndex];
+	const arrayIndex = (projects || cardsData).findIndex((card) => card.id === productId);
+	const description = (projects || cardsData)[arrayIndex];
 
 	return (
 		<div className={s.blockContent}>
 			{isScreenTabletSm ? (
-				<CarouselScreenTablet arrayIndex={arrayIndex} />
+				<CarouselScreenTablet arrayIndex={arrayIndex} projects={projects} />
 			) : (
-				<CarouselScreenMobile arrayIndex={arrayIndex} />
+				<CarouselScreenMobile arrayIndex={arrayIndex} projects={projects} />
 			)}
 			<div className={s.infoContent}>
 				<div className={s.about}>
-					<Text variant="h3">{description.title}</Text>
-					<Text variant="p">{description.text}</Text>
+					<Text variant="h3">{description.subTitle}</Text>
+					<Text variant="p" lineBreak>
+						{description.text}
+					</Text>
 				</div>
 				<div className={s.report}>
 					<div className={s.reportData}>
@@ -36,7 +40,7 @@ export default function AboutProject({ productId }: AboutProjectProps) {
 								Об&apos;єм виконаних робіт:
 							</Text>
 							<Text variant="h6" className={s.dynamicText}>
-								{`${description.square}м2`}
+								{`${description.areaCompletedWorks}м2`}
 							</Text>
 						</div>
 						<div className={s.duration}>
@@ -44,11 +48,13 @@ export default function AboutProject({ productId }: AboutProjectProps) {
 								Тривалість проєкту:
 							</Text>
 							<Text variant="h6" className={s.dynamicText}>
-								{description.duration}
+								{description.projectDuration}
 							</Text>
 						</div>
 					</div>
-					<Text variant="p">{description.patron}</Text>
+					<Text variant="p" lineBreak>
+						{description.projectText}
+					</Text>
 				</div>
 			</div>
 		</div>

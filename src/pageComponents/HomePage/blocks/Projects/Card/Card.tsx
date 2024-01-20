@@ -1,37 +1,28 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import { labelData } from '~/data/projectsContent';
+import { labelData } from '~/pageComponents/HomePage/defaultData/projectsContent';
 import { Text } from '~components/Text/Text';
+import { BASE_URL } from '~constants/BASE_URL';
 
 import s from './Card.module.scss';
 
 interface CardProps {
+	id: string;
 	src: string;
 	title: string;
-	status: StatusObject;
+	status: string;
 	width?: number;
 	handleProductClick: (id: string) => void;
 }
 
-type StatusObject = Record<string, boolean>;
-
-export function Card({ src, title, status, width, handleProductClick }: CardProps) {
-	const findTrueKey = (obj: StatusObject) => {
-		for (const key in obj) {
-			if (obj[key] === true) {
-				return key;
-			}
-		}
-		return null;
-	};
-
+export function Card({ id, src, title, status, width, handleProductClick }: CardProps) {
 	const handleClick = () => {
-		handleProductClick(src);
+		handleProductClick(id);
 	};
 
 	const label = labelData.map(({ name, className, text }) => {
-		if (findTrueKey(status) === name) {
+		if (status === name) {
 			return (
 				<div key={name} className={clsx(s.label, s[className])}>
 					<Text variant="h4" className={s.status}>
@@ -41,13 +32,14 @@ export function Card({ src, title, status, width, handleProductClick }: CardProp
 			);
 		}
 	});
+	const addUrl = process.env.NODE_ENV === 'development' ? `${BASE_URL}` : '';
 
 	return (
 		<div className={s.container} style={{ width: `${width}px` }}>
 			<div className={s.card} onClick={handleClick}>
 				<Image
 					className={s.img}
-					src={src}
+					src={`${addUrl}${src}`}
 					alt={src}
 					width={410}
 					height={296}

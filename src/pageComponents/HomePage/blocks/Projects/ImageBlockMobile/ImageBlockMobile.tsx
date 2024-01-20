@@ -3,18 +3,24 @@ import ReactPlayer from 'react-player/youtube';
 
 import Image from 'next/image';
 
+import { BASE_URL } from '~constants/BASE_URL';
+
 import s from './ImageBlockMobile.module.scss';
 
+interface ImageArrayProps {
+	id?: string;
+	image: string;
+}
+
 interface ImageBlockProps {
-	imagesArray: {
-		src: string;
-		type: string;
-	}[];
+	imagesArray: ImageArrayProps[];
 	width: number;
 }
 
 export function ImageBlockMobile({ imagesArray, width }: ImageBlockProps) {
 	const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+
+	const addUrl = process.env.NODE_ENV === 'development' ? `${BASE_URL}` : '';
 
 	const handleVideoPlay = () => {
 		setIsVideoPlaying(false);
@@ -27,11 +33,11 @@ export function ImageBlockMobile({ imagesArray, width }: ImageBlockProps) {
 		<div className={s.swipable}>
 			{imagesArray.map((image) => {
 				return (
-					<div className={s.container} key={image.src} style={{ width: `${width}px` }}>
-						{image.type === 'video' ? (
+					<div className={s.container} key={image.image} style={{ width: `${width}px` }}>
+						{image.id === 'video' ? (
 							<ReactPlayer
 								light={isVideoPlaying}
-								url={image.src}
+								url={image.image}
 								width={width}
 								height="253"
 								playing={true}
@@ -40,7 +46,7 @@ export function ImageBlockMobile({ imagesArray, width }: ImageBlockProps) {
 							/>
 						) : (
 							<Image
-								src={image.src}
+								src={`${addUrl}${image.image}`}
 								alt=" "
 								width={width}
 								height={253}
