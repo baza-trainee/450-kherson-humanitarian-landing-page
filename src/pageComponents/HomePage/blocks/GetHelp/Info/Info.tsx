@@ -6,7 +6,9 @@ import type { HelpCategories } from '~api/types/getHelp/HelpCategories';
 import { Text } from '~components/Text/Text';
 import { getMatch } from '~helpers/getMatch';
 
+import { InfoData  } from '../../../defaultData/getHelpInfoData';
 import { getImagePercentage } from './helpers/getImagePercentage';
+import { getSrcUrlFromTag } from './helpers/getSrcUrlFromTag';
 
 import s from './Info.module.scss';
 
@@ -17,6 +19,9 @@ interface InfoProps {
 }
 
 export function Info({ lists, activeTab, info }: InfoProps) {
+
+	const address = info?.address ? info.address : InfoData .address;
+	const mapUrl = info?.mapUrl ? getSrcUrlFromTag(info.mapUrl) : getSrcUrlFromTag(InfoData .mapUrl);
 	const imgPercentage = getImagePercentage(
 		lists?.[activeTab].personsRegistered || 0,
 		lists?.[activeTab].availableSets || 0,
@@ -56,12 +61,13 @@ export function Info({ lists, activeTab, info }: InfoProps) {
 				<Text variant="subtitle">
 					Місцезнаходження пункту видачі гуманітарної допомоги:
 					<br />
-					{info?.address && info.address}
+					{address}
+
 				</Text>
 			</div>
-			{info?.mapUrl && (
+			{mapUrl && (
 				<iframe
-					src={info?.mapUrl}
+					src={mapUrl}
 					allowFullScreen={false}
 					loading="lazy"
 					referrerPolicy="no-referrer-when-downgrade"

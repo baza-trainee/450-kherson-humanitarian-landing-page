@@ -38,7 +38,7 @@ export async function getServerSideProps() {
 	const listResp = await api.lists.getActiveListsQuantity();
 	if ('data' in listResp) props.getHelpLists = listResp.data;
 
-	const getHelpResp = await api.getHelp.getInfo();
+	const getHelpResp = await api.getHelpAdmin.getGetHelp();
 	if ('data' in getHelpResp) props.getHelpInfo = getHelpResp.data;
 
 	const getHeroesResp = await api.hero.getHeroes();
