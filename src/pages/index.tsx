@@ -10,6 +10,7 @@ import type { Heroes } from '~api/types/hero/Heroes';
 import type { OurAchievements } from '~api/types/ourAchievements/OurAchievements';
 import type { OurActivitiesData } from '~api/types/ourActivity/OurActivitiesData';
 import type { Partners } from '~api/types/partners/Partners';
+import type { Projects } from '~api/types/projects/Projects';
 import { Meta } from '~components/Meta/Meta';
 import { RootLayout } from '~components/RootLayout/RootLayout';
 import { APP } from '~constants/APP';
@@ -26,6 +27,7 @@ export interface HomeProps {
 	aboutUsFund?: AboutUs;
 	aboutUsTeam?: AboutUs;
 	aboutUsHistory?: AboutUs;
+	projects?: Projects;
 }
 
 export default function Home(data: HomeProps) {
@@ -82,6 +84,9 @@ export async function getServerSideProps() {
 
 	const ourActivityResp = await api.ourActivity.getOurActivities();
 	if ('data' in ourActivityResp) props.ourActivityData = ourActivityResp.data;
+
+	const projectsResp = await api.projects.getProjects();
+	if ('data' in projectsResp) props.projects = projectsResp.data;
 
 	return { props };
 }

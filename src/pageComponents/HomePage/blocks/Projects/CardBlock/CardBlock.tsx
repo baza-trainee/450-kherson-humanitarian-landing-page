@@ -1,22 +1,25 @@
-import { cardsData } from '~/data/projectsContent';
 import { Card } from '~/pageComponents/HomePage/blocks/Projects/Card/Card';
+import { cardsData } from '~/pageComponents/HomePage/defaultData/projectsContent';
+import type { Projects } from '~api/types/projects/Projects';
 
 import s from './CardBlock.module.scss';
 
 interface CardBlockProps {
 	handleProductClick: (id: string) => void;
 	width: number;
+	projects?: Projects;
 }
 
-export function CardBlock({ handleProductClick, width }: CardBlockProps) {
+export function CardBlock({ handleProductClick, width, projects }: CardBlockProps) {
 	return (
 		<div className={s.swipable}>
-			{cardsData.map((card) => (
+			{(projects || cardsData).map((card) => (
 				<Card
-					key={card.src}
-					src={card.src}
-					title={card.title}
-					status={card.status}
+					key={card.mainPicture.image}
+					id={card.id || ''}
+					src={card.mainPicture.image}
+					title={card.subTitle}
+					status={card.projectStatus}
 					width={width}
 					handleProductClick={handleProductClick}
 				/>

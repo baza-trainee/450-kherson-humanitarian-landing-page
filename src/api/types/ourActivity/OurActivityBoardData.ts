@@ -1,4 +1,4 @@
 export interface OurActivityBoardData {
-	src: string;
+	image: string;
 	id?: string;
 }

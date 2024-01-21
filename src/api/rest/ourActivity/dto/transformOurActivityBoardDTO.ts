@@ -3,7 +3,7 @@ import type { OurActivityResponse } from '~api/types/backend/responses/OurActivi
 
 export function transformOurActivityBoardDTO(data: OurActivityResponse) {
 	return {
-		src: data.picture.image || '',
+		image: data.picture.image || '',
 		id: data.id || '',
 	};
 }
