@@ -5,7 +5,10 @@ import type { StaticImageData } from 'next/image';
 import s from './Dots.module.scss';
 
 interface Props {
-	items: StaticImageData[] | { src: string }[];
+	items: {
+		id?: string;
+		src: string | StaticImageData;
+	}[];
 	activeIndex: number;
 	paginateTo: (index: number) => void;
 }
@@ -17,7 +20,7 @@ export function Dots({ items, activeIndex, paginateTo }: Props) {
 				const dotClass = clsx(s.dot, index === activeIndex && s.active);
 				return (
 					<motion.button
-						key={el.src}
+						key={el.id}
 						initial={false}
 						className={dotClass}
 						animate={{

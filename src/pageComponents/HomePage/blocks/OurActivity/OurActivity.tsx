@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import type { MotionProps } from 'framer-motion';
 import Image from 'next/image';
 
-import { images } from '~/data/ourActivityData';
 import { Carousel3d } from '~/pageComponents/HomePage/blocks/OurActivity/Carousel3d/Carousel3d';
+import { images } from '~/pageComponents/HomePage/defaultData/ourActivityData';
 import type { OurActivitiesData } from '~api/types/ourActivity/OurActivitiesData';
 import { Container } from '~components/Container/Container';
 import { Dots } from '~components/Dots/Dots';
@@ -96,7 +96,10 @@ const animation: MotionProps = {
 };
 
 export function OurActivity({ ourActivityData }: OurActivityProps) {
-	const [[activeIndex, direction], setActiveIndex] = useState([Math.floor(images.length / 2), -1]);
+	const [[activeIndex, direction], setActiveIndex] = useState([
+		Math.floor((ourActivityData || images).length / 2),
+		-1,
+	]);
 	const [isAnimating, setIsAnimating] = useState(false);
 	const { isScreenDesktopSm, isScreenTabletSm } = useScreenQuery();
 
@@ -148,8 +151,8 @@ export function OurActivity({ ourActivityData }: OurActivityProps) {
 							<div className={s.card}>
 								<Image
 									className={s.img}
-									src={`${addUrl}${src}`}
-									alt={src}
+									src={ourActivityData ? `${addUrl}${src}` : src}
+									alt={src.toString()}
 									width={286}
 									height={346}
 									style={{ objectFit: 'cover' }}
@@ -181,7 +184,11 @@ export function OurActivity({ ourActivityData }: OurActivityProps) {
 					)}
 				</div>
 				<div className={s.dots}>
-					<Dots items={images} activeIndex={activeIndex} paginateTo={paginateTo} />
+					<Dots
+						items={ourActivityData || images}
+						activeIndex={activeIndex}
+						paginateTo={paginateTo}
+					/>
 				</div>
 			</Container>
 		</Section>
