@@ -6,14 +6,21 @@ import Image from 'next/image';
 
 import { images } from '~/data/ourActivityData';
 import { Carousel3d } from '~/pageComponents/HomePage/blocks/OurActivity/Carousel3d/Carousel3d';
+import type { OurActivitiesData } from '~api/types/ourActivity/OurActivitiesData';
 import { Container } from '~components/Container/Container';
 import { Dots } from '~components/Dots/Dots';
 import { IconButton } from '~components/IconButton/IconButton';
 import { Section } from '~components/Section/Section';
 import { Text } from '~components/Text/Text';
+import { BASE_URL } from '~constants/BASE_URL';
 import { useScreenQuery } from '~hooks/useScreenQuery';
 
 import s from './OurActivity.module.scss';
+
+interface OurActivityProps {
+	ourActivityData?: OurActivitiesData;
+}
+const addUrl = process.env.NODE_ENV === 'development' ? `${BASE_URL}` : '';
 
 const animationDuration = 0.5;
 
@@ -88,24 +95,29 @@ const animation: MotionProps = {
 	dragElastic: 0,
 };
 
-export function OurActivity() {
+export function OurActivity({ ourActivityData }: OurActivityProps) {
 	const [[activeIndex, direction], setActiveIndex] = useState([Math.floor(images.length / 2), -1]);
 	const [isAnimating, setIsAnimating] = useState(false);
 	const { isScreenDesktopSm, isScreenTabletSm } = useScreenQuery();
 
-	const visibleIndices = [...images, ...images].slice(activeIndex, activeIndex + 3);
+	const visibleIndices = (
+		ourActivityData ? [...ourActivityData, ...ourActivityData] : [...images, ...images]
+	).slice(activeIndex, activeIndex + 3);
 
 	const paginate = useCallback(
 		(dir: number) => {
 			if (!isAnimating) {
 				setIsAnimating(true);
-				setActiveIndex([wrap(0, images.length, activeIndex + dir), dir]);
+				setActiveIndex([
+					wrap(0, (ourActivityData ? ourActivityData : images).length, activeIndex + dir),
+					dir,
+				]);
 				setTimeout(() => {
 					setIsAnimating(false);
 				}, animationDuration * 1000);
 			}
 		},
-		[activeIndex, isAnimating],
+		[activeIndex, isAnimating, ourActivityData],
 	);
 
 	const paginateTo = useCallback(
@@ -136,7 +148,7 @@ export function OurActivity() {
 							<div className={s.card}>
 								<Image
 									className={s.img}
-									src={src}
+									src={`${addUrl}${src}`}
 									alt={src}
 									width={286}
 									height={346}

@@ -71,7 +71,7 @@ export function OurActivityBoard() {
 
 	const registers = {
 		image: register('image', {
-			required: ourActivityBoardData?.imageUrl ? false : true,
+			required: ourActivityBoardData?.src ? false : true,
 		}),
 	};
 
@@ -86,7 +86,7 @@ export function OurActivityBoard() {
 
 	useEffect(() => {
 		if (ourActivityBoardData) {
-			setValue('image', ourActivityBoardData.imageUrl);
+			setValue('image', ourActivityBoardData.src);
 			clearErrors();
 			setIsTabsClickBlocked(false);
 		}
@@ -100,7 +100,7 @@ export function OurActivityBoard() {
 
 	useEffect(() => {
 		watch((value) => {
-			if (value.image !== ourActivityBoardData?.imageUrl) {
+			if (value.image !== ourActivityBoardData?.src) {
 				setIsTabsClickBlocked(true);
 			} else {
 				setIsTabsClickBlocked(false);
@@ -128,7 +128,7 @@ export function OurActivityBoard() {
 					.then((dataImage) => (image = dataImage.toString()));
 				type = data.image[0].type;
 			} else {
-				image = ourActivityBoardData?.imageUrl || '';
+				image = ourActivityBoardData?.src || '';
 			}
 		} catch (error) {
 			console.error('Error:', error);
@@ -159,7 +159,7 @@ export function OurActivityBoard() {
 	const handleOnModalCancelYesClick = async () => {
 		if (ourActivityBoardData) {
 			reset({
-				image: ourActivityBoardData.imageUrl,
+				image: ourActivityBoardData.src,
 			});
 			setIsTabsClickBlocked(false);
 		}

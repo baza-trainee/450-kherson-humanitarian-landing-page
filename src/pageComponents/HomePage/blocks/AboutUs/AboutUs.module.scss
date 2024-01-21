@@ -1,56 +1,57 @@
 @use '~/styles/mixins' as *;
 
 .wrapper {
+	gap: 24px;
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
 	@include useScreen('tablet-sm') {
 		gap: 40px;
 	}
 }
 
 .about {
+	gap: 24px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
-	gap: 24px;
 	@include useScreen('tablet-sm') {
 		gap: 40px;
 	}
 	@include useScreen('desktop-sm') {
+		gap: 40px;
 		flex-direction: row;
 		flex-wrap: wrap;
-		gap: 40px;
 	}
 }
 
 .block {
+	gap: 24px;
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	width: 100%;
-	gap: 24px;
 	@include useScreen('desktop-sm') {
+		gap: 80px;
 		flex-direction: row;
 		align-items: center;
-		gap: 80px;
 	}
 }
 
 .text {
+	gap: 24px;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	gap: 24px;
 	@include useScreen('desktop-sm') {
 		width: 600px;
 	}
 }
 
 .header {
+	gap: 8px;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
 }
 
 .aboutTitle {
@@ -61,18 +62,18 @@
 }
 
 .list {
+	gap: 24px;
 	display: flex;
 	flex-direction: column;
 	margin: 0;
 	padding: 0;
-	gap: 24px;
 }
 
 .item {
+	gap: 16px;
 	display: flex;
 	align-items: center;
 	list-style: none;
-	gap: 16px;
 }
 
 .icon {
@@ -104,15 +105,15 @@
 }
 
 .employee {
+	gap: 8px;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
 }
 
 .history {
+	gap: 8px;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
 	@include useScreen('tablet-sm') {
 		gap: 24px;
 	}
