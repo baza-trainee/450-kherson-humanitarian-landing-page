@@ -9,5 +9,5 @@ export function transformOurActivityBoardDTO(data: OurActivityResponse) {
 }
 
 export function transformOurActivitiesDTO(data: OurActivitiesResponse) {
-	return data.map((activity) => transformOurActivityBoardDTO(activity));
+	return data.map((activity) => transformOurActivityBoardDTO(activity)).reverse();
 }
