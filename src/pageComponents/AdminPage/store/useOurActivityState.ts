@@ -83,7 +83,7 @@ export const useOurActivityState = create<OurActivityState>((set) => ({
 	addNewEmptyOurActivityBoard: async () => {
 		set({
 			ourActivityBoardData: {
-				imageUrl: '',
+				src: '',
 			},
 		});
 	},
