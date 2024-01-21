@@ -2,20 +2,22 @@ import { type ReactNode } from 'react';
 
 import type { MotionProps } from 'framer-motion';
 import { AnimatePresence, motion } from 'framer-motion';
+import type { StaticImageData } from 'next/image';
 
 import { useHandleDrag } from '~hooks/useHandleDrag';
 
 import s from './Carousel3d.module.scss';
 
 interface CardData {
-	src: string;
+	id?: string;
+	src: string | StaticImageData;
 	title?: string;
 	text?: string;
 }
 
 interface SliderProps {
 	className: string;
-	renderContent: (src: string, title?: string, text?: string) => ReactNode;
+	renderContent: (src: string | StaticImageData, title?: string, text?: string) => ReactNode;
 	animate: MotionProps;
 	screens?: Record<string, boolean>;
 	paginate: (dir: number) => void;
@@ -32,7 +34,7 @@ export function Carousel3d({
 	direction,
 	visibleIndices,
 }: SliderProps) {
-	const getImageIndex = (item: string) => {
+	const getImageIndex = (item: string | StaticImageData) => {
 		switch (item) {
 			case visibleIndices[0].src:
 				return 'left';
@@ -54,10 +56,10 @@ export function Carousel3d({
 		<div className={className}>
 			<AnimatePresence mode="popLayout" custom={direction} initial={false}>
 				{visibleIndices.map((card) => {
-					const { src, title, text } = card;
+					const { id, src, title, text } = card;
 					return (
 						<motion.div
-							key={src}
+							key={id}
 							className={s.cardWrapper}
 							layout
 							custom={{

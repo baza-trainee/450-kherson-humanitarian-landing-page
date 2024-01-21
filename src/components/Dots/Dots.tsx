@@ -1,10 +1,14 @@
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import type { StaticImageData } from 'next/image';
 
 import s from './Dots.module.scss';
 
 interface Props {
-	items: { image: string }[];
+	items: {
+		id?: string;
+		src: string | StaticImageData;
+	}[];
 	activeIndex: number;
 	paginateTo: (index: number) => void;
 }
@@ -16,7 +20,7 @@ export function Dots({ items, activeIndex, paginateTo }: Props) {
 				const dotClass = clsx(s.dot, index === activeIndex && s.active);
 				return (
 					<motion.button
-						key={el.image}
+						key={el.id}
 						initial={false}
 						className={dotClass}
 						animate={{
