@@ -18,11 +18,11 @@ export function HomePage({ data }: HomePageProps) {
 		<>
 			<Hero heroData={data.getHeroes} />
 			<AboutUs />
-			<OurAchievements donations={data.donations} />
+			<OurAchievements donations={data.donations} achievements={data.getOurAchievements} />
 			<GetHelp lists={data.getHelpLists} info={data.getHelpInfo} />
 			<OurActivity />
 			<Projects />
-			<OurPartners />
+			<OurPartners partnersData={data.partners} />
 			<ArrowUpButton />
 		</>
 	);

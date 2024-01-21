@@ -1,9 +1,13 @@
 import { HomePage } from '~/pageComponents/HomePage/HomePage';
 import { api } from '~api/index';
+import { transformDocumentsOfMainSiteDTO } from '~api/rest/footer/dto/transformDocumentsDTO';
 import type { Donations } from '~api/types/donations/donations';
+import type { FooterData } from '~api/types/footer/FooterData';
 import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
 import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
 import type { Heroes } from '~api/types/hero/Heroes';
+import type { OurAchievements } from '~api/types/ourAchievements/OurAchievements';
+import type { Partners } from '~api/types/partners/Partners';
 import { Meta } from '~components/Meta/Meta';
 import { RootLayout } from '~components/RootLayout/RootLayout';
 import { APP } from '~constants/APP';
@@ -13,11 +17,14 @@ export interface HomeProps {
 	getHelpInfo?: GetHelpInfo;
 	getHeroes?: Heroes;
 	donations?: Donations;
+	partners?: Partners;
+	footerData?: FooterData;
+	getOurAchievements?: OurAchievements;
 }
 
 export default function Home(data: HomeProps) {
 	return (
-		<RootLayout>
+		<RootLayout footerData={data.footerData}>
 			<Meta title={APP.name}>
 				<HomePage data={data} />
 			</Meta>
@@ -39,6 +46,22 @@ export async function getServerSideProps() {
 
 	const donationsResp = await api.donations.getDonations();
 	if ('data' in donationsResp) props.donations = donationsResp.data;
+
+	const partnersResp = await api.partners.getPartners();
+	if ('data' in partnersResp) props.partners = partnersResp.data;
+
+	const contactsResp = await api.footer.getContacts();
+
+	const documentsResp = await api.footer.getDocuments();
+
+	if ('data' in contactsResp && 'data' in documentsResp && documentsResp.data) {
+		const contactsData = contactsResp.data;
+		const documentsData = transformDocumentsOfMainSiteDTO(documentsResp.data);
+		if (contactsData && documentsData) props.footerData = { contactsData, documentsData };
+	}
+
+	const ourAchievementsResp = await api.ourAchievements.getOurAchievements();
+	if ('data' in ourAchievementsResp) props.getOurAchievements = ourAchievementsResp.data;
 
 	return { props };
 }

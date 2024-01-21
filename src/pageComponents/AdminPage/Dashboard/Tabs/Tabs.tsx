@@ -14,22 +14,26 @@ import { useParams } from '~hooks/useParams';
 import { useAboutUsState } from '../../store/useAboutUsState';
 import { useDonationsState } from '../../store/useDonationsState';
 import { useFooterState } from '../../store/useFooterState';
+import { useGetHelpState } from '../../store/useGetHelpState';
 import { useHeroesState } from '../../store/useHeroesState';
 import { useListsState } from '../../store/useListsState';
 import { useOurAchievementsBoardState } from '../../store/useOurAchievementsBoardState';
 import { useOurActivityState } from '../../store/useOurActivityState';
 import { usePartnersState } from '../../store/usePartnersState';
+import { useProjectsState } from '../../store/useProjectsState';
 import { useTabsState } from '../../store/useTabsState';
 import { newTabsTitleNames } from './data/newTabsTitleNames';
 import { fetchAboutUsData } from './fetchHelpers/fetchAboutUsData';
 import { fetchChangePasswordData } from './fetchHelpers/fetchChangePasswordData';
 import { fetchDonationsData } from './fetchHelpers/fetchDonationsData';
 import { fetchFooterData } from './fetchHelpers/fetchFooterData';
+import { fetchGetHelpData } from './fetchHelpers/fetchGetHelpData';
 import { fetchHeroData } from './fetchHelpers/fetchHeroData';
 import { fetchListData } from './fetchHelpers/fetchListData';
 import { fetchOurAchievementsData } from './fetchHelpers/fetchOurAchievementsData';
 import { fetchOurActivityData } from './fetchHelpers/fetchOurActivityData';
 import { fetchPartnersData } from './fetchHelpers/fetchPartnersData';
+import { fetchProjectsData } from './fetchHelpers/fetchProjectsData';
 
 import s from './Tabs.module.scss';
 export interface Tab {
@@ -57,7 +61,8 @@ export function Tabs() {
 	const isOurActivityDataLoading = useOurActivityState((state) => state.isLoading);
 	const isOurAchievementsDataLoading = useOurAchievementsBoardState((state) => state.isLoading);
 	const isPartnersDataLoading = usePartnersState((state) => state.isLoading);
-
+	const isGetHelpDataLoading = useGetHelpState((state) => state.isLoading);
+	const isProjectsDataLoading = useProjectsState((state) => state.isLoading);
 	const isFooterDataLoading = useFooterState((state) => state.isLoading);
 	const isDataLoading =
 		isListsDataLoading ||
@@ -67,6 +72,8 @@ export function Tabs() {
 		isAboutUsDataLoading ||
 		isDonationsDataLoading ||
 		isOurAchievementsDataLoading ||
+		isGetHelpDataLoading ||
+		isProjectsDataLoading ||
 		isFooterDataLoading;
 	//* use your state loading ⭡
 
@@ -104,6 +111,10 @@ export function Tabs() {
 				setTabsTitleName(newTabsTitleNames.donations);
 			},
 			'about-us': async () => await getTabsData(fetchAboutUsData),
+			projects: async () => {
+				await getTabsData(fetchProjectsData);
+				setTabsTitleName(newTabsTitleNames.projects);
+			},
 			'change-password': async () => await getTabsData(fetchChangePasswordData),
 			'our-activity': async () => {
 				await getTabsData(fetchOurActivityData);
@@ -114,6 +125,7 @@ export function Tabs() {
 				await getTabsData(fetchPartnersData);
 				setTabsTitleName(newTabsTitleNames['our-partners']);
 			},
+			'get-help': async () => await getTabsData(fetchGetHelpData),
 			_: () => setTabsData(null),
 		});
 		fetchData();

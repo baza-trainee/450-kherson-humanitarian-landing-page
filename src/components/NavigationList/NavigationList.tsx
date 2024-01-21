@@ -34,20 +34,23 @@ export const NavigationList: React.FC<NavigationListProps> = ({
 }) => {
 	return (
 		<ul className={clsx(s.navigation, navStyle)}>
-			{navigation.map(({ id, name, href }) => (
-				<li className={s.navigationItem} key={id}>
-					<CustomLink
-						className={linkStyle}
-						href={href}
-						variant={variant}
-						onClick={onClick}
-						target={target}
-						download={download}
-					>
-						{name}
-					</CustomLink>
-				</li>
-			))}
+			{navigation.map((item) => {
+				if (item.href)
+					return (
+						<li className={s.navigationItem} key={item.id}>
+							<CustomLink
+								className={linkStyle}
+								href={item.href}
+								variant={variant}
+								onClick={onClick}
+								target={target}
+								download={download}
+							>
+								{item.name}
+							</CustomLink>
+						</li>
+					);
+			})}
 		</ul>
 	);
 };
