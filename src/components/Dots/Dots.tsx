@@ -7,7 +7,7 @@ import s from './Dots.module.scss';
 interface Props {
 	items: {
 		id?: string;
-		src: string | StaticImageData;
+		image: string | StaticImageData;
 	}[];
 	activeIndex: number;
 	paginateTo: (index: number) => void;
