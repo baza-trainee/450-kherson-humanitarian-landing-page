@@ -12,12 +12,15 @@ interface ButtonHelpUsProps {
 
 export function ButtonHelpUs({ donations }: ButtonHelpUsProps) {
 	const [isOpen, setIsOpen] = useState(false);
+
 	const onOpenModal = () => {
 		setIsOpen(true);
 	};
+
 	const onCloseModal = () => {
 		setIsOpen(false);
 	};
+
 	return (
 		<>
 			<Button type="secondary" onClick={onOpenModal} className={s.buttonHelpUs}>

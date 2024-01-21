@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import type { MotionProps } from 'framer-motion';
 
 import { cardsData } from '~/pageComponents/HomePage/defaultData/projectsContent';
+import type { Donations } from '~api/types/donations/donations';
 import type { Projects } from '~api/types/projects/Projects';
 import { Carousel } from '~components/Carousel/Carousel';
 import { Container } from '~components/Container/Container';
@@ -22,9 +23,10 @@ import s from './Projects.module.scss';
 
 interface ProjectsProps {
 	projects?: Projects;
+	donations?: Donations;
 }
 
-export function Projects({ projects }: ProjectsProps) {
+export function Projects({ projects, donations }: ProjectsProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [position, setPosition] = useState(0);
 	const [width, setWidth] = useState(0);
@@ -124,7 +126,7 @@ export function Projects({ projects }: ProjectsProps) {
 					</div>
 				</div>
 				<div className={s.button}>
-					<ButtonHelpUs />
+					<ButtonHelpUs donations={donations} />
 				</div>
 				{isOpen && (
 					<ModalPop title="Проєкти" isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
