@@ -8,6 +8,7 @@ import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
 import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
 import type { Heroes } from '~api/types/hero/Heroes';
 import type { OurAchievements } from '~api/types/ourAchievements/OurAchievements';
+import type { OurActivitiesData } from '~api/types/ourActivity/OurActivitiesData';
 import type { Partners } from '~api/types/partners/Partners';
 import { Meta } from '~components/Meta/Meta';
 import { RootLayout } from '~components/RootLayout/RootLayout';
@@ -21,6 +22,7 @@ export interface HomeProps {
 	partners?: Partners;
 	footerData?: FooterData;
 	getOurAchievements?: OurAchievements;
+	ourActivityData?: OurActivitiesData;
 	aboutUsFund?: AboutUs;
 	aboutUsTeam?: AboutUs;
 	aboutUsHistory?: AboutUs;
@@ -44,7 +46,7 @@ export async function getServerSideProps() {
 	const listResp = await api.lists.getActiveListsQuantity();
 	if ('data' in listResp) props.getHelpLists = listResp.data;
 
-	const getHelpResp = await api.getHelp.getInfo();
+	const getHelpResp = await api.getHelpAdmin.getGetHelp();
 	if ('data' in getHelpResp) props.getHelpInfo = getHelpResp.data;
 
 	const getHeroesResp = await api.hero.getHeroes();
@@ -77,6 +79,9 @@ export async function getServerSideProps() {
 
 	const ourAchievementsResp = await api.ourAchievements.getOurAchievements();
 	if ('data' in ourAchievementsResp) props.getOurAchievements = ourAchievementsResp.data;
+
+	const ourActivityResp = await api.ourActivity.getOurActivities();
+	if ('data' in ourActivityResp) props.ourActivityData = ourActivityResp.data;
 
 	return { props };
 }
