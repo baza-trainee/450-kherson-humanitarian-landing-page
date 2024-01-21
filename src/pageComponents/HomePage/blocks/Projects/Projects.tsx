@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 
 import type { MotionProps } from 'framer-motion';
 
-import { cardsData } from '~/data/projectsContent';
+import { cardsData } from '~/pageComponents/HomePage/defaultData/projectsContent';
+import type { Projects } from '~api/types/projects/Projects';
 import { Carousel } from '~components/Carousel/Carousel';
 import { Container } from '~components/Container/Container';
 import { IconButton } from '~components/IconButton/IconButton';
@@ -19,7 +20,11 @@ import { CardBlock } from './CardBlock/CardBlock';
 
 import s from './Projects.module.scss';
 
-export function Projects() {
+interface ProjectsProps {
+	projects?: Projects;
+}
+
+export function Projects({ projects }: ProjectsProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [position, setPosition] = useState(0);
 	const [width, setWidth] = useState(0);
@@ -47,7 +52,10 @@ export function Projects() {
 	useHandleResize(handleResize);
 
 	const onRight = () => {
-		if (position < cardsData.length - 1 && position !== cardsData.length - visibleItems) {
+		if (
+			position < (projects || cardsData).length - 1 &&
+			position !== (projects || cardsData).length - visibleItems
+		) {
 			setPosition(position + 1);
 		}
 	};
@@ -94,7 +102,11 @@ export function Projects() {
 						handleDragEnd={handleDragEnd}
 						handleDragStart={handleDragStart}
 					>
-						<CardBlock handleProductClick={handleProductClick} width={width} />
+						<CardBlock
+							handleProductClick={handleProductClick}
+							width={width}
+							projects={projects}
+						/>
 					</Carousel>
 					<div className={s.blockArrow}>
 						<IconButton
@@ -107,7 +119,7 @@ export function Projects() {
 							icon="icon--arrow-right"
 							className={s.arrow}
 							onClick={onRight}
-							disabled={position === cardsData.length - visibleItems}
+							disabled={position === (projects || cardsData).length - visibleItems}
 						/>
 					</div>
 				</div>
@@ -118,7 +130,7 @@ export function Projects() {
 					<ModalPop title="Проєкти" isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
 						<section className={s.projectContainer}>
 							<div className={s.aboutProject}>
-								<AboutProject productId={selectedProductId} />
+								<AboutProject productId={selectedProductId} projects={projects} />
 							</div>
 						</section>
 					</ModalPop>

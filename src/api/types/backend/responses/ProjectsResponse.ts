@@ -1,15 +1,3 @@
-import type { PictureResponse } from './PictureResponse';
+import type { ProjectResponse } from './ProjectResponse';
 
-export interface ProjectsResponse {
-	id: string;
-	title: string;
-	stage: 'funding-await' | 'in-process' | 'completed';
-	videoLink: string;
-	subTitle: string;
-	text: string;
-	areaCompletedWorks: string;
-	projectDuration: string;
-	projectText: string;
-	pictures: PictureResponse[];
-	mainPicture?: PictureResponse;
-}
+export type ProjectsResponse = ProjectResponse[];

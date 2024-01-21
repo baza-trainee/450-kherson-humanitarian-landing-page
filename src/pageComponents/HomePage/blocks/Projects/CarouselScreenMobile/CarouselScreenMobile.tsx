@@ -2,7 +2,8 @@ import { useCallback, useRef, useState } from 'react';
 
 import type { MotionProps } from 'framer-motion';
 
-import { cardsData } from '~/data/projectsContent';
+import { cardsData } from '~/pageComponents/HomePage/defaultData/projectsContent';
+import type { Projects } from '~api/types/projects/Projects';
 import { Carousel } from '~components/Carousel/Carousel';
 import { Dots } from '~components/Dots/Dots';
 import { useHandleDrag } from '~hooks/useHandleDrag';
@@ -14,9 +15,10 @@ import s from './CarouselScreenMobile.module.scss';
 
 interface CarouselScreenMobileProps {
 	arrayIndex: number;
+	projects?: Projects;
 }
 
-export function CarouselScreenMobile({ arrayIndex }: CarouselScreenMobileProps) {
+export function CarouselScreenMobile({ arrayIndex, projects }: CarouselScreenMobileProps) {
 	const [position, setPosition] = useState(0);
 	const [width, setWidth] = useState(0);
 
@@ -24,7 +26,11 @@ export function CarouselScreenMobile({ arrayIndex }: CarouselScreenMobileProps) 
 
 	const visibleItems = 1;
 
-	const { description } = cardsData[arrayIndex];
+	const description = (projects || cardsData)[arrayIndex];
+	const imagesArray =
+		description.videoLink !== ' '
+			? [...description.pictures, { image: description.videoLink, id: 'video' }]
+			: [...description.pictures];
 
 	const handleResize = () => {
 		if (carousel.current?.offsetWidth) {
@@ -35,10 +41,7 @@ export function CarouselScreenMobile({ arrayIndex }: CarouselScreenMobileProps) 
 	useHandleResize(handleResize);
 
 	const onRight = () => {
-		if (
-			position < description.images.length - 1 &&
-			position !== description.images.length - visibleItems
-		) {
+		if (position < imagesArray.length - 1 && position !== imagesArray.length - visibleItems) {
 			setPosition(position + 1);
 		}
 	};
@@ -77,10 +80,10 @@ export function CarouselScreenMobile({ arrayIndex }: CarouselScreenMobileProps) 
 				handleDragStart={handleDragStart}
 				className={s.smallCarousel}
 			>
-				<ImageBlockMobile imagesArray={description.images} width={width} />
+				<ImageBlockMobile imagesArray={imagesArray} width={width} />
 			</Carousel>
 			<div className={s.dots}>
-				<Dots items={description.images} activeIndex={position} paginateTo={paginateTo} />
+				<Dots items={imagesArray} activeIndex={position} paginateTo={paginateTo} />
 			</div>
 		</div>
 	);

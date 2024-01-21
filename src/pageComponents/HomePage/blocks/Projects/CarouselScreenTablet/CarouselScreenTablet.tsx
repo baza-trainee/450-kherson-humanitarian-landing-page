@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { MotionProps } from 'framer-motion';
 
-import { cardsData } from '~/data/projectsContent';
+import { cardsData } from '~/pageComponents/HomePage/defaultData/projectsContent';
+import type { Projects } from '~api/types/projects/Projects';
 import { Carousel } from '~components/Carousel/Carousel';
 import { IconButton } from '~components/IconButton/IconButton';
 import { useHandleDrag } from '~hooks/useHandleDrag';
@@ -14,9 +15,10 @@ import s from './CarouselScreenTablet.module.scss';
 
 interface CarouselScreenTabletProps {
 	arrayIndex: number;
+	projects?: Projects;
 }
 
-export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) {
+export function CarouselScreenTablet({ arrayIndex, projects }: CarouselScreenTabletProps) {
 	const [positionMini, setPositionMini] = useState(0);
 	const [widthMini, setWidthMini] = useState(0);
 
@@ -25,11 +27,16 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 	const gap = 16;
 	const widthWithGap = (gap * 2) / visibleItems;
 
-	const { description } = cardsData[arrayIndex];
+	const description = (projects || cardsData)[arrayIndex];
+	const imagesArray =
+		description.videoLink !== ' '
+			? [...description.pictures, { image: description.videoLink, id: 'video' }]
+			: [...description.pictures];
+
 	const onRight = () => {
 		if (
-			positionMini < description.images.length - 1 &&
-			positionMini !== description.images.length - visibleItems + 1
+			positionMini < imagesArray.length - 1 &&
+			positionMini !== imagesArray.length - visibleItems + 1
 		) {
 			setPositionMini(positionMini + 1);
 		}
@@ -64,7 +71,7 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 
 	return (
 		<div className={s.imageContent}>
-			<ActiveImageTablet imagesArray={description.images} position={positionMini} />
+			<ActiveImageTablet imagesArray={imagesArray} position={positionMini} />
 			<div className={s.container}>
 				<IconButton
 					type="secondary"
@@ -80,7 +87,7 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 					className={s.smallCarousel}
 				>
 					<ImageBlockTablet
-						imagesArray={description.images}
+						imagesArray={imagesArray}
 						width={widthMini}
 						position={positionMini}
 					/>
@@ -89,7 +96,7 @@ export function CarouselScreenTablet({ arrayIndex }: CarouselScreenTabletProps) 
 					type="secondary"
 					icon="icon--arrow-right"
 					onClick={onRight}
-					disabled={positionMini === description.images.length - visibleItems + 1}
+					disabled={positionMini === imagesArray.length - visibleItems + 1}
 				/>
 			</div>
 		</div>
