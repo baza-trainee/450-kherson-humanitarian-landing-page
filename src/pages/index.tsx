@@ -56,6 +56,15 @@ export async function getServerSideProps() {
 	const partnersResp = await api.partners.getPartners();
 	if ('data' in partnersResp) props.partners = partnersResp.data;
 
+	const getAboutUsFundResp = await api.aboutUs.getAboutUsFund();
+	if ('data' in getAboutUsFundResp) props.aboutUsFund = getAboutUsFundResp.data;
+
+	const getAboutUsTeamResp = await api.aboutUs.getAboutUs('team');
+	if ('data' in getAboutUsTeamResp) props.aboutUsTeam = getAboutUsTeamResp.data;
+
+	const getAboutUsHistoryResp = await api.aboutUs.getAboutUs('history');
+	if ('data' in getAboutUsHistoryResp) props.aboutUsHistory = getAboutUsHistoryResp.data;
+
 	const contactsResp = await api.footer.getContacts();
 
 	const documentsResp = await api.footer.getDocuments();
@@ -68,15 +77,6 @@ export async function getServerSideProps() {
 
 	const ourAchievementsResp = await api.ourAchievements.getOurAchievements();
 	if ('data' in ourAchievementsResp) props.getOurAchievements = ourAchievementsResp.data;
-
-	const getAboutUsFundResp = await api.aboutUs.getAboutUsFund();
-	if ('data' in getAboutUsFundResp) props.aboutUsFund = getAboutUsFundResp.data;
-
-	const getAboutUsTeamResp = await api.aboutUs.getAboutUs('team');
-	if ('data' in getAboutUsTeamResp) props.aboutUsTeam = getAboutUsTeamResp.data;
-
-	const getAboutUsHistoryResp = await api.aboutUs.getAboutUs('history');
-	if ('data' in getAboutUsHistoryResp) props.aboutUsHistory = getAboutUsHistoryResp.data;
 
 	return { props };
 }
