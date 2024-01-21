@@ -2,7 +2,7 @@ import { HomePage } from '~/pageComponents/HomePage/HomePage';
 import { api } from '~api/index';
 import { transformDocumentsOfMainSiteDTO } from '~api/rest/footer/dto/transformDocumentsDTO';
 import type { AboutUs } from '~api/types/aboutUs/aboutUs';
-import type { DonationsResponse } from '~api/types/backend/responses/DonationsResponse';
+import type { Donations } from '~api/types/donations/donations';
 import type { FooterData } from '~api/types/footer/FooterData';
 import type { GetHelpInfo } from '~api/types/getHelp/GetHelpInfo';
 import type { GetHelpLists } from '~api/types/getHelp/GetHelpLists';
@@ -19,7 +19,7 @@ export interface HomeProps {
 	getHelpLists?: GetHelpLists;
 	getHelpInfo?: GetHelpInfo;
 	getHeroes?: Heroes;
-	donations?: DonationsResponse;
+	donations?: Donations;
 	partners?: Partners;
 	footerData?: FooterData;
 	getOurAchievements?: OurAchievements;
@@ -54,8 +54,8 @@ export async function getServerSideProps() {
 	const getHeroesResp = await api.hero.getHeroes();
 	if ('data' in getHeroesResp) props.getHeroes = getHeroesResp.data;
 
-	const DonationsResp = await api.donations.getDonations();
-	if ('data' in DonationsResp) props.donations = DonationsResp.data;
+	const donationsResp = await api.donations.getDonations();
+	if ('data' in donationsResp) props.donations = donationsResp.data;
 
 	const partnersResp = await api.partners.getPartners();
 	if ('data' in partnersResp) props.partners = partnersResp.data;

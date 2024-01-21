@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useKeenSlider } from 'keen-slider/react';
 import Image from 'next/image';
 
+import type { Donations } from '~api/types/donations/donations';
 import type { Heroes } from '~api/types/hero/Heroes';
 import { Container } from '~components/Container/Container';
 import { Text } from '~components/Text/Text';
@@ -21,9 +22,10 @@ import s from './Hero.module.scss';
 
 interface HeroProps {
 	heroData?: Heroes;
+	donations?: Donations;
 }
 
-export function Hero({ heroData }: HeroProps) {
+export function Hero({ heroData, donations }: HeroProps) {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [loaded, setLoaded] = useState(false);
 
@@ -113,7 +115,7 @@ export function Hero({ heroData }: HeroProps) {
 								{item.subtitle}
 							</Text>
 						</div>
-						<Buttons />
+						<Buttons donations={donations} />
 					</Container>
 				</div>
 			))}

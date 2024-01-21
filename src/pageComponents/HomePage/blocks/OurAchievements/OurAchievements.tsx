@@ -1,4 +1,4 @@
-import type { DonationsResponse } from '~api/types/backend/responses/DonationsResponse';
+import type { Donations } from '~api/types/donations/donations';
 import type { OurAchievements } from '~api/types/ourAchievements/OurAchievements';
 import { Container } from '~components/Container/Container';
 import { Section } from '~components/Section/Section';
@@ -10,7 +10,7 @@ import { blocks } from '../../defaultData/ourAchievementsData';
 import s from './OurAchievements.module.scss';
 
 interface OurAchievementsProps {
-	donations?: DonationsResponse;
+	donations?: Donations;
 	achievements?: OurAchievements;
 }
 
