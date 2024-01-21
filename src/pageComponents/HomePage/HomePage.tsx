@@ -18,7 +18,7 @@ export function HomePage({ data }: HomePageProps) {
 		<>
 			<Hero heroData={data.getHeroes} />
 			<AboutUs fund={data.aboutUsFund} team={data.aboutUsTeam} history={data.aboutUsHistory} />
-			<OurAchievements donations={data.donations} />
+			<OurAchievements donations={data.donations} achievements={data.getOurAchievements} />
 			<GetHelp lists={data.getHelpLists} info={data.getHelpInfo} />
 			<OurActivity />
 			<Projects />
