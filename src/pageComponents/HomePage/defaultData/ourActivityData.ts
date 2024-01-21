@@ -4,8 +4,8 @@ import image3 from '~assets/images/ourActivity/activity-image3.png';
 import image4 from '~assets/images/ourActivity/activity-image4.png';
 
 export const images = [
-	{ id: 'image1', src: image1 },
-	{ id: 'image2', src: image2 },
-	{ id: 'image3', src: image3 },
-	{ id: 'image4', src: image4 },
+	{ id: 'image1', image: image1.src },
+	{ id: 'image2', image: image2.src },
+	{ id: 'image3', image: image3.src },
+	{ id: 'image4', image: image4.src },
 ];
