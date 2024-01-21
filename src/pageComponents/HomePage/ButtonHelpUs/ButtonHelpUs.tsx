@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
 import { ModalHelpUs } from '~/pageComponents/HomePage/ButtonHelpUs/ModalHelpUs/ModalHelpUs';
-import type { DonationsResponse } from '~api/types/backend/responses/DonationsResponse';
+import type { Donations } from '~api/types/donations/donations';
 import { Button } from '~components/Buttons/Button';
 
 import s from './ModalHelpUs/ModalHelpUs.module.scss';
 
 interface ButtonHelpUsProps {
-	donations?: DonationsResponse;
+	donations?: Donations;
 }
 
 export function ButtonHelpUs({ donations }: ButtonHelpUsProps) {
