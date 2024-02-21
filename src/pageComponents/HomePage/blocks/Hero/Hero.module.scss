@@ -1,3 +1,163 @@
-.Hero {
-	border: 1px solid magenta;
+@use '~/styles/mixins' as *;
+
+.container {
+	position: relative;
+	height: 528px;
+
+	@include useScreen('tablet-sm') {
+		height: 850px;
+	}
+
+	@include useScreen('tablet-xl') {
+		height: 100vh;
+	}
+
+	@include useScreen('desktop-md') {
+		max-width: 1440px;
+		height: 680px;
+		margin: 0 auto;
+	}
+}
+
+.content {
+	gap: 10px;
+	display: flex;
+	z-index: 555;
+	position: relative;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: flex-start;
+	width: 100%;
+	height: 528px;
+	padding: 0 16px 52px 16px;
+
+	@include useScreen('mobile-md') {
+		gap: 20px;
+	}
+
+	@include useScreen('mobile-lg') {
+		gap: 30px;
+	}
+
+	@include useScreen('mobile-xl') {
+		gap: 40px;
+	}
+
+	@include useScreen('tablet-sm') {
+		gap: 101px;
+		height: 850px;
+		padding: 0 32px 104px 32px;
+	}
+
+	@include useScreen('tablet-xl') {
+		gap: 48px;
+		height: 100vh;
+		padding: 80px 0 70px 35px;
+	}
+
+	@include useScreen('desktop-md') {
+		gap: 64px;
+		height: 680px;
+		padding: 0 0 88px 0;
+	}
+}
+
+.itemContainer {
+	position: relative;
+	min-width: 100%;
+	height: 528px;
+	@include useScreen('tablet-sm') {
+		height: 850px;
+	}
+
+	@include useScreen('tablet-xl') {
+		height: 100vh;
+	}
+
+	@include useScreen('desktop-md') {
+		height: 680px;
+	}
+}
+
+.gradient {
+	z-index: 11;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.darkGradient {
+	background: var(--color--gradient-3);
+}
+
+.lightGradient {
+	background: var(--color--gradient-4);
+}
+
+.noGradient {
+	background: transparent;
+}
+
+.img {
+	object-fit: cover;
+	object-position: 85%;
+	width: 100%;
+	height: 100%;
+	@include useScreen('tablet-sm') {
+		object-position: 90%;
+	}
+
+	@include useScreen('desktop-md') {
+		object-position: initial;
+	}
+}
+
+.text {
+	gap: 14px;
+	display: flex;
+	flex-direction: column;
+	text-wrap: balance;
+
+	@include useScreen('mobile-md') {
+		gap: 16px;
+	}
+
+	@include useScreen('tablet-sm') {
+		gap: 24px;
+		width: 100%;
+	}
+
+	@include useScreen('desktop-md') {
+		gap: 64px;
+	}
+}
+
+.heading {
+	width: 321px;
+
+	@include useScreen('mobile-lg') {
+		width: 400px;
+	}
+
+	@include useScreen('tablet-sm') {
+		width: 680px;
+	}
+
+	@include useScreen('desktop-md') {
+		width: 675px;
+	}
+}
+
+.white {
+	color: var(--color--shades-1);
+}
+
+.blue {
+	color: var(--color--primary-3);
+}
+
+.black {
+	color: var(--color--secondary-4);
 }

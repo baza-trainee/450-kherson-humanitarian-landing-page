@@ -1,3 +1,50 @@
-.OurPartners {
-	border: 1px solid magenta;
+@use '~/styles/mixins' as *;
+
+.container {
+	row-gap: 24px;
+	display: flex;
+	flex-direction: column;
+	@include useScreen('desktop-sm') {
+		row-gap: 48px;
+	}
+}
+
+.logoContainer {
+	grid-auto-rows: 145px;
+	grid-template-columns: repeat(1, 145px);
+	row-gap: 24px;
+	display: grid;
+	justify-content: center;
+	justify-content: center;
+	@include useScreen('mobile-md') {
+		grid-template-columns: repeat(2, 145px);
+		justify-content: space-between;
+	}
+	@include useScreen('mobile-lg') {
+		grid-template-columns: repeat(3, 145px);
+	}
+	@include useScreen('tablet-sm') {
+		grid-auto-rows: 162px;
+		grid-template-columns: repeat(4, 169px);
+	}
+	@include useScreen('desktop-sm') {
+		grid-auto-rows: 193px;
+		grid-template-columns: repeat(4, 193px);
+		row-gap: 48px;
+	}
+}
+
+.logo {
+	position: relative;
+	align-self: center;
+	width: 145px;
+	height: 145px;
+	@include useScreen('tablet-sm') {
+		width: 169px;
+		height: 169px;
+	}
+	@include useScreen('desktop-sm') {
+		width: 193px;
+		height: 193px;
+	}
 }

@@ -1,0 +1,106 @@
+@use '~/styles/mixins' as *;
+
+.OurActivity {
+	padding: 0 0 0 16px;
+	@include useScreen('mobile-lg') {
+		padding: 0 16px;
+	}
+	@include useScreen('tablet-sm') {
+		padding: 0 32px;
+	}
+	@include useScreen('desktop-sm') {
+		padding: 0 80px;
+	}
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+}
+
+.wrapper {
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.title {
+	width: 328px;
+	padding-bottom: 24px;
+	@include useScreen('mobile-lg') {
+		width: 100%;
+	}
+	@include useScreen('tablet-sm') {
+		padding-bottom: 32px;
+	}
+	@include useScreen('desktop-sm') {
+		padding-bottom: 77px;
+	}
+}
+
+.slider {
+	display: flex;
+	height: 346px;
+	padding-right: calc(100% - 286px);
+	gap: 16px;
+	@include useScreen('mobile-lg') {
+		padding-right: 0;
+	}
+	@include useScreen('tablet-sm') {
+		height: 573px;
+		gap: 24px;
+	}
+}
+
+.cardWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.card {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 573px;
+	height: 100%;
+	cursor: grab;
+	background-color: transparent;
+}
+
+.arrow {
+	z-index: 4;
+	position: absolute;
+	top: 55%;
+	background-color: var(--color--shades-1);
+	transform: translateY(-50%);
+}
+
+.leftArrow {
+	left: 0;
+}
+
+.rightArrow {
+	right: 0;
+}
+
+.dots {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 72px;
+	padding-right: 16px;
+	gap: 18px;
+	@include useScreen('mobile-lg') {
+		padding-right: 0;
+	}
+}
+
+.img {
+	width: 100%;
+	height: 100%;
+}

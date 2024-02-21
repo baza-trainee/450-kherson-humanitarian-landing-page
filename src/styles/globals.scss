@@ -1,4 +1,8 @@
-@import 'node_modules/modern-normalize/modern-normalize.css';
+html {
+	font-family: var(--font-family--open-sans);
+	scroll-behavior: smooth;
+	scroll-padding-top: 100px;
+}
 
 h1,
 h2,

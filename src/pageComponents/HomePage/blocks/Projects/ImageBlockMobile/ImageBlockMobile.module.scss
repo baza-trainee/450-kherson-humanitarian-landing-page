@@ -1,0 +1,17 @@
+.swipable {
+	display: flex;
+	flex-direction: row;
+	gap: 16px;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	max-width: 100%;
+	min-height: 253px;
+}
+
+.img {
+	cursor: grab;
+}

@@ -1,0 +1,8 @@
+export interface DonationResponse {
+	id?: string;
+	currency: string;
+	recipient: string;
+	IBAN: string;
+	IPN: string;
+	paymentPurpose: string;
+}
