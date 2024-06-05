@@ -5,20 +5,13 @@
 }
 
 .container {
-	width: 100vw;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.wrapper {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 24px;
-	margin: 0 auto;
+	width: 100vw;
+	min-height: calc(100vh - 82px);
+	padding: 24px 0;
 }
 
 .content {
@@ -31,8 +24,8 @@
 .image {
 	position: relative;
 	width: 100vw;
-	height: 100vh;
 	max-width: 328px;
+	height: 100vh;
 	max-height: 135px;
 
 	@include useScreen('tablet-sm') {
@@ -46,8 +39,8 @@
 }
 
 .title {
-	text-align: center;
 	max-width: 220px;
+	text-align: center;
 	@include useScreen('mobile-lg') {
 		max-width: 100%;
 	}

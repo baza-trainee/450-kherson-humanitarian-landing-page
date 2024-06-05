@@ -1,0 +1,5 @@
+@use '~/styles/mixins' as *;
+
+.title {
+	color: var(--color--error-1);
+}
